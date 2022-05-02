@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="홍길동1234 님"
-        android:textColor="@color/black"
+        android:textColor="@color/color_333333"
         android:textSize="14dp"/>
 
     <View
@@ -50,20 +50,20 @@
         android:id="@+id/tradingStatement"
         android:layout_width="178dp"
         android:layout_height="178dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="248dp"
         android:layout_marginTop="272dp"
-        android:layout_marginStart="250dp"
-        android:background="@drawable/btn_menu_background">
+        android:background="@drawable/btn_menu_background"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="122dp"
             android:text="거래명세입고"
-            android:textColor="@color/black"
-            android:layout_marginTop="122dp"/>
+            android:textColor="@color/color_333333" />
 
 
     </LinearLayout>
@@ -84,7 +84,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
             android:text="발주입고"
-            android:textColor="@color/black"
+            android:textColor="@color/color_333333"
             android:layout_marginTop="122dp"/>
 
 
@@ -106,7 +106,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
             android:text="키팅출고"
-            android:textColor="@color/black"
+            android:textColor="@color/color_333333"
             android:layout_marginTop="122dp"/>
 
 
@@ -128,7 +128,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
             android:text="요청출고"
-            android:textColor="@color/black"
+            android:textColor="@color/color_333333"
             android:layout_marginTop="122dp"/>
 
 
@@ -150,7 +150,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
             android:text="미출자재출고"
-            android:textColor="@color/black"
+            android:textColor="@color/color_333333"
             android:layout_marginTop="122dp"/>
 
 
@@ -172,7 +172,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
             android:text="로케이션 조회"
-            android:textColor="@color/black"
+            android:textColor="@color/color_333333"
             android:layout_marginTop="122dp"/>
 
 
@@ -194,7 +194,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
             android:text="재고조사"
-            android:textColor="@color/black"
+            android:textColor="@color/color_333333"
             android:layout_marginTop="122dp"/>
 
 
