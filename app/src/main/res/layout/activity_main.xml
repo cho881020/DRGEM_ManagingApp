@@ -4,51 +4,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/base_background"
     tools:context=".MainActivity">
 
+<!--check : 그림자 확인-->
     <LinearLayout
         android:layout_width="420dp"
         android:layout_height="420dp"
         android:background="@drawable/layout_login_background"
+        android:elevation="10dp"
         android:orientation="vertical">
 
         <ImageView
+            android:src="@drawable/drgem_logo"
             android:layout_width="168dp"
             android:layout_height="71dp"
-            android:layout_marginTop="83dp"
-            android:layout_marginHorizontal="117dp"/>
+            android:layout_marginHorizontal="117dp"
+            android:layout_marginTop="83dp" />
 
         <EditText
             android:layout_width="260dp"
             android:layout_height="40dp"
-            android:layout_marginTop="56dp"
             android:layout_marginHorizontal="80dp"
-            android:paddingLeft="32dp"
+            android:layout_marginTop="56dp"
+            android:drawableLeft="@drawable/id_image"
+            android:drawablePadding="8.35dp"
+            android:paddingLeft="9.35dp"
             android:background="@drawable/edt_login_background"
             android:hint="사원 ID"
-            android:textSize="14dp"/>
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:textSize="14dp" />
 
         <EditText
             android:layout_width="260dp"
             android:layout_height="40dp"
-            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="80dp"
-            android:paddingLeft="32dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/edt_login_background"
+            android:drawableLeft="@drawable/pw_image"
+            android:drawablePadding="8.35dp"
+            android:paddingLeft="9.35dp"
             android:hint="비밀번호"
-            android:textSize="14dp"/>
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:textSize="14dp" />
 
         <TextView
             android:layout_width="260dp"
             android:layout_height="40dp"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
             android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_login_background"
+            android:gravity="center"
             android:text="로그인"
-            android:textSize="14dp"
-            android:textColor="@color/white"/>
-
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:textColor="@color/white"
+            android:textSize="14dp" />
 
 
     </LinearLayout>
