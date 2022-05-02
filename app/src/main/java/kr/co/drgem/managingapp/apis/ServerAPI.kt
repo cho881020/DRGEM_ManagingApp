@@ -2,6 +2,7 @@ package kr.co.drgem.managingapp.apis
 
 import android.content.Context
 import com.google.gson.GsonBuilder
+import kr.co.drgem.managingapp.utils.ContextUtil
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -28,7 +29,7 @@ class ServerAPI {
 //                       기존의 request에, 헤더를 추가해주자.
 
                         val newRequest = request().newBuilder()
-//                            .addHeader("X-Http-Token", ContextUtil.getLoginUserToken(context))   // 토큰 방식 확인 완료후 코딩
+                            .addHeader("X-Http-Token", ContextUtil.getToken(context))   // 서버개발자 토큰 생성 방식 확인 필요
                             .build()
 
 //                       다시 하려던 일을 이어가도록
