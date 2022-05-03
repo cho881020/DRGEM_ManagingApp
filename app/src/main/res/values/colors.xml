@@ -16,7 +16,10 @@
     <color name="color_333333">#333333</color>
     <color name="color_000000">#000000</color>
     <color name="color_3E3E3E">#3E3E3E</color>
+    <color name="color_999999">#999999</color>
     <color name="color_808080">#808080</color>
     <color name="color_B3B3B3">#B3B3B3</color>
     <color name="color_F4F4F4">#F4F4F4</color>
+    <color name="color_455591">#455591</color>
+    <color name="color_3DBBE2">#3DBBE2</color>
 </resources>
