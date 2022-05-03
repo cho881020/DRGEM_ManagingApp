@@ -234,6 +234,7 @@
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="31dp"
                 android:text="거래명세번호 G22042600391의 검색결과 "
+                android:textColor="@color/color_000000"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -424,7 +425,8 @@
                 android:layout_marginTop="35dp"
                 android:text="거래상세 내역 (3건)"
                 android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/color_000000"/>
 
 
             <LinearLayout
@@ -441,97 +443,100 @@
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="순번"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="품목코드"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="품명"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="도번/모델"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="사양"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="단위"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="거래수량"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="발주번호"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="발주순번"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="발주수량"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="중요자재여부"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginStart="21dp"
                     android:text="위치"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/color_808080" />
 
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tradingStatementRecyclerView"
                 android:layout_width="1125dp"
                 android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_marginStart="21dp"
                 android:layout_marginBottom="40dp" />
 
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/btnAdd"
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:layout_marginEnd="45dp"

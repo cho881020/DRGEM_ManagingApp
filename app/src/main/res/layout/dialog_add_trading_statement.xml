@@ -77,10 +77,10 @@
             app:layout_constraintTop_toBottomOf="@id/txtCountTitle" />
 
         <TextView
-            android:id="@+id/btnAdd"
+            android:id="@+id/btnAddList"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="48dp"
             android:layout_marginEnd="40dp"
             android:background="@drawable/btn_add"
             android:gravity="center"
@@ -96,13 +96,14 @@
             android:layout_height="1dp"
             android:layout_marginTop="17dp"
             android:background="@color/color_E0E0E0"
-            app:layout_constraintBottom_toTopOf="@id/tradingStatementRecyclerView"
-            app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
+            app:layout_constraintBottom_toTopOf="@id/tradingStatementAddRecyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddList" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tradingStatementRecyclerView"
+            android:id="@+id/tradingStatementAddRecyclerView"
             android:layout_width="850dp"
             android:layout_height="490dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/layoutBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
