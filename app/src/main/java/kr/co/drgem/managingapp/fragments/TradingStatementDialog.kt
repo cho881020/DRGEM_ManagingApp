@@ -1,5 +1,7 @@
 package kr.co.drgem.managingapp.fragments
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +23,9 @@ class TradingStatementDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_add_trading_statement, container, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,6 +34,7 @@ class TradingStatementDialog : DialogFragment() {
         setupEvents()
 
     }
+
 
     fun setupEvents(){
 
