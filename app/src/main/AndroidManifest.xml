@@ -12,6 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManagingApp">
         <activity
+            android:name=".StockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NotShippedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KittingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderReceiptActivity"
+            android:exported="false" />
+        <activity
             android:name=".TradingStatementActivity"
             android:exported="false"
             android:screenOrientation="landscape" />

@@ -24,6 +24,38 @@ class MenuActivity : BaseActivity() {
             val myIntent = Intent(this, TradingStatementActivity::class.java)
             startActivity(myIntent)
         }
+
+        binding.orderReceipt.setOnClickListener{
+            val myIntent = Intent(this, OrderReceiptActivity::class.java)
+            startActivity(myIntent)
+        }
+
+        binding.kitting.setOnClickListener{
+            val myIntent = Intent(this, KittingActivity::class.java)
+            startActivity(myIntent)
+        }
+
+        binding.request.setOnClickListener{
+            val myIntent = Intent(this, RequestActivity::class.java)
+            startActivity(myIntent)
+        }
+
+        binding.notShipped.setOnClickListener{
+            val myIntent = Intent(this, NotShippedActivity::class.java)
+            startActivity(myIntent)
+        }
+
+        binding.location.setOnClickListener{
+            val myIntent = Intent(this, LocationActivity::class.java)
+            startActivity(myIntent)
+        }
+
+        binding.stock.setOnClickListener{
+            val myIntent = Intent(this, StockActivity::class.java)
+            startActivity(myIntent)
+        }
+
+
     }
 
     override fun setValues() {
