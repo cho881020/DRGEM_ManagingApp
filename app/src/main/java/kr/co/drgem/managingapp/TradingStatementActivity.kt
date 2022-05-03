@@ -1,11 +1,27 @@
 package kr.co.drgem.managingapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
+import kr.co.drgem.managingapp.databinding.ActivityTradingStatementBinding
 
-class TradingStatementActivity : AppCompatActivity() {
+class TradingStatementActivity : BaseActivity() {
+
+    lateinit var binding: ActivityTradingStatementBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trading_statement)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_trading_statement)
+
+        setupEvents()
+        setValues()
+
+    }
+
+    override fun setupEvents() {
+
+    }
+
+    override fun setValues() {
+
     }
 }

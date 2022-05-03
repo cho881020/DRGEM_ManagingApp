@@ -1,161 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="850dp"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="품목01"
-        android:textColor="@color/color_000000"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_000000"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="850dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:background="@color/color_F4F4F4"
-            android:text="순번"
-            android:textSize="12dp"
-            android:textColor="@color/color_808080"/>
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:text="품목01"
+            android:textColor="@color/color_000000"
+            android:textSize="14dp"
+            android:textStyle="bold" />
 
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:background="@drawable/light_gray_box"
-            android:layout_marginStart="12dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_000000" />
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:background="@color/color_F4F4F4"
-            android:text="품목코드"
-            android:textSize="12dp"
-            android:textColor="@color/color_808080"
-            android:layout_marginStart="12dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <EditText
-            android:layout_width="180dp"
-            android:layout_height="35dp"
-            android:background="@drawable/light_gray_box"
-            android:layout_marginStart="12dp"/>
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:background="@color/color_F4F4F4"
-            android:text="거래수량"
-            android:textSize="12dp"
-            android:textColor="@color/color_808080"
-            android:layout_marginStart="12dp"/>
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@color/color_F4F4F4"
+                android:gravity="center"
+                android:text="순번"
+                android:textColor="@color/color_808080"
+                android:textSize="12dp" />
 
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:background="@drawable/light_gray_box"
-            android:layout_marginStart="12dp"/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/light_gray_box" />
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:background="@color/color_F4F4F4"
-            android:text="중요자재\n여부"
-            android:textSize="12dp"
-            android:textColor="@color/color_808080"
-            android:layout_marginStart="12dp"/>
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="12dp"
+                android:background="@color/color_F4F4F4"
+                android:gravity="center"
+                android:text="품목코드"
+                android:textColor="@color/color_808080"
+                android:textSize="12dp" />
 
-        <TextView
-            android:layout_width="34dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="12dp"
-            android:gravity="center"
-            android:background="@drawable/btn_find"
-            android:text="Y"
-            android:textStyle="bold"
-            android:textColor="@color/color_FFFFFF"/>
+            <EditText
+                android:layout_width="180dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/light_gray_box" />
 
-        <TextView
-            android:layout_width="34dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="12dp"
-            android:gravity="center"
-            android:background="@drawable/btn_light_gray"
-            android:text="N"
-            android:textStyle="bold"
-            android:textColor="@color/color_000000"/>
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="12dp"
+                android:background="@color/color_F4F4F4"
+                android:gravity="center"
+                android:text="거래수량"
+                android:textColor="@color/color_808080"
+                android:textSize="12dp" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/light_gray_box" />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="12dp"
+                android:background="@color/color_F4F4F4"
+                android:gravity="center"
+                android:text="중요자재\n여부"
+                android:textColor="@color/color_808080"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="34dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/btn_find"
+                android:gravity="center"
+                android:text="Y"
+                android:textColor="@color/color_FFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="34dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/btn_light_gray"
+                android:gravity="center"
+                android:text="N"
+                android:textColor="@color/color_000000"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_E0E0E0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@color/color_F4F4F4"
+                android:gravity="center"
+                android:text="시리얼번호"
+                android:textColor="@color/color_808080"
+                android:textSize="12dp" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/light_gray_box" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/light_gray_box" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/light_gray_box" />
+
+            <TextView
+                android:layout_width="56dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="12dp"
+                android:background="@color/color_E3E6Ef"
+                android:gravity="center"
+                android:text="+추가"
+                android:textColor="@color/color_455591"
+                android:textSize="12dp" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_E0E0E0" />
+
 
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_E0E0E0"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:background="@color/color_F4F4F4"
-            android:text="시리얼번호"
-            android:textSize="12dp"
-            android:textColor="@color/color_808080"/>
-
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:background="@drawable/light_gray_box"
-            android:layout_marginStart="12dp"/>
-
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:background="@drawable/light_gray_box"
-            android:layout_marginStart="12dp"/>
-
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:background="@drawable/light_gray_box"
-            android:layout_marginStart="12dp"/>
-
-        <TextView
-            android:layout_width="56dp"
-            android:layout_height="35dp"
-            android:gravity="center"
-            android:layout_marginStart="12dp"
-            android:background="@color/color_E3E6Ef"
-            android:text="+추가"
-            android:textSize="12dp"
-            android:textColor="@color/color_455591"/>
-
-
-
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_E0E0E0"/>
-
-
-</LinearLayout>
+</layout>
