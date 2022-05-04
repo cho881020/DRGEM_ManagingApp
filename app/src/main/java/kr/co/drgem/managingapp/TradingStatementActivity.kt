@@ -23,6 +23,7 @@ class TradingStatementActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
         binding.btnAdd.setOnClickListener {
             dialog.show(supportFragmentManager, "dialog")
         }

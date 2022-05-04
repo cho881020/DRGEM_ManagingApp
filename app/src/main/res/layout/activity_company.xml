@@ -369,7 +369,7 @@
         <LinearLayout
             android:layout_width="1170dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/layout_find_background"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -422,10 +422,11 @@
                     android:layout_weight="1"/>
 
                 <TextView
+                    android:id="@+id/btnDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_marginEnd="10dp"
-                    android:text="상세보기"
+                    android:text="임시버튼"
                     android:textColor="@color/color_808080" />
 
 
