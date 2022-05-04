@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.adapters.FindCompanyListAdapter
@@ -21,6 +22,10 @@ class OrderReceiptActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        binding.btnDetail.setOnClickListener {
+            val myIntent = Intent(this, CompanyActivity::class.java)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {

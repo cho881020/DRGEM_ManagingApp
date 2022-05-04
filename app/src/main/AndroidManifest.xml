@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManagingApp">
         <activity
+            android:name=".CompanyActivity"
+            android:exported="false" />
+        <activity
             android:name=".StockActivity"
             android:exported="false" />
         <activity
