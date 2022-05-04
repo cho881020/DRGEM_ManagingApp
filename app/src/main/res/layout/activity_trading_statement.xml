@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/base_background"
-        tools:context=".TradingStatementActivity">
+        tools:context=".menu.tradingstatement.activity.TradingStatementActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutTitle"

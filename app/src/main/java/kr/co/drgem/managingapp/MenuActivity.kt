@@ -4,6 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.databinding.ActivityMenuBinding
+import kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity
+import kr.co.drgem.managingapp.menu.location.LocationActivity
+import kr.co.drgem.managingapp.menu.notshipped.NotShippedActivity
+import kr.co.drgem.managingapp.menu.order.activity.OrderReceiptActivity
+import kr.co.drgem.managingapp.menu.request.activity.RequestActivity
+import kr.co.drgem.managingapp.menu.stock.StockActivity
+import kr.co.drgem.managingapp.menu.tradingstatement.activity.TradingStatementActivity
 
 class MenuActivity : BaseActivity() {
 

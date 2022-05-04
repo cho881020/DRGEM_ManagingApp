@@ -12,28 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManagingApp">
         <activity
-            android:name=".CompanyActivity"
+            android:name="kr.co.drgem.managingapp.menu.order.activity.CompanyActivity"
             android:exported="false" />
         <activity
-            android:name=".StockActivity"
+            android:name="kr.co.drgem.managingapp.menu.stock.StockActivity"
             android:exported="false" />
         <activity
-            android:name=".LocationActivity"
+            android:name="kr.co.drgem.managingapp.menu.location.LocationActivity"
             android:exported="false" />
         <activity
-            android:name=".NotShippedActivity"
+            android:name="kr.co.drgem.managingapp.menu.notshipped.NotShippedActivity"
             android:exported="false" />
         <activity
-            android:name=".RequestActivity"
+            android:name="kr.co.drgem.managingapp.menu.request.activity.RequestActivity"
             android:exported="false" />
         <activity
-            android:name=".KittingActivity"
+            android:name="kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity"
             android:exported="false" />
         <activity
-            android:name=".OrderReceiptActivity"
+            android:name="kr.co.drgem.managingapp.menu.order.activity.OrderReceiptActivity"
             android:exported="false" />
         <activity
-            android:name=".TradingStatementActivity"
+            android:name="kr.co.drgem.managingapp.menu.tradingstatement.activity.TradingStatementActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
