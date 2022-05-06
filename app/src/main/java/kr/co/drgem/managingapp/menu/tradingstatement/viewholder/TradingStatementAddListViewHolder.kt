@@ -9,6 +9,8 @@ class TradingStatementAddListViewHolder(parent : ViewGroup) : RecyclerView.ViewH
     LayoutInflater.from(parent.context).inflate(R.layout.dialog_add_trading_statement_list_item, parent, false)
 ) {
 
+
+
     fun bind(){
 
     }

@@ -5,12 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 
-class TradingStatementListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.trading_statement_list_item, parent, false)
+class TradingStatementEmptyViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parent.context).inflate(R.layout.trading_statement_empty, parent, false)
 ) {
 
-    fun bind() {
+    fun bind(){
 
     }
-
 }
