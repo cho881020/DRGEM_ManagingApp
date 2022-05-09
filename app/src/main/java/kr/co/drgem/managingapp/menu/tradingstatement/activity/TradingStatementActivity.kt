@@ -6,13 +6,14 @@ import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityTradingStatementBinding
+import kr.co.drgem.managingapp.menu.tradingstatement.EditListener
 import kr.co.drgem.managingapp.menu.tradingstatement.SearchListener
 import kr.co.drgem.managingapp.menu.tradingstatement.dialog.TradingStatementDialog
 import kr.co.drgem.managingapp.menu.tradingstatement.adapter.TradingStatementAdapter
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
 
-class TradingStatementActivity : BaseActivity(),SearchListener  {
+class TradingStatementActivity : BaseActivity(),SearchListener, EditListener  {
 
     lateinit var binding: ActivityTradingStatementBinding
     lateinit var mAdapter : TradingStatementAdapter
@@ -31,17 +32,16 @@ class TradingStatementActivity : BaseActivity(),SearchListener  {
 
     override fun setupEvents() {
 
-        binding.btnAdd.setOnClickListener {
-            dialog.show(supportFragmentManager, "dialog")
+        binding.btnBack.setOnClickListener {
+            finish()
         }
-
 
 
     }
 
     override fun setValues() {
 
-        mAdapter = TradingStatementAdapter(this)
+        mAdapter = TradingStatementAdapter(this, this)
         mAdapter.setData(null)
         binding.tradingStatementRecyclerView.adapter = mAdapter
 
@@ -158,6 +158,9 @@ class TradingStatementActivity : BaseActivity(),SearchListener  {
 
     }
 
+    override fun onClickedEdit() {
+        dialog.show(supportFragmentManager, "dialog")
+    }
 
 
 }

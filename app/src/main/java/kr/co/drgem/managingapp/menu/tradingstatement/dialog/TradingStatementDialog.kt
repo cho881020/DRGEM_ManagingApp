@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.menu.tradingstatement.adapter.TradingStatementAddListAdapter
-import kr.co.drgem.managingapp.databinding.DialogAddTradingStatementBinding
+import kr.co.drgem.managingapp.databinding.DialogTradingStatementBinding
+import kr.co.drgem.managingapp.menu.tradingstatement.adapter.DialogTSAdapter
 
 class TradingStatementDialog : DialogFragment() {
 
-    lateinit var binding : DialogAddTradingStatementBinding
+    lateinit var binding : DialogTradingStatementBinding
 
 
     override fun onCreateView(
@@ -22,7 +22,7 @@ class TradingStatementDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_add_trading_statement, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_trading_statement, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return binding.root
 
@@ -38,8 +38,14 @@ class TradingStatementDialog : DialogFragment() {
 
     fun setupEvents(){
 
-        val mAdapter = TradingStatementAddListAdapter()
-        binding.tradingStatementAddRecyclerView.adapter = mAdapter
+        val mAdapter = DialogTSAdapter()
+        binding.DialogRecyclerView.adapter = mAdapter
+
+        binding.btnCancel.setOnClickListener {
+            dismiss()
+        }
+
+
     }
 
 }

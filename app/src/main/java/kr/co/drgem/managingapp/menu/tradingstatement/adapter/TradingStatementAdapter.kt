@@ -2,6 +2,7 @@ package kr.co.drgem.managingapp.menu.tradingstatement.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.drgem.managingapp.menu.tradingstatement.EditListener
 import kr.co.drgem.managingapp.menu.tradingstatement.SearchListener
 import kr.co.drgem.managingapp.menu.tradingstatement.viewholder.*
 import kr.co.drgem.managingapp.models.BasicResponse
@@ -9,7 +10,8 @@ import kr.co.drgem.managingapp.models.Georaedetail
 
 class TradingStatementAdapter(
 
-    val listener : SearchListener
+    val SearchListener : SearchListener,
+    val EditListener : EditListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var viewTypeList : ArrayList<Int> = arrayListOf()
@@ -18,12 +20,12 @@ class TradingStatementAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            0 -> TradingStatementSearchViewHolder(parent, listener)
+            0 -> TradingStatementSearchViewHolder(parent, SearchListener)
             1 -> TradingStatementEmptyViewHolder(parent)
             2 -> TradingStatementResultViewHolder(parent)
             3 -> TradingStatementDetailViewHolder(parent)
-            4 -> TradingStatementListViewHolder(parent)
-            else -> TradingStatementListViewHolder(parent)
+            4 -> TradingStatementListViewHolder(parent, EditListener)
+            else -> TradingStatementListViewHolder(parent, EditListener)
         }
     }
 
