@@ -16,4 +16,6 @@ data class Georaedetail(
 
 ){
 
+    var changeSerial = false
+
 }

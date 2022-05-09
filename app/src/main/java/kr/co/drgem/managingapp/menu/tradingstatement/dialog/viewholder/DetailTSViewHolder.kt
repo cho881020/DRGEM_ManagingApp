@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 
-class DialogTSDetailViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.dialog_ts_detail, parent, false)
+class DetailTSViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parent.context).inflate(R.layout.viewholder_detail_ts, parent, false)
 ) {
 
 

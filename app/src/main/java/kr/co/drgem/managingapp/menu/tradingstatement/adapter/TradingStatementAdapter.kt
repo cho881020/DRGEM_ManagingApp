@@ -42,7 +42,8 @@ class TradingStatementAdapter(
                 holder.bind()
             }
             is TradingStatementListViewHolder -> {
-                holder.bind()
+
+                holder.bind(georaedetailList[position-3])
             }
         }
 

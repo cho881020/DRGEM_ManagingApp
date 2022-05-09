@@ -46,10 +46,22 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/btnDetail"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="21dp"
+            android:gravity="center"
+            android:text="상세보기"
+            android:textSize="12dp"
+            android:background="@drawable/light_gray_box"
+            android:textColor="@color/black" />
+
+        <TextView
             android:id="@+id/btnEdit"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_marginStart="21dp"
+            android:visibility="gone"
             android:gravity="center"
             android:text="수정하기"
             android:textSize="12dp"
