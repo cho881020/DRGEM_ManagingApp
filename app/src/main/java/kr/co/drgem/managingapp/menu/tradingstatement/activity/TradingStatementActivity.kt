@@ -34,6 +34,9 @@ class TradingStatementActivity : BaseActivity(),SearchListener  {
         binding.btnAdd.setOnClickListener {
             dialog.show(supportFragmentManager, "dialog")
         }
+
+
+
     }
 
     override fun setValues() {
@@ -44,7 +47,7 @@ class TradingStatementActivity : BaseActivity(),SearchListener  {
 
     }
 
-    override fun onClickedSearch() {
+    override fun onClickedSearch(dateStart: String, dateEnd: String) {
         Log.d("yj", "검색버튼 눌림")
         setList()
         mAdapter.setData(mList)
@@ -52,21 +55,94 @@ class TradingStatementActivity : BaseActivity(),SearchListener  {
 
     fun setList(){
 
-        val georaedetail : ArrayList<Georaedetail> = arrayListOf(
-            Georaedetail(
-                "14",
-                "E08-000601-00",
-                "G22042600391",
-                "B22042200003",
-                "G22042600391",
-                "2022-02-03",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-            ))
+//        val georaedetail : ArrayList<Georaedetail> = arrayListOf(
+//            Georaedetail(
+//                "14",
+//                "E08-000601-00",
+//                "G22042600391",
+//                "B22042200003",
+//                "G22042600391",
+//                "2022-02-03",
+//                "",
+//                "",
+//                "",
+//                "",
+//                "",
+//                "",
+//            ))
+
+        val georaedetail2 = ArrayList<Georaedetail>()
+        georaedetail2.add(Georaedetail(
+            "14",
+            "E08-000601-00",
+            "G22042600391",
+            "B22042200003",
+            "G22042600391",
+            "2022-02-03",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+        ))
+        georaedetail2.add(Georaedetail(
+            "14",
+            "E08-000601-00",
+            "G22042600391",
+            "B22042200003",
+            "G22042600391",
+            "2022-02-03",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+        ))
+        georaedetail2.add(Georaedetail(
+            "14",
+            "E08-000601-00",
+            "G22042600391",
+            "B22042200003",
+            "G22042600391",
+            "2022-02-03",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+        ))
+        georaedetail2.add(Georaedetail(
+            "14",
+            "E08-000601-00",
+            "G22042600391",
+            "B22042200003",
+            "G22042600391",
+            "2022-02-03",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+        ))
+        georaedetail2.add(Georaedetail(
+            "14",
+            "E08-000601-00",
+            "G22042600391",
+            "B22042200003",
+            "G22042600391",
+            "2022-02-03",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+        ))
+
 
 
         mList = BasicResponse(
@@ -78,7 +154,7 @@ class TradingStatementActivity : BaseActivity(),SearchListener  {
             "ㅇㅇ전자",
             "00001",
             "구미공장",
-            "(구매조건부사업) 연구소 토파즈 정부과제 샘플","5", georaedetail)
+            "(구매조건부사업) 연구소 토파즈 정부과제 샘플","5", georaedetail2)
 
     }
 

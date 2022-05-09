@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.tradingstatement.SearchListener
 import kr.co.drgem.managingapp.menu.tradingstatement.viewholder.*
 import kr.co.drgem.managingapp.models.BasicResponse
+import kr.co.drgem.managingapp.models.Georaedetail
 
 class TradingStatementAdapter(
 
@@ -12,6 +13,7 @@ class TradingStatementAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var viewTypeList : ArrayList<Int> = arrayListOf()
+    val georaedetailList : ArrayList<Georaedetail> = arrayListOf()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -27,6 +29,20 @@ class TradingStatementAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+        when(holder){
+            is TradingStatementSearchViewHolder -> {
+                holder.bind()
+            }
+            is TradingStatementEmptyViewHolder -> {
+                holder.bind()
+            }
+            is TradingStatementResultViewHolder -> {
+                holder.bind()
+            }
+            is TradingStatementListViewHolder -> {
+                holder.bind()
+            }
+        }
 
     }
 
@@ -36,18 +52,24 @@ class TradingStatementAdapter(
         return viewTypeList[position]
     }
 
-    fun setData( mList : BasicResponse? ){
+    fun setData( data : BasicResponse? ){
         viewTypeList.clear()
 
-        if(mList==null){
+        if(data == null){
             viewTypeList.add(0)
             viewTypeList.add(1)
         }
         else{
+            georaedetailList.clear()
+            georaedetailList.addAll(data.georaedetail)
+
             viewTypeList.add(0)
             viewTypeList.add(2)
             viewTypeList.add(3)
-            viewTypeList.add(4)
+
+            georaedetailList.forEach {
+                viewTypeList.add(4)
+            }
         }
         notifyDataSetChanged()
     }

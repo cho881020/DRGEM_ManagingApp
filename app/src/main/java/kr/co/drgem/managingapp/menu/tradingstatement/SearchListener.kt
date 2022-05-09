@@ -1,5 +1,5 @@
 package kr.co.drgem.managingapp.menu.tradingstatement
 
 interface SearchListener {
-    fun onClickedSearch()
+    fun onClickedSearch(dateStart : String, dateEnd : String)
 }
