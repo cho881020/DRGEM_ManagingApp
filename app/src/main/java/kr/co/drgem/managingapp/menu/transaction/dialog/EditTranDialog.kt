@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.databinding.DialogEditTsBinding
+import kr.co.drgem.managingapp.databinding.DialogEditTrBinding
 import kr.co.drgem.managingapp.menu.transaction.adapter.DialogEditTranAdapter
 
 class EditTranDialog : DialogFragment() {
 
-    lateinit var binding: DialogEditTsBinding
+    lateinit var binding: DialogEditTrBinding
 
 
     override fun onCreateView(

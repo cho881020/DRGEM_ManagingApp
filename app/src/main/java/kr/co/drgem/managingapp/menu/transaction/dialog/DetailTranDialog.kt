@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.databinding.DialogDetailTsBinding
+import kr.co.drgem.managingapp.databinding.DialogDetailTrBinding
 import kr.co.drgem.managingapp.menu.transaction.adapter.DialogDetailTranAdapter
 
 class DetailTranDialog : DialogFragment() {
 
-    lateinit var binding: DialogDetailTsBinding
+    lateinit var binding: DialogDetailTrBinding
 
 
     override fun onCreateView(
