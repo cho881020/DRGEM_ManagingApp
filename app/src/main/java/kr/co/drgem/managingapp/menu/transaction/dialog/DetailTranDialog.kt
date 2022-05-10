@@ -1,4 +1,4 @@
-package kr.co.drgem.managingapp.menu.tradingstatement.dialog
+package kr.co.drgem.managingapp.menu.transaction.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,10 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogDetailTsBinding
-import kr.co.drgem.managingapp.menu.tradingstatement.adapter.DialogDetailTSAdapter
-import kr.co.drgem.managingapp.menu.tradingstatement.adapter.DialogEditTSAdapter
+import kr.co.drgem.managingapp.menu.transaction.adapter.DialogDetailTranAdapter
 
-class DetailTSDialog : DialogFragment() {
+class DetailTranDialog : DialogFragment() {
 
     lateinit var binding: DialogDetailTsBinding
 
@@ -23,7 +22,7 @@ class DetailTSDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_detail_ts, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_detail_tr, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return binding.root
 
@@ -39,7 +38,7 @@ class DetailTSDialog : DialogFragment() {
 
     fun setupEvents() {
 
-        val mAdapter = DialogDetailTSAdapter()
+        val mAdapter = DialogDetailTranAdapter()
         binding.DialogRecyclerView.adapter = mAdapter
 
         binding.btnOk.setOnClickListener {

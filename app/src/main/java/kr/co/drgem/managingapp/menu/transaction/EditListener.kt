@@ -1,4 +1,4 @@
-package kr.co.drgem.managingapp.menu.tradingstatement
+package kr.co.drgem.managingapp.menu.transaction
 
 interface EditListener {
     fun onClickedEdit()

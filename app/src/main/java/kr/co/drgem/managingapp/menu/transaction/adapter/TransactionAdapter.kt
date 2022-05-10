@@ -1,14 +1,14 @@
-package kr.co.drgem.managingapp.menu.tradingstatement.adapter
+package kr.co.drgem.managingapp.menu.transaction.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.tradingstatement.EditListener
-import kr.co.drgem.managingapp.menu.tradingstatement.SearchListener
-import kr.co.drgem.managingapp.menu.tradingstatement.viewholder.*
+import kr.co.drgem.managingapp.menu.transaction.EditListener
+import kr.co.drgem.managingapp.menu.transaction.SearchListener
+import kr.co.drgem.managingapp.menu.transaction.viewholder.*
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
 
-class TradingStatementAdapter(
+class TransactionAdapter(
 
     val SearchListener : SearchListener,
     val EditListener : EditListener
@@ -20,28 +20,28 @@ class TradingStatementAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            0 -> TradingStatementSearchViewHolder(parent, SearchListener)
-            1 -> TradingStatementEmptyViewHolder(parent)
-            2 -> TradingStatementResultViewHolder(parent)
-            3 -> TradingStatementDetailViewHolder(parent)
-            4 -> TradingStatementListViewHolder(parent, EditListener)
-            else -> TradingStatementListViewHolder(parent, EditListener)
+            0 -> TransactionSearchViewHolder(parent, SearchListener)
+            1 -> TransactionEmptyViewHolder(parent)
+            2 -> TransactionResultViewHolder(parent)
+            3 -> TransactionDetailViewHolder(parent)
+            4 -> TransactionListViewHolder(parent, EditListener)
+            else -> TransactionListViewHolder(parent, EditListener)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when(holder){
-            is TradingStatementSearchViewHolder -> {
+            is TransactionSearchViewHolder -> {
                 holder.bind()
             }
-            is TradingStatementEmptyViewHolder -> {
+            is TransactionEmptyViewHolder -> {
                 holder.bind()
             }
-            is TradingStatementResultViewHolder -> {
+            is TransactionResultViewHolder -> {
                 holder.bind()
             }
-            is TradingStatementListViewHolder -> {
+            is TransactionListViewHolder -> {
 
                 holder.bind(georaedetailList[position-3])
             }

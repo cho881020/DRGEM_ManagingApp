@@ -1,11 +1,11 @@
-package kr.co.drgem.managingapp.menu.tradingstatement.adapter
+package kr.co.drgem.managingapp.menu.transaction.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.tradingstatement.dialog.viewholder.DetailTSSerialViewHolder
-import kr.co.drgem.managingapp.menu.tradingstatement.dialog.viewholder.DetailTSViewHolder
+import kr.co.drgem.managingapp.menu.transaction.dialog.viewholder.DetailTRSerialViewHolder
+import kr.co.drgem.managingapp.menu.transaction.dialog.viewholder.DetailTRViewHolder
 
-class DialogDetailTSAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DialogDetailTranAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var viewTypeList: ArrayList<Int> = arrayListOf()
 
@@ -16,9 +16,9 @@ class DialogDetailTSAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            0 -> DetailTSViewHolder(parent)
-            1 -> DetailTSSerialViewHolder(parent)
-            else -> DetailTSSerialViewHolder(parent)
+            0 -> DetailTRViewHolder(parent)
+            1 -> DetailTRSerialViewHolder(parent)
+            else -> DetailTRSerialViewHolder(parent)
         }
 
     }

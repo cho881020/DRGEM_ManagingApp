@@ -1,17 +1,17 @@
-package kr.co.drgem.managingapp.menu.tradingstatement.adapter
+package kr.co.drgem.managingapp.menu.transaction.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.tradingstatement.dialog.viewholder.EditTSSerialListViewHolder
+import kr.co.drgem.managingapp.menu.transaction.dialog.viewholder.EditTRSerialListViewHolder
 
-class DialogTSSerialListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DialogEditSerialListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return EditTSSerialListViewHolder(parent)
+        return EditTRSerialListViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is EditTSSerialListViewHolder ->
+            is EditTRSerialListViewHolder ->
                 holder.bind()
         }
 

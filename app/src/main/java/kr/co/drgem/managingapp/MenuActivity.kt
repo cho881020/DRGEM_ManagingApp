@@ -6,11 +6,11 @@ import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.databinding.ActivityMenuBinding
 import kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity
 import kr.co.drgem.managingapp.menu.location.LocationActivity
-import kr.co.drgem.managingapp.menu.notshipped.NotShippedActivity
+import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryActivity
 import kr.co.drgem.managingapp.menu.order.activity.OrderReceiptActivity
 import kr.co.drgem.managingapp.menu.request.activity.RequestActivity
 import kr.co.drgem.managingapp.menu.stock.StockActivity
-import kr.co.drgem.managingapp.menu.tradingstatement.activity.TradingStatementActivity
+import kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity
 
 class MenuActivity : BaseActivity() {
 
@@ -28,7 +28,7 @@ class MenuActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.tradingStatement.setOnClickListener{
-            val myIntent = Intent(this, TradingStatementActivity::class.java)
+            val myIntent = Intent(this, TransactionActivity::class.java)
             startActivity(myIntent)
         }
 
@@ -48,7 +48,7 @@ class MenuActivity : BaseActivity() {
         }
 
         binding.notShipped.setOnClickListener{
-            val myIntent = Intent(this, NotShippedActivity::class.java)
+            val myIntent = Intent(this, NotDeliveryActivity::class.java)
             startActivity(myIntent)
         }
 

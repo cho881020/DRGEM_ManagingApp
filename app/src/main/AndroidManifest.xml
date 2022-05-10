@@ -21,7 +21,7 @@
             android:name="kr.co.drgem.managingapp.menu.location.LocationActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.notshipped.NotShippedActivity"
+            android:name="kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryActivity"
             android:exported="false" />
         <activity
             android:name="kr.co.drgem.managingapp.menu.request.activity.RequestActivity"
@@ -33,7 +33,7 @@
             android:name="kr.co.drgem.managingapp.menu.order.activity.OrderReceiptActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.tradingstatement.activity.TradingStatementActivity"
+            android:name="kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity

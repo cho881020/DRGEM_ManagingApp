@@ -1,33 +1,32 @@
-package kr.co.drgem.managingapp.menu.tradingstatement.activity
+package kr.co.drgem.managingapp.menu.transaction.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.databinding.ActivityTradingStatementBinding
-import kr.co.drgem.managingapp.menu.tradingstatement.EditListener
-import kr.co.drgem.managingapp.menu.tradingstatement.SearchListener
-import kr.co.drgem.managingapp.menu.tradingstatement.dialog.EditTSDialog
-import kr.co.drgem.managingapp.menu.tradingstatement.adapter.TradingStatementAdapter
-import kr.co.drgem.managingapp.menu.tradingstatement.dialog.DetailTSDialog
+import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
+import kr.co.drgem.managingapp.menu.transaction.EditListener
+import kr.co.drgem.managingapp.menu.transaction.SearchListener
+import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
+import kr.co.drgem.managingapp.menu.transaction.dialog.DetailTranDialog
+import kr.co.drgem.managingapp.menu.transaction.dialog.EditTranDialog
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
 
-class TradingStatementActivity : BaseActivity(),SearchListener, EditListener  {
+class TransactionActivity : BaseActivity(),SearchListener, EditListener  {
 
-    lateinit var binding: ActivityTradingStatementBinding
-    lateinit var mAdapter : TradingStatementAdapter
+    lateinit var binding: ActivityTransactionBinding
+    lateinit var mAdapter : TransactionAdapter
     var mList : BasicResponse? = null
     val georaedetail2 = ArrayList<Georaedetail>()
 
-    val dialogEdit = EditTSDialog()
-    val dialogDetail = DetailTSDialog()
+    val dialogEdit = EditTranDialog()
+    val dialogDetail = DetailTranDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_trading_statement)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
         setupEvents()
         setValues()
@@ -47,7 +46,9 @@ class TradingStatementActivity : BaseActivity(),SearchListener, EditListener  {
             mAdapter.notifyDataSetChanged()
 
             binding.btnEdit.isVisible = false
+            binding.btnFactory.isVisible = false
             binding.btnSave.isVisible = true
+            binding.btnCancel.isVisible = true
         }
 
         binding.btnCancel.setOnClickListener {
@@ -58,7 +59,9 @@ class TradingStatementActivity : BaseActivity(),SearchListener, EditListener  {
             mAdapter.notifyDataSetChanged()
 
             binding.btnEdit.isVisible = true
+            binding.btnFactory.isVisible = true
             binding.btnSave.isVisible = false
+            binding.btnCancel.isVisible = false
         }
 
 
@@ -66,14 +69,14 @@ class TradingStatementActivity : BaseActivity(),SearchListener, EditListener  {
 
     override fun setValues() {
 
-        mAdapter = TradingStatementAdapter(this, this)
+        mAdapter = TransactionAdapter(this, this)
         mAdapter.setData(null)
         binding.tradingStatementRecyclerView.adapter = mAdapter
 
     }
 
     override fun onClickedSearch(dateStart: String, dateEnd: String) {
-        Log.d("yj", "검색버튼 눌림")
+
         setList()
         mAdapter.setData(mList)
         binding.layoutBtn.isVisible = true

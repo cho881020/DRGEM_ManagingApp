@@ -1,4 +1,4 @@
-package kr.co.drgem.managingapp.menu.tradingstatement.viewholder
+package kr.co.drgem.managingapp.menu.transaction.viewholder
 
 import android.app.DatePickerDialog
 import android.util.Log
@@ -9,12 +9,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.menu.tradingstatement.SearchListener
+import kr.co.drgem.managingapp.menu.transaction.SearchListener
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TradingStatementSearchViewHolder(parent : ViewGroup, val listener: SearchListener) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.trading_statement_search, parent, false)
+class TransactionSearchViewHolder(parent : ViewGroup, val listener: SearchListener) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parent.context).inflate(R.layout.transaction_search, parent, false)
 ) {
     val btnFind = itemView.findViewById<TextView>(R.id.btnFind)
     val btnReset = itemView.findViewById<TextView>(R.id.btnReset)
