@@ -13,5 +13,5 @@ class FindCompanyListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
-    override fun getItemCount() = 3
+    override fun getItemCount() = 10
 }
