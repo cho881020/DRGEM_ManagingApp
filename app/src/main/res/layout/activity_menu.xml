@@ -39,20 +39,29 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="로그아웃" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="parent">
+
+
+        </LinearLayout>
+
         <ImageView
             android:layout_width="186dp"
             android:layout_height="71dp"
-            android:layout_marginTop="153dp"
             android:src="@drawable/drgem_logo"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/stock"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/stock"/>
 
         <LinearLayout
             android:id="@+id/tradingStatement"
             android:layout_width="178dp"
             android:layout_height="178dp"
-            android:layout_marginStart="248dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="272dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"
@@ -140,7 +149,7 @@
             android:id="@+id/notShipped"
             android:layout_width="178dp"
             android:layout_height="178dp"
-            android:layout_marginStart="250dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"

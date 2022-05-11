@@ -30,20 +30,17 @@
             android:name="kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.order.activity.OrderReceiptActivity"
+            android:name="kr.co.drgem.managingapp.menu.order.activity.OrderActivity"
             android:exported="false" />
         <activity
             android:name="kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
+            android:exported="false"/>
         <activity
             android:name=".MenuActivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:screenOrientation="landscape">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

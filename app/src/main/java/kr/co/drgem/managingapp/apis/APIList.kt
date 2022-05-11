@@ -17,14 +17,14 @@ interface APIList {
 
     @GET("tablet/tran/detail/request")
     fun getRequestTranDetail(
-        @Query("requesttype") requesttype : String,
+        @Query("requesttype") requesttype : String = "02001",
         @Query("georaemyeongsebeonho") georaemyeongsebeonho : String
     ) : Call<BasicResponse>
 
     @FormUrlEncoded
     @POST("tablet/tran/detail/register")
     fun postRequestTranDetail(
-        @Field("requesttype") requesttype : String,
+        @Field("requesttype") requesttype : String = "02002",
         @Field("georaemyeongsebeonho") georaemyeongsebeonho : String,
         @Field("ipgosaupjangcode") ipgosaupjangcode : String,
         @Field("ipgochanggocode") ipgochanggocode : String,
@@ -34,13 +34,19 @@ interface APIList {
 
     @GET("tablet/vendorinfo/request")
     fun getRequestVendorInfo (
-        @Query("requesttype") requesttype : String,
+        @Query("requesttype") requesttype : String = "02011",
         @Query("georaecheomyeong") georaecheomyeong : String,
         @Query("baljubeonho") baljubeonho : String,
     ) : Call<BasicResponse>
 
     @GET("tablet/order/number/request")
-    fun getRequestOrderNumber()
+    fun getRequestOrderNumber(
+        @Query("requesttype") requesttype: String = "02012",
+        @Query("georaecheocode") georaecheocode: String,
+        @Query("baljuiljastart") baljuiljastart: String,
+        @Query("baljuiljaend") baljuiljaend: String,
+
+    )
 
     @GET("tablet/order/detail/request")
     fun getRequestOrderDetail()

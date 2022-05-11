@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="1082dp"
-        android:layout_height="675dp"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingStart="31dp"
         android:paddingEnd="31dp"
         android:background="@drawable/borderbox_white_round12">
@@ -39,7 +38,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="75dp"
                 android:orientation="horizontal"
-                android:gravity="center"
                 android:layout_gravity="center">
 
                 <LinearLayout
@@ -177,7 +175,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="970dp"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
                 android:background="@color/color_E0E0E0" />
@@ -206,126 +204,132 @@
 
         </LinearLayout>
 
-
-        <LinearLayout
+        <HorizontalScrollView
             android:id="@+id/linearLayout"
-            android:layout_width="1020dp"
-            android:layout_height="350dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/layout_find_background"
-            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintVertical_weight="1"
             app:layout_constraintBottom_toTopOf="@+id/btnOk"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutDetail">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="23dp"
-                android:layout_marginStart="22dp"
-                android:layout_marginTop="35dp"
-                android:text="품목 갯수(3건)"
-                android:textColor="@color/color_000000"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/color_F4F4F4"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_width="1020dp"
+                android:layout_height="350dp"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:background="@drawable/layout_find_background">
+
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="30dp"
-                    android:text="순번"
-                    android:textColor="@color/color_808080" />
+                    android:layout_height="23dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="35dp"
+                    android:text="품목 갯수(3건)"
+                    android:textColor="@color/color_000000"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="30dp"
-                    android:text="품목코드"
-                    android:textColor="@color/color_808080" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="30dp"
-                    android:text="품명"
-                    android:textColor="@color/color_808080" />
+                <LinearLayout
+                    android:layout_width="1020dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_F4F4F4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="47dp"
-                    android:text="도번/모델"
-                    android:textColor="@color/color_808080" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="30dp"
+                        android:text="순번"
+                        android:textColor="@color/color_808080" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="46dp"
-                    android:text="사양"
-                    android:textColor="@color/color_808080" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="30dp"
+                        android:text="품목코드"
+                        android:textColor="@color/color_808080" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="46dp"
-                    android:text="단위"
-                    android:textColor="@color/color_808080" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="30dp"
+                        android:text="품명"
+                        android:textColor="@color/color_808080" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="46dp"
-                    android:text="발주수량"
-                    android:textColor="@color/color_808080" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="47dp"
+                        android:text="도번/모델"
+                        android:textColor="@color/color_808080" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="46dp"
-                    android:text="입고예정일"
-                    android:textColor="@color/color_808080" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="46dp"
+                        android:text="사양"
+                        android:textColor="@color/color_808080" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="46dp"
-                    android:text="중요자재여부"
-                    android:textColor="@color/color_808080" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="46dp"
+                        android:text="단위"
+                        android:textColor="@color/color_808080" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="17dp"
-                    android:layout_marginStart="46dp"
-                    android:text="위치"
-                    android:textColor="@color/color_808080" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="46dp"
+                        android:text="발주수량"
+                        android:textColor="@color/color_808080" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="46dp"
+                        android:text="입고예정일"
+                        android:textColor="@color/color_808080" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="46dp"
+                        android:text="중요자재여부"
+                        android:textColor="@color/color_808080" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginStart="46dp"
+                        android:text="위치"
+                        android:textColor="@color/color_808080" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_B3B3B3" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/itemListRecyclerView"
+                    android:layout_width="1020dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </LinearLayout>
+        </HorizontalScrollView>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:background="@color/color_B3B3B3" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/itemListRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        </LinearLayout>
 
 
         <TextView

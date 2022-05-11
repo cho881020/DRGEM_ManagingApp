@@ -1,21 +1,22 @@
 package kr.co.drgem.managingapp.menu.order.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.databinding.ActivityOrderBinding
 import kr.co.drgem.managingapp.menu.order.adapter.FindCompanyListAdapter
-import kr.co.drgem.managingapp.databinding.ActivityOrderReceiptBinding
+import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
 
-class OrderReceiptActivity : BaseActivity() {
+class OrderActivity : BaseActivity() {
 
-    lateinit var binding : ActivityOrderReceiptBinding
+    lateinit var binding : ActivityOrderBinding
     lateinit var mFindCompanyAdapter : FindCompanyListAdapter
+    val dialog = OrderDetailDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_order_receipt)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_order)
 
         setupEvents()
         setValues()
@@ -25,13 +26,12 @@ class OrderReceiptActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.btnDetail.setOnClickListener {
-            val myIntent = Intent(this, CompanyActivity::class.java)
-            startActivity(myIntent)
+            dialog.show(supportFragmentManager, "dialog")
         }
     }
 
     override fun setValues() {
         mFindCompanyAdapter = FindCompanyListAdapter()
-        binding.findCompanyList.adapter = mFindCompanyAdapter
+        binding.recyclerView.adapter = mFindCompanyAdapter
     }
 }

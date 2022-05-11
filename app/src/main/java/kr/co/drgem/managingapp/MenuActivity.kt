@@ -7,7 +7,7 @@ import kr.co.drgem.managingapp.databinding.ActivityMenuBinding
 import kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity
 import kr.co.drgem.managingapp.menu.location.LocationActivity
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryActivity
-import kr.co.drgem.managingapp.menu.order.activity.OrderReceiptActivity
+import kr.co.drgem.managingapp.menu.order.activity.OrderActivity
 import kr.co.drgem.managingapp.menu.request.activity.RequestActivity
 import kr.co.drgem.managingapp.menu.stock.StockActivity
 import kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity
@@ -33,7 +33,7 @@ class MenuActivity : BaseActivity() {
         }
 
         binding.orderReceipt.setOnClickListener{
-            val myIntent = Intent(this, OrderReceiptActivity::class.java)
+            val myIntent = Intent(this, OrderActivity::class.java)
             startActivity(myIntent)
         }
 
