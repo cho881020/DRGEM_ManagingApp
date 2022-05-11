@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.request.activity
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
@@ -22,6 +23,15 @@ class RequestActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
+        binding.btnFind.setOnClickListener {
+            binding.layoutList.isVisible = true
+            binding.layoutEmpty.isVisible = false
+        }
 
     }
 

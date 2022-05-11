@@ -33,7 +33,7 @@ class OrderDetailDialog : DialogFragment() {
 
         setValues()
 
-        binding.btnOk.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             dismiss()
         }
 
