@@ -9,12 +9,13 @@ import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
 import kr.co.drgem.managingapp.menu.transaction.EditListener
 import kr.co.drgem.managingapp.menu.transaction.SearchListener
 import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
+import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionViewholderAdapter
 import kr.co.drgem.managingapp.menu.transaction.dialog.DetailTranDialog
 import kr.co.drgem.managingapp.menu.transaction.dialog.EditTranDialog
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
 
-class TransactionActivity : BaseActivity(),SearchListener, EditListener  {
+class TransactionActivity : BaseActivity(), EditListener  {
 
     lateinit var binding: ActivityTransactionBinding
     lateinit var mAdapter : TransactionAdapter
@@ -39,48 +40,47 @@ class TransactionActivity : BaseActivity(),SearchListener, EditListener  {
             finish()
         }
 
-        binding.btnEdit.setOnClickListener {
-            georaedetail2.forEach {
-                it.changeSerial=true
-            }
-            mAdapter.notifyDataSetChanged()
+//        binding.btnEdit.setOnClickListener {
+//            georaedetail2.forEach {
+//                it.changeSerial=true
+//            }
+//            mAdapter.notifyDataSetChanged()
+//
+//            binding.btnEdit.isVisible = false
+//            binding.btnFactory.isVisible = false
+//            binding.btnSave.isVisible = true
+//            binding.btnCancel.isVisible = true
+//        }
 
-            binding.btnEdit.isVisible = false
-            binding.btnFactory.isVisible = false
-            binding.btnSave.isVisible = true
-            binding.btnCancel.isVisible = true
-        }
-
-        binding.btnCancel.setOnClickListener {
-
-            georaedetail2.forEach {
-                it.changeSerial=false
-            }
-            mAdapter.notifyDataSetChanged()
-
-            binding.btnEdit.isVisible = true
-            binding.btnFactory.isVisible = true
-            binding.btnSave.isVisible = false
-            binding.btnCancel.isVisible = false
-        }
+//        binding.btnCancel.setOnClickListener {
+//
+//            georaedetail2.forEach {
+//                it.changeSerial=false
+//            }
+//            mAdapter.notifyDataSetChanged()
+//
+//            binding.btnEdit.isVisible = true
+//            binding.btnFactory.isVisible = true
+//            binding.btnSave.isVisible = false
+//            binding.btnCancel.isVisible = false
+//        }
 
 
     }
 
     override fun setValues() {
 
-        mAdapter = TransactionAdapter(this, this)
-        mAdapter.setData(null)
-        binding.tradingStatementRecyclerView.adapter = mAdapter
+        mAdapter = TransactionAdapter(this)
+        binding.recyclerView.adapter = mAdapter
 
     }
 
-    override fun onClickedSearch(dateStart: String, dateEnd: String) {
-
-        setList()
-        mAdapter.setData(mList)
-        binding.layoutBtn.isVisible = true
-    }
+//    override fun onClickedSearch(dateStart: String, dateEnd: String) {
+//
+//        setList()
+////        mAdapter.setData(mList)
+//        binding.layoutBtn.isVisible = true
+//    }
 
     fun setList(){
 

@@ -3,147 +3,582 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@color/base_background"
         tools:context=".menu.transaction.activity.TransactionActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/layoutTitle"
             android:layout_width="match_parent"
-            android:layout_height="74dp"
+            android:layout_height="50dp"
             android:background="@color/color_FFFFFF"
-            app:layout_constraintTop_toTopOf="parent">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25.6dp"
-                android:layout_marginTop="48.2dp"
-                android:src="@drawable/btn_back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:src="@drawable/btn_back"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginStart="20.04dp"
-                android:layout_marginTop="45dp"
                 android:text="거래명세입고"
                 android:textColor="@color/color_000000"
                 android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/btnBack"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textStyle="bold" />
 
-            <androidx.constraintlayout.utils.widget.ImageFilterView
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+
+            <TextView
+                android:background="@drawable/btn_save"
                 android:layout_width="75.79dp"
                 android:layout_height="28.94dp"
-                android:layout_marginTop="37dp"
                 android:layout_marginEnd="22.21dp"
-                android:src="@drawable/drgem_logo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:gravity="center"
+                android:text="저장하기"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:textColor="@color/color_FFFFFF"/>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
-        <HorizontalScrollView
+        <LinearLayout
+            android:id="@+id/layoutFind"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            app:layout_constraintTop_toBottomOf="@id/layoutTitle"
-            app:layout_constraintBottom_toTopOf="@+id/layoutBtn"
-            android:layout_marginStart="21dp"
-            android:layout_marginEnd="21dp"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:background="@drawable/layout_find_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tradingStatementRecyclerView"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거래명세번호"
+                    android:textSize="12dp"
+                    android:textColor="@color/color_000000"/>
+
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/light_gray_box"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="145dp"
+                        android:layout_height="35dp"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="9dp"
+                        android:text="G22042600391"
+                        android:textColor="@color/color_000000"
+                        android:textSize="14dp" />
+
+                    <ImageView
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:src="@drawable/btn_x" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/btnFind"
+                android:layout_width="65dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/btn_find"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="검색"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="500dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center"
+                android:background="@color/color_F4F4F4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:text="거래처명"
+                        android:textColor="@color/color_808080"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="00전자"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@color/color_E0E0E0" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:text="입고사업장"
+                        android:textColor="@color/color_808080"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="구미공장A"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@color/color_E0E0E0" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:text="비고"
+                       android:textColor="@color/color_808080"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="(구매조건부사업) 연구소 토파즈 정부과제 샘플 구매"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/layout_find_background"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="입고일자"
+                    android:textColor="@color/color_000000"
+                    android:textSize="14dp" />
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="9dp"
+                        android:text="2022-01-12"
+                        android:textColor="@color/color_000000"
+                        android:textSize="14dp" />
+
+
+                    <ImageView
+                        android:layout_width="13.75dp"
+                        android:layout_height="10dp"
+                        android:layout_marginStart="16.25dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="사업장"
+                    android:textColor="@color/color_000000"
+                    android:textSize="14dp" />
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="9dp"
+                        android:text="구미공장"
+                        android:textColor="@color/color_000000"
+                        android:textSize="14dp" />
+
+
+                    <ImageView
+                        android:layout_width="13.75dp"
+                        android:layout_height="10dp"
+                        android:layout_marginStart="16.25dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="20dp"
+                    android:text="창고"
+                    android:textColor="@color/color_000000"
+                    android:textSize="14dp" />
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="9dp"
+                        android:text="구미창고"
+                        android:textColor="@color/color_000000"
+                        android:textSize="14dp" />
+
+
+                    <ImageView
+                        android:layout_width="13.75dp"
+                        android:layout_height="10dp"
+                        android:layout_marginStart="16.25dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="입고담당자"
+                    android:textSize="12dp"
+                    android:textColor="@color/color_000000"/>
+
+                <LinearLayout
+                    android:layout_width="140dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/light_gray_box"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="145dp"
+                        android:layout_height="35dp"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="9dp"
+                        android:text="홍길동"
+                        android:textColor="@color/color_000000"
+                        android:textSize="14dp" />
+
+                    <ImageView
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:src="@drawable/btn_x" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnFind2"
+                android:layout_width="65dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/btn_find"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:text="검색"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="65dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/btn_reset"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:text="초기화"
+                android:textColor="@color/color_808080"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="65dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:text="접기 ^"
+                android:textColor="@color/color_808080"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:layout_marginHorizontal="10dp"
+            android:visibility="gone"
+            android:background="@drawable/layout_find_background"
+            android:gravity="center"
+            android:layout_marginTop="23dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="82dp"
+                android:layout_height="72.75dp"
+                android:src="@drawable/empty_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="18.43dp"
+                android:text="검색 항목이 없습니다"
+                android:textColor="@color/color_B3B3B3"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layoutList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            android:visibility="visible"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/layout_find_background"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="35dp"
+                android:text="발주 내역 (3건)"
+                android:textColor="@color/color_000000"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                android:fillViewport="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginEnd="21dp"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="1125dp"
+                        android:layout_height="35dp"
+                        android:background="@color/color_F4F4F4"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginStart="30dp"
+                            android:text="순번"
+                            android:textColor="@color/color_808080" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginStart="30dp"
+                            android:text="거래처코드"
+                            android:textColor="@color/color_808080" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginStart="30dp"
+                            android:text="거래처명"
+                            android:textColor="@color/color_808080" />
 
 
-        </HorizontalScrollView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginStart="47dp"
+                            android:text="발주번호"
+                            android:textColor="@color/color_808080" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginStart="46dp"
+                            android:text="발주일"
+                            android:textColor="@color/color_808080" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginStart="46dp"
+                            android:text="납품장소"
+                            android:textColor="@color/color_808080" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginStart="46dp"
+                            android:text="비고"
+                            android:textColor="@color/color_808080" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/btnDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="임시버튼"
+                            android:textColor="@color/color_808080" />
 
 
+                    </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:padding="15dp"
-            android:background="@color/color_FFFFFF"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginBottom="107dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_B3B3B3" />
 
-            <TextView
-                android:id="@+id/btnCancel"
-                android:layout_width="140dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:visibility="gone"
-                android:background="@drawable/btn_light_gray"
-                android:text="취소"
-                android:textColor="@color/color_000000"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/btnFactory"
-                android:layout_width="140dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:background="@drawable/btn_light_gray"
-                android:layout_marginEnd="12dp"
-                android:text="구미공장"
-                android:textColor="@color/color_000000"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnEdit" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="1125dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-            <TextView
-                android:id="@+id/btnEdit"
-                android:layout_width="140dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:background="@drawable/borderbox_skyblue_round2"
-                android:text="편집하기"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/btnSave"
-                android:layout_width="140dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:visibility="gone"
-                android:background="@drawable/btn_save"
-                android:text="저장하기"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            </HorizontalScrollView>
 
 
+        </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
