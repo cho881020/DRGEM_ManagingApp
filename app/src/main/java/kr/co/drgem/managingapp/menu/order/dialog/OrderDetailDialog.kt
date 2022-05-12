@@ -11,10 +11,14 @@ import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.databinding.DialogOrderDetailBinding
+import kr.co.drgem.managingapp.menu.order.adapter.DialogEditOrderAdapter
 
 class OrderDetailDialog : DialogFragment() {
 
     lateinit var binding : DialogOrderDetailBinding
+    lateinit var mAdapter : DialogEditOrderAdapter
+
+
 
 
     override fun onCreateView(
@@ -33,7 +37,7 @@ class OrderDetailDialog : DialogFragment() {
 
         setValues()
 
-        binding.btnAdd.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             dismiss()
         }
 
@@ -41,8 +45,9 @@ class OrderDetailDialog : DialogFragment() {
 
 
     fun setValues(){
-        val mAdapter = OrderDetailListAdapter()
-        binding.itemListRecyclerView.adapter = mAdapter
+
+        mAdapter = DialogEditOrderAdapter()
+        binding.RecyclerView.adapter = mAdapter
 
     }
 }

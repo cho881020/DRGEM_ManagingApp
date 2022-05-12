@@ -6,14 +6,13 @@ import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
-import kr.co.drgem.managingapp.menu.transaction.EditListener
 import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
-import kr.co.drgem.managingapp.menu.transaction.dialog.DetailTranDialog
 import kr.co.drgem.managingapp.menu.transaction.dialog.EditTranDialog
+import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
 
-class TransactionActivity : BaseActivity(), EditListener {
+class TransactionActivity : BaseActivity(), transactionEditListener {
 
     lateinit var binding: ActivityTransactionBinding
     lateinit var mAdapter: TransactionAdapter
@@ -47,7 +46,6 @@ class TransactionActivity : BaseActivity(), EditListener {
             binding.layoutFold.isVisible = true
             binding.layoutOpen.isVisible = false
         }
-
 
 
 //        binding.btnEdit.setOnClickListener {
@@ -91,6 +89,10 @@ class TransactionActivity : BaseActivity(), EditListener {
 ////        mAdapter.setData(mList)
 //        binding.layoutBtn.isVisible = true
 //    }
+
+    override fun onClickedEdit() {
+        dialogEdit.show(supportFragmentManager, "dialog")
+    }
 
     fun setList() {
 
@@ -189,10 +191,6 @@ class TransactionActivity : BaseActivity(), EditListener {
             "(구매조건부사업) 연구소 토파즈 정부과제 샘플", "5", georaedetail2
         )
 
-    }
-
-    override fun onClickedEdit() {
-        dialogEdit.show(supportFragmentManager, "dialog")
     }
 
 

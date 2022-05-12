@@ -2,7 +2,7 @@ package kr.co.drgem.managingapp.menu.transaction.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.transaction.EditListener
+import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.menu.transaction.SearchListener
 import kr.co.drgem.managingapp.menu.transaction.viewholder.*
 import kr.co.drgem.managingapp.models.BasicResponse
@@ -15,7 +15,7 @@ import kr.co.drgem.managingapp.models.Georaedetail
 class TransactionViewholderAdapter(
 
     val SearchListener : SearchListener,
-    val EditListener : EditListener
+    val transactionEditListener : transactionEditListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var viewTypeList : ArrayList<Int> = arrayListOf()
@@ -28,8 +28,8 @@ class TransactionViewholderAdapter(
             1 -> TransactionEmptyViewHolder(parent)
             2 -> TransactionResultViewHolder(parent)
             3 -> TransactionDetailViewHolder(parent)
-            4 -> TransactionListViewHolder(parent, EditListener)
-            else -> TransactionListViewHolder(parent, EditListener)
+            4 -> TransactionListViewHolder(parent, transactionEditListener)
+            else -> TransactionListViewHolder(parent, transactionEditListener)
         }
     }
 

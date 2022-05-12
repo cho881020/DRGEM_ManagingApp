@@ -7,7 +7,7 @@ import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.transaction.adapter.DialogEditSerialListAdapter
 
 class EditTRSerialViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.viewholder_edit_tr_serial, parent, false)
+    LayoutInflater.from(parent.context).inflate(R.layout.dialog_order_detail_list, parent, false)
 ) {
 
 

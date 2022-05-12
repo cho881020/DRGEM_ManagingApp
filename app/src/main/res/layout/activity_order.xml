@@ -350,20 +350,6 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/btnDetail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:layout_marginEnd="10dp"
-                            android:text="시리얼/상세"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
-
 
                     </LinearLayout>
 
@@ -374,7 +360,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

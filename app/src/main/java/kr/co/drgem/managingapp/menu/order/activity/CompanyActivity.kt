@@ -8,6 +8,8 @@ import kr.co.drgem.managingapp.menu.order.adapter.FindOrderListAdapter
 import kr.co.drgem.managingapp.databinding.ActivityCompanyBinding
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
 
+// 삭제예정 삭제예정
+
 class CompanyActivity : BaseActivity() {
 
     lateinit var binding: ActivityCompanyBinding

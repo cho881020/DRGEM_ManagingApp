@@ -6,14 +6,13 @@ import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityOrderBinding
-import kr.co.drgem.managingapp.menu.order.adapter.FindCompanyListAdapter
+import kr.co.drgem.managingapp.menu.order.adapter.OrderListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
 
 class OrderActivity : BaseActivity() {
 
     lateinit var binding : ActivityOrderBinding
-    lateinit var mFindCompanyAdapter : FindCompanyListAdapter
-    val dialog = OrderDetailDialog()
+    lateinit var mOrderAdapter : OrderListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +29,7 @@ class OrderActivity : BaseActivity() {
             finish()
         }
 
-        binding.btnDetail.setOnClickListener {
-            dialog.show(supportFragmentManager, "dialog")
-        }
+
 
         binding.btnFind.setOnClickListener {
             binding.layoutList.isVisible = true
@@ -45,7 +42,7 @@ class OrderActivity : BaseActivity() {
     }
 
     override fun setValues() {
-        mFindCompanyAdapter = FindCompanyListAdapter()
-        binding.recyclerView.adapter = mFindCompanyAdapter
+        mOrderAdapter = OrderListAdapter()
+        binding.recyclerView.adapter = mOrderAdapter
     }
 }

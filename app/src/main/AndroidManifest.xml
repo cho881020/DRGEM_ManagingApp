@@ -12,32 +12,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManagingApp">
         <activity
-            android:name="kr.co.drgem.managingapp.menu.order.activity.CompanyActivity"
+            android:name=".menu.order.activity.OrderDetailDetailActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.stock.activity.StockActivity"
+            android:name=".menu.order.activity.CompanyActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.location.activity.LocationActivity"
+            android:name=".menu.stock.activity.StockActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.notdelivery.activity.NotDeliveryActivity"
+            android:name=".menu.location.activity.LocationActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.request.activity.RequestActivity"
+            android:name=".menu.notdelivery.activity.NotDeliveryActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity"
+            android:name=".menu.request.activity.RequestActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.order.activity.OrderActivity"
+            android:name=".menu.kitting.activity.KittingActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity"
-            android:exported="false"/>
+            android:name=".menu.order.activity.OrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".menu.transaction.activity.TransactionActivity"
+            android:exported="false" />
         <activity
             android:name=".MenuActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
