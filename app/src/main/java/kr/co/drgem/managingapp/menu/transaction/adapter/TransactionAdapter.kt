@@ -15,7 +15,11 @@ class TransactionAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
+        when (holder) {
+            is TransactionListViewHolder -> {
+                holder.bind()
+            }
+        }
     }
 
     override fun getItemCount() = 30

@@ -9,17 +9,14 @@ class DialogEditTranAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var viewTypeList: ArrayList<Int> = arrayListOf()
 
-    init {
-        setData()
-    }
+//    init {
+//        setData()
+//    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            0 -> EditTRViewHolder(parent)
-            1 -> EditTRSerialViewHolder(parent)
-            else -> EditTRSerialViewHolder(parent)
-        }
+        return EditTRSerialViewHolder(parent)
+
 
     }
 
@@ -27,17 +24,17 @@ class DialogEditTranAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
-    override fun getItemCount() = viewTypeList.size
+    override fun getItemCount() = 7
 
-    override fun getItemViewType(position: Int): Int {
-        return viewTypeList[position]
-    }
+//    override fun getItemViewType(position: Int): Int {
+//        return viewTypeList[position]
+//    }
 
-    fun setData() {
-
-        viewTypeList.clear()
-        viewTypeList.add(0)
-        viewTypeList.add(1)
-
-    }
+//    fun setData() {
+//
+//        viewTypeList.clear()
+//        viewTypeList.add(0)
+//        viewTypeList.add(1)
+//
+//    }
 }

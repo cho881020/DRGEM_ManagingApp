@@ -1,39 +1,26 @@
 package kr.co.drgem.managingapp.menu.transaction.viewholder
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.transaction.EditListener
 import kr.co.drgem.managingapp.models.Georaedetail
 
-class TransactionListViewHolder(parent: ViewGroup, val listener: EditListener) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.transaction_list_item, parent, false)
-) {
+class TransactionListViewHolder(parent: ViewGroup, val listener: EditListener) :
+    RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.transaction_list_item, parent, false)
+    ) {
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
-    val btnDetail = itemView.findViewById<TextView>(R.id.btnDetail)
 
-    fun bind(data : Georaedetail) {
-
-
-        if(data.changeSerial){
-            btnDetail.isVisible = false
-            btnEdit.isVisible = true
-        }
-        else{
-            btnDetail.isVisible = true
-            btnEdit.isVisible = false
-        }
+    fun bind() {
 
 
         btnEdit.setOnClickListener {
+            Log.d("yj", "거래명세 리스트 클릭")
             listener.onClickedEdit()
-        }
-
-        btnDetail.setOnClickListener {
-            listener.onClickedDetail()
         }
 
 

@@ -7,23 +7,21 @@ import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
 import kr.co.drgem.managingapp.menu.transaction.EditListener
-import kr.co.drgem.managingapp.menu.transaction.SearchListener
 import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
-import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionViewholderAdapter
 import kr.co.drgem.managingapp.menu.transaction.dialog.DetailTranDialog
 import kr.co.drgem.managingapp.menu.transaction.dialog.EditTranDialog
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
 
-class TransactionActivity : BaseActivity(), EditListener  {
+class TransactionActivity : BaseActivity(), EditListener {
 
     lateinit var binding: ActivityTransactionBinding
-    lateinit var mAdapter : TransactionAdapter
-    var mList : BasicResponse? = null
+    lateinit var mAdapter: TransactionAdapter
+    var mList: BasicResponse? = null
     val georaedetail2 = ArrayList<Georaedetail>()
 
     val dialogEdit = EditTranDialog()
-    val dialogDetail = DetailTranDialog()
+//    val dialogDetail = DetailTranDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +37,18 @@ class TransactionActivity : BaseActivity(), EditListener  {
         binding.btnBack.setOnClickListener {
             finish()
         }
+
+        binding.btnFold.setOnClickListener {
+            binding.layoutFold.isVisible = false
+            binding.layoutOpen.isVisible = true
+        }
+
+        binding.btnOpen.setOnClickListener {
+            binding.layoutFold.isVisible = true
+            binding.layoutOpen.isVisible = false
+        }
+
+
 
 //        binding.btnEdit.setOnClickListener {
 //            georaedetail2.forEach {
@@ -82,78 +92,88 @@ class TransactionActivity : BaseActivity(), EditListener  {
 //        binding.layoutBtn.isVisible = true
 //    }
 
-    fun setList(){
+    fun setList() {
 
-        georaedetail2.add(Georaedetail(
-            "14",
-            "E08-000601-00",
-            "G22042600391",
-            "B22042200003",
-            "G22042600391",
-            "2022-02-03",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-        ))
-        georaedetail2.add(Georaedetail(
-            "14",
-            "E08-000601-00",
-            "G22042600391",
-            "B22042200003",
-            "G22042600391",
-            "2022-02-03",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-        ))
-        georaedetail2.add(Georaedetail(
-            "14",
-            "E08-000601-00",
-            "G22042600391",
-            "B22042200003",
-            "G22042600391",
-            "2022-02-03",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-        ))
-        georaedetail2.add(Georaedetail(
-            "14",
-            "E08-000601-00",
-            "G22042600391",
-            "B22042200003",
-            "G22042600391",
-            "2022-02-03",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-        ))
-        georaedetail2.add(Georaedetail(
-            "14",
-            "E08-000601-00",
-            "G22042600391",
-            "B22042200003",
-            "G22042600391",
-            "2022-02-03",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-        ))
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
 
 
 
@@ -166,7 +186,8 @@ class TransactionActivity : BaseActivity(), EditListener  {
             "ㅇㅇ전자",
             "00001",
             "구미공장",
-            "(구매조건부사업) 연구소 토파즈 정부과제 샘플","5", georaedetail2)
+            "(구매조건부사업) 연구소 토파즈 정부과제 샘플", "5", georaedetail2
+        )
 
     }
 
@@ -174,10 +195,7 @@ class TransactionActivity : BaseActivity(), EditListener  {
         dialogEdit.show(supportFragmentManager, "dialog")
     }
 
-    override fun onClickedDetail() {
-        dialogDetail.show(supportFragmentManager, "dialog")
 
-    }
 
 
 }

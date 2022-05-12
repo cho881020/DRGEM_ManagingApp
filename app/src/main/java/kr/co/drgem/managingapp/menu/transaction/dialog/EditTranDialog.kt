@@ -39,7 +39,7 @@ class EditTranDialog : DialogFragment() {
     fun setupEvents() {
 
         val mAdapter = DialogEditTranAdapter()
-        binding.DialogRecyclerView.adapter = mAdapter
+        binding.itemListRecyclerView.adapter = mAdapter
 
         binding.btnCancel.setOnClickListener {
             dismiss()

@@ -47,7 +47,7 @@ class TransactionViewholderAdapter(
             }
             is TransactionListViewHolder -> {
 
-                holder.bind(georaedetailList[position-3])
+//                holder.bind(georaedetailList[position-3])
             }
         }
 
