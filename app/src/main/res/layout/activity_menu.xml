@@ -48,21 +48,14 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="186dp"
-            android:layout_height="71dp"
-            android:src="@drawable/drgem_logo"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/stock"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/stock"/>
+
 
         <LinearLayout
-            android:id="@+id/tradingStatement"
-            android:layout_width="178dp"
-            android:layout_height="178dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="272dp"
+            android:id="@+id/transaction"
+            android:layout_width="250dp"
+            android:layout_height="215dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="180dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,21 +74,21 @@
 
         <LinearLayout
             android:id="@+id/orderReceipt"
-            android:layout_width="178dp"
-            android:layout_height="178dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="272dp"
+            android:layout_width="250dp"
+            android:layout_height="215dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="180dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/tradingStatement"
+            app:layout_constraintStart_toEndOf="@id/transaction"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="122dp"
-                android:text="발주입고"
+                android:text="매입입고\n(발주입고)"
                 android:textColor="@color/color_333333" />
 
 
@@ -103,14 +96,14 @@
 
         <LinearLayout
             android:id="@+id/kitting"
-            android:layout_width="178dp"
-            android:layout_height="178dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="272dp"
+            android:layout_width="250dp"
+            android:layout_height="215dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/orderReceipt"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transaction">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -125,36 +118,36 @@
 
         <LinearLayout
             android:id="@+id/request"
-            android:layout_width="178dp"
-            android:layout_height="178dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="272dp"
+            android:layout_width="250dp"
+            android:layout_height="215dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@id/kitting"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/orderReceipt">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="122dp"
-                android:text="요청출고"
+                android:text="요청출고\n(자재출고)"
                 android:textColor="@color/color_333333" />
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/notShipped"
-            android:layout_width="178dp"
-            android:layout_height="178dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="25dp"
+            android:id="@+id/notDelivery"
+            android:layout_width="250dp"
+            android:layout_height="215dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tradingStatement">
+            app:layout_constraintTop_toBottomOf="@id/kitting">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -169,14 +162,14 @@
 
         <LinearLayout
             android:id="@+id/location"
-            android:layout_width="178dp"
-            android:layout_height="178dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="25dp"
+            android:layout_width="250dp"
+            android:layout_height="215dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/notShipped"
-            app:layout_constraintTop_toBottomOf="@id/orderReceipt">
+            app:layout_constraintStart_toEndOf="@+id/notDelivery"
+            app:layout_constraintTop_toBottomOf="@id/request">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -191,14 +184,14 @@
 
         <LinearLayout
             android:id="@+id/stock"
-            android:layout_width="178dp"
-            android:layout_height="178dp"
-            android:layout_marginStart="20dp"
+            android:layout_width="250dp"
+            android:layout_height="215dp"
+            android:layout_marginStart="140dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/btn_menu_background"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/location"
-            app:layout_constraintTop_toBottomOf="@id/orderReceipt">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notDelivery">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -211,6 +204,15 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="186dp"
+            android:layout_height="71dp"
+            android:src="@drawable/drgem_logo"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/stock"
+            app:layout_constraintEnd_toEndOf="@id/location"
+            app:layout_constraintStart_toEndOf="@+id/stock"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

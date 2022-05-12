@@ -27,7 +27,7 @@ class MenuActivity : BaseActivity() {
 
     override fun setupEvents() {
 
-        binding.tradingStatement.setOnClickListener{
+        binding.transaction.setOnClickListener{
             val myIntent = Intent(this, TransactionActivity::class.java)
             startActivity(myIntent)
         }
@@ -47,7 +47,7 @@ class MenuActivity : BaseActivity() {
             startActivity(myIntent)
         }
 
-        binding.notShipped.setOnClickListener{
+        binding.notDelivery.setOnClickListener{
             val myIntent = Intent(this, NotDeliveryActivity::class.java)
             startActivity(myIntent)
         }
