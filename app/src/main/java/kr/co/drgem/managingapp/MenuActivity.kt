@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.databinding.ActivityMenuBinding
 import kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity
-import kr.co.drgem.managingapp.menu.location.LocationActivity
-import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryActivity
+import kr.co.drgem.managingapp.menu.location.activity.LocationActivity
+import kr.co.drgem.managingapp.menu.notdelivery.activity.NotDeliveryActivity
 import kr.co.drgem.managingapp.menu.order.activity.OrderActivity
 import kr.co.drgem.managingapp.menu.request.activity.RequestActivity
-import kr.co.drgem.managingapp.menu.stock.StockActivity
+import kr.co.drgem.managingapp.menu.stock.activity.StockActivity
 import kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity
 
 class MenuActivity : BaseActivity() {

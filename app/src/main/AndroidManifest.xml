@@ -15,13 +15,13 @@
             android:name="kr.co.drgem.managingapp.menu.order.activity.CompanyActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.stock.StockActivity"
+            android:name="kr.co.drgem.managingapp.menu.stock.activity.StockActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.location.LocationActivity"
+            android:name="kr.co.drgem.managingapp.menu.location.activity.LocationActivity"
             android:exported="false" />
         <activity
-            android:name="kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryActivity"
+            android:name="kr.co.drgem.managingapp.menu.notdelivery.activity.NotDeliveryActivity"
             android:exported="false" />
         <activity
             android:name="kr.co.drgem.managingapp.menu.request.activity.RequestActivity"

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/base_background"
-    tools:context=".menu.notdelivery.NotDeliveryActivity">
+    tools:context=".menu.notdelivery.activity.NotDeliveryActivity">
 
     <LinearLayout
         android:id="@+id/layoutTitle"
@@ -267,7 +267,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="1125dp"
+                    android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@color/color_F4F4F4"
                     android:gravity="center_vertical"
@@ -346,7 +346,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
-                    android:layout_width="1125dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

@@ -259,16 +259,16 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="1125dp"
+                        android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center_vertical"
+                        android:paddingHorizontal="20dp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="17dp"
-                            android:layout_marginStart="30dp"
                             android:text="키팅번호"
                             android:textColor="@color/color_808080" />
 
@@ -330,6 +330,7 @@
                             android:id="@+id/btnDetail"
                             android:layout_width="wrap_content"
                             android:layout_height="17dp"
+                            android:layout_marginStart="30dp"
                             android:layout_marginEnd="10dp"
                             android:text="임시버튼"
                             android:textColor="@color/color_808080" />
@@ -345,7 +346,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/findKittingList"
-                        android:layout_width="1125dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

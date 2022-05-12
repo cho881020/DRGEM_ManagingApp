@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/base_background"
-    tools:context=".menu.stock.StockActivity">
+    tools:context=".menu.stock.activity.StockActivity">
 
     <LinearLayout
         android:id="@+id/layoutTitle"
@@ -85,6 +85,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
+            android:id="@+id/btnFind"
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:gravity="center"
@@ -104,6 +105,33 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layoutEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="23dp"
+        android:background="@drawable/layout_find_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="82dp"
+            android:layout_height="72.75dp"
+            android:src="@drawable/empty_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="18.43dp"
+            android:text="검색 항목이 없습니다"
+            android:textColor="@color/color_B3B3B3"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/layoutList"
@@ -113,7 +141,9 @@
         android:layout_marginTop="23dp"
         android:layout_marginBottom="100dp"
         android:background="@drawable/layout_find_background"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
 
 
 

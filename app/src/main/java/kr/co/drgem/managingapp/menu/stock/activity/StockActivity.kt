@@ -1,20 +1,21 @@
-package kr.co.drgem.managingapp.menu.notdelivery
+package kr.co.drgem.managingapp.menu.stock.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.databinding.ActivityNotDeliveryBinding
+import kr.co.drgem.managingapp.databinding.ActivityStockBinding
+import kr.co.drgem.managingapp.menu.stock.adapter.StockListAdapter
 
-class NotDeliveryActivity : BaseActivity() {
+class StockActivity : BaseActivity() {
 
-    lateinit var binding : ActivityNotDeliveryBinding
+    lateinit var binding: ActivityStockBinding
+    lateinit var mAdapter: StockListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_not_delivery)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_stock)
 
         setupEvents()
         setValues()
@@ -35,6 +36,9 @@ class NotDeliveryActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
+        mAdapter = StockListAdapter()
+        binding.recyclerView.adapter = mAdapter
 
     }
 }
