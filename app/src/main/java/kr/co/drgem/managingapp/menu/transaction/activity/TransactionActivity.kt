@@ -7,7 +7,7 @@ import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
 import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
-import kr.co.drgem.managingapp.menu.transaction.dialog.EditTranDialog
+import kr.co.drgem.managingapp.menu.transaction.dialog.TransactionDialog
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
@@ -19,7 +19,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     var mList: BasicResponse? = null
     val georaedetail2 = ArrayList<Georaedetail>()
 
-    val dialogEdit = EditTranDialog()
+    val dialogEdit = TransactionDialog()
 //    val dialogDetail = DetailTranDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +33,13 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     override fun setupEvents() {
 
+        binding.btnFind.setOnClickListener {
+            binding.layoutEmpty.isVisible = false
+            binding.layoutList.isVisible = true
+            binding.layoutInfo.isVisible = true
+        }
+
+
         binding.btnBack.setOnClickListener {
             finish()
         }
@@ -45,6 +52,14 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         binding.btnOpen.setOnClickListener {
             binding.layoutFold.isVisible = true
             binding.layoutOpen.isVisible = false
+        }
+
+        binding.btnTranRemove.setOnClickListener {
+            binding.edtTran.text = null
+        }
+
+        binding.btnNameRemove.setOnClickListener {
+            binding.edtName.text = null
         }
 
 

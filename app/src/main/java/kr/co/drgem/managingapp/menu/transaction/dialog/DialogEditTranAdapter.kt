@@ -1,9 +1,8 @@
-package kr.co.drgem.managingapp.menu.transaction.adapter
+package kr.co.drgem.managingapp.menu.transaction.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.transaction.dialog.viewholder.EditTRViewHolder
-import kr.co.drgem.managingapp.menu.transaction.dialog.viewholder.EditTRSerialViewHolder
+import kr.co.drgem.managingapp.menu.transaction.dialog.delete.EditTRSerialViewHolder
 
 class DialogEditTranAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -15,7 +14,7 @@ class DialogEditTranAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return EditTRSerialViewHolder(parent)
+        return TranSerialListViewHolder(parent)
 
 
     }

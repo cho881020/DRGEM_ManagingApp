@@ -1,8 +1,7 @@
-package kr.co.drgem.managingapp.menu.order.adapter
+package kr.co.drgem.managingapp.menu.order.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.order.dialog.viewholder.EditOrderSerialViewHolder
 
 class DialogEditOrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -14,7 +13,7 @@ class DialogEditOrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return EditOrderSerialViewHolder(parent)
+        return OrderSerialListViewHolder(parent)
 
 
     }

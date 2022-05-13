@@ -1,9 +1,9 @@
-package kr.co.drgem.managingapp.menu.transaction.adapter
+package kr.co.drgem.managingapp.menu.transaction.dialog.delete
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.transaction.dialog.viewholder.DetailTRSerialViewHolder
-import kr.co.drgem.managingapp.menu.transaction.dialog.viewholder.DetailTRViewHolder
+import kr.co.drgem.managingapp.menu.transaction.dialog.delete.DetailTRSerialViewHolder
+import kr.co.drgem.managingapp.menu.transaction.dialog.delete.DetailTRViewHolder
 
 class DialogDetailTranAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

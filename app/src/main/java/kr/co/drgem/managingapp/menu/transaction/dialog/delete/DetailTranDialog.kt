@@ -1,4 +1,4 @@
-package kr.co.drgem.managingapp.menu.transaction.dialog
+package kr.co.drgem.managingapp.menu.transaction.dialog.delete
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogDetailTrBinding
-import kr.co.drgem.managingapp.menu.transaction.adapter.DialogDetailTranAdapter
 
 class DetailTranDialog : DialogFragment() {
 

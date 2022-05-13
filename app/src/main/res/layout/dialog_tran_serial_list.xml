@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
@@ -23,5 +22,5 @@
         android:layout_marginStart="15dp"
         android:src="@drawable/btn_x" />
 
+
 </LinearLayout>
-</layout>

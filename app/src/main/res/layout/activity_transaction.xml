@@ -85,17 +85,22 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/edtTran"
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="9dp"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:inputType="text"
                         android:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="14dp" />
 
                     <ImageView
+                        android:id="@+id/btnTranRemove"
                         android:layout_width="21dp"
                         android:layout_height="21dp"
                         android:layout_marginEnd="9dp"
@@ -119,12 +124,14 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/layoutInfo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@color/color_F4F4F4"
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -371,17 +378,22 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/edtName"
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="9dp"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:inputType="text"
                         android:text="홍길동"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
                     <ImageView
+                        android:id="@+id/btnNameRemove"
                         android:layout_width="21dp"
                         android:layout_height="21dp"
                         android:layout_marginEnd="9dp"
@@ -502,7 +514,7 @@
             android:background="@drawable/layout_find_background"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="82dp"
@@ -528,7 +540,7 @@
             android:layout_marginBottom="10dp"
             android:background="@color/color_FFFFFF"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
 
             <TextView

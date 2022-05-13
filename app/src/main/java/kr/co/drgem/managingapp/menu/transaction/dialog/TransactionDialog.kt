@@ -9,12 +9,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.databinding.DialogEditTrBinding
-import kr.co.drgem.managingapp.menu.transaction.adapter.DialogEditTranAdapter
+import kr.co.drgem.managingapp.databinding.DialogTransactionBinding
 
-class EditTranDialog : DialogFragment() {
+class TransactionDialog : DialogFragment() {
 
-    lateinit var binding: DialogEditTrBinding
+    lateinit var binding: DialogTransactionBinding
 
 
     override fun onCreateView(
@@ -22,7 +21,7 @@ class EditTranDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_edit_tr, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_transaction, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return binding.root
 

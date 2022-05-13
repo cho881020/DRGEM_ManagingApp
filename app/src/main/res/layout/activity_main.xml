@@ -34,6 +34,8 @@
                 android:drawableLeft="@drawable/id_image"
                 android:drawablePadding="8.35dp"
                 android:fontFamily="@font/noto_sans_kr_regular"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="사원 ID"
                 android:paddingLeft="9.35dp"
                 android:textSize="14dp" />
@@ -47,6 +49,8 @@
                 android:drawableLeft="@drawable/pw_image"
                 android:drawablePadding="8.35dp"
                 android:fontFamily="@font/noto_sans_kr_regular"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="비밀번호"
                 android:paddingLeft="9.35dp"
                 android:textSize="14dp" />

@@ -29,13 +29,18 @@ class OrderActivity : BaseActivity() {
             finish()
         }
 
-
-
         binding.btnFind.setOnClickListener {
             binding.layoutList.isVisible = true
             binding.layoutEmpty.isVisible = false
         }
 
+        binding.btnConpanyRemove.setOnClickListener {
+            binding.edtCompany.text = null
+        }
+
+        binding.btnOrderRemove.setOnClickListener {
+            binding.edtOrder.text = null
+        }
 
 
 

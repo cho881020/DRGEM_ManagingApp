@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.order.activity
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
@@ -25,6 +26,15 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
     }
 
     override fun setupEvents() {
+
+        binding.btnFold.setOnClickListener {
+            binding.layoutFold.isVisible = false
+            binding.layoutOpen.isVisible = true
+        }
+        binding.btnOpen.setOnClickListener {
+            binding.layoutFold.isVisible = true
+            binding.layoutOpen.isVisible = false
+        }
 
     }
 

@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.databinding.DialogOrderDetailBinding
-import kr.co.drgem.managingapp.menu.order.adapter.DialogEditOrderAdapter
 
 class OrderDetailDialog : DialogFragment() {
 
