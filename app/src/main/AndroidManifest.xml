@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManagingApp">
         <activity
+            android:name=".menu.kitting.activity.KittingDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".menu.order.activity.OrderDetailDetailActivity"
             android:exported="false" />
         <activity

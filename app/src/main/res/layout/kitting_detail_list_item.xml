@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -10,11 +10,21 @@
         android:layout_height="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="14"
+            android:textSize="12dp"
+            android:textColor="@color/color_000000" />
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:text="14"
+            android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
 
@@ -22,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:text="E08-000601-00"
+            android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -30,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:text="E08-000601-00"
+            android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -38,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:text="E08-000601-00"
+            android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -46,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:text="E08-000601-00"
+            android:text="5"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -54,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:text="0004"
+            android:text="광명창고"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -62,17 +72,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:text="12"
+            android:text="3"
             android:textSize="12dp"
             android:textColor="@color/black" />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:text="12"
+            android:text="3"
             android:textSize="12dp"
             android:textColor="@color/black" />
+
 
         <EditText
             android:layout_width="50dp"
@@ -86,6 +98,13 @@
             android:background="@drawable/light_gray_box"
             android:textColor="@color/black" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:text="Y"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/btnEdit"
@@ -100,38 +119,6 @@
             android:textColor="@color/black" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="Y"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="-"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="B22042200003"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="3"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
 
     </LinearLayout>
 
@@ -139,6 +126,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/color_E0E0E0"/>
-
 </LinearLayout>
 </layout>

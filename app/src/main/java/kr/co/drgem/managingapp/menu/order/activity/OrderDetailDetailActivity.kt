@@ -36,6 +36,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
             binding.layoutOpen.isVisible = false
         }
 
+        binding.btnNameRemove.setOnClickListener {
+            binding.edtName.text = null
+        }
+
     }
 
     override fun setValues() {

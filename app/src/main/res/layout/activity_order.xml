@@ -74,7 +74,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:text="발주일자"
                     android:textColor="@color/color_000000"
                     android:textSize="14dp" />
@@ -154,8 +154,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_height="wrap_content"
                     android:text="거래처명"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
@@ -180,10 +179,10 @@
                         android:inputType="text"
                         android:text="G22042600391"
                         android:textColor="@color/color_000000"
-                        android:textSize="14dp" />
+                        android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnConpanyRemove"
+                        android:id="@+id/btnCompanyRemove"
                         android:layout_width="21dp"
                         android:layout_height="21dp"
                         android:layout_marginEnd="9dp"
@@ -201,8 +200,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_height="wrap_content"
                     android:text="발주번호"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
@@ -227,7 +225,7 @@
                         android:inputType="text"
                         android:text="G22042600391"
                         android:textColor="@color/color_000000"
-                        android:textSize="14dp" />
+                        android:textSize="12dp" />
 
                     <ImageView
                         android:id="@+id/btnOrderRemove"
@@ -250,7 +248,7 @@
                 android:gravity="center"
                 android:text="검색"
                 android:textColor="@color/color_FFFFFF"
-                android:textSize="14dp"
+                android:textSize="12dp"
                 android:textStyle="bold" />
 
             <TextView

@@ -21,49 +21,49 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="E08-000601-00"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="E08-000601-00"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="E08-000601-00"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="E08-000601-00"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="0004"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="12"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="12"
             android:textColor="@color/black" />
@@ -84,7 +84,7 @@
         <TextView
             android:id="@+id/btnEdit"
             android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:visibility="visible"
             android:gravity="center"
@@ -96,28 +96,28 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="Y"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="-"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="B22042200003"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="3"
             android:textColor="@color/black" />

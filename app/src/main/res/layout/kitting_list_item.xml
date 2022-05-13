@@ -6,8 +6,8 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="1125dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <TextView
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:text="K22042700001"
-            android:textSize="14dp"
+            android:textSize="12dp"
             android:textColor="@color/color_000000"/>
 
         <TextView
@@ -23,6 +23,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="21dp"
             android:text="20220402"
+            android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
@@ -30,6 +31,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="21dp"
             android:text="일지매"
+            android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
@@ -37,6 +39,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="21dp"
             android:text="20220403"
+            android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
@@ -44,6 +47,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="21dp"
             android:text="자재창고2"
+            android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
@@ -51,6 +55,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="21dp"
             android:text="뉴스티치 2대 일반 스티치 3대"
+            android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
@@ -58,6 +63,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="21dp"
             android:text="R22041800077,R22041800078"
+            android:textSize="12dp"
             android:textColor="@color/black" />
 
 
@@ -66,21 +72,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="21dp"
             android:text="C22-A43-00,C22-A55-00"
-            android:textColor="@color/black" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/light_gray_box"
-            android:text="상세보기"
+            android:textSize="12dp"
             android:textColor="@color/black" />
 
 
@@ -91,5 +83,27 @@
         android:layout_height="1dp"
         android:background="@color/color_E0E0E0"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_F7F7F7">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="29dp"
+            android:gravity="center_vertical"
+            android:text="ㄴ중간재 1번 / 품명 / 도번모델 / 사양"
+            android:textSize="12dp"
+            android:textColor="@color/color_000000"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_E0E0E0"/>
 </LinearLayout>
 </layout>

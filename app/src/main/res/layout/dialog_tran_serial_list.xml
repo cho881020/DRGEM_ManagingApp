@@ -14,7 +14,7 @@
         android:paddingHorizontal="9dp"
         android:text="12345678912345"
         android:textColor="@color/color_000000"
-        android:textSize="14dp" />
+        android:textSize="12dp" />
 
     <ImageView
         android:layout_width="21dp"

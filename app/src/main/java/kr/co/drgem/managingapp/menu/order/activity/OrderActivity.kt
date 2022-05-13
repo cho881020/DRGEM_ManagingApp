@@ -34,7 +34,7 @@ class OrderActivity : BaseActivity() {
             binding.layoutEmpty.isVisible = false
         }
 
-        binding.btnConpanyRemove.setOnClickListener {
+        binding.btnCompanyRemove.setOnClickListener {
             binding.edtCompany.text = null
         }
 

@@ -32,12 +32,19 @@ class KittingActivity : BaseActivity() {
             binding.layoutEmpty.isVisible = false
         }
 
+        binding.btnCompanyRemove.setOnClickListener {
+            binding.edtCompany.text = null
+        }
+
+        binding.btnOrderRemove.setOnClickListener {
+            binding.edtWarehouse.text = null
+        }
 
     }
 
     override fun setValues() {
 
         mAdapter = KittingListAdapter()
-        binding.findKittingList.adapter = mAdapter
+        binding.recyclerView.adapter = mAdapter
     }
 }
