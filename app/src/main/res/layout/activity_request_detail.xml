@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="@color/base_background"
         android:orientation="vertical"
-        tools:context=".menu.kitting.activity.KittingDetailActivity">
+        tools:context=".menu.request.activity.RequestDetailActivity">
 
 
         <LinearLayout
@@ -27,12 +27,11 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="20.04dp"
-                android:text="키팅출고"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:text="출고번호  - K22042700001"
                 android:textColor="@color/color_000000"
-                android:textSize="14dp"
-                android:textStyle="bold" />
+                android:textSize="14dp"/>
 
             <View
                 android:layout_width="0dp"
@@ -69,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="키팅번호 - B22042200003"
+                android:text="출고번호  - K22042700001"
                 android:textColor="@color/color_000000"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -78,263 +77,6 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/layoutFold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:background="@color/color_FFFFFF"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingVertical="20dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="출고할사업장"
-                    android:textColor="@color/color_808080"
-                    android:textSize="12dp" />
-
-
-                <FrameLayout
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/light_gray_box"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:layout_width="13.75dp"
-                        android:layout_height="10dp"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/dropdown" />
-
-
-                </FrameLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="출고창고"
-                    android:textColor="@color/color_808080"
-                    android:textSize="12dp" />
-
-                <FrameLayout
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/light_gray_box"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:layout_width="13.75dp"
-                        android:layout_height="10dp"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/dropdown" />
-
-
-                </FrameLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="출고담당자"
-                    android:textColor="@color/color_808080"
-                    android:textSize="12dp" />
-
-                <FrameLayout
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/light_gray_box"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:layout_width="13.75dp"
-                        android:layout_height="10dp"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/dropdown" />
-
-
-                </FrameLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="입고 사업자"
-                    android:textColor="@color/color_808080"
-                    android:textSize="12dp" />
-
-                <FrameLayout
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/light_gray_box"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:layout_width="13.75dp"
-                        android:layout_height="10dp"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/dropdown" />
-
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="입고 창고"
-                    android:textColor="@color/color_808080"
-                    android:textSize="12dp" />
-
-                <FrameLayout
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/light_gray_box"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:layout_width="13.75dp"
-                        android:layout_height="10dp"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/dropdown" />
-
-
-                </FrameLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="입고담당자"
-                    android:textColor="@color/color_808080"
-                    android:textSize="12dp" />
-
-                <LinearLayout
-                    android:layout_width="110dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/edtName"
-                        android:layout_width="0dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="center_vertical"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:paddingHorizontal="9dp"
-                        android:text="홍길동"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:id="@+id/btnNameRemove"
-                        android:layout_width="21dp"
-                        android:layout_height="21dp"
-                        android:layout_marginEnd="9dp"
-                        android:src="@drawable/btn_x" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
 
 
         <LinearLayout
@@ -377,12 +119,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="23dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:text="품목 갯수 (3건)"
                     android:textColor="@color/color_000000"
@@ -396,7 +139,7 @@
 
                 <RadioGroup
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
                     android:layout_marginEnd="15dp"
                     android:checkedButton="@id/radioAll"
                     android:orientation="horizontal">
@@ -463,13 +206,6 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:layout_marginStart="30dp"
-                            android:text="품목코드"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -508,14 +244,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="17dp"
                             android:layout_marginStart="46dp"
-                            android:text="창고위치"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:layout_marginStart="46dp"
                             android:text="현재재고수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
@@ -544,6 +272,15 @@
                             android:text="출고수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_marginStart="46dp"
+                            android:text="창고위치"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
+
 
 
                         <TextView

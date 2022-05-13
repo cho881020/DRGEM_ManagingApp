@@ -5,14 +5,14 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.menu.request.adapter.RequestListAdapter
 import kr.co.drgem.managingapp.databinding.ActivityRequestBinding
+import kr.co.drgem.managingapp.menu.request.adapter.RequestListAdapter
 
 class RequestActivity : BaseActivity() {
 
-    lateinit var binding : ActivityRequestBinding
+    lateinit var binding: ActivityRequestBinding
 
-    lateinit var mAdapter : RequestListAdapter
+    lateinit var mAdapter: RequestListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class RequestActivity : BaseActivity() {
     override fun setValues() {
 
         mAdapter = RequestListAdapter()
-        binding.findRequestList.adapter = mAdapter
+        binding.recyclerView.adapter = mAdapter
 
     }
 }

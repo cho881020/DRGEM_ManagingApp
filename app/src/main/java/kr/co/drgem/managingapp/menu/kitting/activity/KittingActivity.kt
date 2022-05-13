@@ -36,7 +36,7 @@ class KittingActivity : BaseActivity() {
             binding.edtCompany.text = null
         }
 
-        binding.btnOrderRemove.setOnClickListener {
+        binding.btnWarehouseRemove.setOnClickListener {
             binding.edtWarehouse.text = null
         }
 
