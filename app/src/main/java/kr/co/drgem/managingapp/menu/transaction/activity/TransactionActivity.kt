@@ -1,6 +1,9 @@
 package kr.co.drgem.managingapp.menu.transaction.activity
 
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
+import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -11,6 +14,9 @@ import kr.co.drgem.managingapp.menu.transaction.dialog.TransactionDialog
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TransactionActivity : BaseActivity(), transactionEditListener {
 
@@ -33,10 +39,45 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     override fun setupEvents() {
 
+        val cal = Calendar.getInstance()
+        val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")     // 텍스트뷰 포맷
+        binding.txtDate.text = dateFormat.format(cal.time)
+
+
+        var calDate = ""
+        binding.layoutDate.setOnClickListener {
+
+            val date = object  : DatePickerDialog.OnDateSetListener{
+                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
+                    cal.set(year,month,dayOfMonth)
+
+                    calDate = dateServer.format(cal.time)
+                    binding.txtDate.text = dateFormat.format(cal.time)
+
+                }
+            }
+
+            val datePick = DatePickerDialog(
+                mContext,
+                date,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
+
+        }
+
+        binding.btnSave.setOnClickListener {
+            Log.d("yj", "날짜선택 : $calDate")
+        }
+
         binding.btnFind.setOnClickListener {
             binding.layoutEmpty.isVisible = false
             binding.layoutList.isVisible = true
             binding.layoutInfo.isVisible = true
+            binding.btnSave.isVisible = true
         }
 
 

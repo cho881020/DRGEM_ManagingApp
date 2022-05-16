@@ -41,6 +41,7 @@
 
 
             <TextView
+                android:id="@+id/btnSave"
                 android:layout_width="75.79dp"
                 android:layout_height="28.94dp"
                 android:layout_marginEnd="22.21dp"
@@ -49,7 +50,8 @@
                 android:text="저장하기"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="14dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
 
         </LinearLayout>
@@ -127,7 +129,6 @@
                 android:id="@+id/layoutInfo"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@color/color_F4F4F4"
@@ -250,29 +251,30 @@
                     android:textSize="12dp" />
 
 
-                <FrameLayout
-                    android:layout_width="110dp"
+                <LinearLayout
+                    android:id="@+id/layoutDate"
+                    android:layout_width="105dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
                     android:gravity="center_vertical">
 
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/light_gray_box"
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="9dp"
+                        android:text="2022-01-12"
                         android:textColor="@color/color_000000"
-                        android:textSize="14dp" />
+                        android:textSize="12dp" />
+
 
                     <ImageView
                         android:layout_width="13.75dp"
                         android:layout_height="10dp"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginStart="13dp"
                         android:src="@drawable/dropdown" />
 
-
-                </FrameLayout>
+                </LinearLayout>
 
 
             </LinearLayout>
