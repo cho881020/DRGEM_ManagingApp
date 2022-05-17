@@ -38,6 +38,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         mAdapter = KittingDetailListAdapter(this)
         binding.recyclerView.adapter = mAdapter
 
+
+
     }
 
     override fun onClickedEdit() {

@@ -28,10 +28,12 @@ class StockActivity : BaseActivity() {
             finish()
         }
 
-        binding.btnFind.setOnClickListener {
-            binding.layoutList.isVisible = true
-            binding.layoutEmpty.isVisible = false
-        }
+//        binding.btnFind.setOnClickListener {
+//
+//            binding.layoutReady.isVisible = false
+//            binding.layoutList.isVisible = true
+//
+//        }
 
     }
 

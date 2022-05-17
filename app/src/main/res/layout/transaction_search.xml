@@ -143,7 +143,7 @@
             android:gravity="center"
             android:text="검색"
             android:textColor="@color/color_FFFFFF"
-            android:textSize="14dp"
+            android:textSize="12dp"
             android:textStyle="bold" />
 
         <View
@@ -160,6 +160,7 @@
             android:background="@drawable/btn_reset"
             android:gravity="center"
             android:text="초기화"
+            android:textSize="12dp"
             android:textColor="@color/color_808080"
             android:textStyle="bold" />
 

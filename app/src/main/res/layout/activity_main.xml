@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/base_background"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         tools:context=".MainActivity">
 
@@ -14,8 +14,8 @@
         <LinearLayout
             android:layout_width="420dp"
             android:layout_height="420dp"
+            android:layout_marginTop="265dp"
             android:background="@drawable/layout_login_background"
-            android:elevation="10dp"
             android:orientation="vertical">
 
             <ImageView
@@ -33,7 +33,6 @@
                 android:background="@drawable/edt_login_background"
                 android:drawableLeft="@drawable/id_image"
                 android:drawablePadding="8.35dp"
-                android:fontFamily="@font/noto_sans_kr_regular"
                 android:maxLines="1"
                 android:inputType="text"
                 android:hint="사원 ID"
@@ -48,7 +47,6 @@
                 android:background="@drawable/edt_login_background"
                 android:drawableLeft="@drawable/pw_image"
                 android:drawablePadding="8.35dp"
-                android:fontFamily="@font/noto_sans_kr_regular"
                 android:maxLines="1"
                 android:inputType="text"
                 android:hint="비밀번호"
@@ -62,7 +60,6 @@
                 android:layout_marginHorizontal="80dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/btn_login_background"
-                android:fontFamily="@font/noto_sans_kr_bold"
                 android:gravity="center"
                 android:text="로그인"
                 android:textColor="@color/color_FFFFFF"

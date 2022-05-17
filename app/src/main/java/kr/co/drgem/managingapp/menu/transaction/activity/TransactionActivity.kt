@@ -77,6 +77,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
             binding.layoutEmpty.isVisible = false
             binding.layoutList.isVisible = true
             binding.layoutInfo.isVisible = true
+            binding.layoutFold.isVisible = true
             binding.btnSave.isVisible = true
         }
 

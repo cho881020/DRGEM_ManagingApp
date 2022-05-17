@@ -10,7 +10,7 @@
         android:orientation="vertical"
         tools:context=".menu.kitting.activity.KittingActivity">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutTitle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -22,21 +22,26 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25.6dp"
-                android:src="@drawable/btn_back" />
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/btn_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_marginStart="20.04dp"
                 android:text="키팅출고"
                 android:textColor="@color/color_000000"
                 android:textSize="14dp"
-                android:textStyle="bold" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="10dp"/>
 
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <LinearLayout
@@ -252,17 +257,19 @@
         <LinearLayout
             android:id="@+id/layoutEmpty"
             android:layout_width="match_parent"
-            android:layout_height="330dp"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/layout_find_background"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:visibility="visible">
 
             <ImageView
                 android:layout_width="82dp"
                 android:layout_height="72.75dp"
+                android:layout_marginTop="73dp"
                 android:src="@drawable/empty_icon" />
 
             <TextView
@@ -287,15 +294,37 @@
             android:visibility="gone">
 
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="23dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:text="등록자 홍길동의 검색결과(3건)"
-                android:textColor="@color/color_000000"
-                android:textSize="14dp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="등록자 홍길동의 검색결과"
+                    android:textColor="@color/color_000000"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="20dp"
+                    android:text="(3건)"
+                    android:textColor="@color/color_3DBBE2"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+
 
             <HorizontalScrollView
                 android:layout_width="match_parent"

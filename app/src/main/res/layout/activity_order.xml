@@ -10,7 +10,7 @@
         android:orientation="vertical"
         tools:context=".menu.order.activity.OrderActivity">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutTitle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -22,37 +22,26 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25.6dp"
-                android:src="@drawable/btn_back" />
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/btn_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_marginStart="20.04dp"
-                android:text="발주입고"
+                android:text="매입입고"
                 android:textColor="@color/color_000000"
                 android:textSize="14dp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="10dp"/>
 
 
-            <TextView
-                android:layout_width="75.79dp"
-                android:layout_height="28.94dp"
-                android:layout_marginEnd="22.21dp"
-                android:background="@drawable/btn_save"
-                android:gravity="center"
-                android:text="저장하기"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="14dp"
-                android:textStyle="bold" />
 
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <LinearLayout
@@ -268,17 +257,19 @@
         <LinearLayout
             android:id="@+id/layoutEmpty"
             android:layout_width="match_parent"
-            android:layout_height="330dp"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/layout_find_background"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:visibility="visible">
 
             <ImageView
                 android:layout_width="82dp"
                 android:layout_height="72.75dp"
+                android:layout_marginTop="73dp"
                 android:src="@drawable/empty_icon" />
 
             <TextView
@@ -303,15 +294,31 @@
             android:visibility="gone">
 
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="23dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:text="발주 내역 (3건)"
-                android:textColor="@color/color_000000"
-                android:textSize="14dp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="거래상세 내역"
+                    android:textColor="@color/color_000000"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="20dp"
+                    android:text="(3건)"
+                    android:textColor="@color/color_3DBBE2"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"

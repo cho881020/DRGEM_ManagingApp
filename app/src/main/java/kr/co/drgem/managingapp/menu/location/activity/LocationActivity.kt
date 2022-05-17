@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.location.activity
 
 import android.os.Bundle
+import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -34,6 +35,7 @@ class LocationActivity : BaseActivity() {
             binding.layoutEmpty.isVisible = false
         }
 
+        binding.txtTitle.text = HtmlCompat.fromHtml(getString(R.string.locationProduct, "BUCKY_COVER_SILK_PRINT"), HtmlCompat.FROM_HTML_MODE_LEGACY)
 
     }
 

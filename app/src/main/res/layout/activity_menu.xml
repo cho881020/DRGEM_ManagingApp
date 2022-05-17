@@ -49,170 +49,196 @@
         </LinearLayout>
 
 
-
         <LinearLayout
-            android:id="@+id/transaction"
-            android:layout_width="250dp"
-            android:layout_height="215dp"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="180dp"
-            android:background="@drawable/btn_menu_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="122dp"
-                android:text="거래명세입고"
-                android:textColor="@color/color_333333" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/transaction"
+                    android:layout_width="250dp"
+                    android:layout_height="215dp"
+                    android:background="@drawable/btn_menu_background"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="122dp"
+                        android:text="거래명세입고"
+                        android:textColor="@color/color_333333" />
 
 
-        </LinearLayout>
+                </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/orderReceipt"
-            android:layout_width="250dp"
-            android:layout_height="215dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="180dp"
-            android:background="@drawable/btn_menu_background"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/transaction"
-            app:layout_constraintTop_toTopOf="parent">
+                <LinearLayout
+                    android:id="@+id/orderReceipt"
+                    android:layout_width="250dp"
+                    android:layout_height="215dp"
+                    android:layout_marginStart="22dp"
+                    android:background="@drawable/btn_menu_background"
+                    android:orientation="vertical">
 
-            <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="122dp"
+                        android:text="매입입고\n(발주입고)"
+                        android:textColor="@color/color_333333" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/kitting"
+                    android:layout_width="250dp"
+                    android:layout_height="215dp"
+                    android:background="@drawable/btn_menu_background"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="122dp"
+                        android:text="키팅출고"
+                        android:textColor="@color/color_333333" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/request"
+                    android:layout_width="250dp"
+                    android:layout_height="215dp"
+                    android:layout_marginStart="22dp"
+                    android:background="@drawable/btn_menu_background"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="122dp"
+                        android:text="요청출고\n(자재출고)"
+                        android:textColor="@color/color_333333" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="122dp"
-                android:text="매입입고\n(발주입고)"
-                android:textColor="@color/color_333333" />
+                android:layout_marginTop="22dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/notDelivery"
+                    android:layout_width="250dp"
+                    android:layout_height="215dp"
+                    android:background="@drawable/btn_menu_background"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="122dp"
+                        android:text="미출자재출고"
+                        android:textColor="@color/color_333333" />
 
 
-        </LinearLayout>
+                </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/kitting"
-            android:layout_width="250dp"
-            android:layout_height="215dp"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_menu_background"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/transaction">
+                <LinearLayout
+                    android:id="@+id/location"
+                    android:layout_width="250dp"
+                    android:layout_height="215dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/btn_menu_background"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="122dp"
-                android:text="키팅출고"
-                android:textColor="@color/color_333333" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="122dp"
+                        android:text="로케이션 조회"
+                        android:textColor="@color/color_333333" />
 
 
-        </LinearLayout>
+                </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/request"
-            android:layout_width="250dp"
-            android:layout_height="215dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_menu_background"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/kitting"
-            app:layout_constraintTop_toBottomOf="@id/orderReceipt">
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="122dp"
-                android:text="요청출고\n(자재출고)"
-                android:textColor="@color/color_333333" />
+                android:layout_marginTop="22dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:id="@+id/stock"
+                    android:layout_width="250dp"
+                    android:layout_height="215dp"
+                    android:background="@drawable/btn_menu_background"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="122dp"
+                        android:text="재고조사"
+                        android:textColor="@color/color_333333" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="186dp"
+                    android:layout_height="71dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="86dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/drgem_logo" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/notDelivery"
-            android:layout_width="250dp"
-            android:layout_height="215dp"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_menu_background"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/kitting">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="122dp"
-                android:text="미출자재출고"
-                android:textColor="@color/color_333333" />
 
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/location"
-            android:layout_width="250dp"
-            android:layout_height="215dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_menu_background"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/notDelivery"
-            app:layout_constraintTop_toBottomOf="@id/request">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="122dp"
-                android:text="로케이션 조회"
-                android:textColor="@color/color_333333" />
 
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/stock"
-            android:layout_width="250dp"
-            android:layout_height="215dp"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/btn_menu_background"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/notDelivery">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="122dp"
-                android:text="재고조사"
-                android:textColor="@color/color_333333" />
-
-
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="186dp"
-            android:layout_height="71dp"
-            android:src="@drawable/drgem_logo"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/stock"
-            app:layout_constraintEnd_toEndOf="@id/location"
-            app:layout_constraintStart_toEndOf="@+id/stock"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

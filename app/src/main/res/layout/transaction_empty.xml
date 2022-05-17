@@ -20,6 +20,7 @@
         <ImageView
             android:layout_width="82dp"
             android:layout_height="72.75dp"
+            android:layout_marginTop="73dp"
             android:src="@drawable/empty_icon" />
 
         <TextView

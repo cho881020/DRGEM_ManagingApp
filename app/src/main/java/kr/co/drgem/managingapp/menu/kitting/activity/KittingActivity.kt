@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.kitting.activity
 
 import android.os.Bundle
+import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -39,6 +40,8 @@ class KittingActivity : BaseActivity() {
         binding.btnWarehouseRemove.setOnClickListener {
             binding.edtWarehouse.text = null
         }
+
+        binding.txtTitle.text = HtmlCompat.fromHtml(getString(R.string.kittingName, "홍길동"), HtmlCompat.FROM_HTML_MODE_LEGACY)
 
     }
 
