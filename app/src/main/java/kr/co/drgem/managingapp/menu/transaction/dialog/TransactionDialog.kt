@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
@@ -30,21 +31,31 @@ class TransactionDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setValues()
         setupEvents()
+
 
     }
 
-
     fun setupEvents() {
 
-        val mAdapter = DialogEditTranAdapter()
-        binding.itemListRecyclerView.adapter = mAdapter
+        binding.btnAdd.setOnClickListener {
+            Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
+            dismiss()
+        }
 
         binding.btnCancel.setOnClickListener {
             dismiss()
         }
 
+    }
+
+    fun setValues() {
+
+        val mAdapter = DialogEditTranAdapter()
+        binding.recyclerView.adapter = mAdapter
 
     }
+
 
 }

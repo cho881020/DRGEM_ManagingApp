@@ -118,7 +118,7 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:layout_width="160dp"
+                    android:layout_width="140dp"
                     android:layout_height="35dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="15dp"
@@ -136,7 +136,7 @@
                     android:textSize="12dp" />
 
                 <TextView
-                    android:layout_width="160dp"
+                    android:layout_width="140dp"
                     android:layout_height="35dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="15dp"
@@ -231,29 +231,29 @@
                         android:textSize="12dp" />
 
 
-                    <FrameLayout
+                    <LinearLayout
                         android:layout_width="110dp"
                         android:layout_height="35dp"
-                        android:layout_marginTop="2dp"
                         android:background="@drawable/light_gray_box"
                         android:gravity="center_vertical">
 
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="35dp"
-                            android:background="@drawable/light_gray_box"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:layout_weight="1"
+                            android:text="2022-01-12"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
+
                         <ImageView
-                            android:layout_width="13.75dp"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center_vertical|right"
-                            android:layout_marginRight="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
                             android:src="@drawable/dropdown" />
 
-
-                    </FrameLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -271,7 +271,7 @@
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="140dp"
                         android:layout_height="35dp"
                         android:layout_marginTop="2dp"
@@ -280,20 +280,22 @@
 
                         <Spinner
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
+                            android:layout_height="match_parent"
                             android:background="@drawable/light_gray_box"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
                         <ImageView
-                            android:layout_width="13.75dp"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center_vertical|right"
-                            android:layout_marginRight="15dp"
-                            android:src="@drawable/dropdown" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:src="@drawable/dropdown"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </LinearLayout>
@@ -311,7 +313,7 @@
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="140dp"
                         android:layout_height="35dp"
                         android:layout_marginTop="2dp"
@@ -320,20 +322,22 @@
 
                         <Spinner
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
+                            android:layout_height="match_parent"
                             android:background="@drawable/light_gray_box"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
                         <ImageView
-                            android:layout_width="13.75dp"
-                            android:layout_height="10dp"
-                            android:layout_gravity="center_vertical|right"
-                            android:layout_marginRight="15dp"
-                            android:src="@drawable/dropdown" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:src="@drawable/dropdown"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </LinearLayout>
@@ -362,10 +366,10 @@
                         <EditText
                             android:id="@+id/edtName"
                             android:layout_width="0dp"
-                            android:layout_height="35dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:paddingHorizontal="9dp"
+                            android:paddingHorizontal="7dp"
                             android:background="@null"
                             android:maxLines="1"
                             android:inputType="text"
@@ -375,12 +379,14 @@
 
                         <ImageView
                             android:id="@+id/btnNameRemove"
-                            android:layout_width="21dp"
-                            android:layout_height="21dp"
-                            android:layout_marginEnd="9dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
                             android:src="@drawable/btn_x" />
 
                     </LinearLayout>
+
+
                 </LinearLayout>
 
 

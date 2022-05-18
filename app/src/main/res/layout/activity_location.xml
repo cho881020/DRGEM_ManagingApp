@@ -80,13 +80,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="출고할사업장"
+                    android:text="창고"
                     android:textColor="@color/color_808080"
                     android:textSize="12dp" />
 
 
-                <FrameLayout
-                    android:layout_width="180dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="110dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
@@ -94,20 +94,22 @@
 
                     <Spinner
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/light_gray_box"
                         android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
+                        android:textSize="14dp" />
 
                     <ImageView
-                        android:layout_width="13.75dp"
-                        android:layout_height="10dp"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginHorizontal="7dp"
                         android:src="@drawable/dropdown" />
 
 
-                </FrameLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </LinearLayout>
@@ -122,13 +124,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="키팅자"
+                    android:text="로케이션"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
                 <LinearLayout
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="35dp"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
                     android:gravity="center_vertical"
@@ -137,22 +139,22 @@
                     <EditText
                         android:id="@+id/edtCompany"
                         android:layout_width="0dp"
-                        android:layout_height="35dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:paddingHorizontal="9dp"
+                        android:paddingHorizontal="7dp"
                         android:background="@null"
                         android:maxLines="1"
                         android:inputType="text"
-                        android:text="00전자"
+                        android:text="내외"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
                     <ImageView
                         android:id="@+id/btnCompanyRemove"
-                        android:layout_width="21dp"
-                        android:layout_height="21dp"
-                        android:layout_marginEnd="9dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
                         android:src="@drawable/btn_x" />
 
                 </LinearLayout>
@@ -168,37 +170,37 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="창고번호"
+                    android:text="품명"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
                 <LinearLayout
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="205dp"
+                    android:layout_height="35dp"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edtWarehouse"
+                        android:id="@+id/edtName"
                         android:layout_width="0dp"
-                        android:layout_height="35dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:paddingHorizontal="9dp"
+                        android:paddingHorizontal="7dp"
                         android:background="@null"
                         android:maxLines="1"
                         android:inputType="text"
-                        android:text="창고1"
+                        android:text="BUCKY_COVER_SILK_PRINT"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnWarehouseRemove"
-                        android:layout_width="21dp"
-                        android:layout_height="21dp"
-                        android:layout_marginEnd="9dp"
+                        android:id="@+id/btnWaRemove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
                         android:src="@drawable/btn_x" />
 
                 </LinearLayout>
@@ -208,24 +210,13 @@
 
             <TextView
                 android:id="@+id/btnFind"
-                android:layout_width="55dp"
+                android:layout_width="65dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/btn_find"
                 android:gravity="center"
                 android:text="검색"
                 android:textColor="@color/color_FFFFFF"
-                android:textSize="12dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="55dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/btn_reset"
-                android:gravity="center"
-                android:text="초기화"
-                android:textColor="@color/color_808080"
                 android:textSize="12dp"
                 android:textStyle="bold" />
 
@@ -242,7 +233,8 @@
             android:background="@drawable/layout_find_background"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="visible"
+            tools:visibility="gone">
 
             <ImageView
                 android:layout_width="82dp"
@@ -269,7 +261,8 @@
             android:layout_marginVertical="10dp"
             android:background="@drawable/layout_find_background"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:layout_width="wrap_content"

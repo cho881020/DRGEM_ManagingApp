@@ -1,9 +1,12 @@
 package kr.co.drgem.managingapp.menu.transaction.activity
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -39,6 +42,21 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     override fun setupEvents() {
 
+
+        val bigo = binding.txtBigo.text
+
+        binding.bigo.setOnClickListener {
+            AlertDialog.Builder(mContext)
+                .setTitle("비고 내용 전체")
+                .setMessage(bigo)
+                .setNegativeButton("확인", null)
+                .show()
+        }
+        
+        binding.btnSave.setOnClickListener {
+            Toast.makeText(mContext, "변경 사항이 저장 되었습니다", Toast.LENGTH_SHORT).show()
+        }
+
         val cal = Calendar.getInstance()
         val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")     // 텍스트뷰 포맷
@@ -69,9 +87,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
         }
 
-        binding.btnSave.setOnClickListener {
-            Log.d("yj", "날짜선택 : $calDate")
-        }
 
         binding.btnFind.setOnClickListener {
             binding.layoutEmpty.isVisible = false

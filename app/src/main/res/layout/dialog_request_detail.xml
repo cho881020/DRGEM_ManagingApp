@@ -7,10 +7,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/borderbox_white_round12"
         android:orientation="vertical"
-        android:padding="25dp">
+        android:padding="20dp">
 
         <LinearLayout
-            android:layout_width="730dp"
+            android:layout_width="wrap_content"
             android:layout_height="673dp"
             android:orientation="vertical">
 
@@ -55,7 +55,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -69,7 +69,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -87,7 +87,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -105,7 +105,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -136,7 +136,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -154,7 +154,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -172,7 +172,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -204,7 +204,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -223,7 +223,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -242,7 +242,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
@@ -273,11 +273,11 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="3"
+                        android:text="7"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -292,11 +292,11 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:layout_width="160dp"
+                        android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="3"
+                        android:text="7"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -326,7 +326,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/RecyclerView"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -334,7 +334,7 @@
                 app:spanCount="2"/>
 
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -348,14 +348,12 @@
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/btn_light_gray"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:gravity="center"
                     android:text="취소"
                     android:textSize="12dp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
 
                 <TextView
 
@@ -363,13 +361,16 @@
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/btn_save"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:gravity="center"
                     android:text="등록하기"
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -377,6 +378,4 @@
 
 
     </LinearLayout>
-
-
 </layout>
