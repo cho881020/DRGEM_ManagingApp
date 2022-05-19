@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 
-class TransactionListViewHolder(parent: ViewGroup, val listenerTransaction: transactionEditListener) :
+class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEditListener) :
     RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.transaction_list_item, parent, false)
     ) {
@@ -19,7 +19,7 @@ class TransactionListViewHolder(parent: ViewGroup, val listenerTransaction: tran
 
         btnEdit.setOnClickListener {
             Log.d("yj", "거래명세 리스트 클릭")
-            listenerTransaction.onClickedEdit()
+            listener.onClickedEdit()
         }
 
 

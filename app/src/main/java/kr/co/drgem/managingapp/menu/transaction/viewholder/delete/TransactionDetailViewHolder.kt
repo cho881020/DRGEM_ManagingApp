@@ -1,4 +1,4 @@
-package kr.co.drgem.managingapp.menu.transaction.viewholder
+package kr.co.drgem.managingapp.menu.transaction.viewholder.delete
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

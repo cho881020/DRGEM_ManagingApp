@@ -89,8 +89,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
 
         binding.btnFind.setOnClickListener {
-
-
             binding.layoutEmpty.isVisible = false
             binding.layoutList.isVisible = true
             binding.layoutInfo.isVisible = true
@@ -99,8 +97,14 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
 
+
+
+
+
         binding.btnBack.setOnClickListener {
-            finish()
+
+            backDialog()
+
         }
 
         binding.btnFold.setOnClickListener {
@@ -114,7 +118,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
         binding.btnTranRemove.setOnClickListener {
-            binding.edtTranNum.text = null
+            binding.edtTran.text = null
         }
 
         binding.btnNameRemove.setOnClickListener {
@@ -157,6 +161,13 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     }
 
+    override fun onBackPressed() {
+
+        backDialog()
+
+    }
+
+
 //    override fun onClickedSearch(dateStart: String, dateEnd: String) {
 //
 //        setList()
@@ -168,104 +179,104 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         dialogEdit.show(supportFragmentManager, "dialog")
     }
 
-//    fun setList() {
-//
-//        georaedetail2.add(
-//            Georaedetail(
-//                "14",
-//                "E08-000601-00",
-//                "G22042600391",
-//                "B22042200003",
-//                "G22042600391",
-//                "2022-02-03",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//            )
-//        )
-//        georaedetail2.add(
-//            Georaedetail(
-//                "14",
-//                "E08-000601-00",
-//                "G22042600391",
-//                "B22042200003",
-//                "G22042600391",
-//                "2022-02-03",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//            )
-//        )
-//        georaedetail2.add(
-//            Georaedetail(
-//                "14",
-//                "E08-000601-00",
-//                "G22042600391",
-//                "B22042200003",
-//                "G22042600391",
-//                "2022-02-03",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//            )
-//        )
-//        georaedetail2.add(
-//            Georaedetail(
-//                "14",
-//                "E08-000601-00",
-//                "G22042600391",
-//                "B22042200003",
-//                "G22042600391",
-//                "2022-02-03",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//            )
-//        )
-//        georaedetail2.add(
-//            Georaedetail(
-//                "14",
-//                "E08-000601-00",
-//                "G22042600391",
-//                "B22042200003",
-//                "G22042600391",
-//                "2022-02-03",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//            )
-//        )
-//
-//
-//
-//        mList = BasicResponse(
-//            "000",
-//            "정상처리되었습니다",
-//            "G22042600391",
-//            "20220203",
-//            "01133",
-//            "ㅇㅇ전자",
-//            "00001",
-//            "구미공장",
-//            "(구매조건부사업) 연구소 토파즈 정부과제 샘플", "5", georaedetail2
-//        )
-//
-//    }
+    fun setList() {
+
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+        georaedetail2.add(
+            Georaedetail(
+                "14",
+                "E08-000601-00",
+                "G22042600391",
+                "B22042200003",
+                "G22042600391",
+                "2022-02-03",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+            )
+        )
+
+
+
+        mList = BasicResponse(
+            "000",
+            "정상처리되었습니다",
+            "G22042600391",
+            "20220203",
+            "01133",
+            "ㅇㅇ전자",
+            "00001",
+            "구미공장",
+            "(구매조건부사업) 연구소 토파즈 정부과제 샘플", "5", georaedetail2
+        )
+
+    }
 
 
 

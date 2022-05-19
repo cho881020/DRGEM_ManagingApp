@@ -12,6 +12,8 @@ class KittingListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.kitting_list_item, parent, false)
 ) {
 
+
+
     fun bind(){
 
         itemView.setOnClickListener{

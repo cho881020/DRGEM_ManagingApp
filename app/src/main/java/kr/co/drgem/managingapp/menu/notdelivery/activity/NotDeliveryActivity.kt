@@ -1,8 +1,6 @@
 package kr.co.drgem.managingapp.menu.notdelivery.activity
 
-import android.app.DatePickerDialog
 import android.os.Bundle
-import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -12,8 +10,6 @@ import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.adapter.NotDeliveryListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.dialog.NotDeliveryDialog
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
-import java.text.SimpleDateFormat
-import java.util.*
 
 class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
@@ -36,80 +32,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
             finish()
         }
 
-        val cal = Calendar.getInstance()
-        val dateSet = SimpleDateFormat("yyyyMMdd")
-        val dateFormat = SimpleDateFormat("MM-dd")
-
-        binding.txtDateStart.text = dateFormat.format(cal.time)
-        binding.txtDateEnd.text = dateFormat.format(cal.time)
-
-        var calStart = ""
-        var calEnd = ""
-
-        binding.layoutDateStart.setOnClickListener {
-
-            val date = object  : DatePickerDialog.OnDateSetListener{
-                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-
-                    cal.set(year,month,dayOfMonth)
-
-                    calStart = dateSet.format(cal.time)
-                    binding.txtDateStart.text = dateFormat.format(cal.time)
-
-                }
-            }
-
-            val datePick = DatePickerDialog(
-                mContext,
-                date,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
-
-        }
-
-        binding.layoutDateEnd.setOnClickListener {
-            val date = object  : DatePickerDialog.OnDateSetListener{
-                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-
-                    cal.set(year,month,dayOfMonth)
-
-                    calEnd = dateSet.format(cal.time)
-                    binding.txtDateEnd.text = dateFormat.format(cal.time)
-                }
-            }
-
-            val datePick = DatePickerDialog(
-                mContext,
-                date,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
-
-        }
-
-        binding.btnNameRemove.setOnClickListener {
-            binding.edtName.text = null
-        }
-
-        binding.btnCodeRemove.setOnClickListener {
-            binding.edtCode.text = null
-        }
-
-
         binding.btnFind.setOnClickListener {
             binding.layoutList.isVisible = true
             binding.layoutEmpty.isVisible = false
-        }
-
-        binding.btnOutName.setOnClickListener {
-            binding.edtOutName.text = null
-        }
-
-        binding.btnInName.setOnClickListener {
-            binding.edtInName.text = null
         }
 
     }

@@ -5,6 +5,10 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.menu.transaction.SearchListener
 import kr.co.drgem.managingapp.menu.transaction.viewholder.*
+import kr.co.drgem.managingapp.menu.transaction.viewholder.delete.TransactionDetailViewHolder
+import kr.co.drgem.managingapp.menu.transaction.viewholder.delete.TransactionEmptyViewHolder
+import kr.co.drgem.managingapp.menu.transaction.viewholder.delete.TransactionResultViewHolder
+import kr.co.drgem.managingapp.menu.transaction.viewholder.delete.TransactionSearchViewHolder
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
 
