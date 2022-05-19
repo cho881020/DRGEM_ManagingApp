@@ -7,12 +7,14 @@ import retrofit2.http.*
 
 interface APIList {
 
-    @FormUrlEncoded
+    @Headers("accept: application/json",
+        "content-type: application/json")
     @POST("/tablet/login")
     fun postRequestLogin(
-        @Field("requesttype") requesttype: String = "01001", // 굳이 첨부 안해도 기본값 01001
-        @Field("sawoncode") email: String,
-        @Field("password") pw: String,    // 서버에 던질때 암호화 해서 던져야함
+        @Body params: HashMap<String, String>,
+//        @Field("requesttype") requesttype: String = "01001", // 굳이 첨부 안해도 기본값 01001
+//        @Field("sawoncode") email: String,
+//        @Field("password") pw: String,    // 서버에 던질때 암호화 해서 던져야함
     ) : Call<BasicResponse>
 
     @GET("tablet/tran/detail/request") //거래명세요청

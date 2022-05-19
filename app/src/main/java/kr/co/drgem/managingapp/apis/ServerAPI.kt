@@ -14,9 +14,10 @@ class ServerAPI {
     companion object {
 
         private var retrofit : Retrofit? = null
+        private var DRGEM_LOCAL_SERVER_URL = "http://192.168.58.39"
         private var DEV_SERVER_URL = "개발서버주소"
         private var LIVE_SERVER_URL = "상용서버주소" // 주소 확정 나면 둘 다 변경
-        private val BASE_URL = DEV_SERVER_URL
+        private val BASE_URL = DRGEM_LOCAL_SERVER_URL
 
         fun getRetrofit(context: Context) : Retrofit {
 
