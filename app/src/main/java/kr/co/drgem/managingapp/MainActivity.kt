@@ -41,6 +41,8 @@ class MainActivity : BaseActivity() {
                "password" to md5(inputPw), // md5 변환해서 첨부
            )
 
+           Log.d("맵확인", dataMap.toString())
+
            apiList.postRequestLogin(
                 dataMap,
            ).enqueue(object : Callback<BasicResponse> {
@@ -48,6 +50,8 @@ class MainActivity : BaseActivity() {
                    call: Call<BasicResponse>,
                    response: Response<BasicResponse>
                ) {
+
+                   Log.d("콜확인", call.request().body().toString())
 
                    if (response.isSuccessful) {
                        Toast.makeText(mContext, "최종 연결 성공", Toast.LENGTH_SHORT).show()
@@ -64,9 +68,9 @@ class MainActivity : BaseActivity() {
                }
 
                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+                   Log.d("콜확인", call.request().body().toString())
                    Toast.makeText(mContext, "서버 연결 실패", Toast.LENGTH_SHORT).show()
                    t.printStackTrace()
-                   Log.d("아예실패", t.toString())
                }
 
            })
