@@ -10,6 +10,8 @@ import kr.co.drgem.managingapp.models.BasicResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.math.BigInteger
+import java.security.MessageDigest
 
 class MainActivity : BaseActivity() {
 
@@ -29,12 +31,14 @@ class MainActivity : BaseActivity() {
        binding.btnLogin.setOnClickListener{
 
            val inputId = binding.edtId.text.toString()
-           val inputPw = binding.edtPw.text.toString() // MD5 변환해야함
+           val inputPw = binding.edtPw.text.toString() 
+
+
 
 //           JSON 바디로 보낼때 => 해쉬맵을 보내는 방향으로
            val dataMap = hashMapOf(
                "username" to inputId,
-               "password" to inputPw,
+               "password" to md5(inputPw), // md5 변환해서 첨부
            )
 
            apiList.postRequestLogin(
@@ -76,5 +80,9 @@ class MainActivity : BaseActivity() {
 
     }
 
+    private fun md5(input:String): String {
+        val md = MessageDigest.getInstance("MD5")
+        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
+    }
 
 }
