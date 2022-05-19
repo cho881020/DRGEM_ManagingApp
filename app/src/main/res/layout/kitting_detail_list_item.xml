@@ -113,7 +113,7 @@
             android:layout_marginStart="21dp"
             android:visibility="visible"
             android:gravity="center"
-            android:text="상세보기"
+            android:text="정보입력"
             android:textSize="12dp"
             android:background="@drawable/btn_light_gray"
             android:textColor="@color/color_9A9A9A" />
