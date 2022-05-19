@@ -26,7 +26,6 @@
                 android:src="@drawable/drgem_logo" />
 
             <EditText
-                android:id="@+id/edtId"
                 android:layout_width="260dp"
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="80dp"
@@ -35,13 +34,13 @@
                 android:drawableLeft="@drawable/id_image"
                 android:drawablePadding="8.35dp"
                 android:maxLines="1"
+                android:privateImeOptions="defaultInputmode=korean"
                 android:inputType="text"
                 android:hint="사원 ID"
                 android:paddingLeft="9.35dp"
                 android:textSize="14dp" />
 
             <EditText
-                android:id="@+id/edtPw"
                 android:layout_width="260dp"
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="80dp"
@@ -50,6 +49,7 @@
                 android:drawableLeft="@drawable/pw_image"
                 android:drawablePadding="8.35dp"
                 android:maxLines="1"
+                android:privateImeOptions="defaultInputmode=english"
                 android:inputType="text"
                 android:hint="비밀번호"
                 android:paddingLeft="9.35dp"

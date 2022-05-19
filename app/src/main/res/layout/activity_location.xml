@@ -137,7 +137,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edtLocation"
+                        android:id="@+id/edtCompany"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -151,7 +151,7 @@
                         android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnLocationRemove"
+                        android:id="@+id/btnCompanyRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -183,7 +183,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edtProduct"
+                        android:id="@+id/edtName"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -197,7 +197,7 @@
                         android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnProductRemove"
+                        android:id="@+id/btnWaRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"

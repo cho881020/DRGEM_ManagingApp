@@ -76,14 +76,12 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/layoutDateStart"
                         android:layout_width="97dp"
                         android:layout_height="35dp"
                         android:background="@drawable/light_gray_box"
                         android:gravity="center_vertical">
 
                         <TextView
-                            android:id="@+id/txtDateStart"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
@@ -108,14 +106,12 @@
                         android:background="@color/color_E0E0E0" />
 
                     <LinearLayout
-                        android:id="@+id/layoutDateEnd"
                         android:layout_width="97dp"
                         android:layout_height="35dp"
                         android:background="@drawable/light_gray_box"
                         android:gravity="center_vertical">
 
                         <TextView
-                            android:id="@+id/txtDateEnd"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
