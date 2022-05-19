@@ -30,6 +30,14 @@ class LocationActivity : BaseActivity() {
             finish()
         }
 
+        binding.btnLocationRemove.setOnClickListener {
+            binding.edtLocation.text = null
+        }
+
+        binding.btnProductRemove.setOnClickListener {
+            binding.edtProduct.text = null
+        }
+
         binding.btnFind.setOnClickListener {
             binding.layoutList.isVisible = true
             binding.layoutEmpty.isVisible = false

@@ -15,14 +15,14 @@ interface APIList {
         @Field("password") pw: String,    // 서버에 던질때 암호화 해서 던져야함
     ) : Call<BasicResponse>
 
-    @GET("tablet/tran/detail/request")
+    @GET("tablet/tran/detail/request") //거래명세요청
     fun getRequestTranDetail(
         @Query("requesttype") requesttype : String = "02001",
         @Query("georaemyeongsebeonho") georaemyeongsebeonho : String
     ) : Call<BasicResponse>
 
     @FormUrlEncoded
-    @POST("tablet/tran/detail/register")
+    @POST("tablet/tran/detail/register")//거래명세등록
     fun postRequestTranDetail(
         @Field("requesttype") requesttype : String = "02002",
         @Field("georaemyeongsebeonho") georaemyeongsebeonho : String,
@@ -32,7 +32,7 @@ interface APIList {
         @Field("georaedetail") georaedetail : Array<Georaedetail>   // 확인
     ) : Call<BasicResponse>
 
-    @GET("tablet/vendorinfo/request")
+    @GET("tablet/vendorinfo/request") // 거래처요청(삭제예정)
     fun getRequestVendorInfo (
         @Query("requesttype") requesttype : String = "02011",
         @Query("georaecheomyeong") georaecheomyeong : String,
@@ -49,7 +49,9 @@ interface APIList {
     )
 
     @GET("tablet/order/detail/request")
-    fun getRequestOrderDetail()
+    fun getRequestOrderDetail(
+
+    )
 
     @FormUrlEncoded
     @POST("tablet/order/receive/register")

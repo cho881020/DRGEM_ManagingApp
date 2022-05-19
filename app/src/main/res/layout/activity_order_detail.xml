@@ -232,12 +232,14 @@
 
 
                     <LinearLayout
+                        android:id="@+id/layoutDate"
                         android:layout_width="110dp"
                         android:layout_height="35dp"
                         android:background="@drawable/light_gray_box"
                         android:gravity="center_vertical">
 
                         <TextView
+                            android:id="@+id/txtDate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"

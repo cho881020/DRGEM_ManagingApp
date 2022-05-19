@@ -91,17 +91,19 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="97dp"
+                        android:id="@+id/layoutDateStart"
+                        android:layout_width="65dp"
                         android:layout_height="35dp"
                         android:background="@drawable/light_gray_box"
                         android:gravity="center_vertical">
 
                         <TextView
+                            android:id="@+id/txtDateStart"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
                             android:layout_weight="1"
-                            android:text="2022-01-12"
+                            android:text="01-12"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
@@ -121,17 +123,19 @@
                         android:background="@color/color_E0E0E0" />
 
                     <LinearLayout
-                        android:layout_width="97dp"
+                        android:id="@+id/layoutDateEnd"
+                        android:layout_width="65dp"
                         android:layout_height="35dp"
                         android:background="@drawable/light_gray_box"
                         android:gravity="center_vertical">
 
                         <TextView
+                            android:id="@+id/txtDateEnd"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
                             android:layout_weight="1"
-                            android:text="2022-01-12"
+                            android:text="01-12"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
@@ -256,6 +260,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/edtName"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -269,6 +274,7 @@
                         android:textSize="12dp" />
 
                     <ImageView
+                        android:id="@+id/btnNameRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -294,7 +300,7 @@
                     android:textSize="12dp" />
 
                 <LinearLayout
-                    android:layout_width="85dp"
+                    android:layout_width="95dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
@@ -302,6 +308,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/edtCode"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -315,6 +322,7 @@
                         android:textSize="12dp" />
 
                     <ImageView
+                        android:id="@+id/btnCodeRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -514,32 +522,36 @@
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <LinearLayout
                         android:layout_width="95dp"
                         android:layout_height="35dp"
                         android:layout_marginTop="2dp"
                         android:background="@drawable/light_gray_box"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <Spinner
-                            android:layout_width="match_parent"
+                        <EditText
+                            android:id="@+id/edtOutName"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:background="@drawable/light_gray_box"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="7dp"
+                            android:background="@null"
+                            android:maxLines="1"
+                            android:inputType="text"
+                            android:text="홍길동"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
                         <ImageView
+                            android:id="@+id/btnOutName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="7dp"
-                            android:src="@drawable/dropdown"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:src="@drawable/btn_x" />
 
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -649,6 +661,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/edtInName"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -662,6 +675,7 @@
                             android:textSize="12dp" />
 
                         <ImageView
+                            android:id="@+id/btnInName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="7dp"

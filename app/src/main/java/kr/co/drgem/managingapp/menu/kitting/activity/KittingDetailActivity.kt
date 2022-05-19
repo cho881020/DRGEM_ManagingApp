@@ -30,6 +30,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
             finish()
         }
 
+        binding.btnNameRemove.setOnClickListener {
+            binding.edtName.text = null
+        }
 
 
     }
