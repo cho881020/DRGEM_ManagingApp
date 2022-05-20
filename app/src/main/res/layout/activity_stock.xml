@@ -132,18 +132,37 @@
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="225dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
                     android:gravity="center_vertical"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:paddingHorizontal="7dp"
-                    android:text="G22042600391"
-                    android:textColor="@color/color_000000"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edtCode"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="7dp"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:text="G22042600391"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/btnCodeRemove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/btn_x" />
+
+                </LinearLayout>
+
 
 
             </LinearLayout>

@@ -87,12 +87,15 @@
 
 
         <EditText
+            android:id="@+id/edtCount"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_marginStart="21dp"
             android:maxLines="1"
             android:inputType="number"
             android:text="1"
+            android:selectAllOnFocus="true"
+            android:imeOptions="actionNext"
             android:textSize="12dp"
             android:gravity="center"
             android:background="@drawable/light_gray_box"

@@ -26,12 +26,17 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
 
     override fun setupEvents() {
 
-        mAdapter = RequestDetailListAdapter(this)
-        binding.recyclerView.adapter = mAdapter
+       binding.btnBack.setOnClickListener {
+           finish()
+       }
+
 
     }
 
     override fun setValues() {
+
+        mAdapter = RequestDetailListAdapter(this)
+        binding.recyclerView.adapter = mAdapter
 
     }
 

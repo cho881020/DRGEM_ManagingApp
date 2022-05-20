@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -28,10 +29,17 @@ class MainActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        binding.btnLogin.setOnClickListener {
+            val myIntent = Intent(mContext, MenuActivity::class.java)
+            startActivity(myIntent)}
+
+        /**
+         * 서버 에러로 인해 테스트 진행 불가로 임시 주석 처리
+
        binding.btnLogin.setOnClickListener{
 
            val inputId = binding.edtId.text.toString()
-           val inputPw = binding.edtPw.text.toString() 
+           val inputPw = binding.edtPw.text.toString()
 
 
 
@@ -47,6 +55,7 @@ class MainActivity : BaseActivity() {
                override fun onResponse(
                    call: Call<BasicResponse>,
                    response: Response<BasicResponse>
+
                ) {
 
                    if (response.isSuccessful) {
@@ -71,10 +80,12 @@ class MainActivity : BaseActivity() {
 
            })
 
-
         }
+         */
 
     }
+
+
 
     override fun setValues() {
 

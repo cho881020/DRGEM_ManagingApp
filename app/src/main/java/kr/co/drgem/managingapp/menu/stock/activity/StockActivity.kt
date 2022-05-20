@@ -28,6 +28,11 @@ class StockActivity : BaseActivity() {
             finish()
         }
 
+        binding.btnCodeRemove.setOnClickListener {
+            binding.edtCode.text = null
+        }
+
+
 //        binding.btnFind.setOnClickListener {
 //
 //            binding.layoutReady.isVisible = false

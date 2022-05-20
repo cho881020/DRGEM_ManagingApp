@@ -13,8 +13,13 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
     ) {
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+    val edtCount = itemView.findViewById<TextView>(R.id.edtCount)
 
     fun bind() {
+
+        itemView.setOnClickListener {
+            edtCount.requestFocus()
+        }
 
         btnEdit.setOnClickListener {
             listener.onClickedEdit()
