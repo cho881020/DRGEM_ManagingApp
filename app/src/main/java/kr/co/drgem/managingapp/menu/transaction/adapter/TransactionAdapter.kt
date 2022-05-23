@@ -4,11 +4,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.menu.transaction.viewholder.TransactionListViewHolder
+import kr.co.drgem.managingapp.models.Georaedetail
 
 class TransactionAdapter(
     val transactionEditListener : transactionEditListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 ) {
+
+    val mList = ArrayList<Georaedetail>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return TransactionListViewHolder(parent, transactionEditListener)
@@ -17,13 +20,20 @@ class TransactionAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is TransactionListViewHolder -> {
-                holder.bind()
+                holder.bind(mList[position])
             }
         }
     }
 
-    override fun getItemCount() = 30
+    override fun getItemCount() = mList.size
 
+    fun setList (list : ArrayList<Georaedetail>){
+
+        mList.clear()
+        mList.addAll(list)
+
+        notifyDataSetChanged()
+    }
 
 }
 

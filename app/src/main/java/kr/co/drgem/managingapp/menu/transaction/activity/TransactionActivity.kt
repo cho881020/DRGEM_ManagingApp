@@ -2,7 +2,6 @@ package kr.co.drgem.managingapp.menu.transaction.activity
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
@@ -19,14 +18,13 @@ import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class TransactionActivity : BaseActivity(), transactionEditListener {
 
     lateinit var binding: ActivityTransactionBinding
     lateinit var mAdapter: TransactionAdapter
-    var mList: BasicResponse? = null
-    val georaedetail2 = ArrayList<Georaedetail>()
+    val georaedetail = ArrayList<Georaedetail>()
+    var mList = BasicResponse("","","","","","","","","","",georaedetail)
 
     val dialogEdit = TransactionDialog()
 //    val dialogDetail = DetailTranDialog()
@@ -35,8 +33,13 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
-        setupEvents()
+
         setValues()
+        setupEvents()
+
+        setList()
+
+        sort()
 
     }
 
@@ -52,7 +55,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 .setNegativeButton("확인", null)
                 .show()
         }
-        
+
         binding.btnSave.setOnClickListener {
             Toast.makeText(mContext, "변경 사항이 저장 되었습니다", Toast.LENGTH_SHORT).show()
         }
@@ -66,10 +69,10 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         var calDate = ""
         binding.layoutDate.setOnClickListener {
 
-            val date = object  : DatePickerDialog.OnDateSetListener{
+            val date = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    cal.set(year,month,dayOfMonth)
+                    cal.set(year, month, dayOfMonth)
 
                     calDate = dateServer.format(cal.time)
                     binding.txtDate.text = dateFormat.format(cal.time)
@@ -94,10 +97,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
             binding.layoutInfo.isVisible = true
             binding.layoutFold.isVisible = true
             binding.btnSave.isVisible = true
+
+            mAdapter.setList(georaedetail)
         }
-
-
-
 
 
 
@@ -109,12 +111,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
         binding.btnFold.setOnClickListener {
             binding.layoutFold.isVisible = false
-            binding.layoutOpen.isVisible = true
+            binding.btnOpen.isVisible = true
         }
 
         binding.btnOpen.setOnClickListener {
             binding.layoutFold.isVisible = true
-            binding.layoutOpen.isVisible = false
+            binding.btnOpen.isVisible = false
         }
 
         binding.btnTranRemove.setOnClickListener {
@@ -124,6 +126,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         binding.btnNameRemove.setOnClickListener {
             binding.edtName.text = null
         }
+
+
+
 
 
 //        binding.btnEdit.setOnClickListener {
@@ -161,29 +166,91 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     }
 
+
+
+    fun sort(){
+
+        var onClickSeq = 0
+
+        binding.layoutSeq.setOnClickListener {
+
+            if (onClickSeq < 2) {
+                onClickSeq ++
+            } else {
+                onClickSeq = 0
+            }
+
+            when (onClickSeq) {
+
+                0 -> {
+                    binding.imgSeq.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(mList.georaedetail)
+
+                }
+
+                1 -> {
+                    binding.imgSeq.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(mList.getDownSeq())
+
+                }
+
+                2 -> {
+                    binding.imgSeq.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(mList.getUpSeq())
+                }
+            }
+
+        }
+
+        var onClickLocation = 0
+
+        binding.layoutLocation.setOnClickListener {
+
+            if (onClickLocation < 2) {
+                onClickLocation ++
+            } else {
+                onClickLocation = 0
+            }
+
+            when (onClickLocation) {
+
+                0 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(mList.georaedetail)
+                }
+
+                1 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(mList.getDownLocation())
+                }
+
+                2 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(mList.getUpLocation())
+                }
+            }
+
+        }
+    }
+
+
+
+    override fun onClickedEdit() {
+        dialogEdit.show(supportFragmentManager, "dialog")
+    }
+
+
     override fun onBackPressed() {
 
         backDialog()
 
     }
 
-
-//    override fun onClickedSearch(dateStart: String, dateEnd: String) {
-//
-//        setList()
-////        mAdapter.setData(mList)
-//        binding.layoutBtn.isVisible = true
-//    }
-
-    override fun onClickedEdit() {
-        dialogEdit.show(supportFragmentManager, "dialog")
-    }
-
     fun setList() {
 
-        georaedetail2.add(
+        georaedetail.add(
             Georaedetail(
-                "14",
+                "2",
                 "E08-000601-00",
                 "G22042600391",
                 "B22042200003",
@@ -194,12 +261,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 "",
                 "",
                 "",
-                "",
+                "서울",
             )
         )
-        georaedetail2.add(
+        georaedetail.add(
             Georaedetail(
-                "14",
+                "3",
                 "E08-000601-00",
                 "G22042600391",
                 "B22042200003",
@@ -210,12 +277,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 "",
                 "",
                 "",
-                "",
+                "구미",
             )
         )
-        georaedetail2.add(
+        georaedetail.add(
             Georaedetail(
-                "14",
+                "4",
                 "E08-000601-00",
                 "G22042600391",
                 "B22042200003",
@@ -226,12 +293,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 "",
                 "",
                 "",
-                "",
+                "대구",
             )
         )
-        georaedetail2.add(
+        georaedetail.add(
             Georaedetail(
-                "14",
+                "5",
                 "E08-000601-00",
                 "G22042600391",
                 "B22042200003",
@@ -242,12 +309,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 "",
                 "",
                 "",
-                "",
+                "구미",
             )
         )
-        georaedetail2.add(
+        georaedetail.add(
             Georaedetail(
-                "14",
+                "1",
                 "E08-000601-00",
                 "G22042600391",
                 "B22042200003",
@@ -258,7 +325,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 "",
                 "",
                 "",
-                "",
+                "서울",
             )
         )
 
@@ -273,12 +340,10 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
             "ㅇㅇ전자",
             "00001",
             "구미공장",
-            "(구매조건부사업) 연구소 토파즈 정부과제 샘플", "5", georaedetail2
+            "(구매조건부사업) 연구소 토파즈 정부과제 샘플", "5", georaedetail
         )
 
     }
-
-
 
 
 }
