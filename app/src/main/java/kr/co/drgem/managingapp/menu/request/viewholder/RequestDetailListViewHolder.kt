@@ -2,6 +2,7 @@ package kr.co.drgem.managingapp.menu.request.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
@@ -13,8 +14,13 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener : RequestDetai
 ) {
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+    val edtCount = itemView.findViewById<EditText>(R.id.edtCount)
 
     fun bind() {
+
+        itemView.setOnClickListener {
+            edtCount.requestFocus()
+        }
 
         btnEdit.setOnClickListener {
             listener.onClickedEdit()

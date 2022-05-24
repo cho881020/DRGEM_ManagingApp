@@ -32,8 +32,8 @@ abstract class BaseActivity : AppCompatActivity() {
     fun backDialog(){
 
         androidx.appcompat.app.AlertDialog.Builder(mContext)
-            .setTitle("취소하시겠습니까?")
-            .setMessage("취소하면 변경하신 사항이 저장되지 않습니다.")
+            .setTitle("아직 저장하지 않은 사항이 있습니다.")
+            .setMessage("그래도 이 화면을 종료하시겠습니까?")
             .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
                 finish()
             })

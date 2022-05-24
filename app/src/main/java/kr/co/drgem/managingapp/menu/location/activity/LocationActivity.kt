@@ -35,6 +35,15 @@ class LocationActivity : BaseActivity() {
             binding.layoutEmpty.isVisible = false
         }
 
+        binding.btnLocationRemove.setOnClickListener {
+            binding.edtLocation.text = null
+        }
+
+        binding.btnProductRemove.setOnClickListener {
+            binding.edtProduct.text = null
+        }
+
+
         binding.txtTitle.text = HtmlCompat.fromHtml(getString(R.string.locationProduct, "BUCKY_COVER_SILK_PRINT"), HtmlCompat.FROM_HTML_MODE_LEGACY)
 
     }

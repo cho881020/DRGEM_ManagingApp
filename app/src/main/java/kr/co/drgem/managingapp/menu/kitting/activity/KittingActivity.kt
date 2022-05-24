@@ -1,6 +1,8 @@
 package kr.co.drgem.managingapp.menu.kitting.activity
 
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.widget.DatePicker
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -8,6 +10,8 @@ import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityKittingBinding
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingListAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class KittingActivity : BaseActivity() {
 
@@ -26,6 +30,60 @@ class KittingActivity : BaseActivity() {
 
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        val cal = Calendar.getInstance()
+        val dateSet = SimpleDateFormat("yyyyMMdd")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        binding.txtDateStart.text = dateFormat.format(cal.time)
+        binding.txtDateEnd.text = dateFormat.format(cal.time)
+
+        var calStart = ""
+        var calEnd = ""
+
+        binding.layoutDateStart.setOnClickListener {
+
+            val date = object  : DatePickerDialog.OnDateSetListener{
+                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
+                    cal.set(year,month,dayOfMonth)
+
+                    calStart = dateSet.format(cal.time)
+                    binding.txtDateStart.text = dateFormat.format(cal.time)
+
+                }
+            }
+
+            val datePick = DatePickerDialog(
+                mContext,
+                date,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
+
+        }
+
+        binding.layoutDateEnd.setOnClickListener {
+            val date = object  : DatePickerDialog.OnDateSetListener{
+                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
+                    cal.set(year,month,dayOfMonth)
+
+                    calEnd = dateSet.format(cal.time)
+                    binding.txtDateEnd.text = dateFormat.format(cal.time)
+                }
+            }
+
+            val datePick = DatePickerDialog(
+                mContext,
+                date,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
+
         }
 
         binding.btnFind.setOnClickListener {

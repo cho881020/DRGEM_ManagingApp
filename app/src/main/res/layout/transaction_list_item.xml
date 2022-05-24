@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/seq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -21,6 +22,7 @@
             android:textColor="@color/color_000000"/>
 
         <TextView
+            android:id="@+id/pummokcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -29,6 +31,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/pummyeong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -37,6 +40,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/dobeon_model"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -45,6 +49,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/saying"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -53,6 +58,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/balhudanwi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -61,6 +67,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/baljubeonho"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -69,6 +76,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/baljusuryang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -77,6 +85,7 @@
             android:textColor="@color/black" />
 
         <EditText
+            android:id="@+id/edtCount"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_marginStart="21dp"
@@ -105,6 +114,7 @@
 
 
         <TextView
+            android:id="@+id/jungyojajeyeobu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -113,10 +123,11 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="-"
+            android:layout_marginStart="200dp"
+            android:text="공장위치"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -131,7 +142,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
+            android:layout_marginStart="50dp"
             android:text="3"
             android:textSize="12dp"
             android:textColor="@color/black" />
