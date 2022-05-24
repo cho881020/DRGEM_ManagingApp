@@ -29,12 +29,9 @@ class MainActivity : BaseActivity() {
 
     override fun setupEvents() {
 
-        binding.btnLogin.setOnClickListener {
-            val myIntent = Intent(mContext, MenuActivity::class.java)
-            startActivity(myIntent)}
-
-        /**
-         * 서버 에러로 인해 테스트 진행 불가로 임시 주석 처리
+//        binding.btnLogin.setOnClickListener {
+//            val myIntent = Intent(mContext, MenuActivity::class.java)
+//            startActivity(myIntent)}
 
        binding.btnLogin.setOnClickListener{
 
@@ -65,6 +62,7 @@ class MainActivity : BaseActivity() {
                    if (response.isSuccessful) {
                        Toast.makeText(mContext, "최종 연결 성공", Toast.LENGTH_SHORT).show()
 
+                       Log.d("응답확인", response.body()!!.resultmsg)
 
                        val myIntent = Intent(mContext, MenuActivity::class.java)
                        startActivity(myIntent)
@@ -85,7 +83,6 @@ class MainActivity : BaseActivity() {
            })
 
         }
-         */
 
     }
 
@@ -97,7 +94,7 @@ class MainActivity : BaseActivity() {
 
     private fun md5(input:String): String {
         val md = MessageDigest.getInstance("MD5")
-        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
+        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0').lowercase()
     }
 
 }
