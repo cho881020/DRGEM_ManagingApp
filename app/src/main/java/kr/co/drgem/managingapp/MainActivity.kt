@@ -63,8 +63,9 @@ class MainActivity : BaseActivity() {
 
                        val br = response.body()!!
                        Log.d("응답확인", br.resultmsg)
+                       Log.d("응답확인", br.resultcd)
 
-                       if (br.resultcd.toInt() == 200) {
+                       if (br.resultcd == "000") {
 
                            val myIntent = Intent(mContext, MenuActivity::class.java)
                            myIntent.putExtra("name", br.sawonmyeong)
