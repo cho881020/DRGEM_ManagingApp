@@ -86,13 +86,7 @@ class RequestActivity : BaseActivity() {
 
         }
 
-        binding.btnCompanyRemove.setOnClickListener {
-            binding.edtCompany.text = null
-        }
 
-        binding.btnWarehouseRemove.setOnClickListener {
-            binding.edtWarehouse.text = null
-        }
 
         binding.btnNameRemove.setOnClickListener {
             binding.edtName.text = null

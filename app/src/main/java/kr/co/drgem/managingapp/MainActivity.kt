@@ -48,8 +48,7 @@ class MainActivity : BaseActivity() {
 
            Log.d("맵확인", dataMap.toString())
 
-           apiList.postRequestLogin(
-                dataMap,
+           apiList.postRequestLogin(dataMap,
            ).enqueue(object : Callback<BasicResponse> {
                override fun onResponse(
                    call: Call<BasicResponse>,
@@ -65,6 +64,7 @@ class MainActivity : BaseActivity() {
                        Log.d("응답확인", response.body()!!.resultmsg)
 
                        val myIntent = Intent(mContext, MenuActivity::class.java)
+                       myIntent.putExtra("name", response.body()?.sawonmyeong)
                        startActivity(myIntent)
                    }
                    else {

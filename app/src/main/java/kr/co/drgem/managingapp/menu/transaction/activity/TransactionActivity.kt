@@ -3,7 +3,8 @@ package kr.co.drgem.managingapp.menu.transaction.activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -14,8 +15,8 @@ import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
 import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
 import kr.co.drgem.managingapp.menu.transaction.dialog.TransactionDialog
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
-import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
+import kr.co.drgem.managingapp.models.TranResponse
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,7 +25,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     lateinit var binding: ActivityTransactionBinding
     lateinit var mAdapter: TransactionAdapter
     val georaedetail = ArrayList<Georaedetail>()
-    var mList = BasicResponse("","","","","","","","","","",georaedetail)
+    var mList = TranResponse("", "", "", "", "", "", "", "", "", "", georaedetail)
 
     val dialogEdit = TransactionDialog()
 //    val dialogDetail = DetailTranDialog()
@@ -128,7 +129,17 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
 
+        binding.spinnerCompany.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+
+            }
 
 
 //        binding.btnEdit.setOnClickListener {
@@ -167,15 +178,14 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     }
 
 
-
-    fun sort(){
+    fun sort() {
 
         var onClickSeq = 0
 
         binding.layoutSeq.setOnClickListener {
 
             if (onClickSeq < 2) {
-                onClickSeq ++
+                onClickSeq++
             } else {
                 onClickSeq = 0
             }
@@ -207,7 +217,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         binding.layoutLocation.setOnClickListener {
 
             if (onClickLocation < 2) {
-                onClickLocation ++
+                onClickLocation++
             } else {
                 onClickLocation = 0
             }
@@ -232,7 +242,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
         }
     }
-
 
 
     override fun onClickedEdit() {
@@ -331,7 +340,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
 
 
-        mList = BasicResponse(
+        mList = TranResponse(
             "000",
             "정상처리되었습니다",
             "G22042600391",

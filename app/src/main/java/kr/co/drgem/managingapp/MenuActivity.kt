@@ -2,6 +2,7 @@ package kr.co.drgem.managingapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.databinding.ActivityMenuBinding
 import kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity
@@ -11,14 +12,21 @@ import kr.co.drgem.managingapp.menu.order.activity.OrderActivity
 import kr.co.drgem.managingapp.menu.request.activity.RequestActivity
 import kr.co.drgem.managingapp.menu.stock.activity.StockActivity
 import kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity
+import kr.co.drgem.managingapp.models.MasterDataResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MenuActivity : BaseActivity() {
 
     lateinit var binding : ActivityMenuBinding
+    lateinit var masterData : MasterDataResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_menu)
+
+//        getRequestMasterCode()
 
         setupEvents()
         setValues()
@@ -67,5 +75,37 @@ class MenuActivity : BaseActivity() {
 
     override fun setValues() {
 
+        val userName = intent.getStringExtra("name")
+        binding.sawonmyeong.text = "$userName 님"
+
     }
+
+//    fun getRequestMasterCode(){
+//
+//        val data = hashMapOf(
+//            "requesttype" to "09001",
+//            "mastertype" to "all",
+//        )
+//
+//        apiList.getRequestMasterData(data).enqueue(object : Callback<MasterDataResponse>{
+//            override fun onResponse(
+//                call: Call<MasterDataResponse>,
+//                response: Response<MasterDataResponse>
+//            ) {
+//                Log.d("yj", "body : ${response.body()}")
+//                if(response.isSuccessful){
+//                    response.body()?.let {
+//                        masterData = it
+//                        Log.d("yj", "it : $it")
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<MasterDataResponse>, t: Throwable) {
+//                Log.d("yj", "body : ${t.message}")
+//            }
+//
+//        })
+//    }
+
 }

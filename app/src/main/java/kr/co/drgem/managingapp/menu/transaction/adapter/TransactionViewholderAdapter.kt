@@ -2,15 +2,15 @@ package kr.co.drgem.managingapp.menu.transaction.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.menu.transaction.SearchListener
-import kr.co.drgem.managingapp.menu.transaction.viewholder.*
+import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
+import kr.co.drgem.managingapp.menu.transaction.viewholder.TransactionListViewHolder
 import kr.co.drgem.managingapp.menu.transaction.viewholder.delete.TransactionDetailViewHolder
 import kr.co.drgem.managingapp.menu.transaction.viewholder.delete.TransactionEmptyViewHolder
 import kr.co.drgem.managingapp.menu.transaction.viewholder.delete.TransactionResultViewHolder
 import kr.co.drgem.managingapp.menu.transaction.viewholder.delete.TransactionSearchViewHolder
-import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.models.Georaedetail
+import kr.co.drgem.managingapp.models.TranResponse
 
 /**
  * 전체 화면 리싸이클러뷰 -> 리스트 스크롤로 변경, 어댑터, 뷰홀더 전체 삭제 예정
@@ -18,16 +18,16 @@ import kr.co.drgem.managingapp.models.Georaedetail
 
 class TransactionViewholderAdapter(
 
-    val SearchListener : SearchListener,
-    val transactionEditListener : transactionEditListener
+    val SearchListener: SearchListener,
+    val transactionEditListener: transactionEditListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var viewTypeList : ArrayList<Int> = arrayListOf()
-    val georaedetailList : ArrayList<Georaedetail> = arrayListOf()
+    var viewTypeList: ArrayList<Int> = arrayListOf()
+    val georaedetailList: ArrayList<Georaedetail> = arrayListOf()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
+        return when (viewType) {
             0 -> TransactionSearchViewHolder(parent, SearchListener)
             1 -> TransactionEmptyViewHolder(parent)
             2 -> TransactionResultViewHolder(parent)
@@ -39,7 +39,7 @@ class TransactionViewholderAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        when(holder){
+        when (holder) {
             is TransactionSearchViewHolder -> {
                 holder.bind()
             }
@@ -63,14 +63,13 @@ class TransactionViewholderAdapter(
         return viewTypeList[position]
     }
 
-    fun setData( data : BasicResponse? ){
+    fun setData(data: TranResponse?) {
         viewTypeList.clear()
 
-        if(data == null){
+        if (data == null) {
             viewTypeList.add(0)
             viewTypeList.add(1)
-        }
-        else{
+        } else {
             georaedetailList.clear()
             georaedetailList.addAll(data.georaedetail)
 

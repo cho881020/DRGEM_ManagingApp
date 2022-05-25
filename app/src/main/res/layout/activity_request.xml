@@ -153,36 +153,32 @@
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical">
 
-                    <EditText
-                        android:id="@+id/edtCompany"
-                        android:layout_width="0dp"
+                    <Spinner
+                        android:id="@+id/spinnerCompany"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:paddingHorizontal="7dp"
-                        android:background="@null"
-                        android:maxLines="1"
-                        android:inputType="text"
-                        android:text="광명본사"
+                        android:background="@drawable/light_gray_box"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnCompanyRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginHorizontal="7dp"
-                        android:src="@drawable/btn_x" />
+                        android:src="@drawable/dropdown" />
 
-                </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
@@ -199,36 +195,32 @@
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical">
 
-                    <EditText
-                        android:id="@+id/edtWarehouse"
-                        android:layout_width="0dp"
+                    <Spinner
+                        android:id="@+id/spinnerWareHouse"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:paddingHorizontal="7dp"
-                        android:background="@null"
-                        android:maxLines="1"
-                        android:inputType="text"
-                        android:text="창고1"
+                        android:background="@drawable/light_gray_box"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnWarehouseRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginHorizontal="7dp"
-                        android:src="@drawable/btn_x" />
+                        android:src="@drawable/dropdown" />
 
-                </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
