@@ -60,7 +60,6 @@ class MainActivity : BaseActivity() {
                    Log.d("콜확인", call.request().body().toString())
 
                    if (response.isSuccessful) {
-                       Toast.makeText(mContext, "최종 연결 성공", Toast.LENGTH_SHORT).show()
 
                        val br = response.body()!!
                        Log.d("응답확인", br.resultmsg)
@@ -70,9 +69,14 @@ class MainActivity : BaseActivity() {
                            val myIntent = Intent(mContext, MenuActivity::class.java)
                            myIntent.putExtra("name", br.sawonmyeong)
                            startActivity(myIntent)
+                           Toast.makeText(mContext, "로그인 성공", Toast.LENGTH_SHORT).show()
 
                            ContextUtil.setToken(mContext, br.security_token)
 
+                       }
+                       else {
+
+                           Toast.makeText(mContext, br.resultmsg, Toast.LENGTH_SHORT).show()
                        }
 
                    }
