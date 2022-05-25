@@ -8,8 +8,6 @@ import retrofit2.http.*
 
 interface APIList {
 
-    @Headers("accept: application/json",
-        "content-type: application/json")
     @POST("/tablet/login")
     fun postRequestLogin(
         @Body params: HashMap<String, String>,

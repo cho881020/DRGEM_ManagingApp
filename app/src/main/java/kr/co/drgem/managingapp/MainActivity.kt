@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.databinding.ActivityMainBinding
 import kr.co.drgem.managingapp.models.BasicResponse
+import kr.co.drgem.managingapp.utils.ContextUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -61,11 +62,19 @@ class MainActivity : BaseActivity() {
                    if (response.isSuccessful) {
                        Toast.makeText(mContext, "최종 연결 성공", Toast.LENGTH_SHORT).show()
 
-                       Log.d("응답확인", response.body()!!.resultmsg)
+                       val br = response.body()!!
+                       Log.d("응답확인", br.resultmsg)
 
-                       val myIntent = Intent(mContext, MenuActivity::class.java)
-                       myIntent.putExtra("name", response.body()?.sawonmyeong)
-                       startActivity(myIntent)
+                       if (br.resultcd.toInt() == 200) {
+
+                           val myIntent = Intent(mContext, MenuActivity::class.java)
+                           myIntent.putExtra("name", br.sawonmyeong)
+                           startActivity(myIntent)
+
+                           ContextUtil.setToken(mContext, br.security_token)
+
+                       }
+
                    }
                    else {
                        Toast.makeText(mContext, "뭔가 결과만 실패", Toast.LENGTH_SHORT).show()
