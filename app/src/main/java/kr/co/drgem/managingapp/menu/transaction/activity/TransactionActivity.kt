@@ -11,11 +11,14 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
 import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
 import kr.co.drgem.managingapp.menu.transaction.dialog.TransactionDialog
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
+import kr.co.drgem.managingapp.models.Detailcode
 import kr.co.drgem.managingapp.models.Georaedetail
+import kr.co.drgem.managingapp.models.MasterDataResponse
 import kr.co.drgem.managingapp.models.TranResponse
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +27,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     lateinit var binding: ActivityTransactionBinding
     lateinit var mAdapter: TransactionAdapter
+    lateinit var detailCode: Detailcode
     val georaedetail = ArrayList<Georaedetail>()
     var mList = TranResponse("", "", "", "", "", "", "", "", "", "", georaedetail)
 
@@ -129,45 +133,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
 
-        binding.spinnerCompany.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                }
-
-            }
-
-
-//        binding.btnEdit.setOnClickListener {
-//            georaedetail2.forEach {
-//                it.changeSerial=true
-//            }
-//            mAdapter.notifyDataSetChanged()
-//
-//            binding.btnEdit.isVisible = false
-//            binding.btnFactory.isVisible = false
-//            binding.btnSave.isVisible = true
-//            binding.btnCancel.isVisible = true
-//        }
-
-//        binding.btnCancel.setOnClickListener {
-//
-//            georaedetail2.forEach {
-//                it.changeSerial=false
-//            }
-//            mAdapter.notifyDataSetChanged()
-//
-//            binding.btnEdit.isVisible = true
-//            binding.btnFactory.isVisible = true
-//            binding.btnSave.isVisible = false
-//            binding.btnCancel.isVisible = false
-//        }
-
-
     }
 
     override fun setValues() {
@@ -175,7 +140,42 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         mAdapter = TransactionAdapter(this)
         binding.recyclerView.adapter = mAdapter
 
+        val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
+
+
+        val spinnerCompanyAdapter =
+            MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, masterData.getCompanyCode())
+        binding.spinnerCompany.adapter = spinnerCompanyAdapter
+
+
+        val spinnerWareHouseAdapter =
+            MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
+        binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
+
+        binding.spinnerCompany.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (masterData.getCompanyCode()[position].code == "0001") {
+                        spinnerWareHouseAdapter.setList(masterData.getGwangmyeongCode())
+                    }
+
+                    if (masterData.getCompanyCode()[position].code == "0002") {
+                        spinnerWareHouseAdapter.setList(masterData.getGumiCode())
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+
+            }
     }
+
 
 
     fun sort() {

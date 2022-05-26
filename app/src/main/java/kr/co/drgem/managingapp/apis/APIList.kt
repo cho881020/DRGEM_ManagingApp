@@ -19,7 +19,8 @@ interface APIList {
 
     @GET("tablet/master-data/request")
     fun getRequestMasterData(
-        @Body params: HashMap<String, String>,
+        @Query("requesttype") requesttype : String = "09001",
+        @Query("mastertype") mastertype : String = "all"
     ) : Call<MasterDataResponse>
 
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="7dp"
+    android:paddingVertical="10dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/detailCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text = "공장이름"
+        android:textSize="12dp"
+        android:textColor="@color/color_000000"/>
+</LinearLayout>

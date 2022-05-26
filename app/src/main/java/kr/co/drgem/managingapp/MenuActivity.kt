@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
+import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityMenuBinding
 import kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity
 import kr.co.drgem.managingapp.menu.location.activity.LocationActivity
@@ -26,7 +27,7 @@ class MenuActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_menu)
 
-//        getRequestMasterCode()
+        getRequestMasterCode()
 
         setupEvents()
         setValues()
@@ -37,6 +38,7 @@ class MenuActivity : BaseActivity() {
 
         binding.transaction.setOnClickListener{
             val myIntent = Intent(this, TransactionActivity::class.java)
+            myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
@@ -78,34 +80,32 @@ class MenuActivity : BaseActivity() {
         val userName = intent.getStringExtra("name")
         binding.sawonmyeong.text = "$userName 님"
 
+
     }
 
-//    fun getRequestMasterCode(){
-//
-//        val data = hashMapOf(
-//            "requesttype" to "09001",
-//            "mastertype" to "all",
-//        )
-//
-//        apiList.getRequestMasterData(data).enqueue(object : Callback<MasterDataResponse>{
-//            override fun onResponse(
-//                call: Call<MasterDataResponse>,
-//                response: Response<MasterDataResponse>
-//            ) {
-//                Log.d("yj", "body : ${response.body()}")
-//                if(response.isSuccessful){
-//                    response.body()?.let {
-//                        masterData = it
-//                        Log.d("yj", "it : $it")
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<MasterDataResponse>, t: Throwable) {
-//                Log.d("yj", "body : ${t.message}")
-//            }
-//
-//        })
-//    }
+    fun getRequestMasterCode(){
+
+        apiList.getRequestMasterData().enqueue(object : Callback<MasterDataResponse>{
+            override fun onResponse(
+                call: Call<MasterDataResponse>,
+                response: Response<MasterDataResponse>
+            ) {
+
+                if(response.isSuccessful){
+                    response.body()?.let {
+                        masterData = it
+
+
+                        Log.d("yj", "it : $it")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<MasterDataResponse>, t: Throwable) {
+                Log.d("yj", "실패 : ${t.message}")
+            }
+
+        })
+    }
 
 }
