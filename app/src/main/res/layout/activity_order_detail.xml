@@ -29,9 +29,10 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
+                android:id="@+id/baljubeonho"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:text="발주번호  - B22042200003"
+                tools:text="발주번호  - B22042200003"
                 android:textColor="@color/color_000000"
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -85,11 +86,12 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/baljubeonho2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="20dp"
-                    android:text="B22042200003"
+                    tools:text="B22042200003"
                     android:textColor="@color/color_3DBBE2"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -118,11 +120,12 @@
                     android:textSize="12dp" />
 
                 <TextView
+                    android:id="@+id/baljuil"
                     android:layout_width="140dp"
                     android:layout_height="35dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="15dp"
-                    android:text="20220312"
+                    tools:text="20220312"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
@@ -136,11 +139,12 @@
                     android:textSize="12dp" />
 
                 <TextView
+                    android:id="@+id/georaecheocode"
                     android:layout_width="140dp"
                     android:layout_height="35dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="15dp"
-                    android:text="01133"
+                    tools:text="01133"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
@@ -154,11 +158,12 @@
                     android:textSize="12dp" />
 
                 <TextView
+                    android:id="@+id/georaecheomyeong"
                     android:layout_width="160dp"
                     android:layout_height="35dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="15dp"
-                    android:text="00전자"
+                    tools:text="00전자"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
@@ -180,16 +185,17 @@
                     android:layout_height="35dp"
                     android:background="@color/color_F4F4F4"
                     android:gravity="center"
-                    android:text="사양"
+                    android:text="비고"
                     android:textColor="@color/color_808080"
                     android:textSize="12dp" />
 
                 <TextView
+                    android:id="@+id/bigo"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="15dp"
-                    android:text="(구매조건부사업) 연구소 토파즈 정부과제 샘플 구매"
+                    tools:text="(구매조건부사업) 연구소 토파즈 정부과제 샘플 구매"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
@@ -244,7 +250,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
                             android:layout_weight="1"
-                            android:text="2022-01-12"
+                            tools:text="2022-01-12"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
@@ -281,6 +287,7 @@
                         android:gravity="center_vertical">
 
                         <Spinner
+                            android:id="@+id/spinnerCompany"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/light_gray_box"
@@ -323,6 +330,7 @@
                         android:gravity="center_vertical">
 
                         <Spinner
+                            android:id="@+id/spinnerWareHouse"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/light_gray_box"
@@ -375,7 +383,6 @@
                             android:background="@null"
                             android:maxLines="1"
                             android:inputType="text"
-                            android:text="홍길동"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 

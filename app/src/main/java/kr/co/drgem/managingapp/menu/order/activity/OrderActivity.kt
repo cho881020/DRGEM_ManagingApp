@@ -2,6 +2,7 @@ package kr.co.drgem.managingapp.menu.order.activity
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -10,8 +11,10 @@ import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityOrderBinding
 import kr.co.drgem.managingapp.menu.order.adapter.OrderListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
-import kr.co.drgem.managingapp.models.BaljuData
-import kr.co.drgem.managingapp.models.OrderData
+import kr.co.drgem.managingapp.models.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -20,6 +23,7 @@ class OrderActivity : BaseActivity() {
 
     lateinit var binding : ActivityOrderBinding
     lateinit var mOrderAdapter : OrderListAdapter
+    val baljuList = ArrayList<Baljubeonho>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,17 +40,13 @@ class OrderActivity : BaseActivity() {
             finish()
         }
 
-        binding.btnFind.setOnClickListener {
-            binding.layoutList.isVisible = true
-            binding.layoutEmpty.isVisible = false
-        }
 
         binding.btnCompanyRemove.setOnClickListener {
-            binding.edtCompany.text = null
+            binding.edtGeoraecheomyeong.text = null
         }
 
         binding.btnOrderRemove.setOnClickListener {
-            binding.edtOrder.text = null
+            binding.edtBaljubeonho.text = null
         }
 
         val cal = Calendar.getInstance()
@@ -103,11 +103,51 @@ class OrderActivity : BaseActivity() {
 
         }
 
+        val georaecheomyeong = binding.edtGeoraecheomyeong.text.toString()
+        val baljubeonho = binding.edtBaljubeonho.text.toString()
+
+
+        binding.btnFind.setOnClickListener {
+            apiList.getRequestOrderNumber("02011","20150310","20150310",georaecheomyeong,baljubeonho).enqueue(object : Callback<OrderResponse>{
+                override fun onResponse(
+                    call: Call<OrderResponse>,
+                    response: Response<OrderResponse>
+                ) {
+
+                    Log.d("yj", "콜확인 ${call.request().body()}")
+                    Log.d("yj", "발주목록 성공 : ${response.body()?.baljubeonho}")
+
+                        response.body()?.let {
+                            baljuList.clear()
+                            baljuList.addAll(it.baljubeonho)
+                            mOrderAdapter.notifyDataSetChanged()
+                            Log.d("yj", "발주목록 성공 : ${it.resultmsg}")
+//                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
+                    Log.d("yj", "발주 오류 : ${t.message}")
+                }
+
+            })
+        }
+
+        binding.layoutList.isVisible = true
+        binding.layoutEmpty.isVisible = false
+
     }
 
     override fun setValues() {
 
-        mOrderAdapter = OrderListAdapter()
+        val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
+
+        mOrderAdapter = OrderListAdapter(baljuList, masterData)
         binding.recyclerView.adapter = mOrderAdapter
+
+
+
+
     }
+
 }

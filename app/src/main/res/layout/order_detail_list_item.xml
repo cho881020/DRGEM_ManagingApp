@@ -20,6 +20,7 @@
             android:textColor="@color/color_000000"/>
 
         <TextView
+            android:id="@+id/pummokcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -28,6 +29,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/pummyeong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -36,6 +38,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/dobeon_model"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -44,6 +47,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/baljusuryang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -52,6 +56,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/ipgoyejeongil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
@@ -130,6 +135,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"

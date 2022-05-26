@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.viewholder.OrderDetailListViewHolder
 import kr.co.drgem.managingapp.models.BaljuData
+import kr.co.drgem.managingapp.models.Baljudetail
 
 class OrderDetailListAdapter(
     val listener : OrderDetailEditListener,
     val mContext: Context,
-    val mList: List<BaljuData>
+    val mList: List<Baljudetail>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return OrderDetailListViewHolder(parent, listener)

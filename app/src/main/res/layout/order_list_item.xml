@@ -13,26 +13,28 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/seq"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="14"
+            android:layout_marginStart="10dp"
+            android:text="1"
             android:textSize="12dp"
             android:textColor="@color/color_000000" />
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/georaecheomyeong"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:text="11111"
             android:textSize="12dp"
+            android:maxLines="1"
             android:textColor="@color/color_000000" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/baljubeonho"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:text="00전자"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -40,35 +42,38 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/georaecheocode"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
             android:text="B22042200003"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/baljuil"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:text="20220511"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/nappumjangso"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:text="디알젬광명"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/bigo"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginEnd="10dp"
             android:text="연구소 토파즈 정부과제 샘플구매"
             android:textSize="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/black" />
 
 

@@ -44,6 +44,7 @@ class MenuActivity : BaseActivity() {
 
         binding.orderReceipt.setOnClickListener{
             val myIntent = Intent(this, OrderActivity::class.java)
+            myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
@@ -54,11 +55,13 @@ class MenuActivity : BaseActivity() {
 
         binding.request.setOnClickListener{
             val myIntent = Intent(this, RequestActivity::class.java)
+            myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
         binding.notDelivery.setOnClickListener{
             val myIntent = Intent(this, NotDeliveryActivity::class.java)
+            myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 

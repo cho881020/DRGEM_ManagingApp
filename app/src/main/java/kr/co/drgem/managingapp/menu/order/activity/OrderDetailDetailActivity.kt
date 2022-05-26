@@ -3,20 +3,25 @@ package kr.co.drgem.managingapp.menu.order.activity
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.DatePicker
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityOrderDetailBinding
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
 import kr.co.drgem.managingapp.models.BaljuData
+import kr.co.drgem.managingapp.models.Baljudetail
+import kr.co.drgem.managingapp.models.MasterDataResponse
+import kr.co.drgem.managingapp.models.OrderDetailResponse
 import kr.co.drgem.managingapp.roomdb.datas.BaljuRoomData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -25,7 +30,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
     lateinit var binding : ActivityOrderDetailBinding
     lateinit var mAdapter : OrderDetailListAdapter
+    lateinit var orderDetailData : OrderDetailResponse
+
     val dialog = OrderDetailDialog()
+    val baljuDetail = ArrayList<Baljudetail>()
 
     val mBaljuList = ArrayList<BaljuData>()
 
@@ -36,8 +44,14 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_order_detail)
 
         mBaljubeonho = intent.getStringExtra("baljubeonho")!!
+
+
+        getRequestOrderDetail()
+
+
         setupEvents()
-        setValues()
+
+
 
     }
 
@@ -87,9 +101,16 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
     override fun setValues() {
 
+        binding.baljubeonho.text = "발주번호 - $mBaljubeonho"
+        binding.baljubeonho2.text = mBaljubeonho
+
+        binding.baljuil.text = orderDetailData.baljuil
+        binding.georaecheocode.text = orderDetailData.georaecheocode
+        binding.georaecheomyeong.text = orderDetailData.georaecheomyeong
+        binding.bigo.text = orderDetailData.bigo
 
 
-        mAdapter = OrderDetailListAdapter(this, mContext, mBaljuList)
+        mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail)
         binding.recyclerView.adapter = mAdapter
 
 //        임시로
@@ -133,6 +154,39 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         }
 
 
+        val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
+
+        val spinnerCompanyAdapter =
+            MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, masterData.getCompanyCode())
+        binding.spinnerCompany.adapter = spinnerCompanyAdapter
+
+
+        val spinnerWareHouseAdapter =
+            MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
+        binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
+
+        binding.spinnerCompany.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (masterData.getCompanyCode()[position].code == "0001") {
+                        spinnerWareHouseAdapter.setList(masterData.getGwangmyeongCode())
+                    }
+
+                    if (masterData.getCompanyCode()[position].code == "0002") {
+                        spinnerWareHouseAdapter.setList(masterData.getGumiCode())
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+
+            }
 
     }
 
@@ -168,6 +222,33 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         Log.d("DB를 통한 목록 개수", mBaljuList.size.toString())
         mAdapter.notifyDataSetChanged()
 
+    }
+
+    fun getRequestOrderDetail(){
+
+        apiList.getRequestOrderDetail("02012",mBaljubeonho).enqueue(object : Callback<OrderDetailResponse>{
+            override fun onResponse(
+                call: Call<OrderDetailResponse>,
+                response: Response<OrderDetailResponse>
+            ) {
+                Log.d("yj","orderDetail : ${response.body()}")
+                response.body()?.let {
+
+                    orderDetailData = it
+
+                    baljuDetail.clear()
+                    baljuDetail.addAll(it.baljudetail)
+
+                    setValues()
+
+                }
+            }
+
+            override fun onFailure(call: Call<OrderDetailResponse>, t: Throwable) {
+
+            }
+
+        })
     }
 
     override fun onClickedEdit() {

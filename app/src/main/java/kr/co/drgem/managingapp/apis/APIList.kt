@@ -1,8 +1,6 @@
 package kr.co.drgem.managingapp.apis
 
-import kr.co.drgem.managingapp.models.BasicResponse
-import kr.co.drgem.managingapp.models.Georaedetail
-import kr.co.drgem.managingapp.models.MasterDataResponse
+import kr.co.drgem.managingapp.models.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -41,24 +39,27 @@ interface APIList {
         @Field("georaedetail") georaedetail : Array<Georaedetail>   // 확인
     ) : Call<BasicResponse>
 
-    @GET("tablet/vendorinfo/request")
-    fun getRequestVendorInfo (
-        @Query("requesttype") requesttype : String = "02011",
-        @Query("georaecheomyeong") georaecheomyeong : String,
-        @Query("baljubeonho") baljubeonho : String,
-    ) : Call<BasicResponse>
+//    @GET("tablet/vendorinfo/request")
+//    fun getRequestVendorInfo (
+//        @Query("requesttype") requesttype : String = "02011",
+//        @Query("georaecheomyeong") georaecheomyeong : String,
+//        @Query("baljubeonho") baljubeonho : String,
+//    ) : Call<BasicResponse>
 
     @GET("tablet/order/number/request")
     fun getRequestOrderNumber(
-        @Query("requesttype") requesttype: String = "02012",
-        @Query("georaecheocode") georaecheocode: String,
+        @Query("requesttype") requesttype: String = "02011",
         @Query("baljuiljastart") baljuiljastart: String,
         @Query("baljuiljaend") baljuiljaend: String,
-
-    )
+        @Query("georaecheomyeong") georaecheomyeong: String,
+        @Query("baljubeonho") baljubeonho: String,
+    ) : Call<OrderResponse>
 
     @GET("tablet/order/detail/request")
-    fun getRequestOrderDetail()
+    fun getRequestOrderDetail(
+    @Query("requesttype") requesttype: String,
+    @Query("baljubeonho") baljubeonho: String,
+    ) : Call<OrderDetailResponse>
 
     @FormUrlEncoded
     @POST("tablet/order/receive/register")

@@ -162,7 +162,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edtCompany"
+                        android:id="@+id/edtGeoraecheomyeong"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -170,8 +170,8 @@
                         android:paddingHorizontal="7dp"
                         android:background="@null"
                         android:maxLines="1"
+                        android:text=""
                         android:inputType="text"
-                        android:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -208,16 +208,16 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edtOrder"
+                        android:id="@+id/edtBaljubeonho"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="7dp"
+                        android:text=""
                         android:background="@null"
                         android:maxLines="1"
                         android:inputType="text"
-                        android:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 

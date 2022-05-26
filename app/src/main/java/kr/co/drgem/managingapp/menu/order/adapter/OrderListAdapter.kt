@@ -1,13 +1,15 @@
 package kr.co.drgem.managingapp.menu.order.adapter
 
-import android.content.Context
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.order.viewholder.OrderListViewHolder
-import kr.co.drgem.managingapp.models.BaljuData
+import kr.co.drgem.managingapp.models.Baljubeonho
+import kr.co.drgem.managingapp.models.Detailcode
+import kr.co.drgem.managingapp.models.MasterDataResponse
 
 class OrderListAdapter(
+    val baljuList : ArrayList<Baljubeonho>,
+    val masterData: MasterDataResponse
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -15,10 +17,11 @@ class OrderListAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
-            is OrderListViewHolder -> holder.bind()
+        when (holder) {
+            is OrderListViewHolder -> holder.bind(baljuList[position],masterData)
         }
     }
 
-    override fun getItemCount() = 40
+    override fun getItemCount() = baljuList.size
+
 }

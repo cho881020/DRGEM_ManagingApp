@@ -176,6 +176,7 @@
                     android:gravity="center_vertical">
 
                     <Spinner
+                        android:id="@+id/spinnerCompany"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/light_gray_box"
@@ -218,6 +219,7 @@
                     android:gravity="center_vertical">
 
                     <Spinner
+                        android:id="@+id/spinnerWareHouse"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/light_gray_box"

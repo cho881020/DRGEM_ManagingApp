@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import kr.co.drgem.managingapp.apis.APIList
 import kr.co.drgem.managingapp.apis.ServerAPI
 import kr.co.drgem.managingapp.roomdb.DatabaseHelper
@@ -13,7 +12,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var mContext: Context
 
-    lateinit var apiList : APIList
+    lateinit var apiList: APIList
 
     lateinit var roomDB: DatabaseHelper
 
@@ -33,7 +32,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun setValues()
 
-    fun backDialog(){
+    fun backDialog() {
 
         androidx.appcompat.app.AlertDialog.Builder(mContext)
             .setTitle("아직 저장하지 않은 사항이 있습니다.")
@@ -45,8 +44,6 @@ abstract class BaseActivity : AppCompatActivity() {
             .show()
 
     }
-
-
 
 
 }
