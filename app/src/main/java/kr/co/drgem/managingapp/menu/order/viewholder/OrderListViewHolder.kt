@@ -16,6 +16,7 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
         itemView.setOnClickListener{
             val myIntent = Intent(itemView.context, OrderDetailDetailActivity::class.java)
+            myIntent.putExtra("baljubeonho", "테스트발주번호")
             itemView.context.startActivity(myIntent)
         }
 
