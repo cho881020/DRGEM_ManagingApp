@@ -10,8 +10,11 @@ import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityOrderBinding
 import kr.co.drgem.managingapp.menu.order.adapter.OrderListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
+import kr.co.drgem.managingapp.models.BaljuData
+import kr.co.drgem.managingapp.models.OrderData
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderActivity : BaseActivity() {
 
@@ -103,6 +106,7 @@ class OrderActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
         mOrderAdapter = OrderListAdapter()
         binding.recyclerView.adapter = mOrderAdapter
     }

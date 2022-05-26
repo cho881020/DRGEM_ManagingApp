@@ -11,6 +11,7 @@ import kr.co.drgem.managingapp.databinding.ActivityOrderDetailBinding
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
+import kr.co.drgem.managingapp.models.BaljuData
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,6 +20,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
     lateinit var binding : ActivityOrderDetailBinding
     lateinit var mAdapter : OrderDetailListAdapter
     val dialog = OrderDetailDialog()
+
+    val mBaljuList = ArrayList<BaljuData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +78,42 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
     override fun setValues() {
 
-        mAdapter = OrderDetailListAdapter(this)
+
+//        임시로
+
+        mBaljuList.add(  BaljuData("1", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고1")  )
+        mBaljuList.add(  BaljuData("2", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고1")  )
+        mBaljuList.add(  BaljuData("3", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "4", "Y", "창고1")  )
+        mBaljuList.add(  BaljuData("4", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "4", "Y", "창고5")  )
+        mBaljuList.add(  BaljuData("5", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "4", "N", "창고5")  )
+        mBaljuList.add(  BaljuData("6", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "4", "N", "창고5")  )
+        mBaljuList.add(  BaljuData("7", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "4", "N", "창고5")  )
+        mBaljuList.add(  BaljuData("8", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "N", "창고5")  )
+        mBaljuList.add(  BaljuData("9", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "N", "창고1")  )
+        mBaljuList.add(  BaljuData("10", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고1")  )
+        mBaljuList.add(  BaljuData("11", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "6", "Y", "창고1")  )
+        mBaljuList.add(  BaljuData("12", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "6", "Y", "창고2")  )
+        mBaljuList.add(  BaljuData("13", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "6", "Y", "창고2")  )
+        mBaljuList.add(  BaljuData("14", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "6", "Y", "창고2")  )
+        mBaljuList.add(  BaljuData("15", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "6", "Y", "창고2")  )
+        mBaljuList.add(  BaljuData("16", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "8", "N", "창고1")  )
+        mBaljuList.add(  BaljuData("17", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "8", "N", "창고1")  )
+        mBaljuList.add(  BaljuData("18", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "8", "N", "창고1")  )
+        mBaljuList.add(  BaljuData("19", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "8", "N", "창고1")  )
+        mBaljuList.add(  BaljuData("20", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "8", "N", "창고1")  )
+        mBaljuList.add(  BaljuData("21", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "8", "N", "창고2")  )
+        mBaljuList.add(  BaljuData("22", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "8", "N", "창고2")  )
+        mBaljuList.add(  BaljuData("23", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고2")  )
+        mBaljuList.add(  BaljuData("24", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고2")  )
+        mBaljuList.add(  BaljuData("25", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고1")  )
+        mBaljuList.add(  BaljuData("26", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고1")  )
+        mBaljuList.add(  BaljuData("27", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고5")  )
+        mBaljuList.add(  BaljuData("28", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고5")  )
+        mBaljuList.add(  BaljuData("29", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고5")  )
+        mBaljuList.add(  BaljuData("30", "품목코드1", "품명1", "도번모델1", "사양1", "발주단위1", "발주수량1", "입고예정일1", "5", "Y", "창고5")  )
+
+
+        mAdapter = OrderDetailListAdapter(this, mContext, mBaljuList)
         binding.recyclerView.adapter = mAdapter
 
     }
