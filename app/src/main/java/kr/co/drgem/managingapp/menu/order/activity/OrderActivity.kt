@@ -102,18 +102,19 @@ class OrderActivity : BaseActivity() {
 
         }
 
-        val georaecheomyeong = binding.edtGeoraecheomyeong.text.toString()
-        val baljubeonho = binding.edtBaljubeonho.text.toString()
-
 
         binding.btnFind.setOnClickListener {
+
+            val georaecheomyeong = binding.edtGeoraecheomyeong.text.toString()
+            val baljubeonho = binding.edtBaljubeonho.text.toString()
+
             apiList.getRequestOrderNumber("02011", calStart, calEnd, georaecheomyeong, baljubeonho)
                 .enqueue(object : Callback<OrderResponse> {
                     override fun onResponse(
                         call: Call<OrderResponse>,
                         response: Response<OrderResponse>
                     ) {
-                        Log.d("yj", "cal :$calStart $calEnd")
+                        Log.d("yj", "cal:$calStart $calEnd, 거래처명:$georaecheomyeong, 발주번호:$baljubeonho" )
 
                             response.body()?.let {
 
