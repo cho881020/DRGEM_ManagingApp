@@ -22,8 +22,12 @@ class OrderDetailListViewHolder(
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
     val pummyeong = itemView.findViewById<TextView>(R.id.pummyeong)
     val dobeon_model = itemView.findViewById<TextView>(R.id.dobeon_model)
+    val saying = itemView.findViewById<TextView>(R.id.saying)
+    val balhudanwi = itemView.findViewById<TextView>(R.id.balhudanwi)
     val baljusuryang = itemView.findViewById<TextView>(R.id.baljusuryang)
     val ipgoyejeongil = itemView.findViewById<TextView>(R.id.ipgoyejeongil)
+    val giipgosuryang = itemView.findViewById<TextView>(R.id.giipgosuryang)
+    val jungyojajeyeobu = itemView.findViewById<TextView>(R.id.ipgoyejeongil)
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
     val edtCount = itemView.findViewById<EditText>(R.id.edtCount)
@@ -43,17 +47,18 @@ class OrderDetailListViewHolder(
             edtCount.requestFocus()
         }
 
+
         btnEdit.setOnClickListener {
             listener.onClickedEdit()
         }
 
 
-//        if (data.jungyojajeyeobu == "Y") {
-//            btnEdit.visibility = View.VISIBLE
-//        }
-//        else {
-//            btnEdit.visibility = View.INVISIBLE
-//        }
+        if (data.jungyojajeyeobu == "Y") {
+            btnEdit.visibility = View.VISIBLE
+        }
+        else {
+            btnEdit.visibility = View.INVISIBLE
+        }
 
 
     }

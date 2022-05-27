@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class Common(
     val codecount: String,
-    val detailcode: ArrayList<Detailcode>,
+    val detailcode: List<Detailcode>,
     val gubuncode: String,
     val gubunvalue: String
 ) : Serializable

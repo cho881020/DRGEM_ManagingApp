@@ -10,19 +10,19 @@ import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityOrderBinding
 import kr.co.drgem.managingapp.menu.order.adapter.OrderListAdapter
-import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
-import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.models.Baljubeonho
+import kr.co.drgem.managingapp.models.MasterDataResponse
+import kr.co.drgem.managingapp.models.OrderResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class OrderActivity : BaseActivity() {
 
-    lateinit var binding : ActivityOrderBinding
-    lateinit var mOrderAdapter : OrderListAdapter
+    lateinit var binding: ActivityOrderBinding
+    lateinit var mOrderAdapter: OrderListAdapter
     val baljuList = ArrayList<Baljubeonho>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,6 @@ class OrderActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order)
 
         setupEvents()
-        setValues()
 
     }
 
@@ -56,15 +55,15 @@ class OrderActivity : BaseActivity() {
         binding.txtDateStart.text = dateFormat.format(cal.time)
         binding.txtDateEnd.text = dateFormat.format(cal.time)
 
-        var calStart = ""
-        var calEnd = ""
+        var calStart = dateSet.format(cal.time)
+        var calEnd = dateSet.format(cal.time)
 
         binding.layoutDateStart.setOnClickListener {
 
-            val date = object  : DatePickerDialog.OnDateSetListener{
+            val date = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    cal.set(year,month,dayOfMonth)
+                    cal.set(year, month, dayOfMonth)
 
                     calStart = dateSet.format(cal.time)
                     binding.txtDateStart.text = dateFormat.format(cal.time)
@@ -83,10 +82,10 @@ class OrderActivity : BaseActivity() {
         }
 
         binding.layoutDateEnd.setOnClickListener {
-            val date = object  : DatePickerDialog.OnDateSetListener{
+            val date = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    cal.set(year,month,dayOfMonth)
+                    cal.set(year, month, dayOfMonth)
 
                     calEnd = dateSet.format(cal.time)
                     binding.txtDateEnd.text = dateFormat.format(cal.time)
@@ -108,33 +107,35 @@ class OrderActivity : BaseActivity() {
 
 
         binding.btnFind.setOnClickListener {
-            apiList.getRequestOrderNumber("02011","20150310","20150310",georaecheomyeong,baljubeonho).enqueue(object : Callback<OrderResponse>{
-                override fun onResponse(
-                    call: Call<OrderResponse>,
-                    response: Response<OrderResponse>
-                ) {
+            apiList.getRequestOrderNumber("02011", calStart, calEnd, georaecheomyeong, baljubeonho)
+                .enqueue(object : Callback<OrderResponse> {
+                    override fun onResponse(
+                        call: Call<OrderResponse>,
+                        response: Response<OrderResponse>
+                    ) {
+                        Log.d("yj", "cal :$calStart $calEnd")
 
-                    Log.d("yj", "콜확인 ${call.request().body()}")
-                    Log.d("yj", "발주목록 성공 : ${response.body()?.baljubeonho}")
+                            response.body()?.let {
 
-                        response.body()?.let {
-                            baljuList.clear()
-                            baljuList.addAll(it.baljubeonho)
-                            mOrderAdapter.notifyDataSetChanged()
-                            Log.d("yj", "발주목록 성공 : ${it.resultmsg}")
-//                        }
+                                baljuList.clear()
+                                baljuList.addAll(it.returnBaljubeonho())
+
+                                setValues()
+
+                            }
+
+
+
                     }
-                }
 
-                override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
-                    Log.d("yj", "발주 오류 : ${t.message}")
-                }
+                    override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
+                        Log.d("yj", "발주 번호 오류 : ${t.message}")
+                    }
 
-            })
+                })
         }
 
-        binding.layoutList.isVisible = true
-        binding.layoutEmpty.isVisible = false
+
 
     }
 
@@ -146,6 +147,12 @@ class OrderActivity : BaseActivity() {
         binding.recyclerView.adapter = mOrderAdapter
 
 
+        if(baljuList.size > 0){
+            binding.layoutList.isVisible = true
+            binding.layoutEmpty.isVisible = false
+        }
+
+        binding.txtCount.text = "(${baljuList.size}건)"
 
 
     }

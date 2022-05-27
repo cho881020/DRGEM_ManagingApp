@@ -304,12 +304,14 @@
                     android:textColor="@color/color_000000"
                     android:textSize="14dp"
                     android:textStyle="bold" />
+
                 <TextView
+                    android:id="@+id/txtCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="20dp"
-                    android:text="(3건)"
+                    android:text="( 건)"
                     android:textColor="@color/color_3DBBE2"
                     android:textSize="14dp"
                     android:textStyle="bold" />
@@ -331,63 +333,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:paddingHorizontal="20dp"
+                        android:paddingHorizontal="10dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:text="순번"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:layout_marginStart="30dp"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
                             android:text="거래처코드"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:layout_marginStart="30dp"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:text="거래처명"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:layout_marginStart="47dp"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:text="발주번호"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:layout_marginStart="46dp"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
                             android:text="발주일"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="17dp"
-                            android:layout_marginStart="46dp"
                             android:text="납품장소"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="250dp"
                             android:layout_height="17dp"
-                            android:layout_marginStart="46dp"
                             android:text="비고"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />

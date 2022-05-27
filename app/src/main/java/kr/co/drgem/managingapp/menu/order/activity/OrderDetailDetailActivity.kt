@@ -108,7 +108,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         binding.georaecheocode.text = orderDetailData.georaecheocode
         binding.georaecheomyeong.text = orderDetailData.georaecheomyeong
         binding.bigo.text = orderDetailData.bigo
-
+        binding.txtCount.text = "(${baljuDetail.size}건)"
 
         mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail)
         binding.recyclerView.adapter = mAdapter
@@ -231,7 +231,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
                 call: Call<OrderDetailResponse>,
                 response: Response<OrderDetailResponse>
             ) {
-                Log.d("yj","orderDetail : ${response.body()}")
+
                 response.body()?.let {
 
                     orderDetailData = it
@@ -246,6 +246,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
             override fun onFailure(call: Call<OrderDetailResponse>, t: Throwable) {
 
+                Log.d("yj", "OrderDetail 실패 : ${t.message}")
             }
 
         })

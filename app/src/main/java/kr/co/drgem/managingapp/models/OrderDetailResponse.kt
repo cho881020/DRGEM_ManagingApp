@@ -1,13 +1,15 @@
 package kr.co.drgem.managingapp.models
 
 data class OrderDetailResponse(
-    val baljubeonho: String,
-    val baljudetail: ArrayList<Baljudetail>,
-    val baljuil: String,
-    val bigo: String,
     val georaecheocode: String,
-    val georaecheomyeong: String,
-    val nappumjangso: String,
+    val bigo: String,
     val resultcd: String,
+    val requesttype: String,
+    val baljubeonho: String,
+    val nappumcheo: String,
+    val georaecheomyeong: String,
+    val baljuil: String,
+    val baljudetail: ArrayList<Baljudetail>,
+    val nappumjangso: String,
     val resultmsg: String
 )

@@ -105,7 +105,7 @@ class MenuActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<MasterDataResponse>, t: Throwable) {
-                Log.d("yj", "실패 : ${t.message}")
+                Log.d("yj", "MasterCode 실패 : ${t.message}")
             }
 
         })

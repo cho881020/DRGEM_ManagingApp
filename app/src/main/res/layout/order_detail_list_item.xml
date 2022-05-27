@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,139 +10,146 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:gravity="center_vertical"
+        android:paddingHorizontal="10dp"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/txtSeq"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="14"
+            android:text="-"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
 
         <TextView
             android:id="@+id/pummokcode"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="E08-000601-00"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/pummyeong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="E08-000601-00"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/dobeon_model"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="E08-000601-00"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/baljusuryang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="E08-000601-00"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/ipgoyejeongil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="0004"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="12"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="12"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <EditText
-            android:id="@+id/edtCount"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="21dp"
-            android:maxLines="1"
-            android:inputType="number"
-            android:text="1"
-            android:selectAllOnFocus="true"
-            android:imeOptions="actionNext"
-            android:textSize="12dp"
-            android:gravity="center"
-            android:background="@drawable/light_gray_box"
-            android:textColor="@color/black" />
-
-
-        <TextView
-            android:id="@+id/btnEdit"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="21dp"
-            android:visibility="visible"
-            android:gravity="center"
-            android:text="정보입력"
-            android:textSize="12dp"
-            android:background="@drawable/btn_light_gray"
-            android:textColor="@color/color_9A9A9A" />
-
-
-        <TextView
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="Y"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
             android:text="-"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/pummyeong"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="B22042200003"
+            android:text="-"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/location"
-            android:layout_width="wrap_content"
+            android:id="@+id/dobeon_model"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="3"
+            android:text="-"
             android:textSize="12dp"
             android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/saying"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/balhudanwi"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/baljusuryang"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/ipgoyejeongil"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/giipgosuryang"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtCount"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:maxLines="1"
+                android:inputType="number"
+                android:selectAllOnFocus="true"
+                android:imeOptions="actionNext"
+                android:text=""
+                android:textSize="12dp"
+                android:gravity="center"
+                android:background="@drawable/light_gray_box"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/jungyojajeyeobu"
+            android:visibility="invisible"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Y"
+            tools:text = "N"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/btnEdit"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:text="정보입력"
+                android:textSize="12dp"
+                android:background="@drawable/btn_light_gray"
+                android:textColor="@color/color_9A9A9A" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+
+
+
 
 
     </LinearLayout>
