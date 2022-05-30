@@ -31,7 +31,7 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
             itemView.context.startActivity(myIntent)
         }
 
-        georaecheomyeong.text = baljuData.getGeoraecheocodeHP()
+        georaecheomyeong.text = baljuData.getGeoraecheomyeongHP()
         baljubeonho.text = baljuData.getBaljubeonhoHP()
         georaecheocode.text = baljuData.getGeoraecheocodeHP()
         baljuil.text = baljuData.getBaljuilHP()

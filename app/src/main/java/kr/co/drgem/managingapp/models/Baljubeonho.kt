@@ -36,7 +36,7 @@ data class Baljubeonho(
         return baljuiljaend
     }
 
-    fun getGoraecheomyeongHP() : String {
+    fun getGeoraecheomyeongHP() : String {
         if(georaecheomyeong == null){
             return "-"
         }
