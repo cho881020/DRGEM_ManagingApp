@@ -98,7 +98,6 @@
                 android:inputType="number"
                 android:selectAllOnFocus="true"
                 android:imeOptions="actionNext"
-                android:text=""
                 android:textSize="12dp"
                 android:gravity="center"
                 android:background="@drawable/light_gray_box"
@@ -111,11 +110,10 @@
 
         <TextView
             android:id="@+id/jungyojajeyeobu"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Y"
-            tools:text = "N"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -128,7 +126,7 @@
                 android:id="@+id/btnEdit"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:gravity="center"
                 android:text="정보입력"
                 android:textSize="12dp"

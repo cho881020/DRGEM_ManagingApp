@@ -2,14 +2,11 @@ package kr.co.drgem.managingapp.menu.order.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.drgem.managingapp.models.Baljudetail
 
 class DialogEditOrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var viewTypeList: ArrayList<Int> = arrayListOf()
-
-//    init {
-//        setData()
-//    }
+    var viewholderCount = 0
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -19,20 +16,15 @@ class DialogEditOrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
+        when (holder){
+            is OrderSerialListViewHolder -> holder.bind()
+        }
     }
 
-    override fun getItemCount() = 7
+    override fun getItemCount() = viewholderCount
 
-//    override fun getItemViewType(position: Int): Int {
-//        return viewTypeList[position]
-//    }
 
-//    fun setData() {
-//
-//        viewTypeList.clear()
-//        viewTypeList.add(0)
-//        viewTypeList.add(1)
-//
-//    }
+    fun listCount(count : Int) {
+        viewholderCount = count
+    }
 }

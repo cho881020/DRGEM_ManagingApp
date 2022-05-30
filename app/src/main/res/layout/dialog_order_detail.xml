@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -30,6 +31,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/baljubeonho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -69,11 +71,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/pummokcode"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="E08-000601-00"
+                        tools:text="E08-000601-00"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -87,11 +90,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/pummyeong"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="G22042600391"
+                        tools:text="TUBE STAND BOX(1,800mm용)"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -105,11 +109,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/dobeonModel"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="G22042600391"
+                        tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -136,11 +141,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/saying"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="G22042600391"
+                        tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -154,11 +160,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/balhudanwi"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="0004"
+                        tools:text="0004"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -172,11 +179,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/seq"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="1"
+                        tools:text="1"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -204,11 +212,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/jungyojajeyeobu"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="Y"
+                        tools:text="Y"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -223,11 +232,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/location"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="-"
+                        tools:text="-"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -242,11 +252,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/ipgoyejeongil"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="20220203"
+                        tools:text="20220203"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -273,11 +284,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/baljusuryang"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="7"
+                        tools:text="7"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -292,11 +304,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/ipgosuryang"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="7"
+                        tools:text="7"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 

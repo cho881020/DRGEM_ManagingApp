@@ -27,16 +27,16 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
         itemView.setOnClickListener{
             val myIntent = Intent(itemView.context, OrderDetailDetailActivity::class.java)
             myIntent.putExtra("masterData", masterData)
-            myIntent.putExtra("baljubeonho", baljuData.baljubeonho)
+            myIntent.putExtra("baljubeonho", baljuData.getBaljubeonhoHP())
             itemView.context.startActivity(myIntent)
         }
 
-        georaecheomyeong.text = baljuData.georaecheomyeong
-        baljubeonho.text = baljuData.baljubeonho
-        georaecheocode.text = baljuData.georaecheocode
-        baljuil.text = baljuData.baljuil
-        nappumjangso.text = baljuData.nappumjangso
-        bigo.text = baljuData.bigo
+        georaecheomyeong.text = baljuData.getGeoraecheocodeHP()
+        baljubeonho.text = baljuData.getBaljubeonhoHP()
+        georaecheocode.text = baljuData.getGeoraecheocodeHP()
+        baljuil.text = baljuData.getBaljuilHP()
+        nappumjangso.text = baljuData.getNappumjangsoHP()
+        bigo.text = baljuData.getbigoHP()
 
 
 

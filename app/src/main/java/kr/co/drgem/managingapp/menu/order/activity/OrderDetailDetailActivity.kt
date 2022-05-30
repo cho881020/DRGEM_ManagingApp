@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.DatePicker
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
@@ -104,11 +105,18 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         binding.baljubeonho.text = "발주번호 - $mBaljubeonho"
         binding.baljubeonho2.text = mBaljubeonho
 
-        binding.baljuil.text = orderDetailData.baljuil
-        binding.georaecheocode.text = orderDetailData.georaecheocode
-        binding.georaecheomyeong.text = orderDetailData.georaecheomyeong
-        binding.bigo.text = orderDetailData.bigo
+        binding.baljuil.text = orderDetailData.getBaljuilHP()
+        binding.georaecheocode.text = orderDetailData.getGeoraecheocodeHP()
+        binding.georaecheomyeong.text = orderDetailData.getGeoraecheomyeongHP()
+        binding.bigo.text = orderDetailData.getBigoHP()
         binding.txtCount.text = "(${baljuDetail.size}건)"
+
+        baljuDetail.forEach {
+            if(it.jungyojajeyeobu == "Y"){
+                binding.jungyojajeyeobu.isVisible = true
+                binding.serialDetail.isVisible = true
+            }
+        }
 
         mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail)
         binding.recyclerView.adapter = mAdapter
@@ -237,7 +245,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
                     orderDetailData = it
 
                     baljuDetail.clear()
-                    baljuDetail.addAll(it.baljudetail)
+                    baljuDetail.addAll(it.returnBaljudetail())
 
                     setValues()
 
@@ -252,7 +260,12 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         })
     }
 
-    override fun onClickedEdit() {
+    override fun onClickedEdit(count : Int, data : Baljudetail) {
+
+        Log.d("yj","Count : $count")
+
+        dialog.setCount(mBaljubeonho, count, data)
         dialog.show(supportFragmentManager, "EditDialog")
+
     }
 }

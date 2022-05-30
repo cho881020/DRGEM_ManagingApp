@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -121,6 +122,9 @@ class OrderActivity : BaseActivity() {
                                 baljuList.clear()
                                 baljuList.addAll(it.returnBaljubeonho())
 
+                                if(baljuList.size == 0){
+                                    Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                }
                                 setValues()
 
                             }
