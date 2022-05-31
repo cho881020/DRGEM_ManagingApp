@@ -71,7 +71,7 @@ class TransactionViewholderAdapter(
             viewTypeList.add(1)
         } else {
             georaedetailList.clear()
-            georaedetailList.addAll(data.georaedetail)
+            georaedetailList.addAll(data.returnGeoraedetail())
 
             viewTypeList.add(0)
             viewTypeList.add(2)

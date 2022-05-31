@@ -3,6 +3,7 @@ package kr.co.drgem.managingapp.menu.transaction.dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogTransactionBinding
+import kr.co.drgem.managingapp.models.Georaedetail
 
 class TransactionDialog : DialogFragment() {
 
     lateinit var binding: DialogTransactionBinding
-
+    lateinit var georaeData: Georaedetail
+    var viewholderCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,5 +60,12 @@ class TransactionDialog : DialogFragment() {
 
     }
 
+    fun setCount(count: Int, data: Georaedetail) {
+        viewholderCount = count
+        georaeData = data
 
+        Log.d("yj", "setCount $viewholderCount")
+        Log.d("yj", "baljuData $georaeData")
+
+    }
 }

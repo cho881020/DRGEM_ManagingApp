@@ -28,33 +28,6 @@ data class OrderDetailResponse(
         return bigo
     }
 
-    fun getResultcdHP() : String {
-        if(resultcd == null){
-            return "-"
-        }
-        return resultcd
-    }
-
-    fun getRequesttypeHP() : String {
-        if(requesttype == null){
-            return "-"
-        }
-        return requesttype
-    }
-
-    fun getBaljubeonhoHP() : String {
-        if(baljubeonho == null){
-            return "-"
-        }
-        return baljubeonho
-    }
-
-    fun getNappumcheoHP() : String {
-        if(nappumcheo == null){
-            return "-"
-        }
-        return nappumcheo
-    }
 
     fun getGeoraecheomyeongHP() : String {
         if(georaecheomyeong == null){
@@ -87,13 +60,6 @@ data class OrderDetailResponse(
             return "-"
         }
         return nappumjangso
-    }
-
-    fun getResultmsgHP() : String {
-        if(resultmsg == null){
-            return "-"
-        }
-        return resultmsg
     }
 
 

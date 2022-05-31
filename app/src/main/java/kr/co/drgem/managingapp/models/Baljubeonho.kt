@@ -2,9 +2,9 @@ package kr.co.drgem.managingapp.models
 
 data class Baljubeonho(
 
-    val requesttype: String?,
-    val baljuiljastart: String?,
-    val baljuiljaend: String?,
+    val requesttype: String,
+    val baljuiljastart: String,
+    val baljuiljaend: String,
     val georaecheomyeong: String?,   //거래처명.
     val baljubeonho: String?,        //발주번호
     val georaecheocode: String?,     //거래처코드
@@ -15,26 +15,6 @@ data class Baljubeonho(
 
 ) {
 
-    fun getRequesttypeHP() : String {
-        if(requesttype == null){
-            return "-"
-        }
-        return requesttype
-    }
-
-    fun getBaljuiljaStartHP() : String {
-        if(baljuiljastart == null){
-            return "-"
-        }
-        return baljuiljastart
-    }
-
-    fun getBaljuiljaEndHP() : String {
-        if(baljuiljaend == null){
-            return "-"
-        }
-        return baljuiljaend
-    }
 
     fun getGeoraecheomyeongHP() : String {
         if(georaecheomyeong == null){

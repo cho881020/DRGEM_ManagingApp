@@ -3,6 +3,7 @@ package kr.co.drgem.managingapp.menu.transaction.activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.DatePicker
@@ -16,10 +17,10 @@ import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
 import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
 import kr.co.drgem.managingapp.menu.transaction.dialog.TransactionDialog
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
-import kr.co.drgem.managingapp.models.Detailcode
-import kr.co.drgem.managingapp.models.Georaedetail
-import kr.co.drgem.managingapp.models.MasterDataResponse
-import kr.co.drgem.managingapp.models.TranResponse
+import kr.co.drgem.managingapp.models.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,21 +29,18 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     lateinit var binding: ActivityTransactionBinding
     lateinit var mAdapter: TransactionAdapter
     lateinit var detailCode: Detailcode
-    val georaedetail = ArrayList<Georaedetail>()
-    var mList = TranResponse("", "", "", "", "", "", "", "", "", "", georaedetail)
+
+    lateinit  var tranData : TranResponse
 
     val dialogEdit = TransactionDialog()
-//    val dialogDetail = DetailTranDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
 
-        setValues()
         setupEvents()
 
-        setList()
 
         sort()
 
@@ -51,12 +49,10 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     override fun setupEvents() {
 
 
-        val bigo = binding.txtBigo.text
-
-        binding.bigo.setOnClickListener {
+        binding.layoutBigo.setOnClickListener {
             AlertDialog.Builder(mContext)
                 .setTitle("비고 내용 전체")
-                .setMessage(bigo)
+                .setMessage(tranData.getBigoHP())
                 .setNegativeButton("확인", null)
                 .show()
         }
@@ -97,13 +93,51 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
 
         binding.btnFind.setOnClickListener {
-            binding.layoutEmpty.isVisible = false
-            binding.layoutList.isVisible = true
-            binding.layoutInfo.isVisible = true
-            binding.layoutFold.isVisible = true
-            binding.btnSave.isVisible = true
 
-            mAdapter.setList(georaedetail)
+            val inputNum = binding.edtTranNum.text.toString()
+
+            apiList.getRequestTranDetail("02001",inputNum).enqueue(object : Callback<TranResponse>{
+                override fun onResponse(
+                    call: Call<TranResponse>,
+                    response: Response<TranResponse>
+                ) {
+                    if(response.isSuccessful){
+                        response.body()?.let {
+                            tranData = it
+
+
+                            if(it.returnGeoraedetail().size == 0){
+                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            else {
+
+                                setValues()
+                                mAdapter.setList(it.returnGeoraedetail())
+
+                                binding.layoutEmpty.isVisible = false
+                                binding.layoutList.isVisible = true
+                                binding.layoutInfo.isVisible = true
+                                binding.layoutFold.isVisible = true
+                                binding.btnSave.isVisible = true
+
+                            }
+
+
+
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<TranResponse>, t: Throwable) {
+                    Log.d("yj", "거래명세요청실패 : ${t.message}" )
+                }
+
+            })
+
+
+
+
         }
 
 
@@ -125,7 +159,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
         binding.btnTranRemove.setOnClickListener {
-            binding.edtTran.text = null
+            binding.edtTranNum.text = null
         }
 
         binding.btnNameRemove.setOnClickListener {
@@ -137,6 +171,24 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     override fun setValues() {
 
+        binding.georaecheomyeong.text = tranData.getGeoraecheomyeongHP()
+        binding.nappumcheomyeong.text = tranData.getNappumcheomyeongHP()
+        binding.bigo.text = tranData.getBigoHP()
+        binding.txtCount.text = "(${tranData.returnGeoraedetail().size}건)"
+
+
+
+        tranData.returnGeoraedetail().forEach {
+            if(it.jungyojajeyeobu == "Y"){
+                binding.jungyojajeyeobu.isVisible = true
+                binding.serialDetail.isVisible = true
+            }
+            else {
+                binding.jungyojajeyeobu.isVisible = false
+                binding.serialDetail.isVisible = false
+            }
+        }
+
         mAdapter = TransactionAdapter(this)
         binding.recyclerView.adapter = mAdapter
 
@@ -144,7 +196,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
 
         val spinnerCompanyAdapter =
-            MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, masterData.getCompanyCode())
+            MasterDataSpinnerAdapter(
+                mContext,
+                R.layout.spinner_list_item,
+                masterData.getCompanyCode()
+            )
         binding.spinnerCompany.adapter = spinnerCompanyAdapter
 
 
@@ -177,7 +233,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     }
 
 
-
     fun sort() {
 
         var onClickSeq = 0
@@ -194,19 +249,19 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
                 0 -> {
                     binding.imgSeq.setImageResource(R.drawable.dropempty)
-                    mAdapter.setList(mList.georaedetail)
+                    mAdapter.setList(tranData.returnGeoraedetail())
 
                 }
 
                 1 -> {
                     binding.imgSeq.setImageResource(R.drawable.dropdown)
-                    mAdapter.setList(mList.getDownSeq())
+                    mAdapter.setList(tranData.getDownSeq())
 
                 }
 
                 2 -> {
                     binding.imgSeq.setImageResource(R.drawable.dropup)
-                    mAdapter.setList(mList.getUpSeq())
+                    mAdapter.setList(tranData.getUpSeq())
                 }
             }
 
@@ -226,17 +281,17 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
                 0 -> {
                     binding.imgLocation.setImageResource(R.drawable.dropempty)
-                    mAdapter.setList(mList.georaedetail)
+                    mAdapter.setList(tranData.returnGeoraedetail())
                 }
 
                 1 -> {
                     binding.imgLocation.setImageResource(R.drawable.dropdown)
-                    mAdapter.setList(mList.getDownLocation())
+                    mAdapter.setList(tranData.getDownLocation())
                 }
 
                 2 -> {
                     binding.imgLocation.setImageResource(R.drawable.dropup)
-                    mAdapter.setList(mList.getUpLocation())
+                    mAdapter.setList(tranData.getUpLocation())
                 }
             }
 
@@ -244,113 +299,18 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     }
 
 
-    override fun onClickedEdit() {
+    override fun onClickedEdit(count : Int, data : Georaedetail) {
         dialogEdit.show(supportFragmentManager, "dialog")
+
+        dialogEdit.setCount(count, data)
+        dialogEdit.show(supportFragmentManager, "EditDialog")
+
     }
 
 
     override fun onBackPressed() {
 
         backDialog()
-
-    }
-
-    fun setList() {
-
-        georaedetail.add(
-            Georaedetail(
-                "2",
-                "E08-000601-00",
-                "G22042600391",
-                "B22042200003",
-                "G22042600391",
-                "2022-02-03",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "서울",
-            )
-        )
-        georaedetail.add(
-            Georaedetail(
-                "3",
-                "E08-000601-00",
-                "G22042600391",
-                "B22042200003",
-                "G22042600391",
-                "2022-02-03",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "구미",
-            )
-        )
-        georaedetail.add(
-            Georaedetail(
-                "4",
-                "E08-000601-00",
-                "G22042600391",
-                "B22042200003",
-                "G22042600391",
-                "2022-02-03",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "대구",
-            )
-        )
-        georaedetail.add(
-            Georaedetail(
-                "5",
-                "E08-000601-00",
-                "G22042600391",
-                "B22042200003",
-                "G22042600391",
-                "2022-02-03",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "구미",
-            )
-        )
-        georaedetail.add(
-            Georaedetail(
-                "1",
-                "E08-000601-00",
-                "G22042600391",
-                "B22042200003",
-                "G22042600391",
-                "2022-02-03",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "서울",
-            )
-        )
-
-
-
-        mList = TranResponse(
-            "000",
-            "정상처리되었습니다",
-            "G22042600391",
-            "20220203",
-            "01133",
-            "ㅇㅇ전자",
-            "00001",
-            "구미공장",
-            "(구매조건부사업) 연구소 토파즈 정부과제 샘플", "5", georaedetail
-        )
 
     }
 

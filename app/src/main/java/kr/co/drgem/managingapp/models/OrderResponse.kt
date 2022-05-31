@@ -2,8 +2,8 @@ package kr.co.drgem.managingapp.models
 
 data class OrderResponse(
     val baljubeonho: ArrayList<Baljubeonho>?,
-    var resultcd: String?,
-    val resultmsg: String?
+    var resultcd: String,
+    val resultmsg: String
 
 ){
 

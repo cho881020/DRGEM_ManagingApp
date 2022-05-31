@@ -26,7 +26,7 @@ interface APIList {
     fun getRequestTranDetail(
         @Query("requesttype") requesttype : String = "02001",
         @Query("georaemyeongsebeonho") georaemyeongsebeonho : String
-    ) : Call<BasicResponse>
+    ) : Call<TranResponse>
 
     @FormUrlEncoded
     @POST("tablet/tran/detail/register")
