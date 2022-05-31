@@ -28,6 +28,7 @@ class KittingListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
         itemView.setOnClickListener{
             val myIntent = Intent(itemView.context, KittingDetailActivity::class.java)
+            myIntent.putExtra("kittingbeonho",data.getKittingbeonhoHP())
             itemView.context.startActivity(myIntent)
         }
 

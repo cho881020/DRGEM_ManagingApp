@@ -75,7 +75,13 @@ interface APIList {
     ) : Call<KittingResponse>
 
     @GET("tablet/kitting/detail/request")
-    fun getRequestKittingDetail()
+    fun getRequestKittingDetail(
+        @Query("requesttype") requesttype : String = "02502",
+        @Query("kittingbeonho") kittingbeonho : String,
+        @Query("johoejogeon") johoejogeon : String,
+        @Query("migwanri") migwanri : String,
+    ) : Call <KittingDetailResponse>
+
 
     @FormUrlEncoded
     @POST("tablet/delivery/batch/register")

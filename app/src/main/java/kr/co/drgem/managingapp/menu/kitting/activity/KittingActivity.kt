@@ -32,7 +32,6 @@ class KittingActivity : BaseActivity() {
 
 
         setupEvents()
-        setValues()
     }
 
     override fun setupEvents() {
@@ -132,7 +131,6 @@ class KittingActivity : BaseActivity() {
                                 kittingData = it
 
                                 setValues()
-                                mAdapter.setList(it.returnKittingDetail())
 
                                 binding.layoutList.isVisible = true
                                 binding.layoutEmpty.isVisible = false
@@ -155,7 +153,7 @@ class KittingActivity : BaseActivity() {
 
     override fun setValues() {
 
-        mAdapter = KittingListAdapter()
+        mAdapter = KittingListAdapter(kittingData.returnKittingDetail())
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${kittingData.returnKittingDetail().size}건)"

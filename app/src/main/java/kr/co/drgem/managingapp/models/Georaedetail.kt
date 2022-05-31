@@ -98,7 +98,7 @@ data class Georaedetail(
 
 
     fun getJungyojajeyeobuHP() : String {
-        if(jungyojajeyeobu == null){
+        if(jungyojajeyeobu.isNullOrEmpty()){
             return "-"
         }
         return jungyojajeyeobu

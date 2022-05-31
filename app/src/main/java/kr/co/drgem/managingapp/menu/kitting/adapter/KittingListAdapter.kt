@@ -7,9 +7,11 @@ import kr.co.drgem.managingapp.menu.order.viewholder.OrderListViewHolder
 import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.models.Kittingdetail
 
-class KittingListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class KittingListAdapter(
+    val mList : ArrayList<Kittingdetail>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
-    val mList = ArrayList<Kittingdetail>()
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return KittingListViewHolder(parent)
@@ -23,11 +25,5 @@ class KittingListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = mList.size
 
-    fun setList (list : ArrayList<Kittingdetail>){
 
-        mList.clear()
-        mList.addAll(list)
-
-        notifyDataSetChanged()
-    }
 }

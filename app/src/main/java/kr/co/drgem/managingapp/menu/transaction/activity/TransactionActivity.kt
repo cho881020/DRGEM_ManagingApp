@@ -134,10 +134,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 binding.jungyojajeyeobu.isVisible = true
                 binding.serialDetail.isVisible = true
             }
-            else {
-                binding.jungyojajeyeobu.isVisible = false
-                binding.serialDetail.isVisible = false
-            }
         }
 
         mAdapter = TransactionAdapter(this)

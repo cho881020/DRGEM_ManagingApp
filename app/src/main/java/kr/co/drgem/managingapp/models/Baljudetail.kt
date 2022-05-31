@@ -80,7 +80,7 @@ data class Baljudetail(
     }
 
     fun getJungyojajeyeobuHP() : String {
-        if(jungyojajeyeobu == null){
+        if(jungyojajeyeobu.isNullOrEmpty()){
             return "-"
         }
         return jungyojajeyeobu

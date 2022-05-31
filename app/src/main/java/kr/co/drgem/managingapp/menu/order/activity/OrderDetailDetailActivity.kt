@@ -115,9 +115,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
             if(it.jungyojajeyeobu == "Y"){
                 binding.jungyojajeyeobu.isVisible = true
                 binding.serialDetail.isVisible = true
-            }else {
-                binding.jungyojajeyeobu.isVisible = false
-                binding.serialDetail.isVisible = false
             }
         }
 
