@@ -14,6 +14,7 @@ import kr.co.drgem.managingapp.menu.order.adapter.OrderListAdapter
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.MasterDataResponse
 import kr.co.drgem.managingapp.models.OrderResponse
+import kr.co.drgem.managingapp.roomdb.datas.BaljuRoomData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,7 +32,9 @@ class OrderActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order)
 
         setupEvents()
+        setValues()
 
+        getAllBaljubeonhoListFromRoomDB()
     }
 
     override fun setupEvents() {
@@ -125,7 +128,12 @@ class OrderActivity : BaseActivity() {
                                 if(baljuList.size == 0){
                                     Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
                                 }
-                                setValues()
+
+                                setBaljubeonhoListData()
+
+                                clearDbAndInsertAllSearchedData()
+
+
 
                             }
 
@@ -152,6 +160,11 @@ class OrderActivity : BaseActivity() {
         binding.recyclerView.adapter = mOrderAdapter
 
 
+
+    }
+
+    fun setBaljubeonhoListData() {
+
         if(baljuList.size > 0){
             binding.layoutList.isVisible = true
             binding.layoutEmpty.isVisible = false
@@ -159,6 +172,29 @@ class OrderActivity : BaseActivity() {
 
         binding.txtCount.text = "(${baljuList.size}건)"
 
+
+        mOrderAdapter.notifyDataSetChanged()
+
+    }
+
+
+    private fun clearDbAndInsertAllSearchedData() {
+
+        roomDB.baljubeonhoDao().deleteAllSavedBaljubeonhoList()
+
+        roomDB.baljubeonhoDao().insertBaljubeonhoList(baljuList)
+
+        setBaljubeonhoListData()
+
+    }
+
+    fun getAllBaljubeonhoListFromRoomDB() {
+
+        val dbList = roomDB.baljubeonhoDao().getAllSavedBaljubeonhoList()
+
+        baljuList.clear()
+        baljuList.addAll(dbList)
+        setBaljubeonhoListData()
 
     }
 
