@@ -66,7 +66,13 @@ interface APIList {
     fun postRequestOrderReceive()
 
     @GET("tablet/kitting/number/request")
-    fun getRequestKittingNumber()
+    fun getRequestKittingNumber(
+        @Query("requesttype") requesttype : String = "02051",
+        @Query("sijakilja") sijakilja : String,
+        @Query("jongryoilja") jongryoilja : String,
+        @Query("kittingja") kittingja : String,
+        @Query("changgocode") changgocode : String,
+    ) : Call<KittingResponse>
 
     @GET("tablet/kitting/detail/request")
     fun getRequestKittingDetail()

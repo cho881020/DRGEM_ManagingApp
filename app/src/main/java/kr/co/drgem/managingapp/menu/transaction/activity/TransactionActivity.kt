@@ -41,6 +41,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
         setupEvents()
 
+        getRequestTran()
 
         sort()
 
@@ -90,56 +91,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
             ).show()
 
         }
-
-
-        binding.btnFind.setOnClickListener {
-
-            val inputNum = binding.edtTranNum.text.toString()
-
-            apiList.getRequestTranDetail("02001",inputNum).enqueue(object : Callback<TranResponse>{
-                override fun onResponse(
-                    call: Call<TranResponse>,
-                    response: Response<TranResponse>
-                ) {
-                    if(response.isSuccessful){
-                        response.body()?.let {
-                            tranData = it
-
-
-                            if(it.returnGeoraedetail().size == 0){
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
-                            }
-                            else {
-
-                                setValues()
-                                mAdapter.setList(it.returnGeoraedetail())
-
-                                binding.layoutEmpty.isVisible = false
-                                binding.layoutList.isVisible = true
-                                binding.layoutInfo.isVisible = true
-                                binding.layoutFold.isVisible = true
-                                binding.btnSave.isVisible = true
-
-                            }
-
-
-
-
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<TranResponse>, t: Throwable) {
-                    Log.d("yj", "거래명세요청실패 : ${t.message}" )
-                }
-
-            })
-
-
-
-
-        }
-
 
 
         binding.btnBack.setOnClickListener {
@@ -192,8 +143,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         mAdapter = TransactionAdapter(this)
         binding.recyclerView.adapter = mAdapter
 
-        val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
 
+
+        val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
 
         val spinnerCompanyAdapter =
             MasterDataSpinnerAdapter(
@@ -230,6 +182,57 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 }
 
             }
+    }
+
+    fun getRequestTran(){
+
+        binding.btnFind.setOnClickListener {
+
+            val inputNum = binding.edtTranNum.text.toString()
+
+            apiList.getRequestTranDetail("02001",inputNum).enqueue(object : Callback<TranResponse>{
+                override fun onResponse(
+                    call: Call<TranResponse>,
+                    response: Response<TranResponse>
+                ) {
+                    if(response.isSuccessful){
+                        response.body()?.let {
+                            tranData = it
+
+
+                            if(it.returnGeoraedetail().size == 0){
+                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            else {
+
+                                setValues()
+                                mAdapter.setList(it.returnGeoraedetail())
+
+                                binding.layoutEmpty.isVisible = false
+                                binding.layoutList.isVisible = true
+                                binding.layoutInfo.isVisible = true
+                                binding.layoutFold.isVisible = true
+                                binding.btnSave.isVisible = true
+
+                            }
+
+
+
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<TranResponse>, t: Throwable) {
+                    Log.d("yj", "거래명세요청실패 : ${t.message}" )
+                }
+
+            })
+
+
+
+
+        }
     }
 
 

@@ -2,7 +2,9 @@ package kr.co.drgem.managingapp.menu.kitting.activity
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -10,6 +12,11 @@ import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityKittingBinding
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingListAdapter
+import kr.co.drgem.managingapp.models.KittingResponse
+import kr.co.drgem.managingapp.models.TranResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,10 +24,12 @@ class KittingActivity : BaseActivity() {
 
     lateinit var binding : ActivityKittingBinding
     lateinit var mAdapter : KittingListAdapter
+    lateinit  var kittingData : KittingResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kitting)
+
 
         setupEvents()
         setValues()
@@ -39,8 +48,8 @@ class KittingActivity : BaseActivity() {
         binding.txtDateStart.text = dateFormat.format(cal.time)
         binding.txtDateEnd.text = dateFormat.format(cal.time)
 
-        var calStart = ""
-        var calEnd = ""
+        var calStart = dateSet.format(cal.time)
+        var calEnd = dateSet.format(cal.time)
 
         binding.layoutDateStart.setOnClickListener {
 
@@ -91,21 +100,69 @@ class KittingActivity : BaseActivity() {
             binding.layoutEmpty.isVisible = false
         }
 
-        binding.btnCompanyRemove.setOnClickListener {
-            binding.edtCompany.text = null
+        binding.btnKittingjaRemove.setOnClickListener {
+            binding.edtKittingja.text = null
         }
 
-        binding.btnWarehouseRemove.setOnClickListener {
-            binding.edtWarehouse.text = null
+        binding.btnCanggocodeRemove.setOnClickListener {
+            binding.edtChanggocode.text = null
         }
 
         binding.txtTitle.text = HtmlCompat.fromHtml(getString(R.string.kittingName, "홍길동"), HtmlCompat.FROM_HTML_MODE_LEGACY)
 
+
+        binding.btnFind.setOnClickListener {
+
+            val inputKittingja = binding.edtKittingja.text.toString()
+            val inputChanggocode = binding.edtChanggocode.text.toString()
+
+            apiList.getRequestKittingNumber("02501", calStart, calEnd, inputKittingja, inputChanggocode).enqueue(object :
+                Callback<KittingResponse>{
+                override fun onResponse(
+                    call: Call<KittingResponse>,
+                    response: Response<KittingResponse>
+                ) {
+                    if(response.isSuccessful){
+                        response.body()?.let {
+
+                            if(it.returnKittingDetail().size == 0){
+                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            else {
+                                kittingData = it
+
+                                setValues()
+                                mAdapter.setList(it.returnKittingDetail())
+
+                                binding.layoutList.isVisible = true
+                                binding.layoutEmpty.isVisible = false
+
+                            }
+
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<KittingResponse>, t: Throwable) {
+                    Log.d("yj", "키팅번호요청실패 : ${t.message}" )
+                }
+
+            })
+
+        }
     }
 
     override fun setValues() {
 
         mAdapter = KittingListAdapter()
         binding.recyclerView.adapter = mAdapter
+
+        binding.txtCount.text = "(${kittingData.returnKittingDetail().size}건)"
+
     }
+
+
+
+
 }

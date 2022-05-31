@@ -166,7 +166,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edtCompany"
+                        android:id="@+id/edtKittingja"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -175,12 +175,11 @@
                         android:background="@null"
                         android:maxLines="1"
                         android:inputType="text"
-                        android:text="00전자"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnCompanyRemove"
+                        android:id="@+id/btnKittingjaRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -212,7 +211,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edtWarehouse"
+                        android:id="@+id/edtChanggocode"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -221,12 +220,11 @@
                         android:background="@null"
                         android:maxLines="1"
                         android:inputType="text"
-                        android:text="00전자"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnWarehouseRemove"
+                        android:id="@+id/btnCanggocodeRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="7dp"
@@ -312,6 +310,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/txtCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -341,71 +340,58 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:paddingHorizontal="20dp"
+                        android:paddingHorizontal="10dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="17dp"
                             android:text="키팅번호"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="17dp"
-                            android:layout_marginStart="30dp"
                             android:text="키팅등록일"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="17dp"
-                            android:layout_marginStart="30dp"
                             android:text="키팅자"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="17dp"
-                            android:layout_marginStart="47dp"
-                            android:text="출고일"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="17dp"
-                            android:layout_marginStart="46dp"
                             android:text="불출창고"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="17dp"
-                            android:layout_marginStart="46dp"
                             android:text="비고"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="200dp"
                             android:layout_height="17dp"
-                            android:layout_marginStart="46dp"
                             android:text="요청번호"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="200dp"
                             android:layout_height="17dp"
-                            android:layout_marginStart="46dp"
                             android:text="출하요청번호"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
