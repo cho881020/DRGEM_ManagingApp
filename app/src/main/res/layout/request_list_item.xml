@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -10,73 +10,66 @@
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:gravity="center_vertical"
+            android:layout_marginHorizontal="10dp"
             android:orientation="horizontal">
 
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginStart="21dp"
-                android:text="20220402"
+                android:id="@+id/yocheongil"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                tools:text="20220402"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginStart="21dp"
-                android:text="K22042700001"
+                android:id="@+id/yocheongbeonho"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                tools:text="K22042700001"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginStart="21dp"
-                android:text="광명본사"
+                android:id="@+id/yocheongchanggo"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                tools:text="광명창고"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginStart="21dp"
-                android:text="생산자재창고"
+                android:id="@+id/yocheongja"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                tools:text="홍길동"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginStart="21dp"
-                android:text="홍길동"
+                android:id="@+id/bigo"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                tools:text="비고비고"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginStart="21dp"
-                android:text="S22-135-00"
+                android:id="@+id/chulgojisicode"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                tools:text="S22-135-00"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginStart="21dp"
-                android:text="GXR"
+                android:id="@+id/gongheong"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                tools:text="GXR"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginStart="21dp"
-                android:text="뉴스티치 2대 일반 스티치 3대"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
 
 
         </LinearLayout>

@@ -90,7 +90,14 @@ interface APIList {
 
 
     @GET("tablet/request/number/request")
-    fun getRequestRequestNumber()
+    fun getRequestRequestNumber(
+        @Query("requesttype") requesttype : String = "02061",
+        @Query("sijakilja") sijakilja : String,
+        @Query("jongryoilja") jongryoilja : String,
+        @Query("saupjang") saupjang : String,
+        @Query("yocheonchanggocode") yocheonchanggocode : String,
+        @Query("yocheongja") yocheongja : String,
+    ) : Call<RequestResponse>
 
     @GET("tablet/request/detail/request")
     fun getRequestRequestDetail()
