@@ -1,5 +1,9 @@
 package kr.co.drgem.managingapp.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Baljudetail(
     val seq: String?,             //순번
     val pummokcode: String?,     //품목코드
@@ -15,6 +19,7 @@ data class Baljudetail(
 
 
 ){
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
 
     fun getSeqHP() : String {
         if(seq == null){

@@ -104,19 +104,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         binding.baljubeonho.text = "발주번호 - $mBaljubeonho"
         binding.baljubeonho2.text = mBaljubeonho
 
-        binding.baljuil.text = orderDetailData.getBaljuilHP()
-        binding.georaecheocode.text = orderDetailData.getGeoraecheocodeHP()
-        binding.georaecheomyeong.text = orderDetailData.getGeoraecheomyeongHP()
-        binding.bigo.text = orderDetailData.getBigoHP()
-        binding.txtCount.text = "(${baljuDetail.size}건)"
-
-        baljuDetail.forEach {
-            if(it.jungyojajeyeobu == "Y"){
-                binding.jungyojajeyeobu.isVisible = true
-                binding.serialDetail.isVisible = true
-            }
-        }
-
         mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail)
         binding.recyclerView.adapter = mAdapter
 

@@ -1,5 +1,9 @@
 package kr.co.drgem.managingapp.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class OrderDetailResponse(
     val georaecheocode: String?,
     val bigo: String?,
@@ -14,6 +18,7 @@ data class OrderDetailResponse(
     val resultmsg: String?
 ){
 
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
     fun getGeoraecheocodeHP() : String {
         if(georaecheocode == null){
             return "-"
