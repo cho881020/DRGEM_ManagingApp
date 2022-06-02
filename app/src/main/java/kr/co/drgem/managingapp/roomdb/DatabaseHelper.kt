@@ -5,15 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import kr.co.drgem.managingapp.models.Baljubeonho
-import kr.co.drgem.managingapp.roomdb.daos.BaljuDao
 import kr.co.drgem.managingapp.roomdb.daos.BaljubeonhoDao
-import kr.co.drgem.managingapp.roomdb.datas.BaljuRoomData
 
-@Database(entities = [Baljubeonho::class, BaljuRoomData::class], version = 1)
+@Database(entities = [Baljubeonho::class, ], version = 1)
 abstract class DatabaseHelper: RoomDatabase() {
 
     abstract fun baljubeonhoDao() : BaljubeonhoDao
-    abstract fun baljuDao() : BaljuDao
 
     companion object {
         private var instance: DatabaseHelper? = null

@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import kr.co.drgem.managingapp.models.Baljubeonho
-import kr.co.drgem.managingapp.roomdb.datas.BaljuRoomData
 
 @Dao
 interface BaljubeonhoDao {
