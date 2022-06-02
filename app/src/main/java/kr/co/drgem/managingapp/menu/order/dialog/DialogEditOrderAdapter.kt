@@ -4,9 +4,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.models.Baljudetail
 
-class DialogEditOrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    var viewholderCount = 0
+class DialogEditOrderAdapter(
+    val viewholderCount : Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -24,7 +24,4 @@ class DialogEditOrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount() = viewholderCount
 
 
-    fun listCount(count : Int) {
-        viewholderCount = count
-    }
 }

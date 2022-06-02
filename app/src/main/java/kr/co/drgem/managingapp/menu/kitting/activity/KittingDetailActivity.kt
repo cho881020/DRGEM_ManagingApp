@@ -2,15 +2,22 @@ package kr.co.drgem.managingapp.menu.kitting.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Spinner
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityKittingDetailBinding
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingDetailListAdapter
 import kr.co.drgem.managingapp.menu.kitting.dialog.KittingDetailDialog
+import kr.co.drgem.managingapp.models.Baljudetail
+import kr.co.drgem.managingapp.models.Detailcode
 import kr.co.drgem.managingapp.models.KittingDetailResponse
+import kr.co.drgem.managingapp.models.Pummokdetail
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,6 +33,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
     lateinit var mkittingbeonho: String
     var johoejogeon = "0"
     var migwanri = "0"
+    var changgocode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,16 +95,48 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
             getRequestKittingDetail()
         }
 
-        binding.radio2.setOnClickListener {
-            johoejogeon = "2"
+        binding.checkMigwanri.setOnCheckedChangeListener { button, ischecked ->
+            if(ischecked){
+                migwanri = "0"
+            }
+            else{
+                migwanri = "1"
+            }
+
             getRequestKittingDetail()
         }
 
+        val changgoList = ArrayList<Detailcode>()
+        changgoList.add(Detailcode("2001", "자재창고1"))
+        changgoList.add(Detailcode("2014", "자재창고2"))
+
+        val spinnerAdapter = MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, changgoList)
+        binding.spinnerChanggocode.adapter = spinnerAdapter
+
+        binding.spinnerChanggocode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                changgocode = changgoList[position].code
+                Log.d("yj", "창고코드 : $changgocode")
+
+                getRequestKittingDetail()
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
+
+
     }
+
+
 
     fun getRequestKittingDetail() {
 
-        apiList.getRequestKittingDetail("02502", mkittingbeonho, johoejogeon ,migwanri ).enqueue(object : Callback<KittingDetailResponse>{
+        apiList.getRequestKittingDetail("02502", mkittingbeonho, johoejogeon ,migwanri, changgocode).enqueue(object : Callback<KittingDetailResponse>{
             override fun onResponse(
                 call: Call<KittingDetailResponse>,
                 response: Response<KittingDetailResponse>
@@ -121,7 +161,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
     }
 
-    override fun onClickedEdit() {
+    override fun onClickedEdit(count : Int, data: Pummokdetail) {
+
+        dialog.setCount(mkittingbeonho, count, data)
         dialog.show(supportFragmentManager, "Kitting_dialog")
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,17 +25,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="발주번호 - "
+                    android:text="키팅번호 - "
                     android:textColor="@color/color_000000"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/kittingbeonho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="20dp"
-                    android:text="B22042200003"
+                    tools:text="B22042200003"
                     android:textColor="@color/color_3DBBE2"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -55,6 +57,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -69,11 +72,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/pummokcode"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="E08-000601-00"
+                        tools:text="E08-000601-00"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -87,11 +91,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/pummyeong"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="G22042600391"
+                        tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -105,11 +110,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/dobeon_model"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="G22042600391"
+                        tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -136,11 +142,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/saying"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="G22042600391"
+                        tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -154,11 +161,12 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/danwi"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="0004"
+                        tools:text="0004"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -167,16 +175,17 @@
                         android:layout_height="35dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center"
-                        android:text="발주순번"
+                        android:text="위치"
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/location"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="1"
+                        tools:text="1"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -199,16 +208,17 @@
                         android:layout_height="35dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center"
-                        android:text="중요자재\n여부"
+                        android:text="현재고수량"
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/hyeonjaegosuryang"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="Y"
+                        tools:text="116"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -218,16 +228,17 @@
                         android:layout_height="35dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center"
-                        android:text="위치"
+                        android:text="요청수량"
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/yocheongsuryang"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="-"
+                        tools:text="16"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -237,16 +248,17 @@
                         android:layout_height="35dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center"
-                        android:text="입고예정일"
+                        android:text="기출고수량"
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/gichulgosuryang"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="20220203"
+                        tools:text="0"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -261,23 +273,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="35dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center"
-                        android:text="발주수량"
+                        android:text="출고수량"
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/chulgosuryang"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="7"
+                        tools:text="16"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -287,16 +301,17 @@
                         android:layout_height="35dp"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center"
-                        android:text="입고수량"
+                        android:text="중요자재\n여부"
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/jungyojajeyeobu"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        android:text="7"
+                        tools:text="Y"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 

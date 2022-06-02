@@ -1,9 +1,11 @@
 package kr.co.drgem.managingapp.menu.kitting.viewholder
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
@@ -35,10 +37,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
             chulgosuryang.requestFocus()
         }
 
-        btnEdit.setOnClickListener {
-            listener.onClickedEdit()
-        }
-
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
         dobeon_model.text = data.getdobeon_modelHP()
@@ -60,6 +58,23 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
             jungyojajeyeobu.isVisible = false
             btnEdit.isVisible = false
         }
+
+
+        btnEdit.setOnClickListener {
+
+            val inputCount = chulgosuryang.text.toString()
+            Log.d("yj", "inputCount : $inputCount")
+
+            try {
+                val count: Int = inputCount.toInt()
+                listener.onClickedEdit(count, data)
+
+            } catch (e: Exception) {
+                chulgosuryang.text = null
+                Toast.makeText(itemView.context, "입고 수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
     }
 

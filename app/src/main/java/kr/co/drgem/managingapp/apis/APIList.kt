@@ -80,6 +80,7 @@ interface APIList {
         @Query("kittingbeonho") kittingbeonho : String,
         @Query("johoejogeon") johoejogeon : String,
         @Query("migwanri") migwanri : String,
+        @Query("changgocode") changgocode : String,
     ) : Call <KittingDetailResponse>
 
 

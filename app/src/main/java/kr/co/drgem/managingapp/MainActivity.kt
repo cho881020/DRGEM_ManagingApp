@@ -77,6 +77,7 @@ class MainActivity : BaseActivity() {
                        }
                        else {
 
+                           binding.loginMSG.text = br.resultmsg
                            Toast.makeText(mContext, br.resultmsg, Toast.LENGTH_SHORT).show()
                        }
 

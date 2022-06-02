@@ -3,13 +3,10 @@ package kr.co.drgem.managingapp.menu.kitting.dialog
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class DialogEditKittingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DialogEditKittingAdapter(
+    val viewholderCount : Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var viewTypeList: ArrayList<Int> = arrayListOf()
-
-//    init {
-//        setData()
-//    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -22,7 +19,7 @@ class DialogEditKittingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     }
 
-    override fun getItemCount() = 7
+    override fun getItemCount() = viewholderCount
 
 
 }

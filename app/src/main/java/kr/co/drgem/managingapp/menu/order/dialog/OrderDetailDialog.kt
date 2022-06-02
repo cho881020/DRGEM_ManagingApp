@@ -60,9 +60,8 @@ class OrderDetailDialog : DialogFragment() {
 
     fun setValues(){
 
-        mAdapter = DialogEditOrderAdapter()
+        mAdapter = DialogEditOrderAdapter(viewholderCount)
         binding.recyclerView.adapter = mAdapter
-        mAdapter.listCount(viewholderCount)
 
         binding.baljubeonho.text = mBaljubeonho
         binding.pummokcode.text = baljuData.getPummyeongHP()
