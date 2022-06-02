@@ -14,6 +14,7 @@ import kr.co.drgem.managingapp.menu.request.activity.RequestActivity
 import kr.co.drgem.managingapp.menu.stock.activity.StockActivity
 import kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity
 import kr.co.drgem.managingapp.models.MasterDataResponse
+import kr.co.drgem.managingapp.utils.MainDataManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -97,6 +98,7 @@ class MenuActivity : BaseActivity() {
                 if(response.isSuccessful){
                     response.body()?.let {
                         masterData = it
+                        MainDataManager.setMainData(it)
 
 
                         Log.d("yj", "it : $it")

@@ -14,7 +14,6 @@ import kr.co.drgem.managingapp.databinding.ActivityNotDeliveryBinding
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.adapter.NotDeliveryListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.dialog.NotDeliveryDialog
-import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.models.MasterDataResponse
 import java.text.SimpleDateFormat
 import java.util.*

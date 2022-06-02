@@ -1,7 +1,6 @@
 package kr.co.drgem.managingapp.menu.request.activity
 
 import android.app.DatePickerDialog
-import android.app.DownloadManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View

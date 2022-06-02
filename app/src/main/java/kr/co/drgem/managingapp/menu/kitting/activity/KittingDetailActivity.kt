@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Spinner
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -14,7 +13,6 @@ import kr.co.drgem.managingapp.databinding.ActivityKittingDetailBinding
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingDetailListAdapter
 import kr.co.drgem.managingapp.menu.kitting.dialog.KittingDetailDialog
-import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.models.Detailcode
 import kr.co.drgem.managingapp.models.KittingDetailResponse
 import kr.co.drgem.managingapp.models.Pummokdetail
@@ -39,7 +37,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kitting_detail)
 
-        mkittingbeonho = intent.getStringExtra("kittingbeonho")!!
+        mkittingbeonho = intent.getStringExtra("kittingbeonho").toString()
 
         getRequestKittingDetail()
         setupEvents()

@@ -100,7 +100,14 @@ interface APIList {
     ) : Call<RequestResponse>
 
     @GET("tablet/request/detail/request")
-    fun getRequestRequestDetail()
+    fun getRequestRequestDetail(
+        @Query("requesttype") requesttype : String = "02062",
+        @Query("yocheongbeonho") yocheongbeonho : String,
+        @Query("johoejogeon") johoejogeon : String,
+        @Query("migwanri") migwanri : String,
+        @Query("saupjangcode") saupjangcode : String,
+        @Query("yocheonchanggocode") yocheonchanggocode : String,
+    ) :Call<RequestDetailResponse>
 
     @FormUrlEncoded
     @POST("tablet/request/delivery/register")

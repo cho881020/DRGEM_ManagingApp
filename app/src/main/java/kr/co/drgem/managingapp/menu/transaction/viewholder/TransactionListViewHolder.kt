@@ -71,14 +71,18 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
             try {
                 val count: Int = inputCount.toInt()
-                listener.onClickedEdit(count, data)
+                if (count >= 1) {
+                    listener.onClickedEdit(count, data)
+                } else {
+                    Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                }
+
 
             } catch (e: Exception) {
                 ipgosuryang.text = null
-                Toast.makeText(itemView.context, "입고 수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
-
 
     }
 

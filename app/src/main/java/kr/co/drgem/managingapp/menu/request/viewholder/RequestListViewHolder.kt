@@ -25,6 +25,7 @@ class RequestListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
         itemView.setOnClickListener{
             val myIntent = Intent(itemView.context, RequestDetailActivity::class.java)
+            myIntent.putExtra("yocheongbeonho", data.getyocheongbeonhoHP())
             itemView.context.startActivity(myIntent)
         }
 

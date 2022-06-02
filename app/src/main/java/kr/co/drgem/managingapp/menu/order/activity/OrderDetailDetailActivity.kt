@@ -44,7 +44,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_order_detail)
 
-        mBaljubeonho = intent.getStringExtra("baljubeonho")!!
+        mBaljubeonho = intent.getStringExtra("baljubeonho").toString()
 
 
         getRequestOrderDetail()

@@ -79,7 +79,7 @@ data class Pummokdetail(
 
     fun getchulgosuryangHP() : String {
         if(chulgosuryang == null){
-            return "-"
+            return "0"
         }
         return chulgosuryang
     }
