@@ -155,6 +155,7 @@ class OrderActivity : BaseActivity() {
     private fun clearDbAndInsertAllSearchedData() {
 
 
+        mSqliteDB.deleteBaljubeonho()
         for (data in baljuList) {
 
             mSqliteDB.insertBaljubeonho(data)
@@ -163,7 +164,10 @@ class OrderActivity : BaseActivity() {
     }
 
     private fun getAllBaljubeonhoInLocalDB() {
-        mSqliteDB.getAllSavedBaljubeonho()
+        baljuList.clear()
+        baljuList.addAll(mSqliteDB.getAllSavedBaljubeonho())
+
+        setBaljubeonhoListData()
     }
 
     override fun setValues() {

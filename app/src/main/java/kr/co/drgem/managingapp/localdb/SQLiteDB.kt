@@ -11,6 +11,11 @@ class SQLiteDB {
         db = localDB
     }
 
+    fun deleteBaljubeonho() {
+        val query = "DELETE FROM baljubeonho;"
+        db.execSQL(query)
+    }
+
     fun insertBaljubeonho(data: Baljubeonho) {
 
         val query = "INSERT INTO baljubeonho ('baljuiljastart', " +
@@ -42,7 +47,21 @@ class SQLiteDB {
         val query = "SELECT * FROM baljubeonho;"
         val c = db.rawQuery(query,null)
         while(c.moveToNext()){
-            System.out.println("txt : "+c.getString(c.getColumnIndex("baljubeonho")));
+
+            list.add(
+                Baljubeonho(
+                    "",
+                    c.getString(c.getColumnIndex("baljuiljastart")),
+                    c.getString(c.getColumnIndex("baljuiljaend")),
+                    c.getString(c.getColumnIndex("georaecheomyeong")),
+                    c.getString(c.getColumnIndex("baljubeonho")),
+                    c.getString(c.getColumnIndex("georaecheocode")),
+                    c.getString(c.getColumnIndex("baljuil")),
+                    c.getString(c.getColumnIndex("nappumjangso")),
+                    c.getString(c.getColumnIndex("bigo"))
+                )
+            )
+
         }
 
         return list
