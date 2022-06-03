@@ -136,8 +136,11 @@ interface APIList {
     @POST("tablet/location/register")
     fun postRequestLocation()
 
-    @GET("tablet/productinfo/request")
-    fun getRequestProductinfo()
+    @GET("tablet/product-info/request")
+    fun getRequestProductinfo(
+        @Query("requesttype") requesttype : String = "02091",
+        @Query("pummokcode") pummokcode : String,
+    ):Call<ProductInfoResponse>
 
     @FormUrlEncoded
     @POST("tablet/stock/register")

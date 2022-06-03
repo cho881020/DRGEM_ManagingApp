@@ -12,6 +12,8 @@ data class Pummokdetail(
     val gichulgosuryang: String?,        //기출고수량
     val chulgosuryang: String?,          //출고수량
     val jungyojajeyeobu: String?,        //중요자재여부
+
+
 ) {
 
     fun getPummokcodeHP() : String {

@@ -170,7 +170,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="품명"
+                    android:text="품목코드"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
@@ -183,7 +183,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edtProduct"
+                        android:id="@+id/pummokcode"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

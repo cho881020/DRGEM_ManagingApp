@@ -40,7 +40,7 @@ class LocationActivity : BaseActivity() {
         }
 
         binding.btnProductRemove.setOnClickListener {
-            binding.edtProduct.text = null
+            binding.pummokcode.text = null
         }
 
 
