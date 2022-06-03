@@ -53,6 +53,7 @@ class DBHelper(
                 "baljusuryang text," +
                 "ipgoyejeongil text," +
                 "giipgosuryang text," +
+                "ipgosuryang text," +
                 "jungyojajeyeobu text," +
                 "location text" +
                 ");"

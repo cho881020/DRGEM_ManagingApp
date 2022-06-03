@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.order.viewholder
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,16 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.localdb.SQLiteDB
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.models.Baljudetail
 
 class OrderDetailListViewHolder(
+    val mContext: Context,
     parent: ViewGroup,
     val listener: OrderDetailEditListener,
 ) : RecyclerView.ViewHolder(
@@ -46,7 +51,7 @@ class OrderDetailListViewHolder(
         ipgoyejeongil.text = data.getIpgoyejeongilHP()
         giipgosuryang.text = data.getGiipgosuryangHP()
         jungyojajeyeobu.text = data.getJungyojajeyeobuHP()
-
+        edtCount.setText(data.ipgosuryang)
 
 
 
@@ -84,5 +89,13 @@ class OrderDetailListViewHolder(
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        edtCount.addTextChangedListener {
+
+            data.ipgosuryang = edtCount.text.toString()
+            (mContext as BaseActivity).mSqliteDB.updateBaljuDetail(data)
+
+        }
+
     }
 }

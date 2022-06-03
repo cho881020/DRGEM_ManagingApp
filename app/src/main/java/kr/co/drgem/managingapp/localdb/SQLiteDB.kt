@@ -177,6 +177,7 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("baljusuryang")),
                     c.getString(c.getColumnIndex("ipgoyejeongil")),
                     c.getString(c.getColumnIndex("giipgosuryang")),
+                    c.getString(c.getColumnIndex("ipgosuryang")),
                     c.getString(c.getColumnIndex("jungyojajeyeobu")),
                     c.getString(c.getColumnIndex("location"))
                 )
@@ -185,6 +186,11 @@ class SQLiteDB {
         }
 
         return list
+    }
+
+    fun updateBaljuDetail(data: Baljudetail) {
+        val query = "UPDATE baljudetail SET ipgosuryang='${data.ipgosuryang}' WHERE pummokcode = '${data.pummokcode}'"
+        db.execSQL(query)
     }
 
 
