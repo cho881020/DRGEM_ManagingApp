@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kr.co.drgem.managingapp.apis.APIList
 import kr.co.drgem.managingapp.apis.ServerAPI
-import kr.co.drgem.managingapp.roomdb.DatabaseHelper
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -14,7 +13,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var apiList: APIList
 
-    lateinit var roomDB: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +21,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
         val retrofit = ServerAPI.getRetrofit(mContext)
         apiList = retrofit.create(APIList::class.java)
-
-        roomDB = DatabaseHelper.getInstance(mContext)
 
     }
 

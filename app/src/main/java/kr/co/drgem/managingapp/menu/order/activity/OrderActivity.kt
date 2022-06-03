@@ -14,7 +14,6 @@ import kr.co.drgem.managingapp.menu.order.adapter.OrderListAdapter
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.MasterDataResponse
 import kr.co.drgem.managingapp.models.OrderResponse
-import kr.co.drgem.managingapp.roomdb.datas.BaljuRoomData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
