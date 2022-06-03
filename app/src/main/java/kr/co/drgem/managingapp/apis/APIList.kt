@@ -114,7 +114,16 @@ interface APIList {
     fun postRequestRequestDelivery()
 
     @GET("tablet/not-delivery/detail/request")
-    fun getRequestNotDeliveryDetail()
+    fun getRequestNotDeliveryDetail(
+        @Query("requesttype") requesttype : String = "02071",
+        @Query("sijakilja") sijakilja : String,
+        @Query("jongryoilja") jongryoilja : String,
+        @Query("saupjang") saupjang : String,
+        @Query("yocheongchanggocode") yocheonchanggocode : String,
+        @Query("yocheongja") yocheongja : String,
+        @Query("yocheongpummok") yocheongpummok : String,
+        @Query("migwanri") migwanri : String,
+    ) :Call<NotDeliveryResponse>
 
     @FormUrlEncoded
     @POST("tablet/not-delivery/delivery/register")

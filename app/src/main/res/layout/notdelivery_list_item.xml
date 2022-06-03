@@ -1,159 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/yocheongil"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="14"
+            android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
-            android:text="20220402"
+            android:id="@+id/yocheongbeonho"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="G22042600391"
             android:textSize="12dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/color_000000"/>
+        <TextView
+            android:id="@+id/yocheongchanggo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="G22042600391"
+            android:textSize="12dp"
+            android:textColor="@color/color_000000"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/yocheongja"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="K22042700001"
+            android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
-            android:text="일지매"
+            android:id="@+id/pummokcode"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="G22042600391"
             android:textSize="12dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/color_000000"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
-            android:text="B11-101-A000-00"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
+            android:id="@+id/pummyeong"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
+            android:id="@+id/dobeon_model"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
+            android:id="@+id/saying"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
+        <TextView
+            android:id="@+id/danwi"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
+            android:id="@+id/location"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="광명창고"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/hyeonjaegosuryang"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:text="3"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
+            android:id="@+id/yocheongsuryang"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:text="3"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
-            android:text="3"
+            android:id="@+id/gichulgosuryang"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Y"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
-        <EditText
-            android:id="@+id/edtCount"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="21dp"
-            android:maxLines="1"
-            android:inputType="number"
-            android:text="1"
-            android:selectAllOnFocus="true"
-            android:imeOptions="actionNext"
-            android:textSize="12dp"
-            android:gravity="center"
-            android:background="@drawable/light_gray_box"
-            android:textColor="@color/black" />
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/chulgosuryang"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:maxLines="1"
+                android:inputType="number"
+                android:text="1"
+                android:selectAllOnFocus="true"
+                android:imeOptions="actionNext"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:background="@drawable/light_gray_box"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
-            android:text="내외산업 WBS 32"
+            android:id="@+id/jungyojajeyeobu"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Y"
             android:textSize="12dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/btnEdit"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="21dp"
-            android:visibility="visible"
-            android:gravity="center"
-            android:text="정보입력"
-            android:textSize="12dp"
-            android:background="@drawable/btn_light_gray"
-            android:textColor="@color/color_9A9A9A" />
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/btnEdit"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:text="정보입력"
+                android:textSize="12dp"
+                android:background="@drawable/btn_light_gray"
+                android:textColor="@color/color_9A9A9A" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
-            android:text="자재창고1"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
+        </LinearLayout>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginStart="21dp"
-            android:text="생산자재창고"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
 
 
     </LinearLayout>

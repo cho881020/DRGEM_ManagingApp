@@ -2,12 +2,12 @@ package kr.co.drgem.managingapp.menu.notdelivery.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.location.viewholder.LocationListViewHolder
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.viewholder.NotDeliveryListViewHolder
-import kr.co.drgem.managingapp.menu.order.viewholder.OrderDetailListViewHolder
+import kr.co.drgem.managingapp.models.PummokdetailDelivery
 
 class NotDeliveryListAdapter(
+    val mList : ArrayList<PummokdetailDelivery>,
     val listener : NotDeliveryEditListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -18,11 +18,11 @@ class NotDeliveryListAdapter(
 
         when (holder) {
             is NotDeliveryListViewHolder -> {
-                holder.bind()
+                holder.bind(mList[position])
             }
         }
 
     }
 
-    override fun getItemCount() = 3
+    override fun getItemCount() = mList.size
 }
