@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.localdb
 
+import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import kr.co.drgem.managingapp.models.Baljubeonho
@@ -18,28 +19,18 @@ class SQLiteDB {
     }
 
     fun insertBaljubeonho(data: Baljubeonho) {
+        val values = ContentValues()
+        values.put("baljuiljastart",data.baljuiljastart)
+        values.put("baljuiljaend",data.baljuiljaend)
+        values.put("georaecheomyeong",data.georaecheomyeong)
+        values.put("baljubeonho",data.baljubeonho)
+        values.put("georaecheocode",data.georaecheocode)
+        values.put("baljuil",data.baljuil)
+        values.put("nappumjangso",data.nappumjangso)
+        values.put("bigo",data.bigo)
 
-        val query = "INSERT INTO baljubeonho (" +
-                "'baljuiljastart', " +
-                "'baljuiljaend', " +
-                "'georaecheomyeong', " +
-                "'baljubeonho', " +
-                "'georaecheocode', " +
-                "'baljuil', " +
-                "'nappumjangso', " +
-                "'bigo') " +
-                "values (" +
-                "'${data.baljuiljastart}', " +
-                "'${data.baljuiljaend}', " +
-                "'${data.georaecheomyeong}', " +
-                "'${data.baljubeonho}', " +
-                "'${data.georaecheocode}', " +
-                "'${data.baljuil}', " +
-                "'${data.nappumjangso}', " +
-                "'${data.bigo}' " +
-                ");"
 
-        db.execSQL(query)
+        db.insert("baljubeonho",null,values)
 
     }
 
@@ -75,33 +66,20 @@ class SQLiteDB {
     }
 
     fun insertOrderDetail(data: OrderDetailResponse) {
+        val values = ContentValues()
+        values.put("georaecheocode",data.georaecheocode)
+        values.put("bigo",data.bigo)
+        values.put("resultcd",data.resultcd)
+        values.put("requesttype",data.requesttype)
+        values.put("baljubeonho",data.baljubeonho)
+        values.put("nappumcheo",data.nappumcheo)
+        values.put("georaecheomyeong",data.georaecheomyeong)
+        values.put("baljuil",data.baljuil)
+        values.put("nappumjangso",data.nappumjangso)
+        values.put("resultmsg",data.resultmsg)
 
-        val query = "INSERT INTO orderdetail (" +
-                "'georaecheocode', " +
-                "'bigo', " +
-                "'resultcd', " +
-                "'requesttype', " +
-                "'baljubeonho', " +
-                "'nappumcheo', " +
-                "'georaecheomyeong', " +
-                "'baljuil', " +
-                "'nappumjangso', " +
-                "'resultmsg') " +
-                "values (" +
-                "'${data.georaecheocode}', " +
-                "'${data.bigo}', " +
-                "'${data.resultcd}', " +
-                "'${data.requesttype}', " +
-                "'${data.baljubeonho}', " +
-                "'${data.nappumcheo}', " +
-                "'${data.georaecheomyeong}', " +
-                "'${data.baljuil}', " +
-                "'${data.nappumjangso}', " +
-                "'${data.resultmsg}' " +
-                ");"
 
-        db.execSQL(query)
-
+        db.insert("orderdetail",null,values)
     }
 
     fun getSavedOrderDetail() : ArrayList<OrderDetailResponse> {
