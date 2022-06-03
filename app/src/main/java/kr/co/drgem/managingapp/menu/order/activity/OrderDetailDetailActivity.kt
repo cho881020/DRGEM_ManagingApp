@@ -168,8 +168,12 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
     fun getRequestOrderDetail() {
 
         val savedOrderDetailList = mSqliteDB.getSavedOrderDetail()
-        if (savedOrderDetailList.size > 0) {
+        if (savedOrderDetailList.size > 0 && savedOrderDetailList[0].baljubeonho == mBaljubeonho) {
             orderDetailData = savedOrderDetailList[0]
+            baljuDetail.clear()
+            baljuDetail.addAll(orderDetailData.returnBaljudetail())
+
+
             setOrderDetailDataToUI()
         } else {
             apiList.getRequestOrderDetail("02012", mBaljubeonho)
@@ -201,6 +205,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
                 })
         }
+
 
 
     }
