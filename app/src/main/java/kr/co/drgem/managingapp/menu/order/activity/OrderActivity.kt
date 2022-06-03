@@ -33,7 +33,7 @@ class OrderActivity : BaseActivity() {
         setupEvents()
         setValues()
 
-//        getAllBaljubeonhoListFromRoomDB()
+        getAllBaljubeonhoInLocalDB()
     }
 
     override fun setupEvents() {
@@ -160,6 +160,10 @@ class OrderActivity : BaseActivity() {
             mSqliteDB.insertBaljubeonho(data)
 
         }
+    }
+
+    private fun getAllBaljubeonhoInLocalDB() {
+        mSqliteDB.getAllSavedBaljubeonho()
     }
 
     override fun setValues() {

@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.localdb
 
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import kr.co.drgem.managingapp.models.Baljubeonho
 
@@ -22,16 +23,29 @@ class SQLiteDB {
                 "'bigo') " +
                 "values (" +
                 "'${data.baljuiljastart}', " +
+                "'${data.baljuiljaend}', " +
                 "'${data.georaecheomyeong}', " +
                 "'${data.baljubeonho}', " +
                 "'${data.georaecheocode}', " +
                 "'${data.baljuil}', " +
                 "'${data.nappumjangso}', " +
-                "'${data.bigo}', " +
+                "'${data.bigo}' " +
                 ");"
 
         db.execSQL(query)
 
+    }
+
+    fun getAllSavedBaljubeonho() : ArrayList<Baljubeonho> {
+        val list = ArrayList<Baljubeonho>()
+
+        val query = "SELECT * FROM baljubeonho;"
+        val c = db.rawQuery(query,null)
+        while(c.moveToNext()){
+            System.out.println("txt : "+c.getString(c.getColumnIndex("baljubeonho")));
+        }
+
+        return list
     }
 
 }
