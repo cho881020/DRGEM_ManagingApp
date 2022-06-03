@@ -9,7 +9,7 @@ data class OrderDetailResponse(
     val nappumcheo: String?,
     val georaecheomyeong: String?,
     val baljuil: String?,
-    val baljudetail: ArrayList<Baljudetail>?,
+    val baljudetail: ArrayList<Baljudetail>? ,
     val nappumjangso: String?,
     val resultmsg: String?
 ){

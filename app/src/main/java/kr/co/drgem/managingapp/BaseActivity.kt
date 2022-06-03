@@ -2,11 +2,13 @@ package kr.co.drgem.managingapp
 
 import android.content.Context
 import android.content.DialogInterface
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kr.co.drgem.managingapp.apis.APIList
 import kr.co.drgem.managingapp.apis.ServerAPI
-import kr.co.drgem.managingapp.roomdb.DatabaseHelper
+import kr.co.drgem.managingapp.localdb.DBHelper
+import kr.co.drgem.managingapp.localdb.SQLiteDB
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -14,7 +16,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var apiList: APIList
 
-    lateinit var roomDB: DatabaseHelper
+    lateinit var mSqliteDB : SQLiteDB
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +28,10 @@ abstract class BaseActivity : AppCompatActivity() {
         val retrofit = ServerAPI.getRetrofit(mContext)
         apiList = retrofit.create(APIList::class.java)
 
-        roomDB = DatabaseHelper.getInstance(mContext)
+        val dbHelper = DBHelper(mContext, "drgemdb.db", null, 1)
+        mSqliteDB = SQLiteDB()
+        mSqliteDB.makeDb(dbHelper.writableDatabase)
+
 
     }
 
