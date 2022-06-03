@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.apis
 
+import android.location.Location
 import kr.co.drgem.managingapp.models.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -130,7 +131,12 @@ interface APIList {
     fun postRequestNotDeliveryDelivery()
 
     @GET("tablet/location/request")
-    fun getRequestLocation()
+    fun getRequestLocation(
+        @Query("requesttype") requesttype : String = "02081",
+        @Query("changgocode") changgocode : String,
+        @Query("location") location : String,
+        @Query("pummyeong") pummyeong : String,
+    ) :Call<LocationResponse>
 
     @FormUrlEncoded
     @POST("tablet/location/register")
