@@ -34,7 +34,7 @@ class OrderActivity : BaseActivity() {
         setupEvents()
         setValues()
 
-        getAllBaljubeonhoListFromRoomDB()
+//        getAllBaljubeonhoListFromRoomDB()
     }
 
     override fun setupEvents() {
@@ -131,7 +131,7 @@ class OrderActivity : BaseActivity() {
 
                                 setBaljubeonhoListData()
 
-                                clearDbAndInsertAllSearchedData()
+//                                clearDbAndInsertAllSearchedData()
 
 
 
@@ -178,24 +178,24 @@ class OrderActivity : BaseActivity() {
     }
 
 
-    private fun clearDbAndInsertAllSearchedData() {
-
-        roomDB.baljubeonhoDao().deleteAllSavedBaljubeonhoList()
-
-        roomDB.baljubeonhoDao().insertBaljubeonhoList(baljuList)
-
-        setBaljubeonhoListData()
-
-    }
-
-    fun getAllBaljubeonhoListFromRoomDB() {
-
-        val dbList = roomDB.baljubeonhoDao().getAllSavedBaljubeonhoList()
-
-        baljuList.clear()
-        baljuList.addAll(dbList)
-        setBaljubeonhoListData()
-
-    }
+//    private fun clearDbAndInsertAllSearchedData() {
+//
+//        roomDB.baljubeonhoDao().deleteAllSavedBaljubeonhoList()
+//
+//        roomDB.baljubeonhoDao().insertBaljubeonhoList(baljuList)
+//
+//        setBaljubeonhoListData()
+//
+//    }
+//
+//    fun getAllBaljubeonhoListFromRoomDB() {
+//
+//        val dbList = roomDB.baljubeonhoDao().getAllSavedBaljubeonhoList()
+//
+//        baljuList.clear()
+//        baljuList.addAll(dbList)
+//        setBaljubeonhoListData()
+//
+//    }
 
 }
