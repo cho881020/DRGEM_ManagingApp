@@ -28,28 +28,28 @@ import kotlin.collections.ArrayList
 
 class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
-    lateinit var binding : ActivityOrderDetailBinding
-    lateinit var mAdapter : OrderDetailListAdapter
-    lateinit var orderDetailData : OrderDetailResponse
+    lateinit var binding: ActivityOrderDetailBinding
+    lateinit var mAdapter: OrderDetailListAdapter
+    lateinit var orderDetailData: OrderDetailResponse
 
     val dialog = OrderDetailDialog()
     val baljuDetail = ArrayList<Baljudetail>()
 
     val mBaljuList = ArrayList<BaljuData>()
 
-    lateinit var mBaljubeonho : String
+    lateinit var mBaljubeonho: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_order_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_order_detail)
 
         mBaljubeonho = intent.getStringExtra("baljubeonho").toString()
 
 
-        getRequestOrderDetail()
-
-
         setupEvents()
+        setValues()
+
+        getRequestOrderDetail()
 
 
 
@@ -75,10 +75,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         var calDate = ""
         binding.layoutDate.setOnClickListener {
 
-            val date = object  : DatePickerDialog.OnDateSetListener{
+            val date = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    cal.set(year,month,dayOfMonth)
+                    cal.set(year, month, dayOfMonth)
 
                     calDate = dateServer.format(cal.time)
                     binding.txtDate.text = dateFormat.format(cal.time)
@@ -101,31 +101,18 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
     override fun setValues() {
 
-        binding.baljubeonho.text = "발주번호 - $mBaljubeonho"
-        binding.baljubeonho2.text = mBaljubeonho
-
-        binding.baljuil.text = orderDetailData.getBaljuilHP()
-        binding.georaecheocode.text = orderDetailData.getGeoraecheocodeHP()
-        binding.georaecheomyeong.text = orderDetailData.getGeoraecheomyeongHP()
-        binding.bigo.text = orderDetailData.getBigoHP()
-        binding.txtCount.text = "(${baljuDetail.size}건)"
-
-        baljuDetail.forEach {
-            if(it.jungyojajeyeobu == "Y"){
-                binding.jungyojajeyeobu.isVisible = true
-                binding.serialDetail.isVisible = true
-            }
-        }
-
         mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail)
         binding.recyclerView.adapter = mAdapter
-
 
 
         val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
 
         val spinnerCompanyAdapter =
-            MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, masterData.getCompanyCode())
+            MasterDataSpinnerAdapter(
+                mContext,
+                R.layout.spinner_list_item,
+                masterData.getCompanyCode()
+            )
         binding.spinnerCompany.adapter = spinnerCompanyAdapter
 
 
@@ -158,37 +145,77 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
     }
 
-    fun getRequestOrderDetail(){
+    fun setOrderDetailDataToUI() {
 
-        apiList.getRequestOrderDetail("02012",mBaljubeonho).enqueue(object : Callback<OrderDetailResponse>{
-            override fun onResponse(
-                call: Call<OrderDetailResponse>,
-                response: Response<OrderDetailResponse>
-            ) {
+        binding.baljubeonho.text = "발주번호 - $mBaljubeonho"
+        binding.baljubeonho2.text = mBaljubeonho
 
-                response.body()?.let {
+        binding.baljuil.text = orderDetailData.getBaljuilHP()
+        binding.georaecheocode.text = orderDetailData.getGeoraecheocodeHP()
+        binding.georaecheomyeong.text = orderDetailData.getGeoraecheomyeongHP()
+        binding.bigo.text = orderDetailData.getBigoHP()
+        binding.txtCount.text = "(${baljuDetail.size}건)"
 
-                    orderDetailData = it
-
-                    baljuDetail.clear()
-                    baljuDetail.addAll(it.returnBaljudetail())
-
-                    setValues()
-
-                }
+        baljuDetail.forEach {
+            if (it.jungyojajeyeobu == "Y") {
+                binding.jungyojajeyeobu.isVisible = true
+                binding.serialDetail.isVisible = true
             }
+        }
 
-            override fun onFailure(call: Call<OrderDetailResponse>, t: Throwable) {
-
-                Log.d("yj", "OrderDetail 실패 : ${t.message}")
-            }
-
-        })
     }
 
-    override fun onClickedEdit(count : Int, data : Baljudetail) {
+    fun getRequestOrderDetail() {
 
-        Log.d("yj","Count : $count")
+        val savedOrderDetailList = mSqliteDB.getSavedOrderDetail()
+        if (savedOrderDetailList.size > 0) {
+            orderDetailData = savedOrderDetailList[0]
+            setOrderDetailDataToUI()
+        } else {
+            apiList.getRequestOrderDetail("02012", mBaljubeonho)
+                .enqueue(object : Callback<OrderDetailResponse> {
+                    override fun onResponse(
+                        call: Call<OrderDetailResponse>,
+                        response: Response<OrderDetailResponse>
+                    ) {
+
+                        response.body()?.let {
+
+                            orderDetailData = it
+
+                            baljuDetail.clear()
+                            baljuDetail.addAll(it.returnBaljudetail())
+
+                            setOrderDetailDataToUI()
+
+
+                            clearAndSaveDataToDB()
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<OrderDetailResponse>, t: Throwable) {
+
+                        Log.d("yj", "OrderDetail 실패 : ${t.message}")
+                    }
+
+                })
+        }
+
+
+    }
+
+    fun clearAndSaveDataToDB() {
+
+        mSqliteDB.deleteOrderDetail()
+
+        mSqliteDB.insertOrderDetail(orderDetailData)
+
+    }
+
+    override fun onClickedEdit(count: Int, data: Baljudetail) {
+
+        Log.d("yj", "Count : $count")
 
         dialog.setCount(mBaljubeonho, count, data)
         dialog.show(supportFragmentManager, "EditDialog")

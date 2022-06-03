@@ -24,6 +24,22 @@ class DBHelper(
                 ");"
 
         db.execSQL(sql)
+
+        val sql2 = "CREATE TABLE if not exists orderdetail(" +
+                "id integer primary key autoincrement," +
+                "georaecheocode text," +
+                "bigo text," +
+                "resultcd text," +
+                "requesttype text," +
+                "baljubeonho text," +
+                "nappumcheo text," +
+                "georaecheomyeong text," +
+                "baljuil text," +
+                "nappumjangso text," +
+                "resultmsg text" +
+                ");"
+
+        db.execSQL(sql2)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
