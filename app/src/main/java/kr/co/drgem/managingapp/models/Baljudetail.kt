@@ -21,6 +21,8 @@ data class Baljudetail(
 ){
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 
+    var orderDetailLocalDbId : Int? = 0
+
     fun getSeqHP() : String {
         if(seq == null){
             return "-"

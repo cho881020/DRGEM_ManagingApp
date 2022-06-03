@@ -8,12 +8,14 @@ import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.models.OrderDetailResponse
 import kr.co.drgem.managingapp.roomdb.converters.BaljuDetailTypeConverter
 import kr.co.drgem.managingapp.roomdb.daos.BaljubeonhoDao
+import kr.co.drgem.managingapp.roomdb.daos.OrderDetailResponseDao
 
 @Database(entities = [Baljubeonho::class, OrderDetailResponse::class, Baljudetail::class], version = 1,)
 @TypeConverters(BaljuDetailTypeConverter::class)
 abstract class DatabaseHelper: RoomDatabase() {
 
     abstract fun baljubeonhoDao() : BaljubeonhoDao
+    abstract fun orderDetailResponseDao() : OrderDetailResponseDao
 
 
     companion object {

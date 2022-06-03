@@ -50,6 +50,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
 
         setupEvents()
+        setValues()
 
 
 
@@ -142,6 +143,26 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
             }
 
+        getAllBaljubeonhoListFromRoomDB()
+    }
+
+
+    fun setOrderDetailDataToUi() {
+
+        binding.baljuil.text = orderDetailData.getBaljuilHP()
+        binding.georaecheocode.text = orderDetailData.getGeoraecheocodeHP()
+        binding.georaecheomyeong.text = orderDetailData.getGeoraecheomyeongHP()
+        binding.bigo.text = orderDetailData.getBigoHP()
+        binding.txtCount.text = "(${baljuDetail.size}건)"
+
+        baljuDetail.forEach {
+            if(it.jungyojajeyeobu == "Y"){
+                binding.jungyojajeyeobu.isVisible = true
+                binding.serialDetail.isVisible = true
+            }
+        }
+
+        mAdapter.notifyDataSetChanged()
     }
 
 
@@ -160,8 +181,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
                     baljuDetail.clear()
                     baljuDetail.addAll(it.returnBaljudetail())
 
-                    setValues()
+                    setOrderDetailDataToUi()
 
+                    clearDbAndInsertAllSearchedData()
                 }
             }
 
@@ -181,4 +203,32 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         dialog.show(supportFragmentManager, "EditDialog")
 
     }
+
+
+    private fun clearDbAndInsertAllSearchedData() {
+
+        roomDB.orderDetailResponseDao().deleteAllSavedOrderDetailResponse()
+
+        roomDB.orderDetailResponseDao().insertOrderDetailResponse(orderDetailData)
+
+        setOrderDetailDataToUi()
+
+    }
+
+    fun getAllBaljubeonhoListFromRoomDB() {
+
+        val dbList = roomDB.orderDetailResponseDao().getAllSavedOrderDetailResponse()
+
+        if (dbList != null) {
+            orderDetailData = dbList
+
+            baljuDetail.clear()
+            baljuDetail.addAll(dbList.returnBaljudetail())
+
+            setOrderDetailDataToUi()
+        }
+
+
+    }
+
 }
