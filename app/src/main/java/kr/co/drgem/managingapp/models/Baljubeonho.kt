@@ -19,42 +19,42 @@ data class Baljubeonho(
 ) {
 
     fun getGeoraecheomyeongHP() : String {
-        if(georaecheomyeong == null){
+        if(georaecheomyeong == null || georaecheomyeong =="null"){
             return "-"
         }
         return georaecheomyeong
     }
 
     fun getBaljubeonhoHP() : String {
-        if(baljubeonho == null){
+        if(baljubeonho == null|| baljubeonho =="null"){
             return "-"
         }
         return baljubeonho
     }
 
     fun getGeoraecheocodeHP() : String {
-        if(georaecheocode == null){
+        if(georaecheocode == null|| georaecheocode =="null"){
             return "-"
         }
         return georaecheocode
     }
 
     fun getBaljuilHP() : String {
-        if(baljuil == null){
+        if(baljuil == null|| baljuil =="null"){
             return "-"
         }
         return baljuil
     }
 
     fun getNappumjangsoHP() : String {
-        if(nappumjangso == null){
+        if(nappumjangso == null|| nappumjangso =="null"){
             return "-"
         }
         return nappumjangso
     }
 
     fun getbigoHP() : String? {
-        if(bigo == null){
+        if(bigo == null|| bigo =="null"){
             return "-"
         }
         return bigo
