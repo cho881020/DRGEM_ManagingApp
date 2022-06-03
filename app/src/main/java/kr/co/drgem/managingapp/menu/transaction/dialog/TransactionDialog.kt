@@ -18,6 +18,7 @@ class TransactionDialog : DialogFragment() {
 
     lateinit var binding: DialogTransactionBinding
     lateinit var georaeData: Georaedetail
+
     var viewholderCount = 0
 
     override fun onCreateView(
@@ -55,8 +56,21 @@ class TransactionDialog : DialogFragment() {
 
     fun setValues() {
 
-        val mAdapter = DialogEditTranAdapter()
+        val mAdapter = DialogEditTranAdapter(viewholderCount)
         binding.recyclerView.adapter = mAdapter
+
+        binding.baljubeonho.text = georaeData.getBaljubeonhoHP()
+        binding.pummokcode.text = georaeData.getPummokcodeHP()
+        binding.pummyeong.text = georaeData.getPummyeongHP()
+        binding.dobeonModel.text = georaeData.getDobeonModelHP()
+        binding.saying.text = georaeData.getSayingHP()
+        binding.balhudanwi.text = georaeData.getBalhudanwiHP()
+        binding.seq.text = georaeData.getSeqHP()
+        binding.jungyojajeyeobu.text = georaeData.getJungyojajeyeobuHP()
+        binding.location.text = georaeData.getLocationHP()
+        binding.ipgoyejeongil.text = georaeData.getIpgosuryangHP()
+        binding.baljusuryang.text = georaeData.getBaljusuryangHP()
+        binding.ipgosuryang.text = viewholderCount.toString()
 
     }
 

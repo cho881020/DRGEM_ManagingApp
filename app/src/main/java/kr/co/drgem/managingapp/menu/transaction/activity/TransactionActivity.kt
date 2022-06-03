@@ -300,9 +300,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     override fun onClickedEdit(count : Int, data : Georaedetail) {
         dialogEdit.show(supportFragmentManager, "dialog")
-
         dialogEdit.setCount(count, data)
-        dialogEdit.show(supportFragmentManager, "EditDialog")
 
     }
 
