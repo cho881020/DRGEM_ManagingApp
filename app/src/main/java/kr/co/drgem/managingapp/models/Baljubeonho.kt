@@ -3,7 +3,6 @@ package kr.co.drgem.managingapp.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
 data class Baljubeonho(
 
     val requesttype: String?,
@@ -18,7 +17,6 @@ data class Baljubeonho(
 
 
 ) {
-    @PrimaryKey(autoGenerate = true) var id: Int = 0
 
     fun getGeoraecheomyeongHP() : String {
         if(georaecheomyeong == null){
