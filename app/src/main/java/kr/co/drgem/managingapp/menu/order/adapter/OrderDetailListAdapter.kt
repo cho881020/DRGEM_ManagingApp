@@ -14,7 +14,7 @@ class OrderDetailListAdapter(
     val mList: List<Baljudetail>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return OrderDetailListViewHolder(parent, listener)
+        return OrderDetailListViewHolder(mContext, parent, listener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

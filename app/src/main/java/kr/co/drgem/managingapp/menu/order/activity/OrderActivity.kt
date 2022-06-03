@@ -14,7 +14,6 @@ import kr.co.drgem.managingapp.menu.order.adapter.OrderListAdapter
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.MasterDataResponse
 import kr.co.drgem.managingapp.models.OrderResponse
-import kr.co.drgem.managingapp.roomdb.datas.BaljuRoomData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +33,7 @@ class OrderActivity : BaseActivity() {
         setupEvents()
         setValues()
 
-//        getAllBaljubeonhoListFromRoomDB()
+        getAllBaljubeonhoInLocalDB()
     }
 
     override fun setupEvents() {
@@ -125,13 +124,14 @@ class OrderActivity : BaseActivity() {
                                 baljuList.clear()
                                 baljuList.addAll(it.returnBaljubeonho())
 
+
                                 if(baljuList.size == 0){
                                     Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
                                 }
 
                                 setBaljubeonhoListData()
 
-//                                clearDbAndInsertAllSearchedData()
+                                clearDbAndInsertAllSearchedData()
 
 
 
@@ -150,6 +150,24 @@ class OrderActivity : BaseActivity() {
 
 
 
+    }
+
+    private fun clearDbAndInsertAllSearchedData() {
+
+
+        mSqliteDB.deleteBaljubeonho()
+        for (data in baljuList) {
+
+            mSqliteDB.insertBaljubeonho(data)
+
+        }
+    }
+
+    private fun getAllBaljubeonhoInLocalDB() {
+        baljuList.clear()
+        baljuList.addAll(mSqliteDB.getAllSavedBaljubeonho())
+
+        setBaljubeonhoListData()
     }
 
     override fun setValues() {
