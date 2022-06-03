@@ -38,6 +38,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var migwanri = "0"
 
+    lateinit var mYocheongbeonho: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_not_delivery)
@@ -279,6 +281,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
 
     override fun onClickedEdit(count : Int, data: PummokdetailDelivery) {
+        dialog.setCount(count, data)
         dialog.show(supportFragmentManager, "dialog_notDelivery")
     }
 }

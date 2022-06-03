@@ -3,7 +3,9 @@ package kr.co.drgem.managingapp.menu.notdelivery.dialog
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class DialogEditNotDeliveryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DialogEditNotDeliveryAdapter(
+    val viewholderCount : Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -16,7 +18,7 @@ class DialogEditNotDeliveryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    override fun getItemCount() = 7
+    override fun getItemCount() = viewholderCount
 
 
 }
