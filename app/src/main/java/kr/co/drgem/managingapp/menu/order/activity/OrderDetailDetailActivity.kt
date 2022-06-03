@@ -163,6 +163,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
             }
         }
 
+        mAdapter.notifyDataSetChanged()
+
     }
 
     fun getRequestOrderDetail() {
@@ -186,6 +188,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
                         response.body()?.let {
 
                             orderDetailData = it
+                            clearAndSaveDataToDB()
 
                             baljuDetail.clear()
                             baljuDetail.addAll(it.returnBaljudetail())
@@ -193,7 +196,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
                             setOrderDetailDataToUI()
 
 
-                            clearAndSaveDataToDB()
 
                         }
                     }
