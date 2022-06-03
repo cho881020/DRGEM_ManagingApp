@@ -7,7 +7,7 @@ data class Pummokdetail(
     val saying: String?,         //사양
     val danwi: String?,          //단위
     val location: String?,       //위치
-    val hyeonjaegosuryang: String?,      //현재재고수량
+    var hyeonjaegosuryang: String?,      //현재재고수량
     val yocheongsuryang: String?,        //요청수량
     val gichulgosuryang: String?,        //기출고수량
     val chulgosuryang: String?,          //출고수량
@@ -62,7 +62,7 @@ data class Pummokdetail(
         if(hyeonjaegosuryang == null){
             return "-"
         }
-        return hyeonjaegosuryang
+        return hyeonjaegosuryang as String
     }
 
     fun getyocheongsuryangHP() : String {

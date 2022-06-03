@@ -68,6 +68,7 @@
             android:layout_marginTop="16dp"
             android:background="@color/color_FFFFFF"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp">
 
@@ -282,6 +283,7 @@
                     android:textSize="12dp" />
 
                 <TextView
+                    android:id="@+id/dobeonModel"
                     android:layout_width="95dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="3dp"
@@ -314,6 +316,7 @@
                     android:textSize="12dp" />
 
                 <TextView
+                    android:id="@+id/saying"
                     android:layout_width="95dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="3dp"
@@ -347,6 +350,7 @@
 
 
                 <EditText
+                    android:id="@+id/hyeonjaegosuryang"
                     android:layout_width="60dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="3dp"
@@ -457,7 +461,7 @@
                             android:textColor="@color/color_808080" />
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:text="도번/모델"
                             android:textSize="12dp"

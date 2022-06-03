@@ -159,6 +159,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
                     ) {
                         wareHouseCode = mWareHouseList[position].code
                         Log.d("yj", "waarHouseCode : $wareHouseCode")
+                        getRequestDetail()
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {

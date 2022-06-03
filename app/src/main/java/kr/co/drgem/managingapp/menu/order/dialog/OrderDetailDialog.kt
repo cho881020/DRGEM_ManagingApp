@@ -64,7 +64,7 @@ class OrderDetailDialog : DialogFragment() {
         binding.recyclerView.adapter = mAdapter
 
         binding.baljubeonho.text = mBaljubeonho
-        binding.pummokcode.text = baljuData.getPummyeongHP()
+        binding.pummokcode.text = baljuData.getPummokcodeHP()
         binding.pummyeong.text = baljuData.getPummyeongHP()
         binding.dobeonModel.text = baljuData.getDobeonModelHP()
         binding.saying.text = baljuData.getSayingHP()

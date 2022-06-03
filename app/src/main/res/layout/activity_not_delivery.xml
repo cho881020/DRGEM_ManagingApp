@@ -271,7 +271,7 @@
                         android:background="@null"
                         android:maxLines="1"
                         android:inputType="text"
-                        tools:text="홍길동"
+                        android:text="김영진"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
