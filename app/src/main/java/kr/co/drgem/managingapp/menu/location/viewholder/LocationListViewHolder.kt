@@ -1,9 +1,11 @@
 package kr.co.drgem.managingapp.menu.location.viewholder
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.models.Pummokdetail
@@ -21,6 +23,28 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     val danwi = itemView.findViewById<TextView>(R.id.danwi)
     val location = itemView.findViewById<TextView>(R.id.location)
     val hyeonjaegosuryang = itemView.findViewById<TextView>(R.id.hyeonjaegosuryang)
+
+    init {
+
+        edtWarehouse.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
+            if (hasFocus) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            } else {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
+            }
+        }
+
+    }
 
     fun bind(data: Pummokdetail) {
 

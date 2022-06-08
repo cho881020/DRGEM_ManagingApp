@@ -34,7 +34,8 @@
         <TextView
             android:id="@+id/pummyeong"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:paddingEnd="10dp"
             android:text="CD 투명슬림케이스"
             android:textSize="12dp"

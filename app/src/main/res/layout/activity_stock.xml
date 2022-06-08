@@ -68,7 +68,7 @@
             android:layout_marginTop="16dp"
             android:background="@color/color_FFFFFF"
             android:gravity="center"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp">
 
@@ -107,10 +107,12 @@
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/layoutFind"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:gravity="bottom"
+            android:paddingBottom="15dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:background="@color/color_FFFFFF"
@@ -184,7 +186,7 @@
                 />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
         <LinearLayout

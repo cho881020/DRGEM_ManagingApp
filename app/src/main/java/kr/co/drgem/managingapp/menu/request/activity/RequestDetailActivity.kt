@@ -50,11 +50,19 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
 
     }
 
+    override fun onBackPressed() {
+        backDialog()
+    }
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            finish()
+            backDialog()
         }
+
+        binding.btnSave.setOnClickListener {
+            saveDialog()
+        }
+
     }
 
     override fun setValues() {
@@ -123,6 +131,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
 
                             mWareHouseList.clear()
                             mWareHouseList.addAll(it.getGwangmyeongCode())
+                            binding.spinnerWareHouse.setSelection(0, false)
 
                             if (mWareHouseList.size > 0) {
                                 wareHouseCode = mWareHouseList[0].code
@@ -136,6 +145,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
 
                             mWareHouseList.clear()
                             mWareHouseList.addAll(it.getGumiCode())
+                            binding.spinnerWareHouse.setSelection(0, false)
 
                             if (mWareHouseList.size > 0) {
                                 wareHouseCode = mWareHouseList[0].code

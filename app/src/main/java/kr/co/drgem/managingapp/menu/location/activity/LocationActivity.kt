@@ -32,12 +32,18 @@ class LocationActivity : BaseActivity() {
 
     }
 
+    override fun onBackPressed() {
+        backDialog()
+    }
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            finish()
+            backDialog()
         }
 
+        binding.btnSave.setOnClickListener {
+            saveDialog()
+        }
 
         binding.btnLocationRemove.setOnClickListener {
             binding.edtLocation.text = null

@@ -72,7 +72,7 @@ interface APIList {
         @Query("sijakilja") sijakilja : String,
         @Query("jongryoilja") jongryoilja : String,
         @Query("kittingja") kittingja : String,
-        @Query("changgocode") changgocode : String,
+        @Query("changgomyeong") changgocode : String,
     ) : Call<KittingResponse>
 
     @GET("tablet/kitting/detail/request")
@@ -95,7 +95,7 @@ interface APIList {
         @Query("requesttype") requesttype : String = "02061",
         @Query("sijakilja") sijakilja : String,
         @Query("jongryoilja") jongryoilja : String,
-        @Query("saupjang") saupjang : String,
+        @Query("saupjangcode") saupjang : String,
         @Query("yocheonchanggocode") yocheonchanggocode : String,
         @Query("yocheongja") yocheongja : String,
     ) : Call<RequestResponse>
@@ -119,7 +119,7 @@ interface APIList {
         @Query("requesttype") requesttype : String = "02071",
         @Query("sijakilja") sijakilja : String,
         @Query("jongryoilja") jongryoilja : String,
-        @Query("saupjang") saupjang : String,
+        @Query("saupjangcode") saupjang : String,
         @Query("yocheongchanggocode") yocheonchanggocode : String,
         @Query("yocheongja") yocheongja : String,
         @Query("yocheongpummok") yocheongpummok : String,

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
@@ -31,6 +32,29 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
     val baljuseq = itemView.findViewById<TextView>(R.id.baljuseq)
     val jungyojajeyeobu = itemView.findViewById<TextView>(R.id.jungyojajeyeobu)
     val location = itemView.findViewById<TextView>(R.id.location)
+
+
+    init {
+
+        ipgosuryang.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
+            if (hasFocus) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            } else {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
+            }
+        }
+
+    }
 
     fun bind(data : Georaedetail) {
 

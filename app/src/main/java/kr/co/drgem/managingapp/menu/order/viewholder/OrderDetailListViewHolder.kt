@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.order.viewholder
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -82,7 +83,12 @@ class OrderDetailListViewHolder(
 
 
         pummyeong.setOnClickListener {
-            listener.onClickedPummyeong(data.pummyeong.toString())
+            AlertDialog.Builder(mContext)
+                .setTitle("품명")
+                .setMessage(data.getPummyeongHP())
+                .setNegativeButton("확인", null)
+                .show()
+
         }
 
 

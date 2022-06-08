@@ -18,6 +18,7 @@ class StockListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     val location = itemView.findViewById<TextView>(R.id.location)
     val hyeonjaegosuryang = itemView.findViewById<TextView>(R.id.hyeonjaegosuryang)
 
+
     fun bind(data: Pummokdetail) {
 
         pummokcode.text = data.getPummokcodeHP()

@@ -82,7 +82,10 @@ class RequestActivity : BaseActivity() {
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            datePick.datePicker.maxDate = System.currentTimeMillis()
+            datePick.show()
+
 
         }
 
@@ -104,7 +107,10 @@ class RequestActivity : BaseActivity() {
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            datePick.datePicker.maxDate = System.currentTimeMillis()
+            datePick.show()
+
 
         }
 

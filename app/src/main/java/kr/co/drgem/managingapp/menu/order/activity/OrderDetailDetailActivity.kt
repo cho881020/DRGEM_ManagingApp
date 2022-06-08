@@ -56,6 +56,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
     }
 
+    override fun onBackPressed() {
+        backDialog()
+    }
     override fun setupEvents() {
 
 
@@ -64,8 +67,13 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         }
 
         binding.btnBack.setOnClickListener {
-            finish()
+            backDialog()
         }
+
+        binding.btnSave.setOnClickListener {
+            saveDialog()
+        }
+
 
         val cal = Calendar.getInstance()
         val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
@@ -230,15 +238,5 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         dialog.show(supportFragmentManager, "EditDialog")
 
     }
-
-    override fun onClickedPummyeong(pummyeong: String) {
-            AlertDialog.Builder(mContext)
-                .setTitle("품명")
-                .setMessage(pummyeong)
-                .setNegativeButton("확인", null)
-                .show()
-
-    }
-
 
 }

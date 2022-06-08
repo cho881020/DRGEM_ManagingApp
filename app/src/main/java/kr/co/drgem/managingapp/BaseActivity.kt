@@ -1,9 +1,11 @@
 package kr.co.drgem.managingapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kr.co.drgem.managingapp.apis.APIList
 import kr.co.drgem.managingapp.apis.ServerAPI
@@ -41,7 +43,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun backDialog() {
 
-        androidx.appcompat.app.AlertDialog.Builder(mContext)
+        AlertDialog.Builder(mContext)
             .setTitle("아직 저장하지 않은 사항이 있습니다.")
             .setMessage("그래도 이 화면을 종료하시겠습니까?")
             .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
@@ -50,6 +52,18 @@ abstract class BaseActivity : AppCompatActivity() {
             .setNegativeButton("아니오", null)
             .show()
 
+    }
+
+    fun saveDialog(){
+
+        AlertDialog.Builder(mContext)
+            .setTitle("저장하시겠습니까?")
+            .setMessage("변경 사항이 저장됩니다.")
+            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+            })
+            .setNegativeButton("아니오", null)
+            .show()
     }
 
 

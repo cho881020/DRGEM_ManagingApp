@@ -2,10 +2,12 @@ package kr.co.drgem.managingapp.menu.notdelivery.viewholder
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
@@ -32,6 +34,28 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
     val jungyojajeyeobu = itemView.findViewById<TextView>(R.id.jungyojajeyeobu)
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+
+    init {
+
+        chulgosuryang.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
+            if (hasFocus) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            } else {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
+            }
+        }
+
+    }
 
     fun bind(data: PummokdetailDelivery) {
 

@@ -2,6 +2,7 @@ package kr.co.drgem.managingapp.menu.transaction.activity
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -59,7 +60,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
         binding.btnSave.setOnClickListener {
-            Toast.makeText(mContext, "변경 사항이 저장 되었습니다", Toast.LENGTH_SHORT).show()
+            saveDialog()
         }
 
         val cal = Calendar.getInstance()
@@ -88,7 +89,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            datePick.datePicker.maxDate = System.currentTimeMillis()
+            datePick.show()
 
         }
 
@@ -111,6 +114,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
         binding.btnTranRemove.setOnClickListener {
             binding.edtTranNum.text = null
+            binding.layoutInfo.isVisible = false
         }
 
         binding.btnNameRemove.setOnClickListener {
@@ -166,10 +170,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 ) {
                     if (masterData.getCompanyCode()[position].code == "0001") {
                         spinnerWareHouseAdapter.setList(masterData.getGwangmyeongCode())
+                        binding.spinnerWareHouse.setSelection(0, false)
                     }
 
                     if (masterData.getCompanyCode()[position].code == "0002") {
                         spinnerWareHouseAdapter.setList(masterData.getGumiCode())
+                        binding.spinnerWareHouse.setSelection(0, false)
                     }
                 }
 

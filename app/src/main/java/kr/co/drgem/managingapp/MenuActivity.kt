@@ -1,8 +1,11 @@
 package kr.co.drgem.managingapp
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityMenuBinding
@@ -14,6 +17,7 @@ import kr.co.drgem.managingapp.menu.request.activity.RequestActivity
 import kr.co.drgem.managingapp.menu.stock.activity.StockActivity
 import kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity
 import kr.co.drgem.managingapp.models.MasterDataResponse
+import kr.co.drgem.managingapp.utils.ContextUtil
 import kr.co.drgem.managingapp.utils.MainDataManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -74,6 +78,21 @@ class MenuActivity : BaseActivity() {
         binding.stock.setOnClickListener{
             val myIntent = Intent(this, StockActivity::class.java)
             startActivity(myIntent)
+        }
+
+        binding.btnLogout.setOnClickListener {
+
+            AlertDialog.Builder(this)
+                .setTitle("로그아웃")
+                .setMessage("정말 로그아웃 하시겠습니까?")
+                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                    ContextUtil.setToken(mContext,"")
+                    val myIntent = Intent(this,MainActivity::class.java)
+                    startActivity(myIntent)
+                    finish()
+                })
+                .setNegativeButton("아니오", null)
+                .show()
         }
 
 

@@ -34,10 +34,18 @@ class StockActivity : BaseActivity() {
 
     }
 
+    override fun onBackPressed() {
+        backDialog()
+    }
+
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            finish()
+            backDialog()
+        }
+
+        binding.btnSave.setOnClickListener {
+            saveDialog()
         }
 
         binding.btnCodeRemove.setOnClickListener {
