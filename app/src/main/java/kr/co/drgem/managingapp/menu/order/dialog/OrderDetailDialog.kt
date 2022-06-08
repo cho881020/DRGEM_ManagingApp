@@ -81,6 +81,7 @@ class OrderDetailDialog : BaseDialogFragment() {
 
     override fun setValues(){
 
+        mSerialDataList.clear()
         for (i in 0..viewholderCount) {
 
             val searchedSerial = mSqliteDB.getFirstSerialByPummokcodeAndPosition(baljuData.getPummokcodeHP(), "${i}")
