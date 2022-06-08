@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.databinding.ActivityMainBinding
+import kr.co.drgem.managingapp.localdb.DBHelper
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.utils.ContextUtil
 import retrofit2.Call
@@ -62,8 +63,8 @@ class MainActivity : BaseActivity() {
                    if (response.isSuccessful) {
 
                        val br = response.body()!!
-                       Log.d("응답확인", br.resultmsg)
-                       Log.d("응답확인", br.resultcd)
+//                       Log.d("응답확인", br.resultmsg)
+//                       Log.d("응답확인", br.resultcd)
 
                        if (br.resultcd == "000") {
 
@@ -72,7 +73,15 @@ class MainActivity : BaseActivity() {
                            startActivity(myIntent)
                            Toast.makeText(mContext, "로그인 성공", Toast.LENGTH_SHORT).show()
 
-                           ContextUtil.setToken(mContext, br.security_token)
+                           ContextUtil.setToken(mContext, br.security_token!!)
+
+                           mSqliteDB.deleteLoginWorkCommon()
+                           mSqliteDB.insertLoginWorkCommon(
+                               inputId,
+                               md5(inputPw),
+                               br
+                           )
+
                            finish()
 
                        }
