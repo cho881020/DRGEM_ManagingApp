@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogOrderDetailBinding
+import kr.co.drgem.managingapp.localdb.SerialLocalDB
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.Baljudetail
 
-class OrderDetailDialog : DialogFragment() {
+class OrderDetailDialog : BaseDialogFragment() {
 
     lateinit var binding : DialogOrderDetailBinding
     lateinit var mAdapter : DialogEditOrderAdapter
@@ -23,6 +25,8 @@ class OrderDetailDialog : DialogFragment() {
     var viewholderCount = 0
     lateinit var baljuData : Baljudetail
     var mBaljubeonho = ""
+
+    val mSerialDataList = ArrayList<SerialLocalDB>()
 
 
     override fun onCreateView(
@@ -45,9 +49,26 @@ class OrderDetailDialog : DialogFragment() {
 
     }
 
-    fun setupEvents(){
+    override fun setupEvents(){
 
         binding.btnAdd.setOnClickListener {
+
+            for (data in mSerialDataList) {
+
+                Log.d("포지션", data.position)
+                Log.d("씨리얼", data.serial)
+
+                if (data.serial.isNotBlank()) {
+
+                    mSqliteDB.insertSerialToPummokcode(
+                        baljuData.getPummokcodeHP(),
+                        data.serial,
+                        data.position
+                    )
+                }
+
+            }
+
             Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
             dismiss()
         }
@@ -58,9 +79,27 @@ class OrderDetailDialog : DialogFragment() {
 
     }
 
-    fun setValues(){
+    override fun setValues(){
 
-        mAdapter = DialogEditOrderAdapter(viewholderCount)
+        for (i in 0..viewholderCount) {
+
+            val searchedSerial = mSqliteDB.getFirstSerialByPummokcodeAndPosition(baljuData.getPummokcodeHP(), "${i}")
+
+            if (searchedSerial != null) {
+                mSerialDataList.add(searchedSerial)
+            }
+            else {
+                mSerialDataList.add(SerialLocalDB(
+                    baljuData.pummokcode!!,
+                    "",
+                    "${i}"
+                ))
+            }
+
+        }
+
+
+        mAdapter = DialogEditOrderAdapter(baljuData, viewholderCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
 
         binding.baljubeonho.text = mBaljubeonho

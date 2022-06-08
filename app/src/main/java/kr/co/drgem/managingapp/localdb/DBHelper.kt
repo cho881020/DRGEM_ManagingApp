@@ -83,6 +83,17 @@ class DBHelper(
                 ");"
 
         db.execSQL(sql4)
+
+
+
+        val sql5 = "CREATE TABLE if not exists SERIAL(" +
+                "id integer primary key autoincrement," +
+                "pummokcode text," +
+                "serial text," +
+                "position text" +
+                ");"
+
+        db.execSQL(sql5)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
