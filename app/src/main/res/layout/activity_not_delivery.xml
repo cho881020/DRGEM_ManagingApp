@@ -469,6 +469,7 @@
                         android:gravity="center_vertical">
 
                         <Spinner
+                            android:id="@+id/spinnerCompanyOut"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/light_gray_box"
@@ -511,6 +512,7 @@
                         android:gravity="center_vertical">
 
                         <Spinner
+                            android:id="@+id/spinnerWareHouseOut"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/light_gray_box"
@@ -563,7 +565,7 @@
                             android:background="@null"
                             android:maxLines="1"
                             android:inputType="text"
-                            tools:text="홍길동"
+                            android:text="김영진"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
@@ -600,6 +602,7 @@
                         android:gravity="center_vertical">
 
                         <Spinner
+                            android:id="@+id/spinnerCompanyIn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/light_gray_box"
@@ -641,6 +644,7 @@
                         android:gravity="center_vertical">
 
                         <Spinner
+                            android:id="@+id/spinnerWareHouseIn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/light_gray_box"
@@ -832,15 +836,6 @@
                             android:text="출고수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
-
-                        <TextView
-                            android:id="@+id/jungyojajeyeobu"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="중요자재"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp"
-                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/serialDetail"

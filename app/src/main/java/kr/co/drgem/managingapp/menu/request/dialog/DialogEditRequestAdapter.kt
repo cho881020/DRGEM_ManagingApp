@@ -15,7 +15,10 @@ class DialogEditRequestAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder){
+            is RequestSerialListViewHolder -> holder.bind(position)
 
+        }
     }
 
     override fun getItemCount() = viewholderCount

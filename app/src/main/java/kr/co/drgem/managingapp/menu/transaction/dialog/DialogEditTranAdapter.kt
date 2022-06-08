@@ -2,7 +2,6 @@ package kr.co.drgem.managingapp.menu.transaction.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.menu.transaction.dialog.delete.EditTRSerialViewHolder
 
 class DialogEditTranAdapter(
     val viewholderCount : Int
@@ -15,7 +14,10 @@ class DialogEditTranAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder){
+            is TranSerialListViewHolder -> holder.bind(position)
 
+        }
     }
 
     override fun getItemCount() = viewholderCount

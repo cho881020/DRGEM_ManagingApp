@@ -15,7 +15,10 @@ class DialogEditNotDeliveryAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder){
+            is NotDeliverySerialListViewHolder -> holder.bind(position)
 
+        }
     }
 
     override fun getItemCount() = viewholderCount

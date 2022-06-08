@@ -135,7 +135,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
         tranData.returnGeoraedetail().forEach {
             if(it.jungyojajeyeobu == "Y"){
-                binding.jungyojajeyeobu.isVisible = true
                 binding.serialDetail.isVisible = true
             }
         }

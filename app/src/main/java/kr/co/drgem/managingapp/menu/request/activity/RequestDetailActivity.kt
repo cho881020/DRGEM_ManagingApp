@@ -76,7 +76,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
 
         requestDetailData.returnPummokDetail().forEach {
             if(it.jungyojajeyeobu == "Y"){
-                binding.jungyojajeyeobu.isVisible = true
                 binding.serialDetail.isVisible = true
             }
         }

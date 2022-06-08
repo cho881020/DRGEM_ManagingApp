@@ -91,7 +91,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
         kittingDetailData.returnKittingDetail().forEach {
             if(it.jungyojajeyeobu == "Y"){
-                binding.jungyojajeyeobu.isVisible = true
                 binding.serialDetail.isVisible = true
             }
         }

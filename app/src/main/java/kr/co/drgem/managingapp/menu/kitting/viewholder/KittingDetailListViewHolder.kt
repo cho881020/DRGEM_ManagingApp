@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.kitting.viewholder
 
+import android.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +31,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
     val yocheongsuryang = itemView.findViewById<TextView>(R.id.yocheongsuryang)
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
-    val jungyojajeyeobu = itemView.findViewById<TextView>(R.id.jungyojajeyeobu)
 
 
     init {
@@ -71,18 +71,19 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
         chulgosuryang.setText(data.getchulgosuryangHP())
-        jungyojajeyeobu.text = data.getjungyojajeyeobuHP()
 
 
-        if(data.jungyojajeyeobu == "Y" ){
-            jungyojajeyeobu.isVisible = true
-            btnEdit.isVisible = true
+        btnEdit.isVisible = data.jungyojajeyeobu == "Y"
+
+
+        pummyeong.setOnClickListener {
+            AlertDialog.Builder(itemView.context)
+                .setTitle("품명")
+                .setMessage(data.getpummyeongHP())
+                .setNegativeButton("확인", null)
+                .show()
+
         }
-        else {
-            jungyojajeyeobu.isVisible = false
-            btnEdit.isVisible = false
-        }
-
 
         btnEdit.setOnClickListener {
 

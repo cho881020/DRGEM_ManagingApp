@@ -59,6 +59,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -76,6 +77,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="E08-000601-00"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -95,6 +98,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="TUBE STAND BOX(1,800mm용)"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -114,6 +119,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -129,6 +136,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -146,6 +154,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -165,6 +175,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="0004"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -184,6 +196,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="1"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -217,6 +231,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="Y"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -237,6 +253,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="-"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -257,6 +275,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="20220203"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -272,6 +292,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -289,6 +310,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="7"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -309,6 +332,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="7"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />

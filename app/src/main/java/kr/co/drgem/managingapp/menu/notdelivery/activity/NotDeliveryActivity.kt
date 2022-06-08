@@ -38,6 +38,14 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var migwanri = "0"
 
+    var companyCodeOut = "0001"
+    var wareHouseCodeOut = "1001"
+    var mWareHouseListOut: java.util.ArrayList<Detailcode> = arrayListOf()
+
+    var companyCodeIn = "0001"
+    var wareHouseCodeIn = "1001"
+    var mWareHouseListIn: java.util.ArrayList<Detailcode> = arrayListOf()
+
     lateinit var mYocheongbeonho: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +55,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
         setupEvents()
         spinnerSet()
         getRequestNotDelivery()
+
+        spinnerSetIn()
+        spinnerSetOut()
 
 
     }
@@ -216,7 +227,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
         notDeliveryData.returnPummokdetailDetail().forEach {
             if(it.jungyojajeyeobu == "Y"){
-                binding.jungyojajeyeobu.isVisible = true
                 binding.serialDetail.isVisible = true
             }
         }
@@ -283,6 +293,150 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCode = mWareHouseList[position].code
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                }
+
+        }
+
+    }
+
+    fun spinnerSetOut() {
+
+        MainDataManager.getMainData()?.let {
+
+            val spinnerCompanyAdapter =
+                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
+            binding.spinnerCompanyOut.adapter = spinnerCompanyAdapter
+
+
+            val spinnerWareHouseAdapter =
+                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
+            binding.spinnerWareHouseOut.adapter = spinnerWareHouseAdapter
+
+
+            binding.spinnerCompanyOut.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        if (it.getCompanyCode()[position].code == "0001") {
+                            spinnerWareHouseAdapter.setList(it.getGwangmyeongCode())
+                            companyCodeOut = "0001"
+
+                            mWareHouseListOut.clear()
+                            mWareHouseListOut.addAll(it.getGwangmyeongCode())
+                            binding.spinnerWareHouseOut.setSelection(0, false)
+                            if (mWareHouseListOut.size > 0) {
+                                wareHouseCodeOut = mWareHouseListOut[0].code
+                            }
+
+
+                        }
+
+                        if (it.getCompanyCode()[position].code == "0002") {
+                            spinnerWareHouseAdapter.setList(it.getGumiCode())
+                            companyCodeOut = "0002"
+
+                            mWareHouseListOut.clear()
+                            mWareHouseListOut.addAll(it.getGumiCode())
+                            binding.spinnerWareHouseOut.setSelection(0, false)
+
+                            if (mWareHouseListOut.size > 0) {
+                                wareHouseCodeOut = mWareHouseListOut[0].code
+                            }
+                        }
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                }
+
+            binding.spinnerWareHouseOut.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        wareHouseCodeOut = mWareHouseListOut[position].code
+
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                }
+
+        }
+
+    }
+
+    fun spinnerSetIn() {
+
+        MainDataManager.getMainData()?.let {
+
+            val spinnerCompanyAdapter =
+                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
+            binding.spinnerCompanyIn.adapter = spinnerCompanyAdapter
+
+
+            val spinnerWareHouseAdapter =
+                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
+            binding.spinnerWareHouseIn.adapter = spinnerWareHouseAdapter
+
+
+            binding.spinnerCompanyIn.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        if (it.getCompanyCode()[position].code == "0001") {
+                            spinnerWareHouseAdapter.setList(it.getGwangmyeongCode())
+                            companyCodeIn = "0001"
+
+                            mWareHouseListIn.clear()
+                            mWareHouseListIn.addAll(it.getGwangmyeongCode())
+                            binding.spinnerWareHouseIn.setSelection(0, false)
+                            if (mWareHouseListIn.size > 0) {
+                                wareHouseCodeIn = mWareHouseListIn[0].code
+                            }
+
+
+                        }
+
+                        if (it.getCompanyCode()[position].code == "0002") {
+                            spinnerWareHouseAdapter.setList(it.getGumiCode())
+                            companyCodeIn = "0002"
+
+                            mWareHouseListIn.clear()
+                            mWareHouseListIn.addAll(it.getGumiCode())
+                            binding.spinnerWareHouseIn.setSelection(0, false)
+
+                            if (mWareHouseListIn.size > 0) {
+                                wareHouseCodeIn = mWareHouseListIn[0].code
+                            }
+                        }
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                }
+
+            binding.spinnerWareHouseIn.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        wareHouseCodeIn = mWareHouseListIn[position].code
+
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {

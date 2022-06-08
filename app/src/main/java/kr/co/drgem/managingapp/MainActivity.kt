@@ -73,6 +73,7 @@ class MainActivity : BaseActivity() {
                            Toast.makeText(mContext, "로그인 성공", Toast.LENGTH_SHORT).show()
 
                            ContextUtil.setToken(mContext, br.security_token)
+                           finish()
 
                        }
                        else {

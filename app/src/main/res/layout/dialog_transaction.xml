@@ -64,7 +64,7 @@
 
                     <TextView
                         android:layout_width="70dp"
-                        android:layout_height="35dp"
+                        android:layout_height="match_parent"
                         android:background="@color/color_F4F4F4"
                         android:gravity="center"
                         android:text="품목코드"
@@ -77,6 +77,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="E08-000601-00"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -96,7 +98,9 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        tools:text="TUBE STAND BOX(1,800mm용)"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        tools:text="TUBE STAND BOX(1,800mm용)TUBE STAND BOX(1,800mm용)"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -115,6 +119,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -130,6 +136,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -147,7 +154,9 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
-                        tools:text="G22042600391"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        tools:text="WBS-TM Motorized전용"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -166,6 +175,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="0004"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -185,6 +196,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="1"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -218,6 +231,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="Y"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -238,6 +253,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="-"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -258,6 +275,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="20220203"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -273,6 +292,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -290,6 +310,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="7"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -310,6 +332,8 @@
                         android:layout_height="35dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="15dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         tools:text="7"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />

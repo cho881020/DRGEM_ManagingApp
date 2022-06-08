@@ -17,6 +17,9 @@
             android:id="@+id/georaecheocode"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="-"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -25,15 +28,20 @@
             android:id="@+id/georaecheomyeong"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="-"
             android:textSize="12dp"
-            android:maxLines="1"
             android:textColor="@color/color_000000" />
 
         <TextView
             android:id="@+id/baljubeonho"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="-"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -42,6 +50,9 @@
             android:id="@+id/baljuil"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="-"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -50,6 +61,9 @@
             android:id="@+id/nappumjangso"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="-"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -58,11 +72,12 @@
             android:id="@+id/bigo"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:layout_marginEnd="10dp"
             android:text="-"
             android:textSize="12dp"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:textColor="@color/black" />
 
 

@@ -104,7 +104,7 @@
                         android:maxLines="1"
                         android:inputType="text"
                         android:textColor="@color/color_000000"
-                        android:text="G22020800064"
+                        android:text="G22011900032"
                         android:textSize="12dp" />
 
                     <ImageView
@@ -678,15 +678,6 @@
                             android:textSize="12dp" />
 
 
-
-                        <TextView
-                            android:id="@+id/jungyojajeyeobu"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="중요자재여부"
-                            android:visibility="gone"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
 
 
                         <LinearLayout

@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.location.viewholder
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,18 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         location.text = data.getlocationHP()
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
 
+
+        pummyeong.setOnClickListener {
+            AlertDialog.Builder(itemView.context)
+                .setTitle("품명")
+                .setMessage(data.getpummyeongHP())
+                .setNegativeButton("확인", null)
+                .show()
+
+        }
+
     }
+
+
 
 }

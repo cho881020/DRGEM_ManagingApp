@@ -16,6 +16,9 @@
             android:id="@+id/pummokcode"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
@@ -24,6 +27,9 @@
             android:id="@+id/pummyeong"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -32,6 +38,9 @@
             android:id="@+id/dobeon_model"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -40,6 +49,9 @@
             android:id="@+id/saying"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -48,6 +60,9 @@
             android:id="@+id/danwi"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="5"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -56,6 +71,9 @@
             android:id="@+id/location"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="광명창고"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -64,6 +82,9 @@
             android:id="@+id/hyeonjaegosuryang"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
             android:text="3"
             android:textSize="12dp"
             android:textColor="@color/black" />

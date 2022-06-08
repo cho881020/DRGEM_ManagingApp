@@ -189,6 +189,8 @@ class RequestActivity : BaseActivity() {
 
         binding.txtDate.text = setDate
 
+        binding.txtCount.text = "(${yocheongdetail.size} 건)"
+
 
     }
 

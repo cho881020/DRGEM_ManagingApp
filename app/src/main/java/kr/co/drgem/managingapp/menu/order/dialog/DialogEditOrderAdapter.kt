@@ -2,7 +2,6 @@ package kr.co.drgem.managingapp.menu.order.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.models.Baljudetail
 
 class DialogEditOrderAdapter(
     val viewholderCount : Int
@@ -17,7 +16,7 @@ class DialogEditOrderAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
-            is OrderSerialListViewHolder -> holder.bind()
+            is OrderSerialListViewHolder -> holder.bind(position)
         }
     }
 

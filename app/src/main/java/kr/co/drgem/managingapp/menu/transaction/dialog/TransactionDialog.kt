@@ -68,7 +68,7 @@ class TransactionDialog : DialogFragment() {
         binding.seq.text = georaeData.getSeqHP()
         binding.jungyojajeyeobu.text = georaeData.getJungyojajeyeobuHP()
         binding.location.text = georaeData.getLocationHP()
-        binding.ipgoyejeongil.text = georaeData.getIpgosuryangHP()
+        binding.ipgoyejeongil.text = "-"
         binding.baljusuryang.text = georaeData.getBaljusuryangHP()
         binding.ipgosuryang.text = viewholderCount.toString()
 

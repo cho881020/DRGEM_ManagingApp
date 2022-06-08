@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.notdelivery.viewholder
 
+import android.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +33,6 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
     val yocheongsuryang = itemView.findViewById<TextView>(R.id.yocheongsuryang)
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
-    val jungyojajeyeobu = itemView.findViewById<TextView>(R.id.jungyojajeyeobu)
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
 
     init {
@@ -77,16 +77,9 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
         chulgosuryang.setText(data.getchulgosuryangHP())
-        jungyojajeyeobu.text = data.getjungyojajeyeobuHP()
 
 
-        if (data.jungyojajeyeobu == "Y") {
-            jungyojajeyeobu.isVisible = true
-            btnEdit.isVisible = true
-        } else {
-            jungyojajeyeobu.isVisible = false
-            btnEdit.isVisible = false
-        }
+        btnEdit.isVisible = data.jungyojajeyeobu == "Y"
 
 
         btnEdit.setOnClickListener {
@@ -108,6 +101,16 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        pummyeong.setOnClickListener {
+            AlertDialog.Builder(itemView.context)
+                .setTitle("품명")
+                .setMessage(data.getpummyeongHP())
+                .setNegativeButton("확인", null)
+                .show()
+
+        }
+
 
     }
 

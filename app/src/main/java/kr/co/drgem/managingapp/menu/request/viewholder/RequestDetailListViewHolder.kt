@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.request.viewholder
 
+import android.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,11 +34,10 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
     val yocheongsuryang = itemView.findViewById<TextView>(R.id.yocheongsuryang)
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
-    val jungyojajeyeobu = itemView.findViewById<TextView>(R.id.jungyojajeyeobu)
 
     init {
 
-        edtCount.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
+        chulgosuryang.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
             if (hasFocus) {
                 itemView.setBackgroundColor(
                     ContextCompat.getColor(
@@ -73,16 +73,9 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
         chulgosuryang.setText(data.getchulgosuryangHP())
-        jungyojajeyeobu.text = data.getjungyojajeyeobuHP()
 
 
-        if (data.jungyojajeyeobu == "Y") {
-            jungyojajeyeobu.isVisible = true
-            btnEdit.isVisible = true
-        } else {
-            jungyojajeyeobu.isVisible = false
-            btnEdit.isVisible = false
-        }
+        btnEdit.isVisible = data.jungyojajeyeobu == "Y"
 
         btnEdit.setOnClickListener {
 
@@ -102,6 +95,15 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
                 chulgosuryang.text = null
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        pummyeong.setOnClickListener {
+            AlertDialog.Builder(itemView.context)
+                .setTitle("품명")
+                .setMessage(data.getpummyeongHP())
+                .setNegativeButton("확인", null)
+                .show()
+
         }
 
     }

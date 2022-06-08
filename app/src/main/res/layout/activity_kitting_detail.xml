@@ -593,14 +593,6 @@
                             android:textSize="12dp" />
 
 
-                        <TextView
-                            android:id="@+id/jungyojajeyeobu"
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
-                            android:text="중요자재여부"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp"
-                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/serialDetail"

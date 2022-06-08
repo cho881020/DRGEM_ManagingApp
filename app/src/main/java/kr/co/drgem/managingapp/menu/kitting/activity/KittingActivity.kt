@@ -113,8 +113,6 @@ class KittingActivity : BaseActivity() {
             binding.edtChanggocode.text = null
         }
 
-        binding.txtTitle.text = HtmlCompat.fromHtml(getString(R.string.kittingName, "홍길동"), HtmlCompat.FROM_HTML_MODE_LEGACY)
-
 
         binding.btnFind.setOnClickListener {
 

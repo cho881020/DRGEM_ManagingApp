@@ -16,7 +16,10 @@ class DialogEditKittingAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder){
+            is KittingSerialListViewHolder -> holder.bind(position)
 
+        }
     }
 
     override fun getItemCount() = viewholderCount

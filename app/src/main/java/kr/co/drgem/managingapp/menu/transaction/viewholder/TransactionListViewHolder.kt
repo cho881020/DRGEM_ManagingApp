@@ -30,7 +30,6 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
     val giipgosuryang = itemView.findViewById<TextView>(R.id.giipgosuryang)
     val ipgosuryang = itemView.findViewById<EditText>(R.id.ipgosuryang)
     val baljuseq = itemView.findViewById<TextView>(R.id.baljuseq)
-    val jungyojajeyeobu = itemView.findViewById<TextView>(R.id.jungyojajeyeobu)
     val location = itemView.findViewById<TextView>(R.id.location)
 
 
@@ -76,16 +75,13 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
         ipgosuryang.setText(data.getIpgosuryangHP())
 
         baljuseq.text = data.getBaljuseqHP()
-        jungyojajeyeobu.text = data.getJungyojajeyeobuHP()
         location.text = data.getLocationHP()
 
 
         if (data.jungyojajeyeobu == "Y") {
             btnEdit.visibility = View.VISIBLE
-            jungyojajeyeobu.visibility = View.VISIBLE
         } else {
             btnEdit.visibility = View.GONE
-            jungyojajeyeobu.visibility = View.GONE
         }
 
         btnEdit.setOnClickListener {
