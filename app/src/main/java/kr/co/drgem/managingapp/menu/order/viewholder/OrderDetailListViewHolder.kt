@@ -3,6 +3,8 @@ package kr.co.drgem.managingapp.menu.order.viewholder
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
@@ -65,7 +68,7 @@ class OrderDetailListViewHolder(
     }
 
 
-    fun bind(data: Baljudetail, position: Int) {
+    fun bind(data: Baljudetail) {
 
         txtSeq.text = data.getSeqHP()
         pummokcode.text = data.getPummokcodeHP()
@@ -104,7 +107,9 @@ class OrderDetailListViewHolder(
         val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())
 
         Log.d("품목코드", data.getPummokcodeHP())
+        Log.d("품목코드", data.getPummokcodeHP())
         Log.d("불러내는 씨리얼스트링", savedSerialString.toString())
+        Log.d("입고수량", data.ipgosuryang.toString())
 
         if (savedSerialString != null) {
 
@@ -143,12 +148,12 @@ class OrderDetailListViewHolder(
             }
         }
 
+        edtCount.setOnFocusChangeListener { view, isFocused ->
+            if (!isFocused) {
 
-        edtCount.addTextChangedListener {
-
-            data.ipgosuryang = edtCount.text.toString()
-            (mContext as BaseActivity).mSqliteDB.updateBaljuDetail(data)
-
+                data.ipgosuryang = edtCount.text.toString()
+                (mContext as BaseActivity).mSqliteDB.updateBaljuDetail(data)
+            }
         }
 
     }

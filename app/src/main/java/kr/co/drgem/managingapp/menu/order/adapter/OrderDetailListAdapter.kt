@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.order.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
@@ -18,12 +19,8 @@ class OrderDetailListAdapter(
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is OrderDetailListViewHolder -> {
-                holder.bind(mList[position], position)
-
-            }
-        }
+        Log.d("뷰홀더바인딩", "${position}번째 줄")
+        (holder as OrderDetailListViewHolder).bind(mList[position])
 
     }
 

@@ -210,7 +210,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
         if (savedOrderDetailList.size > 0 && savedOrderDetailList[0].baljubeonho == mBaljubeonho) {
             orderDetailData = savedOrderDetailList[0]
             baljuDetail.clear()
-            baljuDetail.addAll(orderDetailData.returnBaljudetail())
+
+            for (detail in orderDetailData.returnBaljudetail()) {
+                baljuDetail.add(detail)
+            }
 
 
             setOrderDetailDataToUI()
@@ -250,6 +253,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
     fun clearAndSaveDataToDB() {
 
         mSqliteDB.deleteOrderDetail()
+        mSqliteDB.deleteAllSerials()
 
         mSqliteDB.insertOrderDetail(orderDetailData)
 
