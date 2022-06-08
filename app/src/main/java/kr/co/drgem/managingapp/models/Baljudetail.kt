@@ -96,15 +96,4 @@ data class Baljudetail(
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -5,11 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.viewholder.OrderDetailListViewHolder
-import kr.co.drgem.managingapp.models.BaljuData
 import kr.co.drgem.managingapp.models.Baljudetail
 
 class OrderDetailListAdapter(
-    val listener : OrderDetailEditListener,
+    val listener: OrderDetailEditListener,
     val mContext: Context,
     val mList: List<Baljudetail>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -17,13 +16,18 @@ class OrderDetailListAdapter(
         return OrderDetailListViewHolder(mContext, parent, listener)
     }
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is OrderDetailListViewHolder -> {
-                holder.bind(mList[position])
+                holder.bind(mList[position], position)
+
             }
         }
+
     }
 
     override fun getItemCount() = mList.size
+
+
 }

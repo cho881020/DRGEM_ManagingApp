@@ -5,4 +5,6 @@ import kr.co.drgem.managingapp.models.Baljudetail
 interface OrderDetailEditListener {
     fun onClickedEdit(count : Int, data: Baljudetail)
 
+    fun onClickedPummyeong(pummyeong : String)
+
 }

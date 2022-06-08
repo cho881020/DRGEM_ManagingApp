@@ -14,11 +14,12 @@
         android:gravity="center_vertical"
         android:paddingHorizontal="10dp"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/txtSeq"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:text="1"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
 
@@ -26,7 +27,7 @@
             android:id="@+id/pummokcode"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:text="C14-000033-00"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -34,63 +35,80 @@
             android:id="@+id/pummyeong"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:paddingEnd="10dp"
+            android:text="CD 투명슬림케이스"
             android:textSize="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/dobeon_model"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:paddingEnd="10dp"
+            android:text="CD 보호용"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/saying"
-            android:layout_width="100dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
             android:text="-"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/balhudanwi"
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:maxLines="1"
+            android:gravity="center"
+            android:text="ea"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
 
         <TextView
             android:id="@+id/baljusuryang"
-            android:layout_width="100dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:maxLines="1"
+            android:gravity="center"
+            android:text="300"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
 
         <TextView
             android:id="@+id/ipgoyejeongil"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:maxLines="1"
+            android:gravity="center"
+            android:text="20220304"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/giipgosuryang"
-            android:layout_width="100dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:maxLines="1"
+            android:gravity="center"
+            android:text="300"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
         <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="wrap_content">
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <EditText
                 android:id="@+id/edtCount"
@@ -109,20 +127,10 @@
         </LinearLayout>
 
 
-
-        <TextView
-            android:id="@+id/jungyojajeyeobu"
-            android:visibility="gone"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Y"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-
         <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="wrap_content">
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/btnEdit"
@@ -144,7 +152,9 @@
             android:id="@+id/location"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:maxLines="1"
+            android:gravity="center"
+            android:text="구미공장"
             android:textSize="12dp"
             android:textColor="@color/black" />
 

@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.localdb.SQLiteDB
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.models.Baljudetail
 
@@ -33,13 +33,35 @@ class OrderDetailListViewHolder(
     val baljusuryang = itemView.findViewById<TextView>(R.id.baljusuryang)
     val ipgoyejeongil = itemView.findViewById<TextView>(R.id.ipgoyejeongil)
     val giipgosuryang = itemView.findViewById<TextView>(R.id.giipgosuryang)
-    val jungyojajeyeobu = itemView.findViewById<TextView>(R.id.jungyojajeyeobu)
+    val location = itemView.findViewById<TextView>(R.id.location)
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
     val edtCount = itemView.findViewById<EditText>(R.id.edtCount)
 
+    init {
 
-    fun bind(data: Baljudetail) {
+        edtCount.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
+            if (hasFocus) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            } else {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
+            }
+        }
+
+    }
+
+
+    fun bind(data: Baljudetail, position: Int) {
 
         txtSeq.text = data.getSeqHP()
         pummokcode.text = data.getPummokcodeHP()
@@ -50,9 +72,8 @@ class OrderDetailListViewHolder(
         baljusuryang.text = data.getBaljusuryangHP()
         ipgoyejeongil.text = data.getIpgoyejeongilHP()
         giipgosuryang.text = data.getGiipgosuryangHP()
-        jungyojajeyeobu.text = data.getJungyojajeyeobuHP()
+        location.text = data.getLocationHP()
         edtCount.setText(data.ipgosuryang)
-
 
 
         itemView.setOnClickListener {
@@ -60,13 +81,15 @@ class OrderDetailListViewHolder(
         }
 
 
+        pummyeong.setOnClickListener {
+            listener.onClickedPummyeong(data.pummyeong.toString())
+        }
+
 
         if (data.jungyojajeyeobu == "Y") {
             btnEdit.visibility = View.VISIBLE
-            jungyojajeyeobu.visibility = View.VISIBLE
         } else {
             btnEdit.visibility = View.GONE
-            jungyojajeyeobu.visibility = View.GONE
         }
 
 
@@ -89,6 +112,7 @@ class OrderDetailListViewHolder(
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         edtCount.addTextChangedListener {
 

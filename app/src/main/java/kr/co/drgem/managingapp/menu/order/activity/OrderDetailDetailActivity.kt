@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.order.activity
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -92,10 +93,11 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            datePick.datePicker.maxDate = System.currentTimeMillis()
+            datePick.show()
 
         }
-
 
     }
 
@@ -120,6 +122,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
             MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
         binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
 
+
         binding.spinnerCompany.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -130,10 +133,12 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
                 ) {
                     if (masterData.getCompanyCode()[position].code == "0001") {
                         spinnerWareHouseAdapter.setList(masterData.getGwangmyeongCode())
+                        binding.spinnerWareHouse.setSelection(0, false)
                     }
 
                     if (masterData.getCompanyCode()[position].code == "0002") {
                         spinnerWareHouseAdapter.setList(masterData.getGumiCode())
+                        binding.spinnerWareHouse.setSelection(0, false)
                     }
                 }
 
@@ -158,7 +163,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
         baljuDetail.forEach {
             if (it.jungyojajeyeobu == "Y") {
-                binding.jungyojajeyeobu.isVisible = true
                 binding.serialDetail.isVisible = true
             }
         }
@@ -195,8 +199,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
                             setOrderDetailDataToUI()
 
-
-
                         }
                     }
 
@@ -228,4 +230,15 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
         dialog.show(supportFragmentManager, "EditDialog")
 
     }
+
+    override fun onClickedPummyeong(pummyeong: String) {
+            AlertDialog.Builder(mContext)
+                .setTitle("품명")
+                .setMessage(pummyeong)
+                .setNegativeButton("확인", null)
+                .show()
+
+    }
+
+
 }

@@ -463,7 +463,7 @@
                             android:paddingHorizontal="10dp">
 
                             <TextView
-                                android:layout_width="50dp"
+                                android:layout_width="40dp"
                                 android:layout_height="17dp"
                                 android:text="순번"
                                 android:textColor="@color/color_808080"
@@ -492,63 +492,70 @@
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="100dp"
+                                android:layout_width="60dp"
                                 android:layout_height="17dp"
+                                android:gravity="center"
                                 android:text="사양"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="100dp"
+                                android:layout_width="50dp"
                                 android:layout_height="17dp"
+                                android:gravity="center"
                                 android:text="단위"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="100dp"
+                                android:layout_width="60dp"
                                 android:layout_height="17dp"
+                                android:gravity="center"
                                 android:text="발주수량"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="100dp"
+                                android:layout_width="80dp"
                                 android:layout_height="17dp"
                                 android:text="입고요청일"
+                                android:gravity="center"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="100dp"
+                                android:layout_width="70dp"
                                 android:layout_height="17dp"
+                                android:gravity="center"
                                 android:text="기입고수량"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="100dp"
+                                android:layout_width="60dp"
                                 android:layout_height="17dp"
+                                android:gravity="center"
                                 android:text="입고수량"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
 
 
 
-                            <TextView
-                                android:id="@+id/jungyojajeyeobu"
-                                android:layout_width="100dp"
-                                android:layout_height="17dp"
-                                android:text="중요자재여부"
-                                android:textColor="@color/color_808080"
-                                android:textSize="12dp"
-                                android:visibility="gone"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/jungyojajeyeobu"-->
+<!--                                android:layout_width="100dp"-->
+<!--                                android:layout_height="17dp"-->
+<!--                                android:text="중요자재여부"-->
+<!--                                android:textColor="@color/color_808080"-->
+<!--                                android:textSize="12dp"-->
+<!--                                android:visibility="gone"/>-->
 
 
                             <TextView
                                 android:id="@+id/serialDetail"
-                                android:layout_width="100dp"
+                                android:layout_width="80dp"
                                 android:layout_height="17dp"
+                                android:gravity="center"
                                 android:text="시리얼/상세"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp"
@@ -557,6 +564,7 @@
                             <TextView
                                 android:layout_width="100dp"
                                 android:layout_height="17dp"
+                                android:gravity="center"
                                 android:text="위치"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
