@@ -2,6 +2,7 @@ package kr.co.drgem.managingapp.menu.order.activity
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +21,7 @@ import kr.co.drgem.managingapp.models.BaljuData
 import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.models.MasterDataResponse
 import kr.co.drgem.managingapp.models.OrderDetailResponse
+import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
+class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityOrderDetailBinding
     lateinit var mAdapter: OrderDetailListAdapter
@@ -175,6 +177,29 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
             }
         }
 
+        SerialManageUtil.clearData()
+
+        for (pummok in baljuDetail) {
+            val serialList = mSqliteDB.getAllSerialByPummokcode(pummok.getPummokcodeHP())
+
+
+            val contentString = StringBuilder()
+            for (data in serialList) {
+
+                if (data.serial.isNotBlank()) {
+                    contentString.append("${data.serial},")
+                }
+
+            }
+            if (contentString.length > 1) {
+                contentString.setLength(contentString.length - 1)
+                SerialManageUtil.putSerialStringByPummokCode(pummok.getPummokcodeHP(), contentString.toString())
+            }
+
+
+
+        }
+
         mAdapter.notifyDataSetChanged()
 
     }
@@ -236,7 +261,16 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener {
 
         dialog.setCount(mBaljubeonho, count, data)
         dialog.show(supportFragmentManager, "EditDialog")
+        supportFragmentManager.executePendingTransactions()
 
+//        dialog.dialog?.setOnDismissListener(this)
+    }
+
+    override fun onDismiss(p0: DialogInterface?) {
+
+        Log.d("다이얼로그닫히면", "로그찍히나")
+
+        mAdapter.notifyDataSetChanged()
     }
 
 }

@@ -18,6 +18,7 @@ import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.activity.OrderDetailDetailActivity
 import kr.co.drgem.managingapp.models.Baljudetail
+import kr.co.drgem.managingapp.utils.SerialManageUtil
 
 class OrderDetailListViewHolder(
     val mContext: Context,
@@ -100,9 +101,12 @@ class OrderDetailListViewHolder(
             btnEdit.visibility = View.GONE
         }
 
-        val savedSerialCount = (mContext as OrderDetailDetailActivity).mSqliteDB.getAllSerialByPummokcode(data.getPummokcodeHP()).size
+        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())
 
-        if (savedSerialCount > 0) {
+        Log.d("품목코드", data.getPummokcodeHP())
+        Log.d("불러내는 씨리얼스트링", savedSerialString.toString())
+
+        if (savedSerialString != null) {
 
 
             btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
@@ -133,6 +137,7 @@ class OrderDetailListViewHolder(
 
 
             } catch (e: Exception) {
+                e.printStackTrace()
                 edtCount.text = null
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }

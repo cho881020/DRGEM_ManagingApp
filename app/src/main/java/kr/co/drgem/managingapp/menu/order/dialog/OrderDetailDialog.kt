@@ -1,5 +1,7 @@
 package kr.co.drgem.managingapp.menu.order.dialog
 
+import android.app.Activity
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,13 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogOrderDetailBinding
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
-import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.Baljudetail
+import kr.co.drgem.managingapp.utils.SerialManageUtil
+
 
 class OrderDetailDialog : BaseDialogFragment() {
 
@@ -55,11 +57,9 @@ class OrderDetailDialog : BaseDialogFragment() {
 
             mSqliteDB.deletePummokcodeSerials(baljuData.getPummokcodeHP())
 
+            val contentString = StringBuilder()
 
             for (data in mSerialDataList) {
-
-                Log.d("포지션", data.position)
-                Log.d("씨리얼", data.serial)
 
                 if (data.serial.isNotBlank()) {
 
@@ -68,8 +68,19 @@ class OrderDetailDialog : BaseDialogFragment() {
                         data.serial,
                         data.position
                     )
+
+                    contentString.append("${data.serial},")
                 }
 
+            }
+            if (contentString.isNotBlank()) {
+
+                contentString.setLength(contentString.length - 1)
+
+                SerialManageUtil.putSerialStringByPummokCode(baljuData.getPummokcodeHP(), contentString.toString())
+
+                Log.d("품목코드", baljuData.getPummokcodeHP())
+                Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
 
             Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
@@ -122,7 +133,7 @@ class OrderDetailDialog : BaseDialogFragment() {
 
     }
 
-    fun setCount ( Baljubeonho : String, count : Int, data : Baljudetail,) {
+    fun setCount(Baljubeonho: String, count: Int, data: Baljudetail) {
         mBaljubeonho = Baljubeonho
         viewholderCount = count
         baljuData = data
@@ -132,6 +143,13 @@ class OrderDetailDialog : BaseDialogFragment() {
 
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
 
+        val activity: Activity? = activity
+        if (activity is DialogInterface.OnDismissListener) {
+            (activity as DialogInterface.OnDismissListener).onDismiss(dialog)
+        }
+    }
 
 }

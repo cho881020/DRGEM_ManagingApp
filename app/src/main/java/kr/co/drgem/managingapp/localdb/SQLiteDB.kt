@@ -194,7 +194,7 @@ class SQLiteDB {
 
     fun updateBaljuDetail(data: Baljudetail) {
         val query =
-            "UPDATE baljudetail SET ipgosuryang='${data.ipgosuryang}' WHERE pummokcode = '${data.pummokcode}'"
+            "UPDATE baljudetail SET ipgosuryang='${data.ipgosuryang}' WHERE pummokcode = '${data.getPummokcodeHP()}'"
         db.execSQL(query)
     }
 
