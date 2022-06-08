@@ -95,7 +95,10 @@ class MenuActivity : BaseActivity() {
                 .show()
         }
 
+    }
 
+    override fun onBackPressed() {
+        endDialog()
     }
 
     override fun setValues() {

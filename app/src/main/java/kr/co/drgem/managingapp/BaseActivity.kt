@@ -67,4 +67,16 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 
+    fun endDialog(){
+        AlertDialog.Builder(mContext)
+            .setMessage("종료하시겠습니까?")
+            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                finishAndRemoveTask()
+                android.os.Process.killProcess(android.os.Process.myPid())
+            })
+            .setNegativeButton("아니오", null)
+            .show()
+    }
+
+
 }

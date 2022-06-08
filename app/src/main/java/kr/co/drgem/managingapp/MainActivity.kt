@@ -102,6 +102,9 @@ class MainActivity : BaseActivity() {
 
     }
 
+    override fun onBackPressed() {
+        endDialog()
+    }
 
 
     override fun setValues() {
