@@ -53,6 +53,9 @@ class OrderDetailDialog : BaseDialogFragment() {
 
         binding.btnAdd.setOnClickListener {
 
+            mSqliteDB.deletePummokcodeSerials(baljuData.getPummokcodeHP())
+
+
             for (data in mSerialDataList) {
 
                 Log.d("포지션", data.position)

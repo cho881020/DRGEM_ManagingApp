@@ -2,6 +2,7 @@ package kr.co.drgem.managingapp.menu.order.viewholder
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
+import kr.co.drgem.managingapp.menu.order.activity.OrderDetailDetailActivity
 import kr.co.drgem.managingapp.models.Baljudetail
 
 class OrderDetailListViewHolder(
@@ -96,6 +98,23 @@ class OrderDetailListViewHolder(
             btnEdit.visibility = View.VISIBLE
         } else {
             btnEdit.visibility = View.GONE
+        }
+
+        val savedSerialCount = (mContext as OrderDetailDetailActivity).mSqliteDB.getAllSerialByPummokcode(data.getPummokcodeHP()).size
+
+        if (savedSerialCount > 0) {
+
+
+            btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
+            btnEdit.setTextColor(mContext.resources.getColor(R.color.color_FFFFFF))
+            btnEdit.text = "*수정하기"
+        }
+        else {
+
+            btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
+            btnEdit.setTextColor(mContext.resources.getColor(R.color.color_9A9A9A))
+            btnEdit.text = "정보입력"
+
         }
 
 
