@@ -100,7 +100,7 @@ class MenuActivity : BaseActivity() {
 
     override fun setValues() {
 
-        val userName = intent.getStringExtra("name")
+        val userName = mSqliteDB.getAllLoginWorkCommon()[0].USERNAME
         binding.sawonmyeong.text = "$userName 님"
 
 

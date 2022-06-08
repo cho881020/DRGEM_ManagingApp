@@ -59,6 +59,30 @@ class DBHelper(
                 ");"
 
         db.execSQL(sql3)
+
+
+        val sql4 = "CREATE TABLE if not exists LOGIN_WORK_COMMON(" +
+                "id integer primary key autoincrement," +
+                "USERID text," +
+                "USERNAME text," +
+                "USERPW text," +
+                "SAEOPJANGCODE text," +
+                "SAEOPJANGMYEONG text," +
+                "BUSEOCODE text," +
+                "BUSEOMYEONG text," +
+                "CHANGGOCODE text," +
+                "CHANGGOMYEONG text," +
+                "SECURITY_TOKEN text," +
+                "PROGRAM_VERSION text," +
+                "INPUTDATE text," +
+                "WORKGUBUN text," +
+                "WORKNUMBER text," +
+                "TABLETIPNUMBER text," +
+                "WORK_DATE text," +
+                "WORK_STATE text" +
+                ");"
+
+        db.execSQL(sql4)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
