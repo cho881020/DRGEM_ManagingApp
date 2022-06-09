@@ -153,6 +153,7 @@
                         android:background="@null"
                         android:maxLines="1"
                         android:inputType="text"
+                        android:privateImeOptions="defaultInputmode=english"
                         tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
@@ -358,7 +359,7 @@
                     android:layout_marginTop="3dp"
                     android:background="@drawable/light_gray_box"
                     android:gravity="center_vertical"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:paddingHorizontal="7dp"
                     tools:text="3"

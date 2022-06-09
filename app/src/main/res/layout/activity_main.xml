@@ -54,7 +54,7 @@
                 android:drawableLeft="@drawable/pw_image"
                 android:drawablePadding="8.35dp"
                 android:maxLines="1"
-                android:privateImeOptions="defaultInputmode=english"
+                android:privateImeOptions="defaultInputmode=korean"
                 android:inputType="textPassword"
                 android:hint="비밀번호"
                 android:paddingLeft="9dp"

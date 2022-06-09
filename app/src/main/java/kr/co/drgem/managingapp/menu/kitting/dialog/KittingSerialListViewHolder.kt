@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 
 class KittingSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.dialog_order_serial_list, parent, false)
+    LayoutInflater.from(parent.context).inflate(R.layout.dialog_kitting_serial_list, parent, false)
 ) {
     val txtNumber = itemView.findViewById<TextView>(R.id.txtNumber)
 

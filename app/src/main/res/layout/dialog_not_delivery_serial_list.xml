@@ -31,6 +31,7 @@
         android:background="@null"
         android:maxLines="1"
         android:inputType="text"
+        android:privateImeOptions="defaultInputmode=english"
         android:imeOptions="actionNext"
         android:selectAllOnFocus="true"
         android:paddingHorizontal="7dp"
