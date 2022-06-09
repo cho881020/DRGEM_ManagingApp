@@ -18,6 +18,7 @@ import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 import org.json.JSONArray
 import retrofit2.Call
@@ -42,7 +43,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     var companyCode = "0001"
     var wareHouseCode = "1001"
 
-    lateinit var masterData : MasterDataResponse
+    lateinit var masterData: MasterDataResponse
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,12 +58,12 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         spinnerSet()
         getRequestOrderDetail()
 
-
     }
 
     override fun onBackPressed() {
         backDialog {
             clearAndCancelWork()
+            WorkstatusCancle()
         }
     }
 
@@ -81,6 +82,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         binding.btnBack.setOnClickListener {
             backDialog {
                 clearAndCancelWork()
+                WorkstatusCancle()
             }
         }
 
@@ -131,7 +133,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
                 Log.d("yj", "serialData : $serialData")
 
-                if(serialData.isEmpty()){        // null값 까지 같이 들어옴
+                if (serialData.isEmpty()) {        // null값 까지 같이 들어옴
 
                     serialData = ""
 
@@ -163,7 +165,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             )
 
             Log.d("yj", "georaeMap : ${georaeMap}")
-
 
 
         }
@@ -311,9 +312,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
             var companyIndex = 0
             masterData.getCompanyCode().forEachIndexed { index, company ->
-                 if (company.code == baljuDetailInfoLocalDB.IPGOSAUPJANGCODE) {
-                     companyIndex = index
-                 }
+                if (company.code == baljuDetailInfoLocalDB.IPGOSAUPJANGCODE) {
+                    companyIndex = index
+                }
             }
 
             binding.spinnerCompany.setSelection(companyIndex)
@@ -365,11 +366,50 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     }
 
+    fun WorkstatusCancle() {
+
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val workCancelMap = hashMapOf(
+            "requesttype" to "",
+            "seq" to "02",
+            "tablet_ip" to "000",
+            "sawoncode" to sawonCode,
+            "status" to "111",
+        )
+
+        apiList.postRequestWorkstatusCancle(workCancelMap)
+            .enqueue(object : Callback<WorkResponse> {
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+
+                            Log.d("yj", "작업상태취소 code : ${it.resultcd}")
+                            Log.d("yj", "작업상태취소 msg : ${it.resultmsg}")
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "SEQ 서버 실패 : ${t.message}")
+                }
+
+            })
+
+    }
 
 
     fun clearAndCancelWork() {
 
-        Log.d("KJ","DB에 있는 작업 데이터 삭제만 하기")
+        Log.d("KJ", "DB에 있는 작업 데이터 삭제만 하기")
         mSqliteDB.deleteOrderDetail()
         mSqliteDB.deleteAllSerials()
     }

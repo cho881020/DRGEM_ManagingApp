@@ -1,6 +1,5 @@
 package kr.co.drgem.managingapp.apis
 
-import android.location.Location
 import kr.co.drgem.managingapp.models.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -26,7 +25,17 @@ interface APIList {
     @POST("tablet/workseq/request")
     fun postRequestSEQ(
         @Body params: HashMap<String, String>,
-) : Call<SEQResponse>
+) : Call<WorkResponse>
+
+    @POST("tablet/workstatus/cancle")
+    fun postRequestWorkstatusCancle(
+        @Body params: HashMap<String, String>,
+    ) : Call<WorkResponse>
+
+    @POST("tablet/temp-extantstock/register")
+    fun postRequestTempExtantstock(
+        @Body params: HashMap<String, String>,
+    ) : Call<WorkResponse>
 
     @GET("tablet/tran/detail/request")
     fun getRequestTranDetail(

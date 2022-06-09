@@ -53,10 +53,9 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
             Log.d("yj", "SEQMap : $SEQMap")
 
-            apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<SEQResponse>{
+            apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse>{
 
-                override fun onResponse(call: Call<SEQResponse>, response: Response<SEQResponse>) {
-                    Log.d("yj", "SEQ 성공 메시지 : ${response.body()?.resultmsg}")
+                override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
 
                     if(response.isSuccessful){
                         response.body()?.let {
@@ -76,7 +75,7 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
                 }
 
-                override fun onFailure(call: Call<SEQResponse>, t: Throwable) {
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     Log.d("yj", "SEQ 서버 실패 : ${t.message}")
                 }
 
