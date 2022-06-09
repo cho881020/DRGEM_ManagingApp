@@ -15,7 +15,7 @@ data class IpgodetaildetailAdd(
         jsonObj.put("seq", seq)
         jsonObj.put("pummokcode", pummokcode)
         jsonObj.put("georaesuryang", georaesuryang)
-        jsonObj.put("jungyojajeyeobu", seq)
+        jsonObj.put("jungyojajeyeobu", jungyojajeyeobu)
         jsonObj.put("serialnumber", serialnumber)
 
         return jsonObj
