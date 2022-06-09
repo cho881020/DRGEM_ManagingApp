@@ -5,15 +5,5 @@ data class BaljuCommonLocalDB(
     val BALJUILJAEND: String?,
     val GEORAECHEOMEONG: String?,
     val BALJUBEONHO: String?,
-    val BALJUCOUNT: String?,
-    val BALJUBEONHOSEL: String?,
-    val BALJUIL: String?,
-    val GEORAECHEOCODE: String?,
-    val GEORAECHEMYEONG: String?,
-    val BIGO: String?,
-    val IPGODATE: String?,
-    val IPGOSAUPJANGCODE: String?,
-    val IPGOCHANGGOCODE: String?,
-    val IPGODAMDANGJA: String?,
 ) {
 }

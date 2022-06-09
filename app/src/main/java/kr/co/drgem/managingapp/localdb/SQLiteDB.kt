@@ -352,32 +352,12 @@ class SQLiteDB {
         BALJUILJAEND: String?,
         GEORAECHEOMEONG: String?,
         BALJUBEONHO: String?,
-        BALJUCOUNT: String?,
-        BALJUBEONHOSEL: String?,
-        BALJUIL: String?,
-        GEORAECHEOCODE: String?,
-        GEORAECHEMYEONG: String?,
-        BIGO: String?,
-        IPGODATE: String?,
-        IPGOSAUPJANGCODE: String?,
-        IPGOCHANGGOCODE: String?,
-        IPGODAMDANGJA: String?,
     ) {
         val values = ContentValues()
         values.put("BALJUILJASTART", BALJUILJASTART)
         values.put("BALJUILJAEND", BALJUILJAEND)
         values.put("GEORAECHEOMEONG", GEORAECHEOMEONG)
         values.put("BALJUBEONHO", BALJUBEONHO)
-        values.put("BALJUCOUNT", BALJUCOUNT)
-        values.put("BALJUBEONHOSEL", BALJUBEONHOSEL)
-        values.put("BALJUIL", BALJUIL)
-        values.put("GEORAECHEOCODE", GEORAECHEOCODE)
-        values.put("GEORAECHEMYEONG", GEORAECHEMYEONG)
-        values.put("BIGO", BIGO)
-        values.put("IPGODATE", IPGODATE)
-        values.put("IPGOSAUPJANGCODE", IPGOSAUPJANGCODE)
-        values.put("IPGOCHANGGOCODE", IPGOCHANGGOCODE)
-        values.put("IPGODAMDANGJA", IPGODAMDANGJA)
 
         db.insert("BALJU_COMMON", null, values)
 
@@ -396,16 +376,6 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("BALJUILJAEND")),
                     c.getString(c.getColumnIndex("GEORAECHEOMEONG")),
                     c.getString(c.getColumnIndex("BALJUBEONHO")),
-                    c.getString(c.getColumnIndex("BALJUCOUNT")),
-                    c.getString(c.getColumnIndex("BALJUBEONHOSEL")),
-                    c.getString(c.getColumnIndex("BALJUIL")),
-                    c.getString(c.getColumnIndex("GEORAECHEOCODE")),
-                    c.getString(c.getColumnIndex("GEORAECHEMYEONG")),
-                    c.getString(c.getColumnIndex("BIGO")),
-                    c.getString(c.getColumnIndex("IPGODATE")),
-                    c.getString(c.getColumnIndex("IPGOSAUPJANGCODE")),
-                    c.getString(c.getColumnIndex("IPGOCHANGGOCODE")),
-                    c.getString(c.getColumnIndex("IPGODAMDANGJA"))
                 )
             )
 

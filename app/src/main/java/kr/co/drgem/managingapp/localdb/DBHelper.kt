@@ -102,17 +102,7 @@ class DBHelper(
                 "BALJUILJASTART text," +
                 "BALJUILJAEND text," +
                 "GEORAECHEOMEONG text," +
-                "BALJUBEONHO text," +
-                "BALJUCOUNT text," +
-                "BALJUBEONHOSEL text," +
-                "BALJUIL text," +
-                "GEORAECHEOCODE text," +
-                "GEORAECHEMYEONG text," +
-                "BIGO text," +
-                "IPGODATE text," +
-                "IPGOSAUPJANGCODE text," +
-                "IPGOCHANGGOCODE text," +
-                "IPGODAMDANGJA text" +
+                "BALJUBEONHO text" +
                 ");"
 
         db.execSQL(sql6)
