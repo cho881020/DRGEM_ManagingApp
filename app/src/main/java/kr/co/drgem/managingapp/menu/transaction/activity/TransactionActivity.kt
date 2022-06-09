@@ -103,7 +103,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
         binding.btnBack.setOnClickListener {
 
-            backDialog()
+            backDialog(null)
 
         }
 
@@ -396,7 +396,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     override fun onBackPressed() {
 
-        backDialog()
+        backDialog(null)
 
     }
 

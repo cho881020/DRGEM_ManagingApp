@@ -26,6 +26,15 @@ class OrderActivity : BaseActivity() {
     lateinit var mOrderAdapter: OrderListAdapter
     val baljuList = ArrayList<Baljubeonho>()
 
+
+    val calStart = Calendar.getInstance()
+    val calEnd = Calendar.getInstance()
+    val dateSet = SimpleDateFormat("yyyyMMdd")
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+    var calStartStr = dateSet.format(calStart.time)
+    var calEndStr = dateSet.format(calEnd.time)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order)
@@ -51,25 +60,20 @@ class OrderActivity : BaseActivity() {
             binding.edtBaljubeonho.text = null
         }
 
-        val cal = Calendar.getInstance()
-        val dateSet = SimpleDateFormat("yyyyMMdd")
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-        binding.txtDateStart.text = dateFormat.format(cal.time)
-        binding.txtDateEnd.text = dateFormat.format(cal.time)
+        binding.txtDateStart.text = dateFormat.format(calStart.time)
+        binding.txtDateEnd.text = dateFormat.format(calEnd.time)
 
-        var calStart = dateSet.format(cal.time)
-        var calEnd = dateSet.format(cal.time)
 
         binding.layoutDateStart.setOnClickListener {
 
             val date = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    cal.set(year, month, dayOfMonth)
+                    calStart.set(year, month, dayOfMonth)
 
-                    calStart = dateSet.format(cal.time)
-                    binding.txtDateStart.text = dateFormat.format(cal.time)
+                    calStartStr = dateSet.format(calStart.time)
+                    binding.txtDateStart.text = dateFormat.format(calStart.time)
 
                 }
             }
@@ -77,9 +81,9 @@ class OrderActivity : BaseActivity() {
             val datePick = DatePickerDialog(
                 mContext,
                 date,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
+                calStart.get(Calendar.YEAR),
+                calStart.get(Calendar.MONTH),
+                calStart.get(Calendar.DAY_OF_MONTH)
             )
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
@@ -90,19 +94,19 @@ class OrderActivity : BaseActivity() {
             val date = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    cal.set(year, month, dayOfMonth)
+                    calEnd.set(year, month, dayOfMonth)
 
-                    calEnd = dateSet.format(cal.time)
-                    binding.txtDateEnd.text = dateFormat.format(cal.time)
+                    calEndStr = dateSet.format(calEnd.time)
+                    binding.txtDateEnd.text = dateFormat.format(calEnd.time)
                 }
             }
 
             val datePick = DatePickerDialog(
                 mContext,
                 date,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
+                calEnd.get(Calendar.YEAR),
+                calEnd.get(Calendar.MONTH),
+                calEnd.get(Calendar.DAY_OF_MONTH)
             )
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
@@ -114,13 +118,13 @@ class OrderActivity : BaseActivity() {
             val georaecheomyeong = binding.edtGeoraecheomyeong.text.toString()
             val baljubeonho = binding.edtBaljubeonho.text.toString()
 
-            apiList.getRequestOrderNumber("02011", calStart, calEnd, georaecheomyeong, baljubeonho)
+            apiList.getRequestOrderNumber("02011", calStartStr, calEndStr, georaecheomyeong, baljubeonho)
                 .enqueue(object : Callback<OrderResponse> {
                     override fun onResponse(
                         call: Call<OrderResponse>,
                         response: Response<OrderResponse>
                     ) {
-                        Log.d("yj", "cal:$calStart $calEnd, 거래처명:$georaecheomyeong, 발주번호:$baljubeonho" )
+                        Log.d("yj", "cal:$calStartStr $calEndStr, 거래처명:$georaecheomyeong, 발주번호:$baljubeonho" )
 
                             response.body()?.let {
 
@@ -157,6 +161,13 @@ class OrderActivity : BaseActivity() {
 
     private fun clearDbAndInsertAllSearchedData() {
 
+        mSqliteDB.deleteBaljuCommon()
+        mSqliteDB.insertBaljuCommon(
+            dateFormat.format(calStart.time),
+            dateFormat.format(calEnd.time),
+            binding.edtGeoraecheomyeong.text.toString(),
+            binding.edtBaljubeonho.text.toString()
+        )
 
         mSqliteDB.deleteBaljubeonho()
         for (data in baljuList) {
@@ -167,6 +178,20 @@ class OrderActivity : BaseActivity() {
     }
 
     private fun getAllBaljubeonhoInLocalDB() {
+
+        val baljuCommonDataList = mSqliteDB.getAllBaljuCommon()
+
+        if (baljuCommonDataList.isNotEmpty()) {
+
+            val data = baljuCommonDataList[0]
+
+            binding.txtDateStart.text = data.BALJUILJASTART
+            binding.txtDateEnd.text = data.BALJUILJAEND
+            binding.edtGeoraecheomyeong.setText(data.GEORAECHEOMEONG)
+            binding.edtBaljubeonho.setText(data.BALJUBEONHO)
+
+        }
+
         baljuList.clear()
         baljuList.addAll(mSqliteDB.getAllSavedBaljubeonho())
 
@@ -198,25 +223,5 @@ class OrderActivity : BaseActivity() {
 
     }
 
-
-//    private fun clearDbAndInsertAllSearchedData() {
-//
-//        roomDB.baljubeonhoDao().deleteAllSavedBaljubeonhoList()
-//
-//        roomDB.baljubeonhoDao().insertBaljubeonhoList(baljuList)
-//
-//        setBaljubeonhoListData()
-//
-//    }
-//
-//    fun getAllBaljubeonhoListFromRoomDB() {
-//
-//        val dbList = roomDB.baljubeonhoDao().getAllSavedBaljubeonhoList()
-//
-//        baljuList.clear()
-//        baljuList.addAll(dbList)
-//        setBaljubeonhoListData()
-//
-//    }
 
 }

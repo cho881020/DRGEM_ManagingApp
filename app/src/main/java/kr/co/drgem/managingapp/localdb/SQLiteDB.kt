@@ -1,9 +1,11 @@
 package kr.co.drgem.managingapp.localdb
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
+import kr.co.drgem.managingapp.localdb.model.BaljuCommonLocalDB
+import kr.co.drgem.managingapp.localdb.model.LoginWorkCommonLocalDB
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.models.BasicResponse
@@ -41,6 +43,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getAllSavedBaljubeonho(): ArrayList<Baljubeonho> {
         val list = ArrayList<Baljubeonho>()
 
@@ -103,6 +106,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getSavedOrderDetail(): ArrayList<OrderDetailResponse> {
         val list = ArrayList<OrderDetailResponse>()
 
@@ -154,6 +158,7 @@ class SQLiteDB {
         values.put("baljusuryang", data.baljusuryang)
         values.put("ipgoyejeongil", data.ipgoyejeongil)
         values.put("giipgosuryang", data.giipgosuryang)
+        values.put("ipgosuryang", data.ipgosuryang)
         values.put("jungyojajeyeobu", data.jungyojajeyeobu)
         values.put("location", data.location)
 
@@ -162,6 +167,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getAllSavedBaljuDetail(): ArrayList<Baljudetail> {
         val list = ArrayList<Baljudetail>()
 
@@ -235,6 +241,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getAllLoginWorkCommon(): ArrayList<LoginWorkCommonLocalDB> {
         val list = ArrayList<LoginWorkCommonLocalDB>()
 
@@ -293,6 +300,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getAllSerialByPummokcode(pummokcode: String): ArrayList<SerialLocalDB> {
         val list = ArrayList<SerialLocalDB>()
 
@@ -314,6 +322,7 @@ class SQLiteDB {
     }
 
 
+    @SuppressLint("Range")
     fun getFirstSerialByPummokcodeAndPosition(pummokcode:String, position: String) : SerialLocalDB? {
 
 
@@ -331,5 +340,49 @@ class SQLiteDB {
             return null
         }
     }
+
+
+    fun deleteBaljuCommon() {
+        val query = "DELETE FROM BALJU_COMMON;"
+        db.execSQL(query)
+    }
+
+    fun insertBaljuCommon(
+        BALJUILJASTART: String?,
+        BALJUILJAEND: String?,
+        GEORAECHEOMEONG: String?,
+        BALJUBEONHO: String?,
+    ) {
+        val values = ContentValues()
+        values.put("BALJUILJASTART", BALJUILJASTART)
+        values.put("BALJUILJAEND", BALJUILJAEND)
+        values.put("GEORAECHEOMEONG", GEORAECHEOMEONG)
+        values.put("BALJUBEONHO", BALJUBEONHO)
+
+        db.insert("BALJU_COMMON", null, values)
+
+    }
+
+    @SuppressLint("Range")
+    fun getAllBaljuCommon(): ArrayList<BaljuCommonLocalDB> {
+        val list = ArrayList<BaljuCommonLocalDB>()
+
+        val query = "SELECT * FROM BALJU_COMMON;"
+        val c = db.rawQuery(query, null)
+        while (c.moveToNext()) {
+            list.add(
+                BaljuCommonLocalDB(
+                    c.getString(c.getColumnIndex("BALJUILJASTART")),
+                    c.getString(c.getColumnIndex("BALJUILJAEND")),
+                    c.getString(c.getColumnIndex("GEORAECHEOMEONG")),
+                    c.getString(c.getColumnIndex("BALJUBEONHO")),
+                )
+            )
+
+        }
+
+        return list
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package kr.co.drgem.managingapp.localdb
+package kr.co.drgem.managingapp.localdb.model
 
 data class LoginWorkCommonLocalDB(
     val USERID: String?,
