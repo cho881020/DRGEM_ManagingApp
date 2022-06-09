@@ -106,6 +106,15 @@ class DBHelper(
                 ");"
 
         db.execSQL(sql6)
+        val sql7 = "CREATE TABLE if not exists BALJU_DETAIL_INFO(" +
+                "id integer primary key autoincrement," +
+                "IPGODATE text," +
+                "IPGOSAUPJANGCODE text," +
+                "IPGOCHANGGOCODE text," +
+                "IPGODAMDANGJA text" +
+                ");"
+
+        db.execSQL(sql7)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -40,6 +41,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var companyCode = "0001"
     var wareHouseCode = "1001"
+
+    lateinit var masterData : MasterDataResponse
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -175,7 +178,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     fun spinnerSet() {
-        val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
+        masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
 
         val spinnerCompanyAdapter =
             MasterDataSpinnerAdapter(
@@ -304,6 +307,31 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                 baljuDetail.add(detail)
             }
 
+            val baljuDetailInfoLocalDB = mSqliteDB.getAllBaljuDetailInfo()[0]
+
+            var companyIndex = 0
+            masterData.getCompanyCode().forEachIndexed { index, company ->
+                 if (company.code == baljuDetailInfoLocalDB.IPGOSAUPJANGCODE) {
+                     companyIndex = index
+                 }
+            }
+
+            binding.spinnerCompany.setSelection(companyIndex)
+
+            var wareHouseIndex = 0
+
+            mWareHouseList.forEachIndexed { index, wareHouse ->
+
+                if (wareHouse.code == baljuDetailInfoLocalDB.IPGOCHANGGOCODE) {
+                    wareHouseIndex = index
+                }
+
+            }
+
+            binding.spinnerWareHouse.setSelection(wareHouseIndex)
+
+
+            binding.edtName.setText(baljuDetailInfoLocalDB.IPGODAMDANGJA)
 
             setOrderDetailDataToUI()
         } else {
@@ -346,10 +374,23 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     fun clearAndSaveDataToDB() {
 
+        mSqliteDB.deleteBaljuDetailInfo()
+
         mSqliteDB.deleteOrderDetail()
         mSqliteDB.deleteAllSerials()
 
+        mSqliteDB.insertBaljuDetailInfo(
+
+            binding.txtDate.text.toString(),
+            masterData.getCompanyCode()[binding.spinnerCompany.selectedItemPosition].code,
+            mWareHouseList[binding.spinnerCompany.selectedItemPosition].code,
+            binding.edtName.text.toString()
+
+        )
+
         mSqliteDB.insertOrderDetail(orderDetailData)
+
+        Toast.makeText(mContext, "임시 저장이 완료 되었습니다.", Toast.LENGTH_SHORT).show()
 
     }
 

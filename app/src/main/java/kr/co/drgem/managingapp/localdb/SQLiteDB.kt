@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import kr.co.drgem.managingapp.localdb.model.BaljuCommonLocalDB
+import kr.co.drgem.managingapp.localdb.model.BaljuDetailInfoLocalDB
 import kr.co.drgem.managingapp.localdb.model.LoginWorkCommonLocalDB
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.Baljudetail
@@ -383,6 +384,50 @@ class SQLiteDB {
 
         return list
     }
+
+
+    fun deleteBaljuDetailInfo() {
+        val query = "DELETE FROM BALJU_DETAIL_INFO;"
+        db.execSQL(query)
+    }
+
+    fun insertBaljuDetailInfo(
+        IPGODATE: String?,
+        IPGOSAUPJANGCODE: String?,
+        IPGOCHANGGOCODE: String?,
+        IPGODAMDANGJA: String?,
+    ) {
+        val values = ContentValues()
+        values.put("IPGODATE", IPGODATE)
+        values.put("IPGOSAUPJANGCODE", IPGOSAUPJANGCODE)
+        values.put("IPGOCHANGGOCODE", IPGOCHANGGOCODE)
+        values.put("IPGODAMDANGJA", IPGODAMDANGJA)
+
+        db.insert("BALJU_DETAIL_INFO", null, values)
+
+    }
+
+    @SuppressLint("Range")
+    fun getAllBaljuDetailInfo(): ArrayList<BaljuDetailInfoLocalDB> {
+        val list = ArrayList<BaljuDetailInfoLocalDB>()
+
+        val query = "SELECT * FROM BALJU_DETAIL_INFO;"
+        val c = db.rawQuery(query, null)
+        while (c.moveToNext()) {
+            list.add(
+                BaljuDetailInfoLocalDB(
+                    c.getString(c.getColumnIndex("IPGODATE")),
+                    c.getString(c.getColumnIndex("IPGOSAUPJANGCODE")),
+                    c.getString(c.getColumnIndex("IPGOCHANGGOCODE")),
+                    c.getString(c.getColumnIndex("IPGODAMDANGJA")),
+                )
+            )
+
+        }
+
+        return list
+    }
+
 
 
 }
