@@ -1,9 +1,11 @@
 package kr.co.drgem.managingapp.localdb
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
+import kr.co.drgem.managingapp.localdb.model.BaljuCommonLocalDB
+import kr.co.drgem.managingapp.localdb.model.LoginWorkCommonLocalDB
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.models.BasicResponse
@@ -331,5 +333,79 @@ class SQLiteDB {
             return null
         }
     }
+
+
+    fun deleteBaljuCommon() {
+        val query = "DELETE FROM BALJU_COMMON;"
+        db.execSQL(query)
+    }
+
+    fun insertBaljuCommon(
+        BALJUILJASTART: String?,
+        BALJUILJAEND: String?,
+        GEORAECHEOMEONG: String?,
+        BALJUBEONHO: String?,
+        BALJUCOUNT: String?,
+        BALJUBEONHOSEL: String?,
+        BALJUIL: String?,
+        GEORAECHEOCODE: String?,
+        GEORAECHEMYEONG: String?,
+        BIGO: String?,
+        IPGODATE: String?,
+        IPGOSAUPJANGCODE: String?,
+        IPGOCHANGGOCODE: String?,
+        IPGODAMDANGJA: String?,
+    ) {
+        val values = ContentValues()
+        values.put("BALJUILJASTART", BALJUILJASTART)
+        values.put("BALJUILJAEND", BALJUILJAEND)
+        values.put("GEORAECHEOMEONG", GEORAECHEOMEONG)
+        values.put("BALJUBEONHO", BALJUBEONHO)
+        values.put("BALJUCOUNT", BALJUCOUNT)
+        values.put("BALJUBEONHOSEL", BALJUBEONHOSEL)
+        values.put("BALJUIL", BALJUIL)
+        values.put("GEORAECHEOCODE", GEORAECHEOCODE)
+        values.put("GEORAECHEMYEONG", GEORAECHEMYEONG)
+        values.put("BIGO", BIGO)
+        values.put("IPGODATE", IPGODATE)
+        values.put("IPGOSAUPJANGCODE", IPGOSAUPJANGCODE)
+        values.put("IPGOCHANGGOCODE", IPGOCHANGGOCODE)
+        values.put("IPGODAMDANGJA", IPGODAMDANGJA)
+
+        db.insert("BALJU_COMMON", null, values)
+
+    }
+
+    @SuppressLint("Range")
+    fun getAllBaljuCommon(): ArrayList<BaljuCommonLocalDB> {
+        val list = ArrayList<BaljuCommonLocalDB>()
+
+        val query = "SELECT * FROM BALJU_COMMON;"
+        val c = db.rawQuery(query, null)
+        while (c.moveToNext()) {
+            list.add(
+                BaljuCommonLocalDB(
+                    c.getString(c.getColumnIndex("BALJUILJASTART")),
+                    c.getString(c.getColumnIndex("BALJUILJAEND")),
+                    c.getString(c.getColumnIndex("GEORAECHEOMEONG")),
+                    c.getString(c.getColumnIndex("BALJUBEONHO")),
+                    c.getString(c.getColumnIndex("BALJUCOUNT")),
+                    c.getString(c.getColumnIndex("BALJUBEONHOSEL")),
+                    c.getString(c.getColumnIndex("BALJUIL")),
+                    c.getString(c.getColumnIndex("GEORAECHEOCODE")),
+                    c.getString(c.getColumnIndex("GEORAECHEMYEONG")),
+                    c.getString(c.getColumnIndex("BIGO")),
+                    c.getString(c.getColumnIndex("IPGODATE")),
+                    c.getString(c.getColumnIndex("IPGOSAUPJANGCODE")),
+                    c.getString(c.getColumnIndex("IPGOCHANGGOCODE")),
+                    c.getString(c.getColumnIndex("IPGODAMDANGJA"))
+                )
+            )
+
+        }
+
+        return list
+    }
+
 
 }

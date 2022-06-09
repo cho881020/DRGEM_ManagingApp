@@ -94,6 +94,28 @@ class DBHelper(
                 ");"
 
         db.execSQL(sql5)
+
+
+
+        val sql6 = "CREATE TABLE if not exists BALJU_COMMON(" +
+                "id integer primary key autoincrement," +
+                "BALJUILJASTART text," +
+                "BALJUILJAEND text," +
+                "GEORAECHEOMEONG text," +
+                "BALJUBEONHO text," +
+                "BALJUCOUNT text," +
+                "BALJUBEONHOSEL text," +
+                "BALJUIL text," +
+                "GEORAECHEOCODE text," +
+                "GEORAECHEMYEONG text," +
+                "BIGO text," +
+                "IPGODATE text," +
+                "IPGOSAUPJANGCODE text," +
+                "IPGOCHANGGOCODE text," +
+                "IPGODAMDANGJA text" +
+                ");"
+
+        db.execSQL(sql6)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
