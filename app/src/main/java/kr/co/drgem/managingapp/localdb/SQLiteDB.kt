@@ -43,6 +43,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getAllSavedBaljubeonho(): ArrayList<Baljubeonho> {
         val list = ArrayList<Baljubeonho>()
 
@@ -105,6 +106,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getSavedOrderDetail(): ArrayList<OrderDetailResponse> {
         val list = ArrayList<OrderDetailResponse>()
 
@@ -156,6 +158,7 @@ class SQLiteDB {
         values.put("baljusuryang", data.baljusuryang)
         values.put("ipgoyejeongil", data.ipgoyejeongil)
         values.put("giipgosuryang", data.giipgosuryang)
+        values.put("ipgosuryang", data.ipgosuryang)
         values.put("jungyojajeyeobu", data.jungyojajeyeobu)
         values.put("location", data.location)
 
@@ -164,6 +167,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getAllSavedBaljuDetail(): ArrayList<Baljudetail> {
         val list = ArrayList<Baljudetail>()
 
@@ -237,6 +241,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getAllLoginWorkCommon(): ArrayList<LoginWorkCommonLocalDB> {
         val list = ArrayList<LoginWorkCommonLocalDB>()
 
@@ -295,6 +300,7 @@ class SQLiteDB {
 
     }
 
+    @SuppressLint("Range")
     fun getAllSerialByPummokcode(pummokcode: String): ArrayList<SerialLocalDB> {
         val list = ArrayList<SerialLocalDB>()
 
@@ -316,6 +322,7 @@ class SQLiteDB {
     }
 
 
+    @SuppressLint("Range")
     fun getFirstSerialByPummokcodeAndPosition(pummokcode:String, position: String) : SerialLocalDB? {
 
 

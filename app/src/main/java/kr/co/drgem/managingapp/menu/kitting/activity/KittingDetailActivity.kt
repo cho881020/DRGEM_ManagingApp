@@ -56,13 +56,13 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
     }
 
     override fun onBackPressed() {
-        backDialog()
+        backDialog(null)
     }
 
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog()
+            backDialog(null)
         }
 
         binding.btnSave.setOnClickListener {

@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kr.co.drgem.managingapp.apis.APIList
@@ -41,13 +43,18 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun setValues()
 
-    fun backDialog() {
+    fun backDialog(runnable: Runnable?) {
 
         AlertDialog.Builder(mContext)
             .setTitle("아직 저장하지 않은 사항이 있습니다.")
             .setMessage("그래도 이 화면을 종료하시겠습니까?")
             .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+
+                runnable?.let {
+                    Handler(Looper.getMainLooper()).post(it)
+                }
                 finish()
+
             })
             .setNegativeButton("아니오", null)
             .show()

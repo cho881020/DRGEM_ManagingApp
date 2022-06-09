@@ -58,10 +58,17 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog()
+        backDialog {
+            clearAndCancelWork()
+        }
     }
 
     override fun setupEvents() {
+
+        binding.btnTempSave.setOnClickListener {
+
+            clearAndSaveDataToDB()
+        }
 
 
         binding.btnNameRemove.setOnClickListener {
@@ -69,7 +76,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         }
 
         binding.btnBack.setOnClickListener {
-            backDialog()
+            backDialog {
+                clearAndCancelWork()
+            }
         }
 
         val cal = Calendar.getInstance()
@@ -308,7 +317,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                         response.body()?.let {
 
                             orderDetailData = it
-                            clearAndSaveDataToDB()
 
                             baljuDetail.clear()
                             baljuDetail.addAll(it.returnBaljudetail())
@@ -327,6 +335,13 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         }
 
 
+    }
+
+    fun clearAndCancelWork() {
+
+        Log.d("KJ","DB에 있는 작업 데이터 삭제만 하기")
+        mSqliteDB.deleteOrderDetail()
+        mSqliteDB.deleteAllSerials()
     }
 
     fun clearAndSaveDataToDB() {
@@ -354,5 +369,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         mAdapter.notifyDataSetChanged()
     }
+
 
 }
