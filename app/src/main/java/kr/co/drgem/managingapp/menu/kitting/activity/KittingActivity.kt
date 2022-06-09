@@ -3,6 +3,8 @@ package kr.co.drgem.managingapp.menu.kitting.activity
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
@@ -10,8 +12,10 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityKittingBinding
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingListAdapter
+import kr.co.drgem.managingapp.models.Detailcode
 import kr.co.drgem.managingapp.models.KittingResponse
 import kr.co.drgem.managingapp.models.TranResponse
 import retrofit2.Call
@@ -25,6 +29,10 @@ class KittingActivity : BaseActivity() {
     lateinit var binding : ActivityKittingBinding
     lateinit var mAdapter : KittingListAdapter
     lateinit  var kittingData : KittingResponse
+
+    var changgocode = ""
+    var calStart = ""
+    var calEnd = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +55,8 @@ class KittingActivity : BaseActivity() {
         binding.txtDateStart.text = dateFormat.format(cal.time)
         binding.txtDateEnd.text = dateFormat.format(cal.time)
 
-        var calStart = dateSet.format(cal.time)
-        var calEnd = dateSet.format(cal.time)
+        calStart = dateSet.format(cal.time)
+        calEnd = dateSet.format(cal.time)
 
         binding.layoutDateStart.setOnClickListener {
 
@@ -109,17 +117,37 @@ class KittingActivity : BaseActivity() {
             binding.edtKittingja.text = null
         }
 
-        binding.btnCanggocodeRemove.setOnClickListener {
-            binding.edtChanggocode.text = null
+        val changgoList = ArrayList<Detailcode>()
+        changgoList.add(Detailcode("2001", "자재창고1"))
+        changgoList.add(Detailcode("2014", "자재창고2"))
+
+        val spinnerAdapter = MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, changgoList)
+        binding.spinnerChanggocode.adapter = spinnerAdapter
+
+        binding.spinnerChanggocode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                changgocode = changgoList[position].code
+                Log.d("yj", "창고코드 : $changgocode")
+
+                getRequestKitting()
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
         }
 
+    }
 
+    fun getRequestKitting(){
         binding.btnFind.setOnClickListener {
 
             val inputKittingja = binding.edtKittingja.text.toString()
-            val inputChanggocode = binding.edtChanggocode.text.toString()
 
-            apiList.getRequestKittingNumber("02501", calStart, calEnd, inputKittingja, inputChanggocode).enqueue(object :
+            apiList.getRequestKittingNumber("02501", calStart, calEnd, inputKittingja, changgocode).enqueue(object :
                 Callback<KittingResponse>{
                 override fun onResponse(
                     call: Call<KittingResponse>,

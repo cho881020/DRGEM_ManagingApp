@@ -19,6 +19,8 @@ import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
 import kr.co.drgem.managingapp.menu.transaction.dialog.TransactionDialog
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.SerialManageUtil
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +34,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     lateinit var mAdapter: TransactionAdapter
     lateinit var detailCode: Detailcode
 
-    var georaedetail = ArrayList<GeoraedetailAdd>()
     var mWareHouseList : ArrayList<Detailcode> = arrayListOf()
     var companyCode = "0001"
     var wareHouseCode = "1001"
@@ -129,26 +130,53 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         binding.btnSave.setOnClickListener {
             saveDialog()
 
+            val georaedetail = JSONArray()   // 등록용 리스트
             val inputName = binding.edtName.text.toString()
+
+            tranData.returnGeoraedetail().forEach {
+
+                var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP()).toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
+
+                Log.d("yj", "serialData : $serialData")
+
+                if(serialData.isEmpty()){        // 시리얼 데이터가 빈 값일 경우
+
+                    serialData = ""             // "" 으로 표시
+
+                }
+                georaedetail.put(                         // 리스트에 담기
+                    GeoraedetailAdd(
+                        it.getBalhudanwiHP(),
+                        it.getSeqHP(),
+                        it.getPummokcodeHP(),
+                        serialData.split(",").size.toString(),
+                        it.getJungyojajeyeobuHP(),
+                        serialData
+                    ).toJsonObject()                            // JSONObject로 제작
+                )
+            }
 
 
             val georaeMap = hashMapOf(
                 "requesttype" to "02002",
-                "georaemyeongsebeonho" to "X",
+                "georaemyeongsebeonho" to tranData.getGeoraemyeongsebeonhoHP(),
                 "georaecheocode" to tranData.georaecheocode,
                 "ipgoilja" to calDate,
                 "ipgosaupjangcode" to companyCode,
                 "ipgochanggocode" to wareHouseCode,
                 "ipgodamdangja" to inputName,
-                "pummokcount" to "",
+                "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
+                "status" to "777",
+                "pummokcount" to georaedetail.length(),
                 "georaedetail" to georaedetail
                 )
 
-            Log.d("yj", "맵확인 : $georaeMap")
+            Log.d("yj", "거래명세등록 맵확인 : $georaeMap")
 
         }
 
     }
+
 
     override fun setValues() {
 

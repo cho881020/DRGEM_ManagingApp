@@ -199,40 +199,35 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="창고명"
+                    android:text="창고번호"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="160dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="2dp"
                     android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical">
 
-                    <EditText
-                        android:id="@+id/edtChanggocode"
-                        android:layout_width="0dp"
+                    <Spinner
+                        android:id="@+id/spinnerChanggocode"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:paddingHorizontal="7dp"
-                        android:background="@null"
-                        android:maxLines="1"
-                        android:inputType="text"
-                        android:privateImeOptions="defaultInputmode=korean"
+                        android:background="@drawable/light_gray_box"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
                     <ImageView
-                        android:id="@+id/btnCanggocodeRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginHorizontal="7dp"
-                        android:src="@drawable/btn_x" />
+                        android:src="@drawable/dropdown" />
 
-                </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
@@ -305,7 +300,7 @@
                     android:layout_height="23dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
-                    android:text="검색결과"
+                    android:text="거래상세 내역"
                     android:textColor="@color/color_000000"
                     android:textSize="14dp"
                     android:textStyle="bold" />

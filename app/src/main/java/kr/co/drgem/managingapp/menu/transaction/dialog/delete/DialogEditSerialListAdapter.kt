@@ -10,10 +10,10 @@ class DialogEditSerialListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is TranSerialListViewHolder ->
-                holder.bind(position)
-        }
+//        when (holder) {
+//            is TranSerialListViewHolder ->
+//                holder.bind(position)
+//        }
 
     }
 

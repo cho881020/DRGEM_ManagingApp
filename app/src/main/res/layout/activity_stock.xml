@@ -154,7 +154,7 @@
                         android:maxLines="1"
                         android:inputType="text"
                         android:privateImeOptions="defaultInputmode=english"
-                        tools:text="G22042600391"
+                        android:text="D10-000016-00"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
