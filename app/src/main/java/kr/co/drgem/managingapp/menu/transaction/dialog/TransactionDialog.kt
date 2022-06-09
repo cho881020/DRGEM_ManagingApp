@@ -87,13 +87,13 @@ class TransactionDialog : DialogFragment() {
 
 //            val searchedSerial = mSqliteDB.getFirstSerialByPummokcodeAndPosition(baljuData.getPummokcodeHP(), "${i}") DB안써
 
-            if (mSerialDataList.) {
-                mSerialDataList.add(SerialLocalDB(              // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
-                    georaeData.pummokcode!!,
-                    "",
-                    "${i}"
-                ))
-            }
+//            if (mSerialDataList.) {
+//                mSerialDataList.add(SerialLocalDB(              // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+//                    georaeData.pummokcode!!,
+//                    "",
+//                    "${i}"
+//                ))
+//            }
 
         }
 

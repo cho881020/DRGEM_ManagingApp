@@ -190,6 +190,12 @@ class OrderActivity : BaseActivity() {
             binding.edtGeoraecheomyeong.setText(data.GEORAECHEOMEONG)
             binding.edtBaljubeonho.setText(data.BALJUBEONHO)
 
+            calStart.time = dateFormat.parse(data.BALJUILJASTART)
+            calEnd.time = dateFormat.parse(data.BALJUILJAEND)
+
+            calStartStr = dateSet.format(calStart.time)
+            calEndStr = dateSet.format(calEnd.time)
+
         }
 
         baljuList.clear()
