@@ -24,12 +24,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TransactionActivity : BaseActivity(), transactionEditListener {
 
     lateinit var binding: ActivityTransactionBinding
     lateinit var mAdapter: TransactionAdapter
     lateinit var detailCode: Detailcode
+
+    var georaedetail = ArrayList<GeoraedetailAdd>()
+    var mWareHouseList : ArrayList<Detailcode> = arrayListOf()
+    var companyCode = "0001"
+    var wareHouseCode = "1001"
 
     lateinit  var tranData : TranResponse
 
@@ -59,9 +65,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 .show()
         }
 
-        binding.btnSave.setOnClickListener {
-            saveDialog()
-        }
+
 
         val cal = Calendar.getInstance()
         val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
@@ -69,7 +73,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         binding.txtDate.text = dateFormat.format(cal.time)
 
 
-        var calDate = ""
+        var calDate = dateServer.format(cal.time)
         binding.layoutDate.setOnClickListener {
 
             val date = object : DatePickerDialog.OnDateSetListener {
@@ -122,6 +126,28 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
 
+        binding.btnSave.setOnClickListener {
+            saveDialog()
+
+            val inputName = binding.edtName.text.toString()
+
+
+            val georaeMap = hashMapOf(
+                "requesttype" to "02002",
+                "georaemyeongsebeonho" to "X",
+                "georaecheocode" to tranData.georaecheocode,
+                "ipgoilja" to calDate,
+                "ipgosaupjangcode" to companyCode,
+                "ipgochanggocode" to wareHouseCode,
+                "ipgodamdangja" to inputName,
+                "pummokcount" to "",
+                "georaedetail" to georaedetail
+                )
+
+            Log.d("yj", "맵확인 : $georaeMap")
+
+        }
+
     }
 
     override fun setValues() {
@@ -162,20 +188,37 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         binding.spinnerCompany.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
                     if (masterData.getCompanyCode()[position].code == "0001") {
                         spinnerWareHouseAdapter.setList(masterData.getGwangmyeongCode())
-                        binding.spinnerWareHouse.setSelection(0, false)
+                        companyCode = "0001"
+
+                        mWareHouseList.clear()
+                        mWareHouseList.addAll(masterData.getGwangmyeongCode())
+
+                        if(mWareHouseList.size > 0) {
+                            wareHouseCode = mWareHouseList[0].code
+                        }
+
                     }
 
                     if (masterData.getCompanyCode()[position].code == "0002") {
                         spinnerWareHouseAdapter.setList(masterData.getGumiCode())
-                        binding.spinnerWareHouse.setSelection(0, false)
+                        companyCode = "0002"
+
+                        mWareHouseList.clear()
+                        mWareHouseList.addAll(masterData.getGumiCode())
+
+                        if(mWareHouseList.size > 0) {
+                            wareHouseCode = mWareHouseList[0].code
+                        }
+
                     }
+
+                    Log.d("yj", "companyCode : $companyCode")
+                    Log.d("yj", "waarHouseCode : $wareHouseCode")
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -183,6 +226,26 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 }
 
             }
+
+        binding.spinnerWareHouse.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                ) {
+
+                    wareHouseCode = mWareHouseList[position].code
+
+                    Log.d("yj", "waarHouseCode : $wareHouseCode")
+
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+
+            }
+
+
     }
 
     fun getRequestTran(){
@@ -217,9 +280,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
                             }
 
-
-
-
                         }
                     }
                 }
@@ -229,10 +289,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                 }
 
             })
-
-
-
-
         }
     }
 

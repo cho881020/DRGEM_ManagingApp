@@ -1,6 +1,5 @@
 package kr.co.drgem.managingapp.menu.order.activity
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -17,19 +16,16 @@ import kr.co.drgem.managingapp.databinding.ActivityOrderDetailBinding
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
-import kr.co.drgem.managingapp.models.BaljuData
-import kr.co.drgem.managingapp.models.Baljudetail
-import kr.co.drgem.managingapp.models.MasterDataResponse
-import kr.co.drgem.managingapp.models.OrderDetailResponse
+import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, DialogInterface.OnDismissListener {
+class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
+    DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityOrderDetailBinding
     lateinit var mAdapter: OrderDetailListAdapter
@@ -37,10 +33,13 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
 
     val dialog = OrderDetailDialog()
     val baljuDetail = ArrayList<Baljudetail>()
-
-    val mBaljuList = ArrayList<BaljuData>()
-
     lateinit var mBaljubeonho: String
+
+
+    var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
+    var companyCode = "0001"
+    var wareHouseCode = "1001"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +50,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
 
         setupEvents()
         setValues()
-
+        spinnerSet()
         getRequestOrderDetail()
-
 
 
     }
@@ -61,6 +59,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
     override fun onBackPressed() {
         backDialog()
     }
+
     override fun setupEvents() {
 
 
@@ -72,18 +71,13 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
             backDialog()
         }
 
-        binding.btnSave.setOnClickListener {
-            saveDialog()
-        }
-
-
         val cal = Calendar.getInstance()
         val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")     // 텍스트뷰 포맷
         binding.txtDate.text = dateFormat.format(cal.time)
 
 
-        var calDate = ""
+        var calDate = dateServer.format(cal.time)
         binding.layoutDate.setOnClickListener {
 
             val date = object : DatePickerDialog.OnDateSetListener {
@@ -109,6 +103,52 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
 
         }
 
+        binding.btnSave.setOnClickListener {
+
+            saveDialog()
+
+            val ipgodetail = ArrayList<IpgodetaildetailAdd>()   // 등록용 리스트
+            val inputName = binding.edtName.text.toString()
+
+
+            orderDetailData.returnBaljudetail().forEach {
+
+                val serialdata =
+                    SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP()).toString()
+
+                Log.d("yj", "serialData : $serialdata")
+
+                if(serialdata.isNotEmpty()){        // null값 까지 같이 들어옴
+
+                    ipgodetail.add(
+                        IpgodetaildetailAdd(
+                            it.getSeqHP(),
+                            it.getPummokcodeHP(),
+                            serialdata.split(",").size.toString(),
+                            it.getJungyojajeyeobuHP(),
+                            serialdata
+                        )
+                    )
+                }
+            }
+
+            val georaeMap = hashMapOf(
+                "requesttype" to "02014",
+                "baljubeonho" to mBaljubeonho,
+                "ipgoilja" to calDate,
+                "ipgosaupjangcode" to companyCode,
+                "ipgochanggocode" to wareHouseCode,
+                "ipgodamdangja" to inputName,
+                "georaecheocode" to orderDetailData.georaecheocode,
+                "pummokcount" to ipgodetail.size,
+                "ipgodetail" to ipgodetail
+            )
+
+            Log.d("yj", "ipgodetail size : ${ipgodetail.size}")
+            ipgodetail.forEach {
+                Log.d("yj", "ipgodetail : $it")
+            }
+        }
     }
 
     override fun setValues() {
@@ -117,6 +157,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
         binding.recyclerView.adapter = mAdapter
 
 
+    }
+
+    fun spinnerSet() {
         val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
 
         val spinnerCompanyAdapter =
@@ -136,20 +179,34 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
         binding.spinnerCompany.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
                     if (masterData.getCompanyCode()[position].code == "0001") {
                         spinnerWareHouseAdapter.setList(masterData.getGwangmyeongCode())
-                        binding.spinnerWareHouse.setSelection(0, false)
+                        companyCode = "0001"
+
+                        mWareHouseList.clear()
+                        mWareHouseList.addAll(masterData.getGwangmyeongCode())
+
+                        if (mWareHouseList.size > 0) {
+                            wareHouseCode = mWareHouseList[0].code
+                        }
+
                     }
 
                     if (masterData.getCompanyCode()[position].code == "0002") {
                         spinnerWareHouseAdapter.setList(masterData.getGumiCode())
-                        binding.spinnerWareHouse.setSelection(0, false)
+                        companyCode = "0002"
+
+                        mWareHouseList.clear()
+                        mWareHouseList.addAll(masterData.getGumiCode())
+
+                        if (mWareHouseList.size > 0) {
+                            wareHouseCode = mWareHouseList[0].code
+                        }
+
                     }
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -158,6 +215,21 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
 
             }
 
+        binding.spinnerWareHouse.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                ) {
+
+                    wareHouseCode = mWareHouseList[position].code
+
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+
+            }
     }
 
     fun setOrderDetailDataToUI() {
@@ -193,9 +265,11 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
             }
             if (contentString.length > 1) {
                 contentString.setLength(contentString.length - 1)
-                SerialManageUtil.putSerialStringByPummokCode(pummok.getPummokcodeHP(), contentString.toString())
+                SerialManageUtil.putSerialStringByPummokCode(
+                    pummok.getPummokcodeHP(),
+                    contentString.toString()
+                )
             }
-
 
 
         }
@@ -247,7 +321,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
         }
 
 
-
     }
 
     fun clearAndSaveDataToDB() {
@@ -261,11 +334,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener, Dialo
 
     override fun onClickedEdit(count: Int, data: Baljudetail) {
 
-        Log.d("yj", "Count : $count")
-
         dialog.setCount(mBaljubeonho, count, data)
         dialog.show(supportFragmentManager, "EditDialog")
         supportFragmentManager.executePendingTransactions()
+
 
 //        dialog.dialog?.setOnDismissListener(this)
     }

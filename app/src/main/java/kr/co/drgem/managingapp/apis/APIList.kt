@@ -32,12 +32,13 @@ interface APIList {
     @FormUrlEncoded
     @POST("tablet/tran/detail/register")
     fun postRequestTranDetail(
-        @Field("requesttype") requesttype : String = "02002",
-        @Field("georaemyeongsebeonho") georaemyeongsebeonho : String,
-        @Field("ipgosaupjangcode") ipgosaupjangcode : String,
-        @Field("ipgochanggocode") ipgochanggocode : String,
-        @Field("pummokcount") pummokcount : String,
-        @Field("georaedetail") georaedetail : Array<Georaedetail>   // 확인
+        @Body params: HashMap<String, String>,
+//        @Field("requesttype") requesttype : String = "02002",
+//        @Field("georaemyeongsebeonho") georaemyeongsebeonho : String,
+//        @Field("ipgosaupjangcode") ipgosaupjangcode : String,
+//        @Field("ipgochanggocode") ipgochanggocode : String,
+//        @Field("pummokcount") pummokcount : String,
+//        @Field("georaedetail") georaedetail : Array<Georaedetail>   // 확인
     ) : Call<BasicResponse>
 
 //    @GET("tablet/vendorinfo/request")

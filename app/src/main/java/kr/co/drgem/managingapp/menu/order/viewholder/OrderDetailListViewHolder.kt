@@ -130,7 +130,6 @@ class OrderDetailListViewHolder(
         btnEdit.setOnClickListener {
 
             val inputCount = edtCount.text.toString()
-            Log.d("yj", "inputCount : $inputCount")
 
             try {
                 val count: Int = inputCount.toInt()
@@ -145,6 +144,7 @@ class OrderDetailListViewHolder(
                 e.printStackTrace()
                 edtCount.text = null
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                Log.d("yj", "btnEdit.setOnClickListener Exception $e")
             }
         }
 

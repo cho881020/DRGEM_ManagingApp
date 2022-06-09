@@ -138,9 +138,6 @@ class OrderDetailDialog : BaseDialogFragment() {
         viewholderCount = count
         baljuData = data
 
-        Log.d("yj", "setCount $viewholderCount")
-        Log.d("yj", "baljuData $baljuData")
-
     }
 
     override fun onDismiss(dialog: DialogInterface) {
