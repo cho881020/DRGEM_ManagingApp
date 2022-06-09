@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.models.Georaedetail
+import kr.co.drgem.managingapp.utils.SerialManageUtil
 
 class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEditListener) :
     RecyclerView.ViewHolder(
@@ -84,6 +85,30 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
             btnEdit.visibility = View.GONE
         }
 
+
+        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
+
+        Log.d("품목코드", data.getPummokcodeHP())
+        Log.d("품목코드", data.getPummokcodeHP())
+        Log.d("불러내는 씨리얼스트링", savedSerialString.toString())
+        Log.d("입고수량", data.ipgosuryang.toString())
+
+        if (savedSerialString != null) {
+
+            btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
+            btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
+            btnEdit.text = "*수정하기"
+        }
+        else {
+
+            btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
+            btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
+            btnEdit.text = "정보입력"
+
+        }
+
+
+
         btnEdit.setOnClickListener {
 
             val inputCount = ipgosuryang.text.toString()
@@ -103,6 +128,8 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+
+
 
     }
 

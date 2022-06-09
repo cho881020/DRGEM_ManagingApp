@@ -28,17 +28,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TransactionActivity : BaseActivity(), transactionEditListener {
+class TransactionActivity : BaseActivity(), transactionEditListener,
+    DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityTransactionBinding
     lateinit var mAdapter: TransactionAdapter
     lateinit var detailCode: Detailcode
 
-    var mWareHouseList : ArrayList<Detailcode> = arrayListOf()
+    var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var companyCode = "0001"
     var wareHouseCode = "1001"
-
-    lateinit  var tranData : TranResponse
+    var calDate = ""
+    lateinit var tranData: TranResponse
 
     val dialogEdit = TransactionDialog()
 
@@ -48,10 +49,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
 
         setupEvents()
-
         getRequestTran()
-
         sort()
+        postRequestTran()
 
     }
 
@@ -67,14 +67,13 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
 
-
         val cal = Calendar.getInstance()
         val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")     // 텍스트뷰 포맷
         binding.txtDate.text = dateFormat.format(cal.time)
 
+        calDate = dateServer.format(cal.time)
 
-        var calDate = dateServer.format(cal.time)
         binding.layoutDate.setOnClickListener {
 
             val date = object : DatePickerDialog.OnDateSetListener {
@@ -127,54 +126,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
         }
 
 
-        binding.btnSave.setOnClickListener {
-            saveDialog()
-
-            val georaedetail = JSONArray()   // 등록용 리스트
-            val inputName = binding.edtName.text.toString()
-
-            tranData.returnGeoraedetail().forEach {
-
-                var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP()).toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
-
-                Log.d("yj", "serialData : $serialData")
-
-                if(serialData.isEmpty()){        // 시리얼 데이터가 빈 값일 경우
-
-                    serialData = ""             // "" 으로 표시
-
-                }
-                georaedetail.put(                         // 리스트에 담기
-                    GeoraedetailAdd(
-                        it.getBalhudanwiHP(),
-                        it.getSeqHP(),
-                        it.getPummokcodeHP(),
-                        serialData.split(",").size.toString(),
-                        it.getJungyojajeyeobuHP(),
-                        serialData
-                    ).toJsonObject()                            // JSONObject로 제작
-                )
-            }
-
-
-            val georaeMap = hashMapOf(
-                "requesttype" to "02002",
-                "georaemyeongsebeonho" to tranData.getGeoraemyeongsebeonhoHP(),
-                "georaecheocode" to tranData.georaecheocode,
-                "ipgoilja" to calDate,
-                "ipgosaupjangcode" to companyCode,
-                "ipgochanggocode" to wareHouseCode,
-                "ipgodamdangja" to inputName,
-                "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
-                "status" to "777",
-                "pummokcount" to georaedetail.length(),
-                "georaedetail" to georaedetail
-                )
-
-            Log.d("yj", "거래명세등록 맵확인 : $georaeMap")
-
-        }
-
     }
 
 
@@ -188,14 +139,13 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
 
         tranData.returnGeoraedetail().forEach {
-            if(it.jungyojajeyeobu == "Y"){
+            if (it.jungyojajeyeobu == "Y") {
                 binding.serialDetail.isVisible = true
             }
         }
 
         mAdapter = TransactionAdapter(this)
         binding.recyclerView.adapter = mAdapter
-
 
 
         val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
@@ -225,7 +175,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                         mWareHouseList.clear()
                         mWareHouseList.addAll(masterData.getGwangmyeongCode())
 
-                        if(mWareHouseList.size > 0) {
+                        if (mWareHouseList.size > 0) {
                             wareHouseCode = mWareHouseList[0].code
                         }
 
@@ -238,15 +188,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
                         mWareHouseList.clear()
                         mWareHouseList.addAll(masterData.getGumiCode())
 
-                        if(mWareHouseList.size > 0) {
+                        if (mWareHouseList.size > 0) {
                             wareHouseCode = mWareHouseList[0].code
                         }
 
                     }
-
-                    Log.d("yj", "companyCode : $companyCode")
-                    Log.d("yj", "waarHouseCode : $wareHouseCode")
-
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -263,8 +209,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
                     wareHouseCode = mWareHouseList[position].code
 
-                    Log.d("yj", "waarHouseCode : $wareHouseCode")
-
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -276,47 +220,129 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
     }
 
-    fun getRequestTran(){
+    fun getRequestTran() {
 
         binding.btnFind.setOnClickListener {
 
             val inputNum = binding.edtTranNum.text.toString()
 
-            apiList.getRequestTranDetail("02001",inputNum).enqueue(object : Callback<TranResponse>{
-                override fun onResponse(
-                    call: Call<TranResponse>,
-                    response: Response<TranResponse>
-                ) {
-                    if(response.isSuccessful){
-                        response.body()?.let {
-                            tranData = it
+            apiList.getRequestTranDetail("02001", inputNum)
+                .enqueue(object : Callback<TranResponse> {
+                    override fun onResponse(
+                        call: Call<TranResponse>,
+                        response: Response<TranResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                tranData = it
 
 
-                            if(it.returnGeoraedetail().size == 0){
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                if (it.returnGeoraedetail().size == 0) {
+                                    Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
+                                        .show()
+                                } else {
+
+                                    setValues()
+                                    mAdapter.setList(it.returnGeoraedetail())
+
+                                    binding.layoutEmpty.isVisible = false
+                                    binding.layoutList.isVisible = true
+                                    binding.layoutInfo.isVisible = true
+                                    binding.layoutFold.isVisible = true
+                                    binding.btnSave.isVisible = true
+
+                                }
+
                             }
-                            else {
-
-                                setValues()
-                                mAdapter.setList(it.returnGeoraedetail())
-
-                                binding.layoutEmpty.isVisible = false
-                                binding.layoutList.isVisible = true
-                                binding.layoutInfo.isVisible = true
-                                binding.layoutFold.isVisible = true
-                                binding.btnSave.isVisible = true
-
-                            }
-
                         }
                     }
+
+                    override fun onFailure(call: Call<TranResponse>, t: Throwable) {
+                        Log.d("yj", "거래명세요청실패 : ${t.message}")
+                    }
+
+                })
+        }
+    }
+
+    fun postRequestTran() {
+        binding.btnSave.setOnClickListener {
+            saveDialog()
+
+            val georaedetail = JSONArray()   // 등록용 리스트
+            val inputName = binding.edtName.text.toString()
+
+            tranData.returnGeoraedetail().forEach {
+
+                var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                    .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
+
+                Log.d("yj", "serialData : $serialData")
+
+                if (serialData.isEmpty()) {        // 시리얼 데이터가 빈 값일 경우
+
+                    serialData = ""             // "" 으로 표시
+
                 }
 
-                override fun onFailure(call: Call<TranResponse>, t: Throwable) {
-                    Log.d("yj", "거래명세요청실패 : ${t.message}" )
+                if (serialData != "null") {
+
+                    georaedetail.put(                         // 리스트에 담기
+                        GeoraedetailAdd(
+                            it.getBalhudanwiHP(),
+                            it.getSeqHP(),
+                            it.getPummokcodeHP(),
+                            serialData.split(",").size.toString(),
+                            it.getJungyojajeyeobuHP(),
+                            serialData
+                        ).toJsonObject()                            // JSONObject로 제작
+                    )
+                }
+
+            }
+
+            val georaeMap = hashMapOf(
+                "requesttype" to "02002",
+                "georaemyeongsebeonho" to tranData.getGeoraemyeongsebeonhoHP(),
+                "georaecheocode" to tranData.getGeoraecheocodeHP(),
+                "ipgoilja" to calDate,
+                "ipgosaupjangcode" to companyCode,
+                "ipgochanggocode" to wareHouseCode,
+                "ipgodamdangja" to inputName,
+                "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
+                "status" to "777",
+                "pummokcount" to georaedetail.length().toString(),
+                "georaedetail" to georaedetail.toString()
+            )
+
+            Log.d("yj", "거래명세등록 맵확인 : $georaeMap")
+
+            apiList.postRequestTranDetail(georaeMap).enqueue(object : Callback<BasicResponse> {
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
+
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+
+                            Log.d("yj", "거래명세등록 콜 결과코드 : ${it.resultcd}")
+                            Log.d("yj", "거래명세등록 콜 결과메시지 : ${it.resultmsg}")
+
+                        }
+
+
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
                 }
 
             })
+
         }
     }
 
@@ -387,7 +413,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
     }
 
 
-    override fun onClickedEdit(count : Int, data : Georaedetail) {
+    override fun onClickedEdit(count: Int, data: Georaedetail) {
         dialogEdit.show(supportFragmentManager, "dialog")
         dialogEdit.setCount(count, data)
 
@@ -398,6 +424,10 @@ class TransactionActivity : BaseActivity(), transactionEditListener {
 
         backDialog(null)
 
+    }
+
+    override fun onDismiss(p0: DialogInterface?) {
+        mAdapter.notifyDataSetChanged()             // 어댑터 데이터 변경 (시리얼이 담긴 리스트 버튼 컬러 변경)
     }
 
 

@@ -1,5 +1,7 @@
 package kr.co.drgem.managingapp.menu.transaction.dialog
 
+import android.app.Activity
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -85,18 +87,13 @@ class TransactionDialog : DialogFragment() {
 
         for (i in 0..viewholderCount) {             // 뷰 홀더 갯수만큼 돌아
 
-//            val searchedSerial = mSqliteDB.getFirstSerialByPummokcodeAndPosition(baljuData.getPummokcodeHP(), "${i}") DB안써
-
-//            if (mSerialDataList.) {
-//                mSerialDataList.add(SerialLocalDB(              // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
-//                    georaeData.pummokcode!!,
-//                    "",
-//                    "${i}"
-//                ))
-//            }
-
+            // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+            mSerialDataList.add(SerialLocalDB(
+                georaeData.pummokcode!!,
+                "",
+                "${i}"
+            ))
         }
-
 
 
         val mAdapter = DialogEditTranAdapter(viewholderCount, mSerialDataList)
@@ -125,4 +122,14 @@ class TransactionDialog : DialogFragment() {
         Log.d("yj", "baljuData $georaeData")
 
     }
+
+    override fun onDismiss(dialog: DialogInterface) {           // 다이얼로그가 닫힐 때 메인액티비티로 전달해주는 리스너
+        super.onDismiss(dialog)
+
+        val activity: Activity? = activity
+        if (activity is DialogInterface.OnDismissListener) {                        // 액티비티에 다이얼로그 리스너가 있다면,
+            (activity as DialogInterface.OnDismissListener).onDismiss(dialog)           // 액티비티의 onDismiss 를 실행
+        }
+    }
+
 }
