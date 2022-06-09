@@ -23,6 +23,11 @@ interface APIList {
     ) : Call<MasterDataResponse>
 
 
+    @POST("tablet/workseq/request")
+    fun postRequestSEQ(
+        @Body params: HashMap<String, String>,
+) : Call<SEQResponse>
+
     @GET("tablet/tran/detail/request")
     fun getRequestTranDetail(
         @Query("requesttype") requesttype : String = "02001",

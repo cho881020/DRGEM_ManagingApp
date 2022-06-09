@@ -267,7 +267,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     fun postRequestTran() {
         binding.btnSave.setOnClickListener {
+
             saveDialog()
+            /**
+             * 추가하기 : 예 눌렀을 때만 동작하게 하기
+             */
 
             val georaedetail = JSONArray()   // 등록용 리스트
             val inputName = binding.edtName.text.toString()
@@ -325,9 +329,17 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                     if (response.isSuccessful) {
                         response.body()?.let {
+                            if(it.resultcd=="000"){
+
+                                /**
+                                 * 추가하기 : 성공시에 시리얼 넘버 지우기
+                                 */
+
+                            }
 
                             Log.d("yj", "거래명세등록 콜 결과코드 : ${it.resultcd}")
                             Log.d("yj", "거래명세등록 콜 결과메시지 : ${it.resultmsg}")
+
 
                         }
 

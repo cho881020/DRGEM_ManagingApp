@@ -7,13 +7,15 @@ data class BasicResponse (
     val changgomyeong: String?,
     val resultcd: String?,
     val resultmsg: String?,
-    val saeopjangcode: String?,
+    val saeopjangcode: String,
     val saeopjangmyeong: String?,
     val sawoncode: String?,
     val sawonmyeong: String?,
     val security_token: String?,
     val program_version: String?,
 
+    val seq : String,
+    val status : String,
 
 ){
 

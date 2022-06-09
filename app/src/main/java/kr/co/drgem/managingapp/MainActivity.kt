@@ -10,6 +10,7 @@ import kr.co.drgem.managingapp.databinding.ActivityMainBinding
 import kr.co.drgem.managingapp.localdb.DBHelper
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.utils.ContextUtil
+import kr.co.drgem.managingapp.utils.LoginUserUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -74,6 +75,7 @@ class MainActivity : BaseActivity() {
                            Toast.makeText(mContext, "로그인 성공", Toast.LENGTH_SHORT).show()
 
                            ContextUtil.setToken(mContext, br.security_token!!)
+                           LoginUserUtil.setLoginData(br)
 
                            mSqliteDB.deleteLoginWorkCommon()
                            mSqliteDB.insertLoginWorkCommon(

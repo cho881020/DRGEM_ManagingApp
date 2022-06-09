@@ -365,6 +365,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     }
 
+
+
     fun clearAndCancelWork() {
 
         Log.d("KJ","DB에 있는 작업 데이터 삭제만 하기")
