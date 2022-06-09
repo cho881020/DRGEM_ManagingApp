@@ -1,5 +1,7 @@
 package kr.co.drgem.managingapp.models
 
+import org.json.JSONObject
+
 data class IpgodetaildetailAdd(
 
     val seq: String,
@@ -7,4 +9,15 @@ data class IpgodetaildetailAdd(
     val georaesuryang: String,
     val jungyojajeyeobu: String,
     val serialnumber: String
-)
+) {
+    fun toJsonObject() : JSONObject {
+        val jsonObj = JSONObject()
+        jsonObj.put("seq", seq)
+        jsonObj.put("pummokcode", pummokcode)
+        jsonObj.put("georaesuryang", georaesuryang)
+        jsonObj.put("jungyojajeyeobu", seq)
+        jsonObj.put("serialnumber", serialnumber)
+
+        return jsonObj
+    }
+}

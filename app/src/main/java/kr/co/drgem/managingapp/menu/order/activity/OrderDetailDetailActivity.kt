@@ -18,6 +18,7 @@ import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.SerialManageUtil
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -107,29 +108,32 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
             saveDialog()
 
-            val ipgodetail = ArrayList<IpgodetaildetailAdd>()   // 등록용 리스트
+            val ipgodetail = JSONArray()   // 등록용 리스트
             val inputName = binding.edtName.text.toString()
 
 
             orderDetailData.returnBaljudetail().forEach {
 
-                val serialdata =
+                var serialData =
                     SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP()).toString()
 
-                Log.d("yj", "serialData : $serialdata")
+                Log.d("yj", "serialData : $serialData")
 
-                if(serialdata.isNotEmpty()){        // null값 까지 같이 들어옴
+                if(serialData.isEmpty()){        // null값 까지 같이 들어옴
 
-                    ipgodetail.add(
-                        IpgodetaildetailAdd(
-                            it.getSeqHP(),
-                            it.getPummokcodeHP(),
-                            serialdata.split(",").size.toString(),
-                            it.getJungyojajeyeobuHP(),
-                            serialdata
-                        )
-                    )
+                    serialData = ""
+
                 }
+                ipgodetail.put(
+                    IpgodetaildetailAdd(
+                        it.getSeqHP(),
+                        it.getPummokcodeHP(),
+                        serialData.split(",").size.toString(),
+                        it.getJungyojajeyeobuHP(),
+                        serialData
+                    ).toJsonObject()
+                )
+
             }
 
             val georaeMap = hashMapOf(
@@ -140,14 +144,16 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                 "ipgochanggocode" to wareHouseCode,
                 "ipgodamdangja" to inputName,
                 "georaecheocode" to orderDetailData.georaecheocode,
-                "pummokcount" to ipgodetail.size,
+                "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
+                "status" to "777",
+                "pummokcount" to ipgodetail.length(),
                 "ipgodetail" to ipgodetail
             )
 
-            Log.d("yj", "ipgodetail size : ${ipgodetail.size}")
-            ipgodetail.forEach {
-                Log.d("yj", "ipgodetail : $it")
-            }
+            Log.d("yj", "georaeMap : ${georaeMap}")
+
+
+
         }
     }
 
