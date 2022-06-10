@@ -62,9 +62,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
     }
 
-    override fun onBackPressed() {
-        backDialog(null)
-    }
+
 
     override fun setupEvents() {
 
@@ -246,6 +244,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
 
+            binding.spinnerCompany.setSelection(1)
 
             binding.spinnerCompany.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -449,6 +448,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
     }
 
+    override fun onBackPressed() {
+        backDialog(null)
+    }
 
     override fun onClickedEdit(count : Int, data: PummokdetailDelivery) {
         dialog.setCount(count, data)

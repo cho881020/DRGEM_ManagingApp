@@ -45,7 +45,7 @@ class RequestActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            finish()
+            backDialog(null)
         }
 
         val cal = Calendar.getInstance()
@@ -199,10 +199,12 @@ class RequestActivity : BaseActivity() {
             MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, masterData.getCompanyCode())
         binding.spinnerCompany.adapter = spinnerCompanyAdapter
 
-
         val spinnerWareHouseAdapter =
             MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
         binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
+
+
+        binding.spinnerCompany.setSelection(1)
 
 
         binding.spinnerCompany.onItemSelectedListener =
@@ -236,6 +238,9 @@ class RequestActivity : BaseActivity() {
 
                     }
 
+                    Log.d("yj", "companyCode : $companyCode")
+                    Log.d("yj", "waarHouseCode : $wareHouseCode")
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -251,6 +256,9 @@ class RequestActivity : BaseActivity() {
                 ) {
 
                     wareHouseCode = mWareHouseList[position].code
+                    Log.d("yj", "companyCode : $companyCode")
+                    Log.d("yj", "waarHouseCode : $wareHouseCode")
+
 
                 }
 
@@ -262,6 +270,9 @@ class RequestActivity : BaseActivity() {
 
     }
 
+    override fun onBackPressed() {
+        backDialog(null)
+    }
 
 
 }

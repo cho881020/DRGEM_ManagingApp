@@ -48,7 +48,7 @@ class OrderActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            finish()
+            backDialog(null)
         }
 
 

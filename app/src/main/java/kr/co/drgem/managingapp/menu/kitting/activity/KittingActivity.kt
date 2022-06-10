@@ -40,12 +40,13 @@ class KittingActivity : BaseActivity() {
 
 
         setupEvents()
+        getRequestKitting()
     }
 
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            finish()
+            backDialog(null)
         }
 
         val cal = Calendar.getInstance()
@@ -131,7 +132,7 @@ class KittingActivity : BaseActivity() {
                 changgocode = changgoList[position].code
                 Log.d("yj", "창고코드 : $changgocode")
 
-                getRequestKitting()
+
 
             }
 
