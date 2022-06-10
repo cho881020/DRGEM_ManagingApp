@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
-import kr.co.drgem.managingapp.localdb.SerialLocalDB
+import kr.co.drgem.managingapp.localdb.model.SerialLocalDB
 
 class TranSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.dialog_tran_serial_list, parent, false)

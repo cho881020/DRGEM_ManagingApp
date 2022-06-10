@@ -2,7 +2,7 @@ package kr.co.drgem.managingapp.menu.order.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.localdb.SerialLocalDB
+import kr.co.drgem.managingapp.localdb.model.SerialLocalDB
 import kr.co.drgem.managingapp.models.Baljudetail
 
 class DialogEditOrderAdapter(

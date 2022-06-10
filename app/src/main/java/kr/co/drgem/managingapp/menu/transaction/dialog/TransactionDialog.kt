@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogTransactionBinding
-import kr.co.drgem.managingapp.localdb.SerialLocalDB
+import kr.co.drgem.managingapp.localdb.model.SerialLocalDB
 import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 
@@ -88,11 +88,13 @@ class TransactionDialog : DialogFragment() {
         for (i in 0..viewholderCount) {             // 뷰 홀더 갯수만큼 돌아
 
             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
-            mSerialDataList.add(SerialLocalDB(
+            mSerialDataList.add(
+                SerialLocalDB(
                 georaeData.pummokcode!!,
                 "",
                 "${i}"
-            ))
+            )
+            )
         }
 
 

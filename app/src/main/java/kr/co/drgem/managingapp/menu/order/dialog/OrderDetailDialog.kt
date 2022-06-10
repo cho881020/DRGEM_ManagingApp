@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogOrderDetailBinding
-import kr.co.drgem.managingapp.localdb.SerialLocalDB
+import kr.co.drgem.managingapp.localdb.model.SerialLocalDB
 import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 
@@ -104,11 +104,13 @@ class OrderDetailDialog : BaseDialogFragment() {
                 mSerialDataList.add(searchedSerial)
             }
             else {
-                mSerialDataList.add(SerialLocalDB(
+                mSerialDataList.add(
+                    SerialLocalDB(
                     baljuData.pummokcode!!,
                     "",
                     "${i}"
-                ))
+                )
+                )
             }
 
         }

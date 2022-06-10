@@ -7,6 +7,7 @@ import android.util.Log
 import kr.co.drgem.managingapp.localdb.model.BaljuCommonLocalDB
 import kr.co.drgem.managingapp.localdb.model.BaljuDetailInfoLocalDB
 import kr.co.drgem.managingapp.localdb.model.LoginWorkCommonLocalDB
+import kr.co.drgem.managingapp.localdb.model.SerialLocalDB
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.models.BasicResponse

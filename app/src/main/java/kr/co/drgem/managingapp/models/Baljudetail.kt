@@ -11,7 +11,7 @@ data class Baljudetail(
     val ipgoyejeongil: String?,      //입고예정일? 디자인에없음
     val giipgosuryang : String?,     //기입고수량
     var ipgosuryang : String?,     //입고수량 => 서버에 던져줄 것 (+ 로컬디비에 저장할것)
-    val jungyojajeyeobu : String?,       //중요자재여부
+    val jungyojajeyeobu : String?,     //  //중요자재여부
     val location : String?,      //위치(공장)
 
 

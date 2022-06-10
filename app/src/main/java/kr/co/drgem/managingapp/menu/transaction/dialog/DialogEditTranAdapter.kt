@@ -2,8 +2,7 @@ package kr.co.drgem.managingapp.menu.transaction.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.localdb.SerialLocalDB
-import kr.co.drgem.managingapp.models.Baljudetail
+import kr.co.drgem.managingapp.localdb.model.SerialLocalDB
 
 class DialogEditTranAdapter(
     val viewholderCount : Int,
