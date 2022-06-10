@@ -63,38 +63,452 @@
         <LinearLayout
             android:id="@+id/layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:background="@color/color_FFFFFF"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:paddingHorizontal="16dp">
 
             <TextView
-                android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="요청번호 -"
-                android:textColor="@color/color_000000"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:text="전체자재창고"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/color_000000"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="25dp"
+                android:background="@color/color_CCCCCC"
+                android:layout_marginStart="33dp"
+                android:layout_marginEnd="20dp"/>
+
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="15dp"
+                android:checkedButton="@id/radio0"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:drawableRight="@drawable/btn_radio"
+                    android:drawablePadding="5dp"
+                    android:button="@null"
+                    android:text="전체"
+                    android:textSize="12dp" />
+
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:drawableRight="@drawable/btn_radio"
+                    android:drawablePadding="5dp"
+                    android:button="@null"
+                    android:text="미출고"
+                    android:textSize="12dp" />
+
+
+            </RadioGroup>
+
+            <CheckBox
+                android:id="@+id/checkMigwanri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="미관리 항목 포함 전체"
+                android:textSize="12dp"
+                android:drawableRight="@drawable/btn_checkbox"
+                android:drawablePadding="5dp"
+                android:checked="true"
+                android:button="@null"
+                android:buttonTint="@color/color_455591"/>
 
             <TextView
-                android:id="@+id/yocheongbeonho2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
-                tools:text="K22042700001"
-                android:textColor="@color/color_3DBBE2"
-                android:textSize="16dp"
+                android:id="@+id/btnFind"
+                android:layout_width="65dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/btn_find"
+                android:gravity="center"
+                android:text="검색"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="12dp"
                 android:textStyle="bold" />
-
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:paddingTop="20dp"
+            android:background="@color/color_FFFFFF"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="검색 결과"
+                android:textColor="@color/color_000000"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                tools:text="(3건)"
+                android:textColor="@color/color_3DBBE2"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutFold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@color/color_FFFFFF"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingVertical="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출고일자"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/layoutDate"
+                        android:layout_width="65dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/light_gray_box"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/txtDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:layout_weight="1"
+                            tools:text="01-12"
+                            android:textColor="@color/color_000000"
+                            android:textSize="12dp" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:src="@drawable/dropdown" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출고할사업장"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="95dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/spinnerCompanyOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/light_gray_box"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출고창고"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="95dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/spinnerWareHouseOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/light_gray_box"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출고담당자"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+                <LinearLayout
+                    android:layout_width="95dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edtOutName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="7dp"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:privateImeOptions="defaultInputmode=korean"
+                        tools:text="홍길동"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/btnOutNameRemove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/btn_x" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="입고 사업장"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="95dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/spinnerCompanyIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/light_gray_box"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="입고 창고"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="95dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/spinnerWareHouseIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/light_gray_box"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="입고담당자"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+                <LinearLayout
+                    android:layout_width="95dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edtInName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="7dp"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:privateImeOptions="defaultInputmode=korean"
+                        tools:text="홍길동"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/btnInNameRemove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/btn_x" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -106,140 +520,6 @@
             android:background="@color/color_FFFFFF"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
-                android:layout_marginHorizontal="15dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="품목갯수"
-                    android:textColor="@color/color_000000"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    tools:text="(3건)"
-                    android:textColor="@color/color_3DBBE2"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="15dp"
-                    android:checkedButton="@id/radio0"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/radio0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="10dp"
-                        android:drawableRight="@drawable/btn_radio"
-                        android:drawablePadding="5dp"
-                        android:button="@null"
-                        android:text="전체"
-                        android:textSize="12dp" />
-
-                    <RadioButton
-                        android:id="@+id/radio1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="10dp"
-                        android:drawableRight="@drawable/btn_radio"
-                        android:drawablePadding="5dp"
-                        android:button="@null"
-                        android:text="미출고"
-                        android:textSize="12dp" />
-
-
-                </RadioGroup>
-
-                <CheckBox
-                    android:id="@+id/checkMigwanri"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="미관리 항목 포함 전체"
-                    android:textSize="12dp"
-                    android:drawableRight="@drawable/btn_checkbox"
-                    android:drawablePadding="5dp"
-                    android:checked="true"
-                    android:button="@null"
-                    android:buttonTint="@color/color_455591"/>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="95dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="15dp"
-                    android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical">
-
-                    <Spinner
-                        android:id="@+id/spinnerCompany"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/light_gray_box"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginHorizontal="7dp"
-                        android:src="@drawable/dropdown" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="95dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/light_gray_box"
-                    android:gravity="center_vertical">
-
-                    <Spinner
-                        android:id="@+id/spinnerWareHouse"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/light_gray_box"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginHorizontal="7dp"
-                        android:src="@drawable/dropdown" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-            </LinearLayout>
 
 
             <HorizontalScrollView

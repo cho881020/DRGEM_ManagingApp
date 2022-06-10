@@ -1,9 +1,11 @@
 package kr.co.drgem.managingapp.menu.request.activity
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -21,6 +23,8 @@ import kr.co.drgem.managingapp.utils.MainDataManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
 
@@ -34,19 +38,31 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
 
     var johoejogeon = "0"
     var migwanri = "0"
+    var companyCode = ""
+    var wareHouseCode = ""
 
-    var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
-    var companyCode = "0001"
-    var wareHouseCode = "1001"
+    var companyCodeOut = "0001"
+    var wareHouseCodeOut = "1001"
+    var mWareHouseListOut: java.util.ArrayList<Detailcode> = arrayListOf()
+
+    var companyCodeIn = "0001"
+    var wareHouseCodeIn = "1001"
+    var mWareHouseListIn: java.util.ArrayList<Detailcode> = arrayListOf()
+
+    var calDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail)
 
-        getRequestDetail()
-        spinnerSet()
-        getRequestJohoejogeon()
+        mYocheongbeonho = intent.getStringExtra("yocheongbeonho").toString()
+        binding.yocheongbeonho.text = "요청번호 - $mYocheongbeonho"
+
+
         setupEvents()
+        spinnerSetOut()
+        spinnerSetIn()
+        dateSet()
 
     }
 
@@ -63,6 +79,10 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
             saveDialog(null)
         }
 
+        binding.btnFind.setOnClickListener {
+            getRequestDetail()
+        }
+
     }
 
     override fun setValues() {
@@ -70,8 +90,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
         mAdapter = RequestDetailListAdapter(requestDetailData.returnPummokDetail(),this)
         binding.recyclerView.adapter = mAdapter
 
-        binding.yocheongbeonho.text = "요청번호 - $mYocheongbeonho"
-        binding.yocheongbeonho2.text = mYocheongbeonho
+
         binding.txtCount.text = "(${requestDetailData.pummokcount}건)"
 
         requestDetailData.returnPummokDetail().forEach {
@@ -82,108 +101,12 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
     }
 
 
-    fun getRequestJohoejogeon() {
-
-        binding.radio0.setOnClickListener {
-            johoejogeon = "0"
-            getRequestDetail()
-        }
-
-        binding.radio1.setOnClickListener {
-            johoejogeon = "1"
-            getRequestDetail()
-        }
-
-        binding.checkMigwanri.setOnCheckedChangeListener { button, ischecked ->
-            if (ischecked) {
-                migwanri = "0"
-            } else {
-                migwanri = "1"
-            }
-            getRequestJohoejogeon()
-        }
-
-    }
-
-    fun spinnerSet() {
-
-        MainDataManager.getMainData()?.let {
-
-            val spinnerCompanyAdapter =
-                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
-            binding.spinnerCompany.adapter = spinnerCompanyAdapter
-
-
-            val spinnerWareHouseAdapter =
-                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
-            binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
-
-
-            binding.spinnerCompany.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
-                    ) {
-                        if (it.getCompanyCode()[position].code == "0001") {
-                            spinnerWareHouseAdapter.setList(it.getGwangmyeongCode())
-                            companyCode = "0001"
-
-                            mWareHouseList.clear()
-                            mWareHouseList.addAll(it.getGwangmyeongCode())
-                            binding.spinnerWareHouse.setSelection(0, false)
-
-                            if (mWareHouseList.size > 0) {
-                                wareHouseCode = mWareHouseList[0].code
-                            }
-
-                        }
-
-                        if (it.getCompanyCode()[position].code == "0002") {
-                            spinnerWareHouseAdapter.setList(it.getGumiCode())
-                            companyCode = "0002"
-
-                            mWareHouseList.clear()
-                            mWareHouseList.addAll(it.getGumiCode())
-                            binding.spinnerWareHouse.setSelection(0, false)
-
-                            if (mWareHouseList.size > 0) {
-                                wareHouseCode = mWareHouseList[0].code
-                            }
-
-                        }
-                        Log.d("yj", "companyCode : $companyCode")
-                        Log.d("yj", "waarHouseCode : $wareHouseCode")
-                    }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                    }
-
-                }
-
-            binding.spinnerWareHouse.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
-                    ) {
-                        wareHouseCode = mWareHouseList[position].code
-                        Log.d("yj", "waarHouseCode : $wareHouseCode")
-                        getRequestDetail()
-                    }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                    }
-
-                }
-
-        }
-
-    }
 
 
     fun getRequestDetail() {
-        mYocheongbeonho = intent.getStringExtra("yocheongbeonho").toString()
+
+        companyCode = intent.getStringExtra("companyCode").toString()
+        wareHouseCode = intent.getStringExtra("wareHouseCode").toString()
 
         apiList.getRequestRequestDetail( "02062", mYocheongbeonho, johoejogeon, migwanri, companyCode, wareHouseCode).enqueue(object :Callback<RequestDetailResponse>{
             override fun onResponse(
@@ -207,6 +130,185 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
         })
 
     }
+
+    fun spinnerSetOut() {
+
+        MainDataManager.getMainData()?.let {
+
+            val spinnerCompanyAdapter =
+                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
+            binding.spinnerCompanyOut.adapter = spinnerCompanyAdapter
+
+
+            val spinnerWareHouseAdapter =
+                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
+            binding.spinnerWareHouseOut.adapter = spinnerWareHouseAdapter
+
+
+            binding.spinnerCompanyOut.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        if (it.getCompanyCode()[position].code == "0001") {
+                            spinnerWareHouseAdapter.setList(it.getGwangmyeongCode())
+                            companyCodeOut = "0001"
+
+                            mWareHouseListOut.clear()
+                            mWareHouseListOut.addAll(it.getGwangmyeongCode())
+                            binding.spinnerWareHouseOut.setSelection(0, false)
+                            if (mWareHouseListOut.size > 0) {
+                                wareHouseCodeOut = mWareHouseListOut[0].code
+                            }
+
+
+                        }
+
+                        if (it.getCompanyCode()[position].code == "0002") {
+                            spinnerWareHouseAdapter.setList(it.getGumiCode())
+                            companyCodeOut = "0002"
+
+                            mWareHouseListOut.clear()
+                            mWareHouseListOut.addAll(it.getGumiCode())
+                            binding.spinnerWareHouseOut.setSelection(0, false)
+
+                            if (mWareHouseListOut.size > 0) {
+                                wareHouseCodeOut = mWareHouseListOut[0].code
+                            }
+                        }
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                }
+
+            binding.spinnerWareHouseOut.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        wareHouseCodeOut = mWareHouseListOut[position].code
+
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                }
+
+        }
+
+    }
+
+    fun spinnerSetIn() {
+
+        MainDataManager.getMainData()?.let {
+
+            val spinnerCompanyAdapter =
+                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
+            binding.spinnerCompanyIn.adapter = spinnerCompanyAdapter
+
+
+            val spinnerWareHouseAdapter =
+                MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
+            binding.spinnerWareHouseIn.adapter = spinnerWareHouseAdapter
+
+
+            binding.spinnerCompanyIn.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        if (it.getCompanyCode()[position].code == "0001") {
+                            spinnerWareHouseAdapter.setList(it.getGwangmyeongCode())
+                            companyCodeIn = "0001"
+
+                            mWareHouseListIn.clear()
+                            mWareHouseListIn.addAll(it.getGwangmyeongCode())
+                            binding.spinnerWareHouseIn.setSelection(0, false)
+                            if (mWareHouseListIn.size > 0) {
+                                wareHouseCodeIn = mWareHouseListIn[0].code
+                            }
+
+
+                        }
+
+                        if (it.getCompanyCode()[position].code == "0002") {
+                            spinnerWareHouseAdapter.setList(it.getGumiCode())
+                            companyCodeIn = "0002"
+
+                            mWareHouseListIn.clear()
+                            mWareHouseListIn.addAll(it.getGumiCode())
+                            binding.spinnerWareHouseIn.setSelection(0, false)
+
+                            if (mWareHouseListIn.size > 0) {
+                                wareHouseCodeIn = mWareHouseListIn[0].code
+                            }
+                        }
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                }
+
+            binding.spinnerWareHouseIn.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        wareHouseCodeIn = mWareHouseListIn[position].code
+
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
+
+                }
+
+        }
+
+    }
+
+    fun dateSet() {
+        val cal = Calendar.getInstance()
+        val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
+        val dateFormat = SimpleDateFormat("MM-dd")     // 텍스트뷰 포맷
+        binding.txtDate.text = dateFormat.format(cal.time)
+
+
+        calDate = dateServer.format(cal.time)
+        binding.layoutDate.setOnClickListener {
+
+            val date = object : DatePickerDialog.OnDateSetListener {
+                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
+                    cal.set(year, month, dayOfMonth)
+
+                    calDate = dateServer.format(cal.time)
+                    binding.txtDate.text = dateFormat.format(cal.time)
+
+                }
+            }
+
+            val datePick = DatePickerDialog(
+                mContext,
+                date,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            )
+            datePick.datePicker.maxDate = System.currentTimeMillis()
+            datePick.show()
+        }
+
+    }
+
 
 
     override fun onClickedEdit(count: Int, data: Pummokdetail) {

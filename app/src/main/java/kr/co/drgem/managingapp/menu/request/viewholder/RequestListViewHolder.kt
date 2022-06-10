@@ -21,11 +21,13 @@ class RequestListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
     val chulgojisicode = itemView.findViewById<TextView>(R.id.chulgojisicode)
     val gongheong = itemView.findViewById<TextView>(R.id.gongheong)
 
-    fun bind(data : Yocheongdetail){
+    fun bind(data: Yocheongdetail, companyCode: String, wareHouseCode: String){
 
         itemView.setOnClickListener{
             val myIntent = Intent(itemView.context, RequestDetailActivity::class.java)
             myIntent.putExtra("yocheongbeonho", data.getyocheongbeonhoHP())
+            myIntent.putExtra("companyCode", companyCode)
+            myIntent.putExtra("wareHouseCode", wareHouseCode)
             itemView.context.startActivity(myIntent)
         }
 

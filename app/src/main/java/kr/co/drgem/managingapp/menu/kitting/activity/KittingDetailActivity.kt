@@ -1,9 +1,11 @@
 package kr.co.drgem.managingapp.menu.kitting.activity
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -21,6 +23,8 @@ import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
@@ -43,17 +47,19 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
     var wareHouseCodeIn = "1001"
     var mWareHouseListIn: java.util.ArrayList<Detailcode> = arrayListOf()
 
+    var calDate = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kitting_detail)
 
         mkittingbeonho = intent.getStringExtra("kittingbeonho").toString()
+        binding.kittingbeonho.text = "키팅번호 - $mkittingbeonho"
 
-        getRequestKittingDetail()
         setupEvents()
-        getRequestJohoejogeon()
         spinnerSetOut()
         spinnerSetIn()
+        dateSet()
     }
 
     override fun onBackPressed() {
@@ -68,7 +74,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
         binding.btnSave.setOnClickListener {
 //            saveDialog(){
-                postRequestKitting()
+            postRequestKitting()
 //            }
         }
 
@@ -80,6 +86,10 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
             binding.edtInName.text = null
         }
 
+        binding.btnFind.setOnClickListener {
+            getRequestKittingDetail()
+        }
+
     }
 
     override fun setValues() {
@@ -87,8 +97,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         mAdapter = KittingDetailListAdapter(kittingDetailData.returnKittingDetail(), this)
         binding.recyclerView.adapter = mAdapter
 
-        binding.kittingbeonho.text = "키팅번호 - $mkittingbeonho"
-        binding.kittingbeonho2.text = mkittingbeonho
         binding.txtCount.text = "(${kittingDetailData.getPummokCount()} 건)"
 
 
@@ -97,61 +105,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
                 binding.serialDetail.isVisible = true
             }
         }
-
-
-    }
-
-    fun getRequestJohoejogeon() {
-
-        binding.radio0.setOnClickListener {
-            johoejogeon = "0"
-            getRequestKittingDetail()
-        }
-
-        binding.radio1.setOnClickListener {
-            johoejogeon = "1"
-            getRequestKittingDetail()
-        }
-
-        binding.checkMigwanri.setOnCheckedChangeListener { button, ischecked ->
-            if (ischecked) {
-                migwanri = "0"
-            } else {
-                migwanri = "1"
-            }
-
-            getRequestKittingDetail()
-        }
-
-        val changgoList = ArrayList<Detailcode>()
-        changgoList.add(Detailcode("2001", "자재창고1"))
-        changgoList.add(Detailcode("2014", "자재창고2"))
-
-        val spinnerAdapter =
-            MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, changgoList)
-        binding.spinnerChanggocode.adapter = spinnerAdapter
-
-        binding.spinnerChanggocode.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    p0: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-
-                    changgocode = changgoList[position].code
-                    Log.d("yj", "창고코드 : $changgocode")
-
-                    getRequestKittingDetail()
-
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                }
-
-            }
 
 
     }
@@ -220,7 +173,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
             "requesttype" to "02053",
             "kittingbeonho" to "000",
             "chulgoilja" to "20220510",
-            "chulgosaupjangcode" to  companyCodeOut,
+            "chulgosaupjangcode" to companyCodeOut,
             "chulgochanggocode" to wareHouseCodeOut,
             "chulgodamdangjacode" to chulgodamdangjacode,
             "ipgosaupjangcode" to companyCodeIn,
@@ -236,7 +189,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         Log.d("yj", "일괄출고등록 맵확인 : $chulgoMap")
 
         if (kittingDetail.length() > 0) {
-            apiList.postRequestDeliveryBatch(chulgoMap).enqueue(object : Callback<WorkResponse>{
+            apiList.postRequestDeliveryBatch(chulgoMap).enqueue(object : Callback<WorkResponse> {
                 override fun onResponse(
                     call: Call<WorkResponse>,
                     response: Response<WorkResponse>
@@ -423,6 +376,40 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
                 }
 
+        }
+
+    }
+
+    fun dateSet() {
+        val cal = Calendar.getInstance()
+        val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
+        val dateFormat = SimpleDateFormat("MM-dd")     // 텍스트뷰 포맷
+        binding.txtDate.text = dateFormat.format(cal.time)
+
+
+        calDate = dateServer.format(cal.time)
+        binding.layoutDate.setOnClickListener {
+
+            val date = object : DatePickerDialog.OnDateSetListener {
+                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
+                    cal.set(year, month, dayOfMonth)
+
+                    calDate = dateServer.format(cal.time)
+                    binding.txtDate.text = dateFormat.format(cal.time)
+
+                }
+            }
+
+            val datePick = DatePickerDialog(
+                mContext,
+                date,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            )
+            datePick.datePicker.maxDate = System.currentTimeMillis()
+            datePick.show()
         }
 
     }

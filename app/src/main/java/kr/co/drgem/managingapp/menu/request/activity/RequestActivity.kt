@@ -176,7 +176,7 @@ class RequestActivity : BaseActivity() {
 
     override fun setValues() {
 
-        mAdapter = RequestListAdapter(yocheongdetail)
+        mAdapter = RequestListAdapter(yocheongdetail, companyCode, wareHouseCode)
         binding.recyclerView.adapter = mAdapter
 
 
