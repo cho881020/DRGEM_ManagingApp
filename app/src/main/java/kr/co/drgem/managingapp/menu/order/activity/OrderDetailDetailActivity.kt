@@ -120,7 +120,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         binding.btnSave.setOnClickListener {
 
-            saveDialog()
+            saveDialog(null)
 
             val ipgodetail = JSONArray()   // 등록용 리스트
             val inputName = binding.edtName.text.toString()

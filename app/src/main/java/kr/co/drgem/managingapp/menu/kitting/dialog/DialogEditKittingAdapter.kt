@@ -2,9 +2,11 @@ package kr.co.drgem.managingapp.menu.kitting.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.drgem.managingapp.localdb.SerialLocalDB
 
 class DialogEditKittingAdapter(
-    val viewholderCount : Int
+    val viewholderCount : Int,
+    val mList: List<SerialLocalDB>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -17,7 +19,10 @@ class DialogEditKittingAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is KittingSerialListViewHolder -> holder.bind(position)
+            is KittingSerialListViewHolder -> {
+                val data = mList[position]
+                holder.bind(position,data)
+            }
 
         }
     }

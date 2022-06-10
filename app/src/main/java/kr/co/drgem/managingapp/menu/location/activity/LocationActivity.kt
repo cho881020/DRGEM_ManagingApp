@@ -42,7 +42,7 @@ class LocationActivity : BaseActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog()
+            saveDialog(null)
         }
 
         binding.btnLocationRemove.setOnClickListener {

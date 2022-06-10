@@ -51,7 +51,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         setupEvents()
         getRequestTran()
         sort()
-        postRequestTran()
+
 
     }
 
@@ -125,6 +125,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             binding.edtName.text = null
         }
 
+        binding.btnSave.setOnClickListener {
+            saveDialog() {
+                postRequestTran()
+            }
+        }
 
     }
 
@@ -266,61 +271,57 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     }
 
     fun postRequestTran() {
-        binding.btnSave.setOnClickListener {
 
-            saveDialog()
-            /**
-             * 추가하기 : 예 눌렀을 때만 동작하게 하기
-             */
 
-            val georaedetail = JSONArray()   // 등록용 리스트
-            val inputName = binding.edtName.text.toString()
+        val georaedetail = JSONArray()   // 등록용 리스트
+        val inputName = binding.edtName.text.toString()
 
-            tranData.returnGeoraedetail().forEach {
+        tranData.returnGeoraedetail().forEach {
 
-                var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
-                    .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
+            var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
 
-                Log.d("yj", "serialData : $serialData")
+            Log.d("yj", "serialData : $serialData")
 
-                if (serialData.isEmpty()) {        // 시리얼 데이터가 빈 값일 경우
+            if (serialData.isEmpty()) {        // 시리얼 데이터가 빈 값일 경우
 
-                    serialData = ""             // "" 으로 표시
-
-                }
-
-                if (serialData != "null") {
-
-                    georaedetail.put(                         // 리스트에 담기
-                        GeoraedetailAdd(
-                            it.getBalhudanwiHP(),
-                            it.getSeqHP(),
-                            it.getPummokcodeHP(),
-                            serialData.split(",").size.toString(),
-                            it.getJungyojajeyeobuHP(),
-                            serialData
-                        ).toJsonObject()                            // JSONObject로 제작
-                    )
-                }
+                serialData = ""             // "" 으로 표시
 
             }
 
-            val georaeMap = hashMapOf(
-                "requesttype" to "02002",
-                "georaemyeongsebeonho" to tranData.getGeoraemyeongsebeonhoHP(),
-                "georaecheocode" to tranData.getGeoraecheocodeHP(),
-                "ipgoilja" to calDate,
-                "ipgosaupjangcode" to companyCode,
-                "ipgochanggocode" to wareHouseCode,
-                "ipgodamdangja" to inputName,
-                "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
-                "status" to "777",
-                "pummokcount" to georaedetail.length().toString(),
-                "georaedetail" to georaedetail.toString()
-            )
+            if (serialData != "null") {
 
-            Log.d("yj", "거래명세등록 맵확인 : $georaeMap")
+                georaedetail.put(                         // 리스트에 담기
+                    GeoraedetailAdd(
+                        it.getSeqHP(),
+                        it.getPummokcodeHP(),
+                        serialData.split(",").size.toString(),
+                        it.getJungyojajeyeobuHP(),
+                        it.getBaljubeonhoHP(),
+                        serialData
+                    ).toJsonObject()                            // JSONObject로 제작
+                )
+            }
 
+        }
+
+        val georaeMap = hashMapOf(
+            "requesttype" to "02002",
+            "georaemyeongsebeonho" to tranData.getGeoraemyeongsebeonhoHP(),
+            "georaecheocode" to tranData.getGeoraecheocodeHP(),
+            "ipgoilja" to calDate,
+            "ipgosaupjangcode" to companyCode,
+            "ipgochanggocode" to wareHouseCode,
+            "ipgodamdangja" to inputName,
+            "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
+            "status" to "777",
+            "pummokcount" to georaedetail.length().toString(),
+            "georaedetail" to georaedetail.toString()
+        )
+
+        Log.d("yj", "거래명세등록 맵확인 : $georaeMap")
+
+        if (georaedetail.length() > 0) {
             apiList.postRequestTranDetail(georaeMap).enqueue(object : Callback<BasicResponse> {
                 override fun onResponse(
                     call: Call<BasicResponse>,
@@ -329,24 +330,19 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            if(it.resultcd=="000"){
+                            if (it.resultcd == "000") {
 
-                                /**
-                                 * 추가하기 : 성공시에 시리얼 넘버 지우기
-                                 */
+                                SerialManageUtil.clearData()
+                                mAdapter.notifyDataSetChanged()
 
+                                Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                             }
 
                             Log.d("yj", "거래명세등록 콜 결과코드 : ${it.resultcd}")
                             Log.d("yj", "거래명세등록 콜 결과메시지 : ${it.resultmsg}")
 
-
                         }
-
-
                     }
-
-
                 }
 
                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
@@ -354,8 +350,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 }
 
             })
-
+        } else {
+            Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
         }
+
+
     }
 
 

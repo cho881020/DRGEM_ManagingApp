@@ -45,7 +45,7 @@ class StockActivity : BaseActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog()
+            saveDialog(null)
         }
 
         binding.btnCodeRemove.setOnClickListener {

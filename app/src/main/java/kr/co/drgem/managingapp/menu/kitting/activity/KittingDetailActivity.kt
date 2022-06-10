@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -13,10 +14,10 @@ import kr.co.drgem.managingapp.databinding.ActivityKittingDetailBinding
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingDetailListAdapter
 import kr.co.drgem.managingapp.menu.kitting.dialog.KittingDetailDialog
-import kr.co.drgem.managingapp.models.Detailcode
-import kr.co.drgem.managingapp.models.KittingDetailResponse
-import kr.co.drgem.managingapp.models.Pummokdetail
+import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.MainDataManager
+import kr.co.drgem.managingapp.utils.SerialManageUtil
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -66,7 +67,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog()
+//            saveDialog(){
+                postRequestKitting()
+//            }
         }
 
         binding.btnOutNameRemove.setOnClickListener {
@@ -81,7 +84,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
     override fun setValues() {
 
-        mAdapter = KittingDetailListAdapter(kittingDetailData.returnKittingDetail(),this)
+        mAdapter = KittingDetailListAdapter(kittingDetailData.returnKittingDetail(), this)
         binding.recyclerView.adapter = mAdapter
 
         binding.kittingbeonho.text = "키팅번호 - $mkittingbeonho"
@@ -90,7 +93,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
 
         kittingDetailData.returnKittingDetail().forEach {
-            if(it.jungyojajeyeobu == "Y"){
+            if (it.jungyojajeyeobu == "Y") {
                 binding.serialDetail.isVisible = true
             }
         }
@@ -98,7 +101,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
     }
 
-    fun getRequestJohoejogeon(){
+    fun getRequestJohoejogeon() {
 
         binding.radio0.setOnClickListener {
             johoejogeon = "0"
@@ -111,10 +114,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         }
 
         binding.checkMigwanri.setOnCheckedChangeListener { button, ischecked ->
-            if(ischecked){
+            if (ischecked) {
                 migwanri = "0"
-            }
-            else{
+            } else {
                 migwanri = "1"
             }
 
@@ -125,53 +127,158 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         changgoList.add(Detailcode("2001", "자재창고1"))
         changgoList.add(Detailcode("2014", "자재창고2"))
 
-        val spinnerAdapter = MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, changgoList)
+        val spinnerAdapter =
+            MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, changgoList)
         binding.spinnerChanggocode.adapter = spinnerAdapter
 
-        binding.spinnerChanggocode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        binding.spinnerChanggocode.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    p0: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
 
-                changgocode = changgoList[position].code
-                Log.d("yj", "창고코드 : $changgocode")
+                    changgocode = changgoList[position].code
+                    Log.d("yj", "창고코드 : $changgocode")
 
-                getRequestKittingDetail()
+                    getRequestKittingDetail()
+
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
 
             }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-
-        }
 
 
     }
 
 
-
     fun getRequestKittingDetail() {
 
-        apiList.getRequestKittingDetail("02502", mkittingbeonho, johoejogeon ,migwanri, changgocode).enqueue(object : Callback<KittingDetailResponse>{
-            override fun onResponse(
-                call: Call<KittingDetailResponse>,
-                response: Response<KittingDetailResponse>
-            ) {
-                if(response.isSuccessful){
-                    response.body()?.let{
-                        kittingDetailData = it
+        apiList.getRequestKittingDetail("02502", mkittingbeonho, johoejogeon, migwanri, changgocode)
+            .enqueue(object : Callback<KittingDetailResponse> {
+                override fun onResponse(
+                    call: Call<KittingDetailResponse>,
+                    response: Response<KittingDetailResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            kittingDetailData = it
 
-                        setValues()
+                            setValues()
 
+                        }
                     }
                 }
+
+                override fun onFailure(call: Call<KittingDetailResponse>, t: Throwable) {
+                    Log.d("yj", "키팅명세요청실패 : ${t.message}")
+                }
+
+            })
+
+    }
+
+    fun postRequestKitting() {
+
+        val kittingDetail = JSONArray()   // 등록용 리스트
+        val chulgodamdangjacode = binding.edtOutName.text.toString()
+        val ipgodamdangjacode = binding.edtInName.text.toString()
+
+
+        kittingDetailData.returnKittingDetail().forEach {
+
+            var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                .toString()      // 시리얼 데이터 꺼내오기
+
+            if (serialData.isEmpty()) {        // 시리얼 데이터가 빈 값일 경우
+
+                serialData = ""             // "" 으로 표시
+
             }
 
-            override fun onFailure(call: Call<KittingDetailResponse>, t: Throwable) {
-                Log.d("yj", "키팅명세요청실패 : ${t.message}" )
+            if (serialData != "null") {
+
+                kittingDetail.put(                         // 리스트에 담기
+                    ChulgoDetailAdd(
+                        "1",         //check : 요청번호?
+                        it.getPummokcodeHP(),
+                        serialData.split(",").size.toString(),
+                        it.getjungyojajeyeobuHP(),
+                        serialData
+                    ).toJsonObject()                            // JSONObject로 제작
+                )
             }
 
-        })
+        }
 
+        val chulgoMap = hashMapOf(
+            "requesttype" to "02053",
+            "kittingbeonho" to "000",
+            "chulgoilja" to "20220510",
+            "chulgosaupjangcode" to  companyCodeOut,
+            "chulgochanggocode" to wareHouseCodeOut,
+            "chulgodamdangjacode" to chulgodamdangjacode,
+            "ipgosaupjangcode" to companyCodeIn,
+            "ipgochanggocode" to wareHouseCodeIn,
+            "ipgodamdangjacode" to ipgodamdangjacode,
+            "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
+            "status" to "777",
+            "pummokcount" to kittingDetail.length().toString(),
+            "chulgodetail" to kittingDetail.toString()
+        )
+
+
+        Log.d("yj", "일괄출고등록 맵확인 : $chulgoMap")
+
+        if (kittingDetail.length() > 0) {
+            apiList.postRequestDeliveryBatch(chulgoMap).enqueue(object : Callback<WorkResponse>{
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+
+
+                    Log.d("yj", "일괄출고등록 콜 결과코드 : ${response.body()}")
+
+                    response.body()?.let {
+                        Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultmsg}")
+                    }
+
+
+
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            if (it.resultcd == "000") {
+
+                                SerialManageUtil.clearData()
+                                mAdapter.notifyDataSetChanged()
+
+                                Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            }
+
+                            Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultcd}")
+                            Log.d("yj", "일괄출고등록 콜 결과메시지 : ${it.resultmsg}")
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+
+                    Log.d("yj", "일괄출고등록 실패 결과메시지 : ${t.message}")
+                }
+
+            })
+
+
+        } else {
+            Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+        }
 
 
     }
@@ -320,7 +427,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
     }
 
-    override fun onClickedEdit(count : Int, data: Pummokdetail) {
+    override fun onClickedEdit(count: Int, data: Pummokdetail) {
 
         dialog.setCount(mkittingbeonho, count, data)
         dialog.show(supportFragmentManager, "Kitting_dialog")

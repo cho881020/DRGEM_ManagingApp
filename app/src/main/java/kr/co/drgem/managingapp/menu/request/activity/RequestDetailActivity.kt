@@ -60,7 +60,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog()
+            saveDialog(null)
         }
 
     }

@@ -94,9 +94,10 @@ interface APIList {
     ) : Call <KittingDetailResponse>
 
 
-    @FormUrlEncoded
     @POST("tablet/delivery/batch/register")
-    fun postRequestDeliveryBatch()
+    fun postRequestDeliveryBatch(
+        @Body params: HashMap<String, String>
+    ) : Call<WorkResponse>
 
 
     @GET("tablet/request/number/request")

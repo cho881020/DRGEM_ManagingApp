@@ -61,13 +61,15 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
-    fun saveDialog(){
+    fun saveDialog(runnable: Runnable?){
 
         AlertDialog.Builder(mContext)
             .setTitle("저장하시겠습니까?")
             .setMessage("변경 사항이 저장됩니다.")
             .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-                Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                runnable?.let {
+                    Handler(Looper.getMainLooper()).post(it)
+                }
             })
             .setNegativeButton("아니오", null)
             .show()

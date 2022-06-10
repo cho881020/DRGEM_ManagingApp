@@ -73,7 +73,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog()
+            saveDialog(null)
         }
 
         val cal = Calendar.getInstance()
