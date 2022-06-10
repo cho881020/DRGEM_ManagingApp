@@ -83,9 +83,6 @@ class NotDeliveryDialog : DialogFragment() {
         viewholderCount = count
         pummokData = data
 
-        Log.d("yj", "setCount $viewholderCount")
-        Log.d("yj", "pummokData $pummokData")
-
     }
 
 

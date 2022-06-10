@@ -139,12 +139,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
 
     fun postRequestKitting() {
 
-        val kittingDetail = JSONArray()   // 등록용 리스트
         val chulgodamdangjacode = binding.edtOutName.text.toString()
         val ipgodamdangjacode = binding.edtInName.text.toString()
 
 
-        val chulgodetail: ArrayList<Chulgodetail> = arrayListOf()
+        val chulgodetail: ArrayList<DeliveryBatchChulgodetail> = arrayListOf()
 
         kittingDetailData.returnKittingDetail().forEach {
 
@@ -160,7 +159,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
             if (serialData != "null") {
 
                 chulgodetail.add(
-                    Chulgodetail(
+                    DeliveryBatchChulgodetail(
                         "000",         //check : 요청번호?
                         it.getPummokcodeHP(),
                         serialData.split(",").size.toString(),
@@ -168,15 +167,12 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
                         serialData
                     )
                 )
-
             }
-
         }
 
-
-        val deliveryBatch = DeliveryBatch(
+        val deliveryBatch = DeliveryBatchAdd(
             "02053",
-            "000",
+            mkittingbeonho,
             calDate,
             companyCodeOut,
             wareHouseCodeOut,
@@ -186,7 +182,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
             ipgodamdangjacode,
             "TEMP_SEQ",
             "777",
-            kittingDetail.length().toString(),
+            chulgodetail.size.toString(),
             chulgodetail
         )
 
@@ -200,16 +196,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
                         call: Call<WorkResponse>,
                         response: Response<WorkResponse>
                     ) {
-
-
-                        Log.d("yj", "일괄출고등록 콜 결과코드 : ${response.body()}")
-
-                        response.body()?.let {
-                            Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultmsg}")
-                        }
-
-
-
+                        
                         if (response.isSuccessful) {
                             response.body()?.let {
                                 if (it.resultcd == "000") {
@@ -219,6 +206,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
 
                                     Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
                                         .show()
+                                }
+                                else{
+                                    Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
                                 }
 
                                 Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultcd}")

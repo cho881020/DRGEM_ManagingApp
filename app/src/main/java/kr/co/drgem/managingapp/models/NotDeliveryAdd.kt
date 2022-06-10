@@ -1,18 +1,18 @@
 package kr.co.drgem.managingapp.models
 
-data class DeliveryBatch(
+data class NotDeliveryAdd(
 
     val requesttype: String,
-    val kittingbeonho: String,
     val chulgoilja: String,
     val chulgosaupjangcode: String,
     val chulgochanggocode: String,
     val chulgodamdangjacode: String,
     val ipgosaupjangcode: String,
-    val ipgodamdangjacode: String,
     val ipgochanggocode: String,
-    val seq: String,
-    val status: String,
+    val chulgodetail: List<NotDeliveryChulgodetail>,
+
+
     val pummokcount: String,
-    val chulgodetail: List<Chulgodetail>,
+    val seq: String,
+    val status: String
 )

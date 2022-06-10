@@ -118,9 +118,6 @@ class TransactionDialog : DialogFragment() {
         viewholderCount = count
         georaeData = data
 
-        Log.d("yj", "setCount $viewholderCount")
-        Log.d("yj", "baljuData $georaeData")
-
     }
 
     override fun onDismiss(dialog: DialogInterface) {           // 다이얼로그가 닫힐 때 메인액티비티로 전달해주는 리스너

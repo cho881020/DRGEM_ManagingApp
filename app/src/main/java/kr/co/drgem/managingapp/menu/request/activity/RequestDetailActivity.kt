@@ -1,11 +1,13 @@
 package kr.co.drgem.managingapp.menu.request.activity
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -15,18 +17,16 @@ import kr.co.drgem.managingapp.databinding.ActivityRequestDetailBinding
 import kr.co.drgem.managingapp.menu.request.RequestDetailEditListener
 import kr.co.drgem.managingapp.menu.request.adapter.RequestDetailListAdapter
 import kr.co.drgem.managingapp.menu.request.dialog.RequestDetailDialog
-import kr.co.drgem.managingapp.models.Detailcode
-import kr.co.drgem.managingapp.models.KittingDetailResponse
-import kr.co.drgem.managingapp.models.Pummokdetail
-import kr.co.drgem.managingapp.models.RequestDetailResponse
+import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.MainDataManager
+import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
+class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityRequestDetailBinding
     lateinit var mAdapter: RequestDetailListAdapter
@@ -35,7 +35,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
     val dialog = RequestDetailDialog()
 
     lateinit var mYocheongbeonho: String
-
     var johoejogeon = "0"
     var migwanri = "0"
     var companyCode = ""
@@ -66,9 +65,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
 
     }
 
-    override fun onBackPressed() {
-        backDialog(null)
-    }
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
@@ -76,7 +72,9 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog(null)
+            saveDialog(){
+                getPostRequest()
+            }
         }
 
         binding.btnFind.setOnClickListener {
@@ -99,9 +97,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
             }
         }
     }
-
-
-
 
     fun getRequestDetail() {
 
@@ -128,6 +123,93 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
             }
 
         })
+
+    }
+
+    fun getPostRequest(){
+
+        val chulgodamdangjacode = binding.edtOutName.text.toString()
+        val ipgodamdangjacode = binding.edtInName.text.toString()
+
+        val requestChulgodetail : ArrayList<RequestChulgodetail> = arrayListOf()
+
+        requestDetailData.returnPummokDetail().forEach {
+
+            var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                .toString()
+
+            if (serialData.isEmpty()) {        // 시리얼 데이터가 빈 값일 경우
+
+                serialData = ""             // "" 으로 표시
+
+            }
+
+            if (serialData != "null") {
+
+                requestChulgodetail.add(
+                    RequestChulgodetail(        //check : 요청번호?
+                        it.getPummokcodeHP(),
+                        serialData.split(",").size.toString(),
+                        it.getjungyojajeyeobuHP(),
+                        serialData
+                    )
+                )
+            }
+
+        }
+
+        val requestAdd = RequestAdd(
+            "02063",
+            mYocheongbeonho,
+            calDate,
+            companyCodeOut,
+            wareHouseCodeOut,
+            chulgodamdangjacode,
+            companyCodeIn,
+            wareHouseCodeIn,
+            ipgodamdangjacode,
+            "TEMP_SEQ",
+            "777",
+            requestChulgodetail.size.toString(),
+            requestChulgodetail
+        )
+
+        if (requestChulgodetail.size > 0){
+            apiList.postRequestRequestDelivery(requestAdd).enqueue(object : Callback<WorkResponse>{
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            if (it.resultcd == "000") {
+
+                                SerialManageUtil.clearData()
+                                mAdapter.notifyDataSetChanged()
+
+                                Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                            else{
+                                Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
+                            }
+
+                            Log.d("yj", "요청출고등록 콜 결과코드 : ${it.resultcd}")
+                            Log.d("yj", "요청출고등록 콜 결과메시지 : ${it.resultmsg}")
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "요청출고등록 실패 결과메시지 : ${t.message}")
+                }
+
+            })
+        }else {
+            Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+
 
     }
 
@@ -310,11 +392,18 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener {
     }
 
 
-
     override fun onClickedEdit(count: Int, data: Pummokdetail) {
         dialog.setCount(mYocheongbeonho, count, data)
         dialog.show(supportFragmentManager, "dialog_request")
     }
 
+    override fun onBackPressed() {
+        backDialog(null)
+    }
+
+    override fun onDismiss(p0: DialogInterface?) {
+
+        mAdapter.notifyDataSetChanged()
+    }
 
 }

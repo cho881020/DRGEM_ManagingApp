@@ -71,7 +71,6 @@ interface APIList {
     @Query("baljubeonho") baljubeonho: String,
     ) : Call<OrderDetailResponse>
 
-    @FormUrlEncoded
     @POST("tablet/order/receive/register")
     fun postRequestOrderReceive()
 
@@ -96,7 +95,7 @@ interface APIList {
 
     @POST("tablet/delivery/batch/register")
     fun postRequestDeliveryBatch(
-        @Body params: DeliveryBatch
+        @Body params: DeliveryBatchAdd
     ) : Call<WorkResponse>
 
 
@@ -120,9 +119,11 @@ interface APIList {
         @Query("yocheonchanggocode") yocheonchanggocode : String,
     ) :Call<RequestDetailResponse>
 
-    @FormUrlEncoded
+
     @POST("tablet/request/delivery/register")
-    fun postRequestRequestDelivery()
+    fun postRequestRequestDelivery(
+        @Body params: RequestAdd
+    ) : Call<WorkResponse>
 
     @GET("tablet/not-delivery/detail/request")
     fun getRequestNotDeliveryDetail(
@@ -136,7 +137,7 @@ interface APIList {
         @Query("migwanri") migwanri : String,
     ) :Call<NotDeliveryResponse>
 
-    @FormUrlEncoded
+
     @POST("tablet/not-delivery/delivery/register")
     fun postRequestNotDeliveryDelivery()
 
@@ -148,9 +149,10 @@ interface APIList {
         @Query("pummyeong") pummyeong : String,
     ) :Call<LocationResponse>
 
-    @FormUrlEncoded
     @POST("tablet/location/register")
-    fun postRequestLocation()
+    fun postRequestLocation(
+        @Body params: LocationAdd
+    ) : Call<WorkResponse>
 
     @GET("tablet/product-info/request")
     fun getRequestProductinfo(
@@ -158,7 +160,7 @@ interface APIList {
         @Query("pummokcode") pummokcode : String,
     ):Call<ProductInfoResponse>
 
-    @FormUrlEncoded
+
     @POST("tablet/stock/register")
     fun postRequestStock()
 

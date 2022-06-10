@@ -122,8 +122,6 @@ class MenuActivity : BaseActivity() {
                         masterData = it
                         MainDataManager.setMainData(it)
 
-
-                        Log.d("yj", "it : $it")
                     }
                 }
             }

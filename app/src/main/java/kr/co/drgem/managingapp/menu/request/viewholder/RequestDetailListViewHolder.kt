@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.request.RequestDetailEditListener
 import kr.co.drgem.managingapp.models.Pummokdetail
+import kr.co.drgem.managingapp.utils.SerialManageUtil
 
 class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetailEditListener) :
     RecyclerView.ViewHolder(
@@ -72,15 +73,50 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
-        chulgosuryang.setText(data.getchulgosuryangHP())
 
 
         btnEdit.isVisible = data.jungyojajeyeobu == "Y"
 
+        pummyeong.setOnClickListener {
+            AlertDialog.Builder(itemView.context)
+                .setTitle("품명")
+                .setMessage(data.getpummyeongHP())
+                .setNegativeButton("확인", null)
+                .show()
+
+        }
+
+        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
+
+        if (savedSerialString != null) {
+
+            btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
+            btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
+            btnEdit.text = "*수정하기"
+        }
+        else {
+
+            btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
+            btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
+            btnEdit.text = "정보입력"
+        }
+
+
+        if(savedSerialString != null){
+            val serialData = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())?.let {
+                val count = it.split(",").size.toString()
+
+                chulgosuryang.setText(count)
+            }
+
+        }else{
+            chulgosuryang.setText(data.getchulgosuryangHP())
+        }
+
+
         btnEdit.setOnClickListener {
 
             val inputCount = chulgosuryang.text.toString()
-            Log.d("yj", "inputCount : $inputCount")
 
             try {
                 val count: Int = inputCount.toInt()
@@ -97,14 +133,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             }
         }
 
-        pummyeong.setOnClickListener {
-            AlertDialog.Builder(itemView.context)
-                .setTitle("품명")
-                .setMessage(data.getpummyeongHP())
-                .setNegativeButton("확인", null)
-                .show()
 
-        }
 
     }
 

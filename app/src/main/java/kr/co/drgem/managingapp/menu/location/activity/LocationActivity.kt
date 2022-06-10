@@ -9,6 +9,7 @@ import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityLocationBinding
 import kr.co.drgem.managingapp.menu.location.adapter.LocationListAdapter
+import kr.co.drgem.managingapp.models.LocationPummokdetail
 import kr.co.drgem.managingapp.models.LocationResponse
 import kr.co.drgem.managingapp.models.Pummokdetail
 import retrofit2.Call
@@ -105,6 +106,19 @@ class LocationActivity : BaseActivity() {
             })
 
         }
+
+    }
+
+    fun postRequestLocationAdd(){
+
+        mList.forEach {
+            val pummokdetail : ArrayList<LocationPummokdetail> = arrayListOf()
+
+
+        }
+
+
+
 
     }
 

@@ -1,6 +1,6 @@
 package kr.co.drgem.managingapp.models
 
-data class Chulgodetail(
+data class DeliveryBatchChulgodetail(
     val yocheongbeonho: String,
     val pummokcode: String,
     val georaesuryang: String,

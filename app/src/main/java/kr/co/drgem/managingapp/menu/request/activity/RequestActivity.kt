@@ -139,8 +139,6 @@ class RequestActivity : BaseActivity() {
 
                     if(response.isSuccessful){
 
-                        Log.d("yj", "response.body 성공 : ${response.body()}" )
-
                         setValues()
 
                         response.body()?.let {
@@ -191,7 +189,6 @@ class RequestActivity : BaseActivity() {
 
         binding.txtCount.text = "(${yocheongdetail.size} 건)"
 
-
     }
 
     fun spinnerSet() {
@@ -206,7 +203,6 @@ class RequestActivity : BaseActivity() {
         val spinnerWareHouseAdapter =
             MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
         binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
-
 
 
         binding.spinnerCompany.onItemSelectedListener =
@@ -240,9 +236,6 @@ class RequestActivity : BaseActivity() {
 
                     }
 
-                    Log.d("yj", "companyCode : $companyCode")
-                    Log.d("yj", "waarHouseCode : $wareHouseCode")
-
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -258,8 +251,6 @@ class RequestActivity : BaseActivity() {
                 ) {
 
                     wareHouseCode = mWareHouseList[position].code
-
-                    Log.d("yj", "waarHouseCode : $wareHouseCode")
 
                 }
 

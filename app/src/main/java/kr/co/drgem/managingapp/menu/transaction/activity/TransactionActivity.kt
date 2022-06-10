@@ -337,6 +337,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                                 Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                             }
+                            else{
+                                Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
+                            }
 
                             Log.d("yj", "거래명세등록 콜 결과코드 : ${it.resultcd}")
                             Log.d("yj", "거래명세등록 콜 결과메시지 : ${it.resultmsg}")

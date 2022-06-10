@@ -2,9 +2,11 @@ package kr.co.drgem.managingapp.menu.request.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.drgem.managingapp.localdb.SerialLocalDB
 
 class DialogEditRequestAdapter(
-    val viewholderCount : Int
+    val viewholderCount : Int,
+    val mList: List<SerialLocalDB>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -16,7 +18,10 @@ class DialogEditRequestAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is RequestSerialListViewHolder -> holder.bind(position)
+            is RequestSerialListViewHolder -> {
+                val data = mList[position]
+                holder.bind(position, data)
+            }
 
         }
     }
