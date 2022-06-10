@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.models.Pummokdetail
+import kr.co.drgem.managingapp.utils.SerialManageUtil
 
 class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetailEditListener) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.kitting_detail_list_item, parent, false)
@@ -70,7 +71,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
-        chulgosuryang.setText(data.getchulgosuryangHP())
+
 
 
         btnEdit.isVisible = data.jungyojajeyeobu == "Y"
@@ -84,6 +85,34 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
                 .show()
 
         }
+
+        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
+
+        if (savedSerialString != null) {
+
+            btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
+            btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
+            btnEdit.text = "*수정하기"
+        }
+        else {
+
+            btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
+            btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
+            btnEdit.text = "정보입력"
+        }
+
+
+        if(savedSerialString != null){
+            val serialData = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())?.let {
+                val count = it.split(",").size.toString()
+
+                chulgosuryang.setText(count)
+            }
+
+        }else{
+            chulgosuryang.setText(data.getchulgosuryangHP())
+        }
+
 
         btnEdit.setOnClickListener {
 
@@ -102,6 +131,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
             } catch (e: Exception) {
                 chulgosuryang.text = null
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                Log.d("yj", "키팅뷰홀더 Exception : $e" )
             }
         }
 

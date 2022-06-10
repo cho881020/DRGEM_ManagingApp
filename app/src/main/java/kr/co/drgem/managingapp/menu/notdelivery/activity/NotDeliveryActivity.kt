@@ -33,8 +33,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
     var calStart = ""
     var calEnd = ""
-    var companyCode = "0001"
-    var wareHouseCode = "1001"
+    var companyCode = "0002"
+    var wareHouseCode = "2001"
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var migwanri = "0"
 

@@ -73,7 +73,6 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
         baljusuryang.text = data.getBaljusuryangHP()
         giipgosuryang.text = data.getGiipgosuryangHP()
 
-        ipgosuryang.setText(data.getIpgosuryangHP())
 
         baljuseq.text = data.getBaljuseqHP()
         location.text = data.getLocationHP()
@@ -105,6 +104,17 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
             btnEdit.text = "정보입력"
 
+        }
+
+        if(savedSerialString != null){
+            val serialData = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())?.let {
+                val count = it.split(",").size.toString()
+
+                ipgosuryang.setText(count)
+            }
+
+        }else{
+            ipgosuryang.setText(data.getIpgosuryangHP())
         }
 
 

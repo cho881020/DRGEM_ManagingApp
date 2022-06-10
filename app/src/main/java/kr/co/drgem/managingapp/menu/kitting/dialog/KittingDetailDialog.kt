@@ -1,5 +1,7 @@
 package kr.co.drgem.managingapp.menu.kitting.dialog
 
+import android.app.Activity
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -128,6 +130,15 @@ class KittingDetailDialog : DialogFragment() {
         Log.d("yj", "setCount $viewholderCount")
         Log.d("yj", "pummokData $pummokData")
 
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {           // 다이얼로그가 닫힐 때 메인액티비티로 전달해주는 리스너
+        super.onDismiss(dialog)
+
+        val activity: Activity? = activity
+        if (activity is DialogInterface.OnDismissListener) {                        // 액티비티에 다이얼로그 리스너가 있다면,
+            (activity as DialogInterface.OnDismissListener).onDismiss(dialog)           // 액티비티의 onDismiss 를 실행
+        }
     }
 
 }

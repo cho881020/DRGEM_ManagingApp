@@ -29,8 +29,8 @@ class RequestActivity : BaseActivity() {
     var mWareHouseList : ArrayList<Detailcode> = arrayListOf()
     var yocheongdetail = ArrayList<Yocheongdetail>()
 
-    var companyCode = "0001"
-    var wareHouseCode = "1001"
+    var companyCode = "0002"
+    var wareHouseCode = "2001"
     var setDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {

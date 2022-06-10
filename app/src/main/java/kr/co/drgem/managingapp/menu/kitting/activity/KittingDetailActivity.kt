@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.kitting.activity
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,7 +27,7 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
+class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityKittingDetailBinding
     lateinit var mAdapter: KittingDetailListAdapter
@@ -73,9 +74,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         }
 
         binding.btnSave.setOnClickListener {
-//            saveDialog(){
-            postRequestKitting()
-//            }
+            saveDialog() {
+                postRequestKitting()
+            }
         }
 
         binding.btnOutNameRemove.setOnClickListener {
@@ -143,6 +144,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
         val ipgodamdangjacode = binding.edtInName.text.toString()
 
 
+        val chulgodetail: ArrayList<Chulgodetail> = arrayListOf()
+
         kittingDetailData.returnKittingDetail().forEach {
 
             var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
@@ -156,77 +159,81 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
             if (serialData != "null") {
 
-                kittingDetail.put(                         // 리스트에 담기
-                    ChulgoDetailAdd(
-                        "1",         //check : 요청번호?
+                chulgodetail.add(
+                    Chulgodetail(
+                        "000",         //check : 요청번호?
                         it.getPummokcodeHP(),
                         serialData.split(",").size.toString(),
                         it.getjungyojajeyeobuHP(),
                         serialData
-                    ).toJsonObject()                            // JSONObject로 제작
+                    )
                 )
+
             }
 
         }
 
-        val chulgoMap = hashMapOf(
-            "requesttype" to "02053",
-            "kittingbeonho" to "000",
-            "chulgoilja" to "20220510",
-            "chulgosaupjangcode" to companyCodeOut,
-            "chulgochanggocode" to wareHouseCodeOut,
-            "chulgodamdangjacode" to chulgodamdangjacode,
-            "ipgosaupjangcode" to companyCodeIn,
-            "ipgochanggocode" to wareHouseCodeIn,
-            "ipgodamdangjacode" to ipgodamdangjacode,
-            "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
-            "status" to "777",
-            "pummokcount" to kittingDetail.length().toString(),
-            "chulgodetail" to kittingDetail.toString()
+
+        val deliveryBatch = DeliveryBatch(
+            "02053",
+            "000",
+            calDate,
+            companyCodeOut,
+            wareHouseCodeOut,
+            chulgodamdangjacode,
+            companyCodeIn,
+            wareHouseCodeIn,
+            ipgodamdangjacode,
+            "TEMP_SEQ",
+            "777",
+            kittingDetail.length().toString(),
+            chulgodetail
         )
 
 
-        Log.d("yj", "일괄출고등록 맵확인 : $chulgoMap")
+        Log.d("yj", "일괄출고등록 맵확인 : deliveryBatch")
 
-        if (kittingDetail.length() > 0) {
-            apiList.postRequestDeliveryBatch(chulgoMap).enqueue(object : Callback<WorkResponse> {
-                override fun onResponse(
-                    call: Call<WorkResponse>,
-                    response: Response<WorkResponse>
-                ) {
-
-
-                    Log.d("yj", "일괄출고등록 콜 결과코드 : ${response.body()}")
-
-                    response.body()?.let {
-                        Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultmsg}")
-                    }
+        if (chulgodetail.size > 0) {
+            apiList.postRequestDeliveryBatch(deliveryBatch)
+                .enqueue(object : Callback<WorkResponse> {
+                    override fun onResponse(
+                        call: Call<WorkResponse>,
+                        response: Response<WorkResponse>
+                    ) {
 
 
+                        Log.d("yj", "일괄출고등록 콜 결과코드 : ${response.body()}")
 
-                    if (response.isSuccessful) {
                         response.body()?.let {
-                            if (it.resultcd == "000") {
+                            Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultmsg}")
+                        }
 
-                                SerialManageUtil.clearData()
-                                mAdapter.notifyDataSetChanged()
 
-                                Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                if (it.resultcd == "000") {
+
+                                    SerialManageUtil.clearData()
+                                    mAdapter.notifyDataSetChanged()
+
+                                    Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+
+                                Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultcd}")
+                                Log.d("yj", "일괄출고등록 콜 결과메시지 : ${it.resultmsg}")
+
                             }
-
-                            Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultcd}")
-                            Log.d("yj", "일괄출고등록 콜 결과메시지 : ${it.resultmsg}")
-
                         }
                     }
-                }
 
-                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
 
-                    Log.d("yj", "일괄출고등록 실패 결과메시지 : ${t.message}")
-                }
+                        Log.d("yj", "일괄출고등록 실패 결과메시지 : ${t.message}")
+                    }
 
-            })
+                })
 
 
         } else {
@@ -418,5 +425,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener {
 
         dialog.setCount(mkittingbeonho, count, data)
         dialog.show(supportFragmentManager, "Kitting_dialog")
+    }
+
+    override fun onDismiss(p0: DialogInterface?) {
+        mAdapter.notifyDataSetChanged()             // 어댑터 데이터 변경 (시리얼이 담긴 리스트 버튼 컬러 변경)
     }
 }

@@ -96,7 +96,7 @@ interface APIList {
 
     @POST("tablet/delivery/batch/register")
     fun postRequestDeliveryBatch(
-        @Body params: HashMap<String, String>
+        @Body params: DeliveryBatch
     ) : Call<WorkResponse>
 
 
