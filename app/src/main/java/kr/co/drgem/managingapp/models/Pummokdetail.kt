@@ -105,5 +105,18 @@ data class Pummokdetail(
     }
 
 
+    private var SerialCount = ""
+
+    fun setSerialCount( count : String) {
+        this.SerialCount = count
+    }
+
+    fun getSerialCount() : String {
+
+        return SerialCount
+    }
+
+    var serialCheck = false
+
 
 }

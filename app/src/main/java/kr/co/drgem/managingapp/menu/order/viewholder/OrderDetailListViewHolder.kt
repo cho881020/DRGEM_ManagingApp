@@ -126,6 +126,13 @@ class OrderDetailListViewHolder(
 
         }
 
+        edtCount.setText(data.getSerialCount())
+
+        edtCount.setOnFocusChangeListener { view, b ->
+            val serialCount = edtCount.text.toString().trim()
+            data.setSerialCount(serialCount)
+        }
+
 
         btnEdit.setOnClickListener {
 

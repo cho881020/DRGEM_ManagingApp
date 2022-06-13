@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
@@ -101,16 +102,27 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
             btnEdit.text = "정보입력"
         }
 
+        chulgosuryang.setText(data.getSerialCount())
 
-        if(savedSerialString != null){
-            val serialData = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())?.let {
-                val count = it.split(",").size.toString()
+        chulgosuryang.setOnFocusChangeListener { view, b ->
+            val serialCount = chulgosuryang.text.toString().trim()
+            data.setSerialCount(serialCount)
+        }
 
-                chulgosuryang.setText(count)
-            }
-
+        if(data.serialCheck){
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.red
+                )
+            )
         }else{
-            chulgosuryang.setText(data.getchulgosuryangHP())
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.color_FFFFFF
+                )
+            )
         }
 
 

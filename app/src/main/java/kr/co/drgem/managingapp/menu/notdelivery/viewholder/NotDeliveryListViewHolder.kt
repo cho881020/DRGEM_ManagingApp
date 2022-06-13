@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
@@ -99,18 +100,13 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
         }
 
-        if(savedSerialString != null){
-            val serialData = SerialManageUtil.getSerialStringByPummokCode(data.getpummokcodeHP())?.let {
-                val count = it.split(",").size.toString()
 
-                chulgosuryang.setText(count)
-            }
+        chulgosuryang.setText(data.getSerialCount())
 
-        }else{
-            chulgosuryang.setText(data.getchulgosuryangHP())
+        chulgosuryang.setOnFocusChangeListener { view, b ->
+            val serialCount = chulgosuryang.text.toString().trim()
+            data.setSerialCount(serialCount)
         }
-
-
 
 
         btnEdit.setOnClickListener {

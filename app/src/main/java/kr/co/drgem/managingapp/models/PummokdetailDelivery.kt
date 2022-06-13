@@ -122,4 +122,17 @@ data class PummokdetailDelivery(
         }
         return jungyojajeyeobu
     }
+
+    private var SerialCount = ""
+
+    fun setSerialCount( count : String) {
+        this.SerialCount = count
+    }
+
+    fun getSerialCount() : String {
+
+        return SerialCount
+    }
+
+
 }

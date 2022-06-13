@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.request.RequestDetailEditListener
@@ -102,17 +103,12 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         }
 
 
-        if(savedSerialString != null){
-            val serialData = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())?.let {
-                val count = it.split(",").size.toString()
+        chulgosuryang.setText(data.getSerialCount())
 
-                chulgosuryang.setText(count)
-            }
-
-        }else{
-            chulgosuryang.setText(data.getchulgosuryangHP())
+        chulgosuryang.setOnFocusChangeListener { view, b ->
+            val serialCount = chulgosuryang.text.toString().trim()
+            data.setSerialCount(serialCount)
         }
-
 
         btnEdit.setOnClickListener {
 

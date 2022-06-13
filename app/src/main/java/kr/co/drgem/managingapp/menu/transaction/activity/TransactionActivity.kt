@@ -26,7 +26,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class TransactionActivity : BaseActivity(), transactionEditListener,
     DialogInterface.OnDismissListener {
@@ -275,6 +274,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         val georaedetail = JSONArray()   // 등록용 리스트
         val inputName = binding.edtName.text.toString()
 
+
         tranData.returnGeoraedetail().forEach {
 
             var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
@@ -288,19 +288,23 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
             }
 
+            val serialCount = serialData.split(",").size.toString()
+
+
             if (serialData != "null") {
 
                 georaedetail.put(                         // 리스트에 담기
                     GeoraedetailAdd(
                         it.getSeqHP(),
                         it.getPummokcodeHP(),
-                        serialData.split(",").size.toString(),
+                        serialCount,
                         it.getJungyojajeyeobuHP(),
                         it.getBaljubeonhoHP(),
                         serialData
                     ).toJsonObject()                            // JSONObject로 제작
                 )
             }
+
 
         }
 
@@ -335,8 +339,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                 mAdapter.notifyDataSetChanged()
 
                                 Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
                             }
 

@@ -61,6 +61,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         spinnerSetOut()
         spinnerSetIn()
         dateSet()
+        postRequestKitting()
     }
 
     override fun onBackPressed() {
@@ -73,11 +74,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             backDialog(null)
         }
 
-        binding.btnSave.setOnClickListener {
-            saveDialog() {
-                postRequestKitting()
-            }
-        }
+
 
         binding.btnOutNameRemove.setOnClickListener {
             binding.edtOutName.text = null
@@ -139,96 +136,121 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     fun postRequestKitting() {
 
-        val chulgodamdangjacode = binding.edtOutName.text.toString()
-        val ipgodamdangjacode = binding.edtInName.text.toString()
+        binding.btnSave.setOnClickListener {
+            saveDialog() {
+                val chulgodamdangjacode = binding.edtOutName.text.toString()
+                val ipgodamdangjacode = binding.edtInName.text.toString()
 
 
-        val chulgodetail: ArrayList<KittingChulgodetail> = arrayListOf()
+                val chulgodetail: ArrayList<KittingChulgodetail> = arrayListOf()
 
-        kittingDetailData.returnKittingDetail().forEach {
+                kittingDetailData.returnKittingDetail().forEach {
 
-            var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
-                .toString()      // 시리얼 데이터 꺼내오기
+                    var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                        .toString()      // 시리얼 데이터 꺼내오기
 
-            if (serialData.isEmpty()) {        // 시리얼 데이터가 빈 값일 경우
+                    if(serialData == "null"){
+                        serialData = ""
+                    }
 
-                serialData = ""             // "" 으로 표시
+                    if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
+                        val serialSize = serialData.split(",").size
 
-            }
+                        Log.d("yj", "serialDataSize : $serialSize")
+                        Log.d("yj", "serialData : $serialData")
 
-            if (serialData != "null") {
-
-                chulgodetail.add(
-                    KittingChulgodetail(
-                        "000",         //check : 요청번호?
-                        it.getPummokcodeHP(),
-                        serialData.split(",").size.toString(),
-                        it.getjungyojajeyeobuHP(),
-                        serialData
-                    )
-                )
-            }
-        }
-
-        val kittingAdd = KittingAdd(
-            "02053",
-            mkittingbeonho,
-            calDate,
-            companyCodeOut,
-            wareHouseCodeOut,
-            chulgodamdangjacode,
-            companyCodeIn,
-            wareHouseCodeIn,
-            ipgodamdangjacode,
-            "TEMP_SEQ",
-            "777",
-            chulgodetail.size.toString(),
-            chulgodetail
-        )
-
-
-        Log.d("yj", "일괄출고등록 맵확인 : $kittingAdd")
-
-        if (chulgodetail.size > 0) {
-            apiList.postRequestDeliveryBatch(kittingAdd)
-                .enqueue(object : Callback<WorkResponse> {
-                    override fun onResponse(
-                        call: Call<WorkResponse>,
-                        response: Response<WorkResponse>
-                    ) {
-
-                        if (response.isSuccessful) {
-                            response.body()?.let {
-                                if (it.resultcd == "000") {
-
-                                    SerialManageUtil.clearData()
-                                    mAdapter.notifyDataSetChanged()
-
-                                    Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
-                                        .show()
-                                } else {
-                                    Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
-                                        .show()
-                                }
-
-                                Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultcd}")
-                                Log.d("yj", "일괄출고등록 콜 결과메시지 : ${it.resultmsg}")
-
+                        if(serialSize > 0){
+                            if(serialSize.toString() != it.getSerialCount()){
+                                Toast.makeText(mContext, "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                                it.serialCheck = true
+                                mAdapter.notifyDataSetChanged()
+                                return@saveDialog
+                            }
+                            else {
+                                it.serialCheck = false
+                                mAdapter.notifyDataSetChanged()
                             }
                         }
                     }
 
-                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
 
-                        Log.d("yj", "일괄출고등록 실패 결과메시지 : ${t.message}")
+                    if (serialData.isNotEmpty()) {
+
+                        chulgodetail.add(
+                            KittingChulgodetail(
+                                "000",         //check : 요청번호?
+                                it.getPummokcodeHP(),
+                                serialData.split(",").size.toString(),
+                                it.getjungyojajeyeobuHP(),
+                                serialData
+                            )
+                        )
                     }
+                }
 
-                })
+                val kittingAdd = KittingAdd(
+                    "02053",
+                    mkittingbeonho,
+                    calDate,
+                    companyCodeOut,
+                    wareHouseCodeOut,
+                    chulgodamdangjacode,
+                    companyCodeIn,
+                    wareHouseCodeIn,
+                    ipgodamdangjacode,
+                    "TEMP_SEQ",
+                    "777",
+                    chulgodetail.size.toString(),
+                    chulgodetail
+                )
 
 
-        } else {
-            Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("yj", "일괄출고등록 맵확인 : $kittingAdd")
+
+                if (chulgodetail.size > 0) {
+                    apiList.postRequestDeliveryBatch(kittingAdd)
+                        .enqueue(object : Callback<WorkResponse> {
+                            override fun onResponse(
+                                call: Call<WorkResponse>,
+                                response: Response<WorkResponse>
+                            ) {
+
+                                if (response.isSuccessful) {
+                                    response.body()?.let {
+                                        if (it.resultcd == "000") {
+
+                                            SerialManageUtil.clearData()
+                                            mAdapter.notifyDataSetChanged()
+
+                                            Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                                .show()
+                                        } else {
+                                            Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
+                                                .show()
+                                        }
+
+                                        Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultcd}")
+                                        Log.d("yj", "일괄출고등록 콜 결과메시지 : ${it.resultmsg}")
+
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+
+                                Log.d("yj", "일괄출고등록 실패 결과메시지 : ${t.message}")
+                            }
+
+                        })
+
+
+                } else {
+                    Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+
+            }
         }
+
 
 
     }

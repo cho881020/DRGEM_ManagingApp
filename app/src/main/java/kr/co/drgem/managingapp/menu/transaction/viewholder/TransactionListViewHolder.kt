@@ -56,7 +56,7 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
     }
 
-    fun bind(data : Georaedetail) {
+    fun bind(data: Georaedetail) {
 
         itemView.setOnClickListener {
             ipgosuryang.requestFocus()
@@ -85,7 +85,8 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
         }
 
 
-        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
+        val savedSerialString =
+            SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
 
         Log.d("품목코드", data.getPummokcodeHP())
         Log.d("품목코드", data.getPummokcodeHP())
@@ -97,8 +98,8 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
             btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
             btnEdit.text = "*수정하기"
-        }
-        else {
+
+        } else {
 
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
@@ -106,17 +107,13 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
         }
 
-        if(savedSerialString != null){
-            val serialData = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())?.let {
-                val count = it.split(",").size.toString()
 
-                ipgosuryang.setText(count)
-            }
+        ipgosuryang.setText(data.getSerialCount())
 
-        }else{
-            ipgosuryang.setText(data.getIpgosuryangHP())
+        ipgosuryang.setOnFocusChangeListener { view, b ->
+            val serialCount = ipgosuryang.text.toString().trim()
+            data.setSerialCount(serialCount)
         }
-
 
 
         btnEdit.setOnClickListener {
@@ -138,7 +135,6 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
-
 
 
     }
