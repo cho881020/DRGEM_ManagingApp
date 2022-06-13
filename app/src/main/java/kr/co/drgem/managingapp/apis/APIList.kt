@@ -49,13 +49,6 @@ interface APIList {
         @Body params: HashMap<String, String>,
     ) : Call<BasicResponse>
 
-//    @GET("tablet/vendorinfo/request")
-//    fun getRequestVendorInfo (
-//        @Query("requesttype") requesttype : String = "02011",
-//        @Query("georaecheomyeong") georaecheomyeong : String,
-//        @Query("baljubeonho") baljubeonho : String,
-//    ) : Call<BasicResponse>
-
     @GET("tablet/order/number/request")
     fun getRequestOrderNumber(
         @Query("requesttype") requesttype: String = "02011",
@@ -95,7 +88,7 @@ interface APIList {
 
     @POST("tablet/delivery/batch/register")
     fun postRequestDeliveryBatch(
-        @Body params: DeliveryBatchAdd
+        @Body params: KittingAdd
     ) : Call<WorkResponse>
 
 
@@ -139,7 +132,9 @@ interface APIList {
 
 
     @POST("tablet/not-delivery/delivery/register")
-    fun postRequestNotDeliveryDelivery()
+    fun postRequestNotDeliveryDelivery(
+        @Body params: NotDeliveryAdd
+    ) : Call<WorkResponse>
 
     @GET("tablet/location/request")
     fun getRequestLocation(

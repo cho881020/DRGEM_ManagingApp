@@ -20,14 +20,14 @@ import kr.co.drgem.managingapp.menu.kitting.dialog.KittingDetailDialog
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.MainDataManager
 import kr.co.drgem.managingapp.utils.SerialManageUtil
-import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogInterface.OnDismissListener {
+class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
+    DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityKittingDetailBinding
     lateinit var mAdapter: KittingDetailListAdapter
@@ -42,11 +42,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
 
     var companyCodeOut = "0001"
     var wareHouseCodeOut = "1001"
-    var mWareHouseListOut: java.util.ArrayList<Detailcode> = arrayListOf()
+    var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
 
     var companyCodeIn = "0001"
     var wareHouseCodeIn = "1001"
-    var mWareHouseListIn: java.util.ArrayList<Detailcode> = arrayListOf()
+    var mWareHouseListIn: ArrayList<Detailcode> = arrayListOf()
 
     var calDate = ""
 
@@ -143,7 +143,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
         val ipgodamdangjacode = binding.edtInName.text.toString()
 
 
-        val chulgodetail: ArrayList<DeliveryBatchChulgodetail> = arrayListOf()
+        val chulgodetail: ArrayList<KittingChulgodetail> = arrayListOf()
 
         kittingDetailData.returnKittingDetail().forEach {
 
@@ -159,7 +159,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
             if (serialData != "null") {
 
                 chulgodetail.add(
-                    DeliveryBatchChulgodetail(
+                    KittingChulgodetail(
                         "000",         //check : 요청번호?
                         it.getPummokcodeHP(),
                         serialData.split(",").size.toString(),
@@ -170,7 +170,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
             }
         }
 
-        val deliveryBatch = DeliveryBatchAdd(
+        val kittingAdd = KittingAdd(
             "02053",
             mkittingbeonho,
             calDate,
@@ -190,13 +190,13 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
         Log.d("yj", "일괄출고등록 맵확인 : deliveryBatch")
 
         if (chulgodetail.size > 0) {
-            apiList.postRequestDeliveryBatch(deliveryBatch)
+            apiList.postRequestDeliveryBatch(kittingAdd)
                 .enqueue(object : Callback<WorkResponse> {
                     override fun onResponse(
                         call: Call<WorkResponse>,
                         response: Response<WorkResponse>
                     ) {
-                        
+
                         if (response.isSuccessful) {
                             response.body()?.let {
                                 if (it.resultcd == "000") {
@@ -206,9 +206,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener, DialogI
 
                                     Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
                                         .show()
-                                }
-                                else{
-                                    Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
+                                        .show()
                                 }
 
                                 Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultcd}")

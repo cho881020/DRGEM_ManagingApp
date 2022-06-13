@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.models.PummokdetailDelivery
+import kr.co.drgem.managingapp.utils.SerialManageUtil
 
 class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEditListener) :
     RecyclerView.ViewHolder(
@@ -80,6 +81,36 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
 
         btnEdit.isVisible = data.jungyojajeyeobu == "Y"
+
+        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getpummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
+
+
+        if (savedSerialString != null) {
+
+            btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
+            btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
+            btnEdit.text = "*수정하기"
+        }
+        else {
+
+            btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
+            btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
+            btnEdit.text = "정보입력"
+
+        }
+
+        if(savedSerialString != null){
+            val serialData = SerialManageUtil.getSerialStringByPummokCode(data.getpummokcodeHP())?.let {
+                val count = it.split(",").size.toString()
+
+                chulgosuryang.setText(count)
+            }
+
+        }else{
+            chulgosuryang.setText(data.getchulgosuryangHP())
+        }
+
+
 
 
         btnEdit.setOnClickListener {

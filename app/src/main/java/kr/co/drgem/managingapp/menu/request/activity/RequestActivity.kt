@@ -139,7 +139,6 @@ class RequestActivity : BaseActivity() {
 
                     if(response.isSuccessful){
 
-                        setValues()
 
                         response.body()?.let {
 

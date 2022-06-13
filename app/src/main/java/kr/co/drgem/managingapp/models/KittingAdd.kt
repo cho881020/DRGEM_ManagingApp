@@ -1,6 +1,6 @@
 package kr.co.drgem.managingapp.models
 
-data class DeliveryBatchAdd(
+data class KittingAdd(
 
     val requesttype: String,
     val kittingbeonho: String,
@@ -14,5 +14,5 @@ data class DeliveryBatchAdd(
     val seq: String,
     val status: String,
     val pummokcount: String,
-    val chulgodetail: ArrayList<DeliveryBatchChulgodetail>,
+    val chulgodetail: ArrayList<KittingChulgodetail>,
 )

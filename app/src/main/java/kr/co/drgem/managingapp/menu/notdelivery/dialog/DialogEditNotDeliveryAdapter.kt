@@ -2,9 +2,11 @@ package kr.co.drgem.managingapp.menu.notdelivery.dialog
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.drgem.managingapp.localdb.SerialLocalDB
 
 class DialogEditNotDeliveryAdapter(
-    val viewholderCount : Int
+    val viewholderCount : Int,
+    val mList: List<SerialLocalDB>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -16,8 +18,10 @@ class DialogEditNotDeliveryAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is NotDeliverySerialListViewHolder -> holder.bind(position)
-
+            is NotDeliverySerialListViewHolder -> {
+                val data = mList[position]
+                holder.bind(position,data)
+            }
         }
     }
 

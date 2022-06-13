@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.notdelivery.activity
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,13 +19,15 @@ import kr.co.drgem.managingapp.menu.notdelivery.adapter.NotDeliveryListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.dialog.NotDeliveryDialog
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.MainDataManager
+import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
+class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
+    DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityNotDeliveryBinding
     lateinit var mAdapter: NotDeliveryListAdapter
@@ -40,13 +43,13 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
     var companyCodeOut = "0001"
     var wareHouseCodeOut = "1001"
-    var mWareHouseListOut: java.util.ArrayList<Detailcode> = arrayListOf()
+    var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
 
     var companyCodeIn = "0001"
     var wareHouseCodeIn = "1001"
-    var mWareHouseListIn: java.util.ArrayList<Detailcode> = arrayListOf()
+    var mWareHouseListIn: ArrayList<Detailcode> = arrayListOf()
 
-    lateinit var mYocheongbeonho: String
+    var calDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +66,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
     }
 
 
-
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
@@ -71,7 +73,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog(null)
+            saveDialog(){
+                postRequestNotDelivery()
+            }
         }
 
         val cal = Calendar.getInstance()
@@ -86,10 +90,10 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
         binding.layoutDateStart.setOnClickListener {
 
-            val date = object  : DatePickerDialog.OnDateSetListener{
+            val date = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    cal.set(year,month,dayOfMonth)
+                    cal.set(year, month, dayOfMonth)
 
                     calStart = dateSet.format(cal.time)
                     binding.txtDateStart.text = dateFormat.format(cal.time)
@@ -111,10 +115,10 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
         }
 
         binding.layoutDateEnd.setOnClickListener {
-            val date = object  : DatePickerDialog.OnDateSetListener{
+            val date = object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    cal.set(year,month,dayOfMonth)
+                    cal.set(year, month, dayOfMonth)
 
                     calEnd = dateSet.format(cal.time)
                     binding.txtDateEnd.text = dateFormat.format(cal.time)
@@ -161,36 +165,42 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
         }
 
 
-
-
     }
 
-    fun getRequestNotDelivery(){
+    fun getRequestNotDelivery() {
 
         binding.btnFind.setOnClickListener {
 
             val yocheongja = binding.edtName.text.toString()
-            if(yocheongja.isEmpty()){
+            if (yocheongja.isEmpty()) {
                 Toast.makeText(mContext, "요청자를 입력하세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             var yocheongpummok = binding.edtCode.text.toString()
-            if(yocheongpummok.isEmpty()){
+            if (yocheongpummok.isEmpty()) {
                 yocheongpummok = "1"
             }
 
 
-            apiList.getRequestNotDeliveryDetail("02071", calStart, calEnd, companyCode, wareHouseCode, yocheongja, yocheongpummok, migwanri).enqueue(object :Callback<NotDeliveryResponse>{
+            apiList.getRequestNotDeliveryDetail(
+                "02071",
+                calStart,
+                calEnd,
+                companyCode,
+                wareHouseCode,
+                yocheongja,
+                yocheongpummok,
+                migwanri
+            ).enqueue(object : Callback<NotDeliveryResponse> {
                 override fun onResponse(
                     call: Call<NotDeliveryResponse>,
                     response: Response<NotDeliveryResponse>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         response.body()?.let {
-                            if(it.returnPummokdetailDetail().size == 0){
+                            if (it.returnPummokdetailDetail().size == 0) {
                                 Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
-                            }
-                            else{
+                            } else {
                                 notDeliveryData = it
 
                                 setValues()
@@ -200,7 +210,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
                             }
 
                         }
-
 
 
                     }
@@ -216,15 +225,101 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
         }
     }
 
+    fun postRequestNotDelivery() {
+
+        val chulgodamdangjacode = binding.edtOutName.text.toString()
+        val ipgodamdangjacode = binding.edtInName.text.toString()
+
+        val chulgodetail: ArrayList<NotDeliveryChulgodetail> = arrayListOf()
+
+        notDeliveryData.returnPummokdetailDetail().forEach {
+
+            var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getpummokcodeHP())
+                .toString()
+
+            if (serialData.isEmpty()) {
+
+                serialData = ""
+
+            }
+
+            if (serialData != "null") {
+
+                chulgodetail.add(
+                    NotDeliveryChulgodetail(
+                        it.getyocheongbeonhoHP(),
+                        it.getpummokcodeHP(),
+                        serialData.split(",").size.toString(),
+                        it.getjungyojajeyeobuHP(),
+                        serialData
+                    )
+                )
+            }
+        }
+
+        val notDeliveryAdd = NotDeliveryAdd(
+            "02072",
+            calDate,
+            companyCodeOut,
+            wareHouseCodeOut,
+            chulgodamdangjacode,
+            companyCodeIn,
+            wareHouseCodeIn,
+            ipgodamdangjacode,
+            "TEMP_SEQ",
+            "777",
+            chulgodetail.size.toString(),
+            chulgodetail
+        )
+
+        if (chulgodetail.size > 0) {
+            apiList.postRequestNotDeliveryDelivery(notDeliveryAdd)
+                .enqueue(object : Callback<WorkResponse> {
+                    override fun onResponse(
+                        call: Call<WorkResponse>,
+                        response: Response<WorkResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                if (it.resultcd == "000") {
+
+                                    SerialManageUtil.clearData()
+                                    mAdapter.notifyDataSetChanged()
+
+                                    Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                        .show()
+                                } else {
+                                    Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+
+                                Log.d("yj", "미출고등록 콜 결과코드 : ${it.resultcd}")
+                                Log.d("yj", "미출고등록 콜 결과메시지 : ${it.resultmsg}")
+
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                        Log.d("yj", "미출고등록 실패 결과메시지 : ${t.message}")
+                    }
+
+                })
+        } else {
+            Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
     override fun setValues() {
 
-        mAdapter = NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(),this)
+        mAdapter = NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(), this)
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${notDeliveryData.pummokcount} 건)"
 
         notDeliveryData.returnPummokdetailDetail().forEach {
-            if(it.jungyojajeyeobu == "Y"){
+            if (it.jungyojajeyeobu == "Y") {
                 binding.serialDetail.isVisible = true
             }
         }
@@ -448,12 +543,52 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener {
 
     }
 
+    fun dateSet() {
+        val cal = Calendar.getInstance()
+        val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
+        val dateFormat = SimpleDateFormat("MM-dd")     // 텍스트뷰 포맷
+        binding.txtDate.text = dateFormat.format(cal.time)
+
+
+        calDate = dateServer.format(cal.time)
+        binding.layoutDate.setOnClickListener {
+
+            val date = object : DatePickerDialog.OnDateSetListener {
+                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
+                    cal.set(year, month, dayOfMonth)
+
+                    calDate = dateServer.format(cal.time)
+                    binding.txtDate.text = dateFormat.format(cal.time)
+
+                }
+            }
+
+            val datePick = DatePickerDialog(
+                mContext,
+                date,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            )
+            datePick.datePicker.maxDate = System.currentTimeMillis()
+            datePick.show()
+        }
+
+    }
+
     override fun onBackPressed() {
         backDialog(null)
     }
 
-    override fun onClickedEdit(count : Int, data: PummokdetailDelivery) {
+    override fun onClickedEdit(count: Int, data: PummokdetailDelivery) {
         dialog.setCount(count, data)
         dialog.show(supportFragmentManager, "dialog_notDelivery")
+
     }
+
+    override fun onDismiss(p0: DialogInterface?) {
+        mAdapter.notifyDataSetChanged()
+    }
+
 }

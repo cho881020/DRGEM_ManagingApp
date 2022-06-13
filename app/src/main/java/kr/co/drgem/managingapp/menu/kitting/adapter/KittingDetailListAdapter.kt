@@ -12,6 +12,7 @@ class KittingDetailListAdapter(
     val mList : ArrayList<Pummokdetail>,
     val listener : KittingDetailEditListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return KittingDetailListViewHolder(parent, listener)
     }

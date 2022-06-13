@@ -75,4 +75,6 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
 
 
+
+
 }

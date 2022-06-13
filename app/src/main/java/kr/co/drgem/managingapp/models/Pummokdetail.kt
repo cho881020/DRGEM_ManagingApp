@@ -93,6 +93,17 @@ data class Pummokdetail(
         return jungyojajeyeobu
     }
 
+    private var locationAdd = ""
+
+    fun setLocationAdd( locationAdd : String) {
+        this.locationAdd = locationAdd
+    }
+
+    fun getLocationAdd() : String {
+
+        return locationAdd
+    }
+
 
 
 }

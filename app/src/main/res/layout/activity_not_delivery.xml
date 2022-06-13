@@ -458,6 +458,59 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="출고일자"
+                        android:textColor="@color/color_808080"
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/layoutDate"
+                            android:layout_width="65dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/light_gray_box"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/txtDate"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:layout_weight="1"
+                                tools:text="01-12"
+                                android:textColor="@color/color_000000"
+                                android:textSize="12dp" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="7dp"
+                                android:src="@drawable/dropdown" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="출고할사업장"
                         android:textColor="@color/color_808080"
                         android:textSize="12dp" />

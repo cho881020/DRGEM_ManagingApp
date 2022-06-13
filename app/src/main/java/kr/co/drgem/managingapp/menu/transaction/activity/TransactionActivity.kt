@@ -272,7 +272,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     fun postRequestTran() {
 
-
         val georaedetail = JSONArray()   // 등록용 리스트
         val inputName = binding.edtName.text.toString()
 

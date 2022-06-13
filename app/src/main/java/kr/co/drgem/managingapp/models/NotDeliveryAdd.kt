@@ -8,11 +8,12 @@ data class NotDeliveryAdd(
     val chulgochanggocode: String,
     val chulgodamdangjacode: String,
     val ipgosaupjangcode: String,
+    val ipgodamdangjacode: String,
     val ipgochanggocode: String,
+    val seq: String,
+    val status: String,
+    val pummokcount: String,
     val chulgodetail: List<NotDeliveryChulgodetail>,
 
 
-    val pummokcount: String,
-    val seq: String,
-    val status: String
 )
