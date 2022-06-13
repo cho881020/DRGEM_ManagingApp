@@ -1,11 +1,11 @@
 package kr.co.drgem.managingapp.models
 
 data class RequestDetailResponse(
-    val johoejogeon: Any,
-    val migwanri: Any,
+    val johoejogeon: String,
+    val migwanri: String,
     val pummokcount: String,
     val pummokdetail: ArrayList<Pummokdetail>?,
-    val requesttype: Any,
+    val requesttype: String,
     val resultcd: String,
     val resultmsg: String,
     val yocheongbeonho: String,

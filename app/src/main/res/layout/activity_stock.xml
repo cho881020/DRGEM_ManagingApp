@@ -171,6 +171,95 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="사업장"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="140dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/spinnerCompany"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/light_gray_box"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="창고"
+                    android:textColor="@color/color_808080"
+                    android:textSize="12dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="140dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/light_gray_box"
+                    android:gravity="center_vertical">
+
+                    <Spinner
+                        android:id="@+id/spinnerWareHouse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/light_gray_box"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginHorizontal="7dp"
+                        android:src="@drawable/dropdown" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+
+
             <TextView
                 android:id="@+id/btnFind"
                 android:layout_width="65dp"
@@ -224,6 +313,7 @@
                     android:gravity="center_vertical"
                     android:inputType="text"
                     android:maxLines="1"
+                    android:ellipsize="end"
                     android:paddingHorizontal="7dp"
                     tools:text="G22042600391"
                     android:textColor="@color/color_000000"
@@ -259,6 +349,8 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="3dp"
                     android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     tools:text="G22042600391"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
@@ -291,6 +383,8 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="3dp"
                     android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     tools:text="G22042600391"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />
@@ -324,6 +418,8 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="3dp"
                     android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     tools:text="G22042600391"
                     android:textColor="@color/color_000000"
                     android:textSize="12dp" />

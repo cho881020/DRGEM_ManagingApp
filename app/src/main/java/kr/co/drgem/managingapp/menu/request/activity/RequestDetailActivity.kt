@@ -42,11 +42,11 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
 
     var companyCodeOut = "0001"
     var wareHouseCodeOut = "1001"
-    var mWareHouseListOut: java.util.ArrayList<Detailcode> = arrayListOf()
+    var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
 
     var companyCodeIn = "0001"
     var wareHouseCodeIn = "1001"
-    var mWareHouseListIn: java.util.ArrayList<Detailcode> = arrayListOf()
+    var mWareHouseListIn: ArrayList<Detailcode> = arrayListOf()
 
     var calDate = ""
 

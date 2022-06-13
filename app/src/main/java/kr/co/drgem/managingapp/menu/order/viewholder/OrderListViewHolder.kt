@@ -51,7 +51,7 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
                 "status" to "111",
             )
 
-            Log.d("yj", "SEQMap : $SEQMap")
+
 
             apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse>{
 
@@ -64,7 +64,10 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
                                 val myIntent = Intent(itemView.context, OrderDetailDetailActivity::class.java)
                                 myIntent.putExtra("masterData", masterData)
                                 myIntent.putExtra("baljubeonho", baljuData.getBaljubeonhoHP())
+                                myIntent.putExtra("seq", it.seq)
                                 itemView.context.startActivity(myIntent)
+
+                                Log.d("yj", "SEQ : ${it.seq}")
                             }
 
                             else{

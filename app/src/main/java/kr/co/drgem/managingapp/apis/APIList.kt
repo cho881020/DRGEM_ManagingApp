@@ -155,17 +155,15 @@ interface APIList {
     fun getRequestProductinfo(
         @Query("requesttype") requesttype : String = "02091",
         @Query("pummokcode") pummokcode : String,
+        @Query("saupjangcode") saupjangcode : String,
+        @Query("changgocode") changgocode : String,
     ):Call<ProductInfoResponse>
 
 
     @POST("tablet/stock/register")
-    fun postRequestStock()
-
-    @GET("tablet/masterdata/request")
-    fun getRequestMasterdata()
-
-    @GET("tablet/messagedata/request")
-    fun getRequestMessageData()
+    fun postRequestStock(
+        @Body params: StockAdd
+    ) : Call<WorkResponse>
 
 
 }

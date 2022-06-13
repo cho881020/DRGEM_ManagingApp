@@ -61,7 +61,7 @@ class LocationActivity : BaseActivity() {
             binding.pummyeong.text = null
         }
 
-        val changgoList = java.util.ArrayList<Detailcode>()
+        val changgoList = ArrayList<Detailcode>()
         changgoList.add(Detailcode("", "전체"))
         changgoList.add(Detailcode("2001", "자재창고1"))
         changgoList.add(Detailcode("2014", "자재창고2"))
