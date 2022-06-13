@@ -42,6 +42,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var companyCode = "0001"
     var wareHouseCode = "1001"
+    var calDate = ""
 
     lateinit var masterData: MasterDataResponse
 
@@ -92,7 +93,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         binding.txtDate.text = dateFormat.format(cal.time)
 
 
-        var calDate = dateServer.format(cal.time)
+        calDate = dateServer.format(cal.time)
         binding.layoutDate.setOnClickListener {
 
             val date = object : DatePickerDialog.OnDateSetListener {
@@ -138,15 +139,18 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                     serialData = ""
 
                 }
-                ipgodetail.put(
-                    IpgodetaildetailAdd(
-                        it.getSeqHP(),
-                        it.getPummokcodeHP(),
-                        serialData.split(",").size.toString(),
-                        it.getJungyojajeyeobuHP(),
-                        serialData
-                    ).toJsonObject()
-                )
+
+                if(serialData != "null"){
+                    ipgodetail.put(
+                        IpgodetaildetailAdd(
+                            it.getSeqHP(),
+                            it.getPummokcodeHP(),
+                            serialData.split(",").size.toString(),
+                            it.getJungyojajeyeobuHP(),
+                            serialData
+                        ).toJsonObject()
+                    )
+                }
 
             }
 
@@ -157,16 +161,48 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                 "ipgosaupjangcode" to companyCode,
                 "ipgochanggocode" to wareHouseCode,
                 "ipgodamdangja" to inputName,
-                "georaecheocode" to orderDetailData.georaecheocode,
+                "georaecheocode" to orderDetailData.getGeoraecheocodeHP(),
                 "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
                 "status" to "777",
-                "pummokcount" to ipgodetail.length(),
-                "ipgodetail" to ipgodetail
+                "pummokcount" to ipgodetail.length().toString(),
+                "ipgodetail" to ipgodetail.toString()
             )
 
             Log.d("yj", "georaeMap : ${georaeMap}")
 
+            if(ipgodetail.length() > 0){
+                apiList.postRequestOrderReceive(georaeMap).enqueue(object : Callback<WorkResponse>{
+                    override fun onResponse(
+                        call: Call<WorkResponse>,
+                        response: Response<WorkResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                if (it.resultcd == "000") {
 
+                                    SerialManageUtil.clearData()
+                                    mAdapter.notifyDataSetChanged()
+
+                                    Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                                }
+                                else{
+                                    Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
+                                }
+
+                                Log.d("yj", "요청명세등록 콜 결과코드 : ${it.resultcd}")
+                                Log.d("yj", "요청명세등록 콜 결과메시지 : ${it.resultmsg}")
+
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                        Log.d("yj", "요청명세등록 실패메시지 : ${t.message}")
+                    }
+                })
+            } else {
+                Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
