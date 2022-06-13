@@ -352,6 +352,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
                             setOrderDetailDataToUI()
 
+
+                            clearAndSaveDataToDB()
+
                         }
                     }
 
@@ -432,7 +435,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         mSqliteDB.insertOrderDetail(orderDetailData)
 
-        Toast.makeText(mContext, "임시 저장이 완료 되었습니다.", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(mContext, "임시 저장이 완료 되었습니다.", Toast.LENGTH_SHORT).show()
 
     }
 
