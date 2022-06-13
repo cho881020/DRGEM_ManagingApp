@@ -358,7 +358,7 @@
                         <TextView
                             android:layout_width="100dp"
                             android:layout_height="17dp"
-                            android:text="창고위치"
+                            android:text="로케이션"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.models.Pummokdetail
@@ -53,6 +54,15 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             edtWarehouse.requestFocus()
         }
 
+
+        edtWarehouse.addTextChangedListener {
+            val txtLocation = edtWarehouse.text.toString().trim()
+            data.setLocationAdd(txtLocation)
+
+        }
+
+
+
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
         dobeon_model.text = data.getdobeon_modelHP()
@@ -72,9 +82,6 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         }
 
     }
-
-
-
 
 
 }

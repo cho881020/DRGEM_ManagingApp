@@ -187,7 +187,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         )
 
 
-        Log.d("yj", "일괄출고등록 맵확인 : deliveryBatch")
+        Log.d("yj", "일괄출고등록 맵확인 : $kittingAdd")
 
         if (chulgodetail.size > 0) {
             apiList.postRequestDeliveryBatch(kittingAdd)
