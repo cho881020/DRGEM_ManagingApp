@@ -5,7 +5,7 @@ data class Baljudetail(
     val pummokcode: String?,     //품목코드
     val pummyeong: String?,      //품명
     val dobeon_model: String?,   //도번/모델
-    val saying : String?,            //사양
+    val sayang : String?,            //사양
     val balhudanwi : String?,        //단위
     val baljusuryang: String?,       //발주수량
     val ipgoyejeongil: String?,      //입고예정일? 디자인에없음
@@ -46,10 +46,10 @@ data class Baljudetail(
     }
 
     fun getSayingHP() : String {
-        if(saying == null){
+        if(sayang == null){
             return "-"
         }
-        return saying
+        return sayang
     }
 
     fun getBalhudanwiHP() : String {

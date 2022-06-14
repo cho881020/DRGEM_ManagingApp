@@ -6,7 +6,7 @@ data class BaljuData(
     val pummokcode: String,
     val pummyeong: String,
     val dobeon_model: String,
-    val saying: String,
+    val sayang: String,
     val balhudanwi: String,
     val baljusuryang: String,
     val ipgoyejeongil: String,

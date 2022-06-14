@@ -154,7 +154,7 @@ class SQLiteDB {
         values.put("pummokcode", data.pummokcode)
         values.put("pummyeong", data.pummyeong)
         values.put("dobeon_model", data.dobeon_model)
-        values.put("saying", data.saying)
+        values.put("saying", data.sayang)
         values.put("balhudanwi", data.balhudanwi)
         values.put("baljusuryang", data.baljusuryang)
         values.put("ipgoyejeongil", data.ipgoyejeongil)

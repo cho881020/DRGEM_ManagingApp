@@ -5,7 +5,7 @@ data class Georaedetail(
     val pummokcode : String?,
     val pummyeong : String?,
     val dobeon_model : String?,
-    val saying : String?,
+    val sayang : String?,
     val balhudanwi : String?,
     val baljubeonho : String?,
     val baljusuryang : String?,
@@ -48,10 +48,10 @@ data class Georaedetail(
     }
 
     fun getSayingHP() : String {
-        if(saying == null){
+        if(sayang == null){
             return "-"
         }
-        return saying
+        return sayang
     }
 
     fun getBalhudanwiHP() : String {

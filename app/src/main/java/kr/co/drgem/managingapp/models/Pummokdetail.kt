@@ -4,7 +4,7 @@ data class Pummokdetail(
     val pummokcode: String?,     // 품목코드
     val pummyeong: String?,      // 품명
     val dobeon_model: String?,   //도번/모델
-    val saying: String?,         //사양
+    val sayang: String?,         //사양
     val danwi: String?,          //단위
     val location: String?,       //위치
     var hyeonjaegosuryang: String?,      //현재재고수량
@@ -38,10 +38,10 @@ data class Pummokdetail(
     }
 
     fun getsayingHP() : String {
-        if(saying == null){
+        if(sayang == null){
             return "-"
         }
-        return saying
+        return sayang
     }
 
     fun getdanwiHP() : String {

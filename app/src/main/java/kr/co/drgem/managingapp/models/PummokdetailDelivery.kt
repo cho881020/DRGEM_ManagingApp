@@ -8,7 +8,7 @@ data class PummokdetailDelivery(
     val pummokcode: String?,
     val pummyeong: String?,
     val dobeon_model: String?,
-    val saying: String?,
+    val sayang: String?,
     val danwi: String?,
     val location: String?,
     val hyeonjaegosuryang: String?,
@@ -17,7 +17,7 @@ data class PummokdetailDelivery(
     val chulgosuryang: String?,
     val jungyojajeyeobu: String?,
 
-){
+    ){
     fun getyocheongilHP() : String {
         if(yocheongil == null){
             return "-"
@@ -68,10 +68,10 @@ data class PummokdetailDelivery(
     }
 
     fun getsayingHP() : String {
-        if(saying == null){
+        if(sayang == null){
             return "-"
         }
-        return saying
+        return sayang
     }
 
     fun getdanwiHP() : String {
