@@ -18,6 +18,8 @@ import kr.co.drgem.managingapp.menu.request.RequestDetailEditListener
 import kr.co.drgem.managingapp.menu.request.adapter.RequestDetailListAdapter
 import kr.co.drgem.managingapp.menu.request.dialog.RequestDetailDialog
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.IPUtil
+import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.MainDataManager
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
@@ -26,7 +28,8 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogInterface.OnDismissListener {
+class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
+    DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityRequestDetailBinding
     lateinit var mAdapter: RequestDetailListAdapter
@@ -57,7 +60,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
         binding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail)
 
         mYocheongbeonho = intent.getStringExtra("yocheongbeonho").toString()
-        SEQ = intent.getStringExtra("seq").toString()
         binding.yocheongbeonho.text = "요청번호 - $mYocheongbeonho"
 
 
@@ -75,30 +77,77 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog(){
+            saveDialog() {
                 getPostRequest()
             }
         }
 
         binding.btnFind.setOnClickListener {
-            getRequestDetail()
+            requestWorkseq()
         }
 
     }
 
     override fun setValues() {
 
-        mAdapter = RequestDetailListAdapter(requestDetailData.returnPummokDetail(),this)
+        mAdapter = RequestDetailListAdapter(requestDetailData.returnPummokDetail(), this)
         binding.recyclerView.adapter = mAdapter
 
 
         binding.txtCount.text = "(${requestDetailData.pummokcount}건)"
 
         requestDetailData.returnPummokDetail().forEach {
-            if(it.jungyojajeyeobu == "Y"){
+            if (it.jungyojajeyeobu == "Y") {
                 binding.serialDetail.isVisible = true
             }
         }
+    }
+
+    fun requestWorkseq() {
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val SEQMap = hashMapOf(
+            "requesttype" to "",
+            "pid" to "05",
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to "111",
+        )
+
+        Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
+
+
+        apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
+
+            override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
+
+                if (response.isSuccessful) {
+                    response.body()?.let {
+
+                        if (it.resultcd == "000") {
+                            SEQ = it.seq
+
+                            getRequestDetail()
+
+                            Log.d("yj", "SEQ : ${it.seq}")
+                        } else {
+                            Log.d("yj", "SEQ 실패 코드 : ${it.resultmsg}")
+                        }
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                Log.d("yj", "SEQ 서버 실패 : ${t.message}")
+            }
+
+        })
+
     }
 
     fun getRequestDetail() {
@@ -106,12 +155,19 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
         companyCode = intent.getStringExtra("companyCode").toString()
         wareHouseCode = intent.getStringExtra("wareHouseCode").toString()
 
-        apiList.getRequestRequestDetail( "02062", mYocheongbeonho, johoejogeon, migwanri, companyCode, wareHouseCode).enqueue(object :Callback<RequestDetailResponse>{
+        apiList.getRequestRequestDetail(
+            "02062",
+            mYocheongbeonho,
+            johoejogeon,
+            migwanri,
+            companyCode,
+            wareHouseCode
+        ).enqueue(object : Callback<RequestDetailResponse> {
             override fun onResponse(
                 call: Call<RequestDetailResponse>,
                 response: Response<RequestDetailResponse>
             ) {
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     response.body()?.let {
                         requestDetailData = it
 
@@ -129,12 +185,12 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
 
     }
 
-    fun getPostRequest(){
+    fun getPostRequest() {
 
         val chulgodamdangjacode = binding.edtOutName.text.toString()
         val ipgodamdangjacode = binding.edtInName.text.toString()
 
-        val requestChulgodetail : ArrayList<RequestChulgodetail> = arrayListOf()
+        val requestChulgodetail: ArrayList<RequestChulgodetail> = arrayListOf()
 
         requestDetailData.returnPummokDetail().forEach {
 
@@ -177,8 +233,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
             requestChulgodetail
         )
 
-        if (requestChulgodetail.size > 0){
-            apiList.postRequestRequestDelivery(requestAdd).enqueue(object : Callback<WorkResponse>{
+        if (requestChulgodetail.size > 0) {
+            apiList.postRequestRequestDelivery(requestAdd).enqueue(object : Callback<WorkResponse> {
                 override fun onResponse(
                     call: Call<WorkResponse>,
                     response: Response<WorkResponse>
@@ -192,8 +248,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
 
                                 Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
                                     .show()
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
                             }
 
@@ -209,7 +264,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
                 }
 
             })
-        }else {
+        } else {
             Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
         }
 

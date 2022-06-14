@@ -18,6 +18,8 @@ import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingDetailListAdapter
 import kr.co.drgem.managingapp.menu.kitting.dialog.KittingDetailDialog
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.IPUtil
+import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.MainDataManager
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
@@ -36,7 +38,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     val dialog = KittingDetailDialog()
 
     lateinit var mkittingbeonho: String
-    lateinit var seq: String
+    lateinit var SEQ: String
 
     var johoejogeon = "0"
     var migwanri = "0"
@@ -57,7 +59,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kitting_detail)
 
         mkittingbeonho = intent.getStringExtra("kittingbeonho").toString()
-        seq = intent.getStringExtra("seq").toString()
         binding.kittingbeonho.text = "키팅번호 - $mkittingbeonho"
 
         setupEvents()
@@ -88,7 +89,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         }
 
         binding.btnFind.setOnClickListener {
-            getRequestKittingDetail()
+            requestWorkseq()
         }
 
     }
@@ -110,6 +111,52 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     }
 
+    fun requestWorkseq() {
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val SEQMap = hashMapOf(
+            "requesttype" to "",
+            "pid" to "05",
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to "111",
+        )
+
+        Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
+
+
+        apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
+
+            override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
+
+                if (response.isSuccessful) {
+                    response.body()?.let {
+
+                        if (it.resultcd == "000") {
+                            SEQ = it.seq
+
+                            getRequestKittingDetail()
+
+                            Log.d("yj", "SEQ : ${it.seq}")
+                        } else {
+                            Log.d("yj", "SEQ 실패 코드 : ${it.resultmsg}")
+                        }
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                Log.d("yj", "SEQ 서버 실패 : ${t.message}")
+            }
+
+        })
+
+    }
 
     fun getRequestKittingDetail() {
 
@@ -205,7 +252,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                     companyCodeIn,
                     wareHouseCodeIn,
                     ipgodamdangjacode,
-                    seq,
+                    SEQ,
                     "777",
                     chulgodetail.size.toString(),
                     chulgodetail
