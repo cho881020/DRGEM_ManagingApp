@@ -14,7 +14,7 @@ data class IpgodetaildetailAdd(
         val jsonObj = JSONObject()
         jsonObj.put("seq", seq)
         jsonObj.put("pummokcode", pummokcode)
-        jsonObj.put("georaesuryang", georaesuryang)
+        jsonObj.put("ipgosuryang", georaesuryang)
         jsonObj.put("jungyojajeyeobu", jungyojajeyeobu)
         jsonObj.put("serialnumber", serialnumber)
 
