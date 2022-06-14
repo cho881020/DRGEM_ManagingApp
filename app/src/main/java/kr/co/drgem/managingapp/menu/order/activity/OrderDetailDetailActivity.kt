@@ -10,6 +10,8 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.google.gson.Gson
+import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
@@ -18,6 +20,7 @@ import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 import org.json.JSONArray
@@ -330,7 +333,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     fun postRequestOrderDetail(){
-        val ipgodetail = JSONArray()   // 등록용 리스트
+        val ipgodetail = JsonArray()   // 등록용 리스트
         val inputName = binding.edtName.text.toString()
 
 
@@ -348,7 +351,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             }
 
             if(serialData != "null"){
-                ipgodetail.put(
+                ipgodetail.add(
                     IpgodetaildetailAdd(
                         it.getSeqHP(),
                         it.getPummokcodeHP(),
@@ -371,14 +374,15 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             "georaecheocode" to orderDetailData.getGeoraecheocodeHP(),
             "seq" to seq, // TODO - SEQ 관련 API 연동 성공시 수정해야함
             "status" to "777",
-            "pummokcount" to ipgodetail.length().toString(),
-            "ipgodetail" to ipgodetail.toString()
+            "pummokcount" to ipgodetail.size().toString(),
+            "ipgodetail" to ipgodetail
         )
 
         Log.d("yj", "georaeMap : ${georaeMap}")
         Log.d("yj", "발주입고등록SEQ : $seq")
+        Log.d("yj", "ipgodetail : ${Gson().toJson(ipgodetail)}")
 
-        if(ipgodetail.length() > 0){
+        if(ipgodetail.size() > 0){
             apiList.postRequestOrderReceive(georaeMap).enqueue(object : Callback<WorkResponse>{
                 override fun onResponse(
                     call: Call<WorkResponse>,
@@ -424,8 +428,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "",
-            "seq" to "02",
-            "tablet_ip" to "000",
+            "seq" to seq,
+            "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,
             "status" to "111",
         )

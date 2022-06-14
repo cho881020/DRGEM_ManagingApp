@@ -66,7 +66,7 @@ interface APIList {
 
     @POST("tablet/order/receive/register")
     fun postRequestOrderReceive(
-        @Body params: HashMap<String, String>,
+        @Body params: HashMap<String, Any>,
     ) : Call<WorkResponse>
 
     @GET("tablet/kitting/number/request")
