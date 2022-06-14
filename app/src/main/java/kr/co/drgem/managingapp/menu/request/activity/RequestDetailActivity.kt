@@ -35,6 +35,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
     val dialog = RequestDetailDialog()
 
     lateinit var mYocheongbeonho: String
+    lateinit var SEQ: String
+
     var johoejogeon = "0"
     var migwanri = "0"
     var companyCode = ""
@@ -55,6 +57,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
         binding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail)
 
         mYocheongbeonho = intent.getStringExtra("yocheongbeonho").toString()
+        SEQ = intent.getStringExtra("seq").toString()
         binding.yocheongbeonho.text = "요청번호 - $mYocheongbeonho"
 
 
@@ -168,7 +171,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener, DialogI
             companyCodeIn,
             wareHouseCodeIn,
             ipgodamdangjacode,
-            "TEMP_SEQ",
+            SEQ,
             "777",
             requestChulgodetail.size.toString(),
             requestChulgodetail

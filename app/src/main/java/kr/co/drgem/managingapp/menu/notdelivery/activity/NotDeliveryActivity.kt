@@ -18,6 +18,8 @@ import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.adapter.NotDeliveryListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.dialog.NotDeliveryDialog
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.IPUtil
+import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.MainDataManager
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
@@ -51,13 +53,14 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     var calDate = ""
 
+    var SEQ = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_not_delivery)
 
         setupEvents()
         spinnerSet()
-        getRequestNotDelivery()
 
         spinnerSetIn()
         spinnerSetOut()
@@ -73,7 +76,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog(){
+            saveDialog() {
                 postRequestNotDelivery()
             }
         }
@@ -161,68 +164,116 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             } else {
                 migwanri = "1"
             }
-            getRequestNotDelivery()
+        }
+
+        binding.btnFind.setOnClickListener {
+            requestWorkseq()
         }
 
 
     }
 
+    fun requestWorkseq() {
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val SEQMap = hashMapOf(
+            "requesttype" to "",
+            "pid" to "05",
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to "111",
+        )
+
+        Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
+
+
+        apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
+
+            override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
+
+                if (response.isSuccessful) {
+                    response.body()?.let {
+
+                        if (it.resultcd == "000") {
+                            SEQ = it.seq
+
+                            getRequestNotDelivery()
+
+                            Log.d("yj", "SEQ : ${it.seq}")
+                        } else {
+                            Log.d("yj", "SEQ 실패 코드 : ${it.resultmsg}")
+                        }
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                Log.d("yj", "SEQ 서버 실패 : ${t.message}")
+            }
+
+        })
+
+    }
+
     fun getRequestNotDelivery() {
 
-        binding.btnFind.setOnClickListener {
+        val yocheongja = binding.edtName.text.toString()
+        if (yocheongja.isEmpty()) {
+            Toast.makeText(mContext, "요청자를 입력하세요", Toast.LENGTH_SHORT).show()
 
-            val yocheongja = binding.edtName.text.toString()
-            if (yocheongja.isEmpty()) {
-                Toast.makeText(mContext, "요청자를 입력하세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            var yocheongpummok = binding.edtCode.text.toString()
-            if (yocheongpummok.isEmpty()) {
-                yocheongpummok = "1"
-            }
+        }
+        var yocheongpummok = binding.edtCode.text.toString()
+        if (yocheongpummok.isEmpty()) {
+            yocheongpummok = "1"
+        }
 
 
-            apiList.getRequestNotDeliveryDetail(
-                "02071",
-                calStart,
-                calEnd,
-                companyCode,
-                wareHouseCode,
-                yocheongja,
-                yocheongpummok,
-                migwanri
-            ).enqueue(object : Callback<NotDeliveryResponse> {
-                override fun onResponse(
-                    call: Call<NotDeliveryResponse>,
-                    response: Response<NotDeliveryResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            if (it.returnPummokdetailDetail().size == 0) {
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
-                            } else {
-                                notDeliveryData = it
+        apiList.getRequestNotDeliveryDetail(
+            "02071",
+            calStart,
+            calEnd,
+            companyCode,
+            wareHouseCode,
+            yocheongja,
+            yocheongpummok,
+            migwanri
+        ).enqueue(object : Callback<NotDeliveryResponse> {
+            override fun onResponse(
+                call: Call<NotDeliveryResponse>,
+                response: Response<NotDeliveryResponse>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        if (it.returnPummokdetailDetail().size == 0) {
+                            Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                        } else {
+                            notDeliveryData = it
 
-                                setValues()
+                            setValues()
 
-                                binding.layoutList.isVisible = true
-                                binding.layoutEmpty.isVisible = false
-                            }
-
+                            binding.layoutList.isVisible = true
+                            binding.layoutEmpty.isVisible = false
                         }
-
 
                     }
 
+
                 }
 
-                override fun onFailure(call: Call<NotDeliveryResponse>, t: Throwable) {
-                    Log.d("yj", "미출고명세 실패 : ${t.message}")
-                }
+            }
 
-            })
+            override fun onFailure(call: Call<NotDeliveryResponse>, t: Throwable) {
+                Log.d("yj", "미출고명세 실패 : ${t.message}")
+            }
 
-        }
+        })
+
+
     }
 
     fun postRequestNotDelivery() {
@@ -266,7 +317,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             companyCodeIn,
             wareHouseCodeIn,
             ipgodamdangjacode,
-            "TEMP_SEQ",
+            SEQ,
             "777",
             chulgodetail.size.toString(),
             chulgodetail

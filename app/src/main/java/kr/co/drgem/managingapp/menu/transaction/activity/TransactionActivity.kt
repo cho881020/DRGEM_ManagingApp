@@ -11,6 +11,7 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
@@ -19,8 +20,9 @@ import kr.co.drgem.managingapp.menu.transaction.adapter.TransactionAdapter
 import kr.co.drgem.managingapp.menu.transaction.dialog.TransactionDialog
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.IPUtil
+import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
-import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,13 +44,14 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     val dialogEdit = TransactionDialog()
 
+    var SEQ = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
 
         setupEvents()
-        getRequestTran()
         sort()
 
 
@@ -128,6 +131,10 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             saveDialog() {
                 postRequestTran()
             }
+        }
+
+        binding.btnFind.setOnClickListener {
+            requestWorkseq()
         }
 
     }
@@ -224,54 +231,100 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     }
 
-    fun getRequestTran() {
+    fun requestWorkseq() {
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
 
-        binding.btnFind.setOnClickListener {
+        // TODO - API 정상 연동시 수정
+        val SEQMap = hashMapOf(
+            "requesttype" to "",
+            "pid" to "01",
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to "111",
+        )
 
-            val inputNum = binding.edtTranNum.text.toString()
-
-            apiList.getRequestTranDetail("02001", inputNum)
-                .enqueue(object : Callback<TranResponse> {
-                    override fun onResponse(
-                        call: Call<TranResponse>,
-                        response: Response<TranResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            response.body()?.let {
-                                tranData = it
+        Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
 
 
-                                if (it.returnGeoraedetail().size == 0) {
-                                    Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
-                                        .show()
-                                } else {
+        apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
 
-                                    setValues()
-                                    mAdapter.setList(it.returnGeoraedetail())
+            override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
 
-                                    binding.layoutEmpty.isVisible = false
-                                    binding.layoutList.isVisible = true
-                                    binding.layoutInfo.isVisible = true
-                                    binding.layoutFold.isVisible = true
-                                    binding.btnSave.isVisible = true
+                if (response.isSuccessful) {
+                    response.body()?.let {
 
-                                }
+                        if (it.resultcd == "000") {
+                            SEQ = it.seq
 
-                            }
+                            getRequestTran()
+
+                            Log.d("yj", "SEQ : ${it.seq}")
+                        } else {
+                            Log.d("yj", "SEQ 실패 코드 : ${it.resultmsg}")
                         }
                     }
+                }
 
-                    override fun onFailure(call: Call<TranResponse>, t: Throwable) {
-                        Log.d("yj", "거래명세요청실패 : ${t.message}")
-                    }
+            }
 
-                })
-        }
+            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                Log.d("yj", "SEQ 서버 실패 : ${t.message}")
+            }
+
+        })
+
     }
+
+    fun getRequestTran() {
+
+
+        val inputNum = binding.edtTranNum.text.toString()
+
+        apiList.getRequestTranDetail("02001", inputNum)
+            .enqueue(object : Callback<TranResponse> {
+                override fun onResponse(
+                    call: Call<TranResponse>,
+                    response: Response<TranResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            tranData = it
+
+
+                            if (it.returnGeoraedetail().size == 0) {
+                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
+                                    .show()
+                            } else {
+
+                                setValues()
+                                mAdapter.setList(it.returnGeoraedetail())
+
+                                binding.layoutEmpty.isVisible = false
+                                binding.layoutList.isVisible = true
+                                binding.layoutInfo.isVisible = true
+                                binding.layoutFold.isVisible = true
+                                binding.btnSave.isVisible = true
+
+                            }
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<TranResponse>, t: Throwable) {
+                    Log.d("yj", "거래명세요청실패 : ${t.message}")
+                }
+
+            })
+    }
+
 
     fun postRequestTran() {
 
-        val georaedetail = JSONArray()   // 등록용 리스트
+        val georaedetail = JsonArray()   // 등록용 리스트
         val inputName = binding.edtName.text.toString()
 
 
@@ -293,7 +346,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
             if (serialData != "null") {
 
-                georaedetail.put(                         // 리스트에 담기
+                georaedetail.add(                         // 리스트에 담기
                     GeoraedetailAdd(
                         it.getSeqHP(),
                         it.getPummokcodeHP(),
@@ -316,15 +369,15 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             "ipgosaupjangcode" to companyCode,
             "ipgochanggocode" to wareHouseCode,
             "ipgodamdangja" to inputName,
-            "seq" to "TEMP_SEQ", // TODO - SEQ 관련 API 연동 성공시 수정해야함
+            "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
             "status" to "777",
-            "pummokcount" to georaedetail.length().toString(),
+            "pummokcount" to georaedetail.size().toString(),
             "georaedetail" to georaedetail.toString()
         )
 
         Log.d("yj", "거래명세등록 맵확인 : $georaeMap")
 
-        if (georaedetail.length() > 0) {
+        if (georaedetail.size() > 0) {
             apiList.postRequestTranDetail(georaeMap).enqueue(object : Callback<BasicResponse> {
                 override fun onResponse(
                     call: Call<BasicResponse>,

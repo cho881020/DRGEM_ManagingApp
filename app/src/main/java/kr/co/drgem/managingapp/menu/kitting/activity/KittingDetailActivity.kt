@@ -36,6 +36,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     val dialog = KittingDetailDialog()
 
     lateinit var mkittingbeonho: String
+    lateinit var seq: String
+
     var johoejogeon = "0"
     var migwanri = "0"
     var changgocode = ""
@@ -55,6 +57,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kitting_detail)
 
         mkittingbeonho = intent.getStringExtra("kittingbeonho").toString()
+        seq = intent.getStringExtra("seq").toString()
         binding.kittingbeonho.text = "키팅번호 - $mkittingbeonho"
 
         setupEvents()
@@ -202,7 +205,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                     companyCodeIn,
                     wareHouseCodeIn,
                     ipgodamdangjacode,
-                    "TEMP_SEQ",
+                    seq,
                     "777",
                     chulgodetail.size.toString(),
                     chulgodetail

@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.models
 
+import com.google.gson.JsonObject
 import org.json.JSONObject
 
 data class GeoraedetailAdd(
@@ -10,14 +11,14 @@ data class GeoraedetailAdd(
     val baljuheonho: String,
     val serialnumber: String
 ){
-    fun toJsonObject() : JSONObject {       // JSONObject 로 제작하는
-        val jsonObj = JSONObject()
-        jsonObj.put("seq", seq)
-        jsonObj.put("pummokcode", pummokcode)
-        jsonObj.put("georaesuryang", georaesuryang)
-        jsonObj.put("jungyojajeyeobu", jungyojajeyeobu)
-        jsonObj.put("baljuheonho", baljuheonho)
-        jsonObj.put("serialnumber", serialnumber)
+    fun toJsonObject() : JsonObject {       // JSONObject 로 제작하는
+        val jsonObj = JsonObject()
+        jsonObj.addProperty("seq", seq)
+        jsonObj.addProperty("pummokcode", pummokcode)
+        jsonObj.addProperty("georaesuryang", georaesuryang)
+        jsonObj.addProperty("jungyojajeyeobu", jungyojajeyeobu)
+        jsonObj.addProperty("baljuheonho", baljuheonho)
+        jsonObj.addProperty("serialnumber", serialnumber)
 
         return jsonObj
     }

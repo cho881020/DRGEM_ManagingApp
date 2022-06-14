@@ -13,6 +13,8 @@ import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityStockBinding
 import kr.co.drgem.managingapp.menu.stock.adapter.StockListAdapter
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.IPUtil
+import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.MainDataManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +31,8 @@ class StockActivity : BaseActivity() {
     var companyCode = "0002"
     var wareHouseCode = "2001"
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
+
+    var SEQ = ""
 
     val mList: ArrayList<Pummokdetail> = arrayListOf()  // 리스트 추가시 화면에 보일 목록
     var addList: ArrayList<Pummokdetail> = arrayListOf()   //mList 에 담을 목록
@@ -64,48 +68,12 @@ class StockActivity : BaseActivity() {
 
         binding.btnFind.setOnClickListener {
 
-            inputCode = binding.edtCode.text.toString()
-            if (inputCode.isEmpty()) {
-                Toast.makeText(mContext, "요청코드를 입력하세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            apiList.getRequestProductinfo("02091", inputCode, companyCode, wareHouseCode)
-                .enqueue(object : Callback<ProductInfoResponse> {
-                    override fun onResponse(
-                        call: Call<ProductInfoResponse>,
-                        response: Response<ProductInfoResponse>
-                    ) {
-                        if (response.isSuccessful) {
+            getRequestStock()
 
-                            response.body()?.let {
+        }
 
-
-                                if (it.returnPummokDetail().size == 0) {
-                                    Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
-                                        .show()
-
-                                } else {
-                                    productData = it
-                                    addList.clear()
-                                    addList.addAll(it.returnPummokDetail())
-                                    Log.d("yj", "addList : $addList")
-
-                                    binding.layoutEmpty.isVisible = false
-                                    binding.layoutFind.isVisible = false
-                                    binding.layoutAdd.isVisible = true
-                                    binding.layoutList.isVisible = true
-
-                                    setText()
-                                }
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ProductInfoResponse>, t: Throwable) {
-
-                    }
-                })
-
+        binding.btnReady.setOnClickListener {
+            requestWorkseq()
         }
 
         binding.btnAdd.setOnClickListener {
@@ -224,6 +192,98 @@ class StockActivity : BaseActivity() {
 
     }
 
+    fun requestWorkseq() {
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val SEQMap = hashMapOf(
+            "requesttype" to "",
+            "pid" to "01",
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to "111",
+        )
+
+        Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
+
+
+        apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
+
+            override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
+
+                if (response.isSuccessful) {
+                    response.body()?.let {
+
+                        if (it.resultcd == "000") {
+                            SEQ = it.seq
+
+
+                            Log.d("yj", "SEQ : ${it.seq}")
+                        } else {
+                            Log.d("yj", "SEQ 실패 코드 : ${it.resultmsg}")
+                        }
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                Log.d("yj", "SEQ 서버 실패 : ${t.message}")
+            }
+
+        })
+
+    }
+
+    fun getRequestStock(){
+        inputCode = binding.edtCode.text.toString()
+        if (inputCode.isEmpty()) {
+            Toast.makeText(mContext, "요청코드를 입력하세요", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            apiList.getRequestProductinfo("02091", inputCode, companyCode, wareHouseCode)
+                .enqueue(object : Callback<ProductInfoResponse> {
+                    override fun onResponse(
+                        call: Call<ProductInfoResponse>,
+                        response: Response<ProductInfoResponse>
+                    ) {
+                        if (response.isSuccessful) {
+
+                            response.body()?.let {
+
+
+                                if (it.returnPummokDetail().size == 0) {
+                                    Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
+                                        .show()
+
+                                } else {
+                                    productData = it
+                                    addList.clear()
+                                    addList.addAll(it.returnPummokDetail())
+                                    Log.d("yj", "addList : $addList")
+
+                                    binding.layoutEmpty.isVisible = false
+                                    binding.layoutFind.isVisible = false
+                                    binding.layoutAdd.isVisible = true
+                                    binding.layoutList.isVisible = true
+
+                                    setText()
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ProductInfoResponse>, t: Throwable) {
+
+                    }
+                })
+        }
+
+    }
+
     fun postRequestStock() {
 
         val stockAddList: ArrayList<StockPummokdetail> = arrayListOf()
@@ -242,7 +302,7 @@ class StockActivity : BaseActivity() {
             "02092",
             companyCode,    // TODO : 창고코드/로케이션 확인
             wareHouseCode,
-            "TEMP_SEQ",
+            SEQ,
             "777",
             mList.size.toString(),
             stockAddList

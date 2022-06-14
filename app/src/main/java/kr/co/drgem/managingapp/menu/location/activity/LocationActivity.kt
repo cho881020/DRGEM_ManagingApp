@@ -14,6 +14,8 @@ import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityLocationBinding
 import kr.co.drgem.managingapp.menu.location.adapter.LocationListAdapter
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.IPUtil
+import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,12 +29,13 @@ class LocationActivity : BaseActivity() {
 
     var changgocode = ""
     var inputPummyeong = ""
+    var SEQ = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_location)
 
-        getRequestLocation()
+
         setupEvents()
 
     }
@@ -90,6 +93,9 @@ class LocationActivity : BaseActivity() {
 
             }
 
+        binding.btnFind.setOnClickListener {
+            requestWorkseq()
+        }
 
     }
 
@@ -102,8 +108,55 @@ class LocationActivity : BaseActivity() {
 
     }
 
+    fun requestWorkseq() {
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val SEQMap = hashMapOf(
+            "requesttype" to "",
+            "pid" to "06",
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to "111",
+        )
+
+        Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
+
+
+        apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
+
+            override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
+
+                if (response.isSuccessful) {
+                    response.body()?.let {
+
+                        if (it.resultcd == "000") {
+                            SEQ = it.seq
+
+                            getRequestLocation()
+
+                            Log.d("yj", "SEQ : ${it.seq}")
+                        } else {
+                            Log.d("yj", "SEQ 실패 코드 : ${it.resultmsg}")
+                        }
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                Log.d("yj", "SEQ 서버 실패 : ${t.message}")
+            }
+
+        })
+
+    }
+
     fun getRequestLocation() {
-        binding.btnFind.setOnClickListener {
+
 
             val changgocode = ""
             val location = binding.edtLocation.text.toString()
@@ -143,7 +196,7 @@ class LocationActivity : BaseActivity() {
 
         }
 
-    }
+
 
     fun postRequestLocationAdd() {
 
@@ -161,7 +214,7 @@ class LocationActivity : BaseActivity() {
         }
 
         val locationAdd = LocationAdd(
-            "02082", pummokdetail.size.toString(), "TEMP_SEQ", "777", pummokdetail
+            "02082", pummokdetail.size.toString(), SEQ, "777", pummokdetail
         )
 
 
