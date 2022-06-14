@@ -15,7 +15,6 @@ import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogKittingDetailBinding
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
-import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 
@@ -27,9 +26,10 @@ class KittingDetailDialog : DialogFragment() {
     val mSerialDataList = ArrayList<SerialLocalDB>()
 
     var viewholderCount = 0
-    lateinit var pummokData : Pummokdetail
+    lateinit var pummokData: Pummokdetail
     var mKittingbeonho = ""
 
+    var itemCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +52,7 @@ class KittingDetailDialog : DialogFragment() {
 
     }
 
-    fun setupEvents(){
+    fun setupEvents() {
 
         binding.btnAdd.setOnClickListener {
 
@@ -70,11 +70,28 @@ class KittingDetailDialog : DialogFragment() {
 
                 contentString.setLength(contentString.length - 1)           // contentString 길이를 1개 줄임 (, 때문에 빈 값을 제외)
 
-                SerialManageUtil.putSerialStringByPummokCode(pummokData.getPummokcodeHP(), contentString.toString())        // SerialManageUtil 에 값을 담기 (hashMap 형태로)
+                SerialManageUtil.putSerialStringByPummokCode(
+                    pummokData.getPummokcodeHP(),
+                    contentString.toString()
+                )        // SerialManageUtil 에 값을 담기 (hashMap 형태로)
 
                 Log.d("품목코드", pummokData.getPummokcodeHP())
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
+
+
+            var isSerialBlank = false
+            mSerialDataList.forEach {
+                if (it.serial.isEmpty()) {
+                    isSerialBlank = true
+                }
+            }
+
+            if(isSerialBlank){
+                Toast.makeText(requireContext(), "시리얼번호 입력이 완료되지 않았습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
 
             Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
             dismiss()
@@ -93,19 +110,53 @@ class KittingDetailDialog : DialogFragment() {
 
     fun setValues() {
 
-        mSerialDataList.clear()
 
-        for (i in 0..viewholderCount) {             // 뷰 홀더 갯수만큼 돌아
 
-            // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
-            mSerialDataList.add(SerialLocalDB(
-                pummokData.pummokcode!!,
-                "",
-                "${i}"
-            ))
+        val serialData = SerialManageUtil.getSerialStringByPummokCode(pummokData.getPummokcodeHP())
+            .toString()
+        val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
+
+
+        if (serialList.size > viewholderCount) {
+            itemCount = serialList.size
+        } else if (serialList.size < viewholderCount) {
+            itemCount = viewholderCount
+        } else {
+            itemCount = viewholderCount
         }
 
-        mAdapter = DialogEditKittingAdapter(viewholderCount,mSerialDataList)
+
+        /**
+         *  serial데이터가 있다면, 시리얼을 목록에 담고,
+         *  없다면 그때 빈값으로 만들 수 있도록
+         */
+
+        mSerialDataList.clear()
+
+
+        for (i in 0 until itemCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+
+            var serial = ""
+
+            if (serialList.isNotEmpty() && serialList.size > i) {      // 시리얼리스트가 사이즈 i보다 크거나 같을 때
+
+                serial = serialList[i]
+
+            }
+
+            mSerialDataList.add(
+                SerialLocalDB(
+                    pummokData.pummokcode!!,
+                    serial,
+                    "${i}"
+                )
+            )
+        }
+
+        Log.d("yj", "serialList = $serialList")
+
+
+        mAdapter = DialogEditKittingAdapter(itemCount, mSerialDataList, serialList)
         binding.recyclerView.adapter = mAdapter
 
         binding.kittingbeonho.text = mKittingbeonho
@@ -122,7 +173,7 @@ class KittingDetailDialog : DialogFragment() {
         binding.jungyojajeyeobu.text = pummokData.getjungyojajeyeobuHP()
     }
 
-    fun setCount (kittingbeonho : String, count : Int, data : Pummokdetail) {
+    fun setCount(kittingbeonho: String, count: Int, data: Pummokdetail) {
         mKittingbeonho = kittingbeonho
         viewholderCount = count
         pummokData = data

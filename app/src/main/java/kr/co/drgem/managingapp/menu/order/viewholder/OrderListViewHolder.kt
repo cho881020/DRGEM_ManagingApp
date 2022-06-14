@@ -11,6 +11,7 @@ import kr.co.drgem.managingapp.apis.APIList
 import kr.co.drgem.managingapp.apis.ServerAPI
 import kr.co.drgem.managingapp.menu.order.activity.OrderDetailDetailActivity
 import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.LoginUserUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,11 +47,12 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
             val SEQMap = hashMapOf(
                 "requesttype" to "",
                 "pid" to "02",
-                "tablet_ip" to "000",
+                "tablet_ip" to IPUtil.getIpAddress(),
                 "sawoncode" to sawonCode,
                 "status" to "111",
             )
 
+            Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
 
 
             apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse>{

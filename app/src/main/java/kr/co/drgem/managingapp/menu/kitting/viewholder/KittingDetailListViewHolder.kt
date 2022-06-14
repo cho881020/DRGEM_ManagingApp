@@ -1,6 +1,8 @@
 package kr.co.drgem.managingapp.menu.kitting.viewholder
 
 import android.app.AlertDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +24,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
 ) {
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
-
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
     val pummyeong = itemView.findViewById<TextView>(R.id.pummyeong)
     val dobeon_model = itemView.findViewById<TextView>(R.id.dobeon_model)
@@ -33,6 +34,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
     val yocheongsuryang = itemView.findViewById<TextView>(R.id.yocheongsuryang)
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
+
 
 
     init {
@@ -102,12 +104,28 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
             btnEdit.text = "정보입력"
         }
 
-        chulgosuryang.setText(data.getSerialCount())
 
-        chulgosuryang.setOnFocusChangeListener { view, b ->
-            val serialCount = chulgosuryang.text.toString().trim()
-            data.setSerialCount(serialCount)
+
+        chulgosuryang.setText(data.getSerialCount())
+        val textChangeListener = object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val serialCount = chulgosuryang.text.toString().trim()
+                data.setSerialCount(serialCount)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
         }
+
+        chulgosuryang.removeTextChangedListener(textChangeListener)
+        chulgosuryang.addTextChangedListener(textChangeListener)
+
+
 
         if(data.serialCheck){
             itemView.setBackgroundColor(
