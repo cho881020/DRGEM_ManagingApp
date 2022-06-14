@@ -226,7 +226,7 @@
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/saying"
+                        android:id="@+id/sayang"
                         android:layout_width="135dp"
                         android:layout_height="35dp"
                         android:gravity="center_vertical"

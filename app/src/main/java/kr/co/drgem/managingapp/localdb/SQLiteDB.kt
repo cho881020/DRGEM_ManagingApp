@@ -154,7 +154,7 @@ class SQLiteDB {
         values.put("pummokcode", data.pummokcode)
         values.put("pummyeong", data.pummyeong)
         values.put("dobeon_model", data.dobeon_model)
-        values.put("saying", data.sayang)
+        values.put("sayang", data.sayang)
         values.put("balhudanwi", data.balhudanwi)
         values.put("baljusuryang", data.baljusuryang)
         values.put("ipgoyejeongil", data.ipgoyejeongil)
@@ -183,7 +183,7 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("pummokcode")),
                     c.getString(c.getColumnIndex("pummyeong")),
                     c.getString(c.getColumnIndex("dobeon_model")),
-                    c.getString(c.getColumnIndex("saying")),
+                    c.getString(c.getColumnIndex("sayang")),
                     c.getString(c.getColumnIndex("balhudanwi")),
                     c.getString(c.getColumnIndex("baljusuryang")),
                     c.getString(c.getColumnIndex("ipgoyejeongil")),

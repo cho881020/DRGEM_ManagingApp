@@ -19,7 +19,7 @@ class KittingDetailListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is KittingDetailListViewHolder -> holder.bind(mList[position])
+            is KittingDetailListViewHolder -> holder.bind(mList[position], position)
         }
     }
 

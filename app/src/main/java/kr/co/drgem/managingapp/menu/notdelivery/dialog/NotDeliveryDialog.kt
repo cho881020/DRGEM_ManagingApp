@@ -106,7 +106,7 @@ class NotDeliveryDialog : DialogFragment() {
         binding.pummokcode.text = pummokData.getpummyeongHP()
         binding.pummyeong.text = pummokData.getpummyeongHP()
         binding.dobeonModel.text = pummokData.getdobeon_modelHP()
-        binding.saying.text = pummokData.getsayingHP()
+        binding.sayang.text = pummokData.getsayangHP()
         binding.balhudanwi.text = pummokData.getdanwiHP()
         binding.location.text = pummokData.getlocationHP()
 

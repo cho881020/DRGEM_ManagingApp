@@ -121,7 +121,7 @@ class OrderDetailDialog : BaseDialogFragment() {
         binding.pummokcode.text = baljuData.getPummokcodeHP()
         binding.pummyeong.text = baljuData.getPummyeongHP()
         binding.dobeonModel.text = baljuData.getDobeonModelHP()
-        binding.saying.text = baljuData.getSayingHP()
+        binding.sayang.text = baljuData.getsayangHP()
         binding.balhudanwi.text = baljuData.getBalhudanwiHP()
         binding.seq.text = baljuData.getSeqHP()
         binding.jungyojajeyeobu.text = baljuData.getJungyojajeyeobuHP()

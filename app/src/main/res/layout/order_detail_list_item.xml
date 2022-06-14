@@ -62,7 +62,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/saying"
+            android:id="@+id/sayang"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"

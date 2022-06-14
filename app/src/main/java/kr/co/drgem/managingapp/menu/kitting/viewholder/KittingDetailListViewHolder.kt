@@ -12,22 +12,25 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 
-class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetailEditListener) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.kitting_detail_list_item, parent, false)
-) {
+class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetailEditListener) :
+    RecyclerView.ViewHolder(
+        LayoutInflater.from(parent.context)
+            .inflate(R.layout.kitting_detail_list_item, parent, false)
+    ) {
+
+    var data: Pummokdetail? = null
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
     val pummyeong = itemView.findViewById<TextView>(R.id.pummyeong)
     val dobeon_model = itemView.findViewById<TextView>(R.id.dobeon_model)
-    val saying = itemView.findViewById<TextView>(R.id.saying)
+    val sayang = itemView.findViewById<TextView>(R.id.sayang)
     val danwi = itemView.findViewById<TextView>(R.id.danwi)
     val location = itemView.findViewById<TextView>(R.id.location)
     val hyeonjaegosuryang = itemView.findViewById<TextView>(R.id.hyeonjaegosuryang)
@@ -35,6 +38,21 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
 
+    val textChangeListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            val serialCount = chulgosuryang.text.toString().trim()
+            data?.setSerialCount(serialCount)
+            Log.d("yj", "키팅뷰홀더포지션2 : ${data?.getSerialCount()}")
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
+    }
 
 
     init {
@@ -59,7 +77,9 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
 
     }
 
-    fun bind(data : Pummokdetail) {
+    fun bind(data: Pummokdetail, position: Int) {
+
+        this.data = data
 
         itemView.setOnClickListener {
             chulgosuryang.requestFocus()
@@ -68,7 +88,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
         dobeon_model.text = data.getdobeon_modelHP()
-        saying.text = data.getsayingHP()
+        sayang.text = data.getsayangHP()
         danwi.text = data.getdanwiHP()
         location.text = data.getlocationHP()
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
@@ -89,15 +109,15 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
 
         }
 
-        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
+        val savedSerialString =
+            SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
 
         if (savedSerialString != null) {
 
             btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
             btnEdit.text = "*수정하기"
-        }
-        else {
+        } else {
 
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
@@ -105,36 +125,23 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
         }
 
 
-
         chulgosuryang.setText(data.getSerialCount())
-        val textChangeListener = object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-            }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val serialCount = chulgosuryang.text.toString().trim()
-                data.setSerialCount(serialCount)
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-        }
 
         chulgosuryang.removeTextChangedListener(textChangeListener)
         chulgosuryang.addTextChangedListener(textChangeListener)
 
 
 
-        if(data.serialCheck){
+        if (data.serialCheck) {
             itemView.setBackgroundColor(
                 ContextCompat.getColor(
                     itemView.context,
                     R.color.red
                 )
             )
-        }else{
+        } else {
             itemView.setBackgroundColor(
                 ContextCompat.getColor(
                     itemView.context,
@@ -161,7 +168,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener : KittingDetai
             } catch (e: Exception) {
                 chulgosuryang.text = null
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
-                Log.d("yj", "키팅뷰홀더 Exception : $e" )
+                Log.d("yj", "키팅뷰홀더 Exception : $e")
             }
         }
 

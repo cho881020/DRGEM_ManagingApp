@@ -37,7 +37,7 @@ data class Pummokdetail(
         return dobeon_model
     }
 
-    fun getsayingHP() : String {
+    fun getsayangHP() : String {
         if(sayang == null){
             return "-"
         }

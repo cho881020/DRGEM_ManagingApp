@@ -29,7 +29,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
     val pummyeong = itemView.findViewById<TextView>(R.id.pummyeong)
     val dobeon_model = itemView.findViewById<TextView>(R.id.dobeon_model)
-    val saying = itemView.findViewById<TextView>(R.id.saying)
+    val sayang = itemView.findViewById<TextView>(R.id.sayang)
     val danwi = itemView.findViewById<TextView>(R.id.danwi)
     val location = itemView.findViewById<TextView>(R.id.location)
     val hyeonjaegosuryang = itemView.findViewById<TextView>(R.id.hyeonjaegosuryang)
@@ -68,7 +68,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
         dobeon_model.text = data.getdobeon_modelHP()
-        saying.text = data.getsayingHP()
+        sayang.text = data.getsayangHP()
         danwi.text = data.getdanwiHP()
         location.text = data.getlocationHP()
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
@@ -105,10 +105,10 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
 
         chulgosuryang.setText(data.getSerialCount())
 
-        chulgosuryang.setOnFocusChangeListener { view, b ->
-            val serialCount = chulgosuryang.text.toString().trim()
-            data.setSerialCount(serialCount)
-        }
+//        chulgosuryang.setOnFocusChangeListener { view, b ->
+//            val serialCount = chulgosuryang.text.toString().trim()
+//            data.setSerialCount(serialCount)
+//        }
 
         btnEdit.setOnClickListener {
 

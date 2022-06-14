@@ -147,7 +147,7 @@ class StockActivity : BaseActivity() {
         binding.pummokcode.text = (inputCode)
         binding.pummyeong.text = productData.returnPummokDetail()[0].getPummokcodeHP()
         binding.dobeonModel.text = productData.returnPummokDetail()[0].getdobeon_modelHP()
-        binding.saying.text = productData.returnPummokDetail()[0].getsayingHP()
+        binding.sayang.text = productData.returnPummokDetail()[0].getsayangHP()
         binding.hyeonjaegosuryang.setText(productData.returnPummokDetail()[0].gethyeonjaegosuryangHP())
     }
 

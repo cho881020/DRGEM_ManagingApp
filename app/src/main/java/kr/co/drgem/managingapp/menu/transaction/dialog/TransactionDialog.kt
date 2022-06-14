@@ -103,7 +103,7 @@ class TransactionDialog : DialogFragment() {
         binding.pummokcode.text = georaeData.getPummokcodeHP()
         binding.pummyeong.text = georaeData.getPummyeongHP()
         binding.dobeonModel.text = georaeData.getDobeonModelHP()
-        binding.saying.text = georaeData.getSayingHP()
+        binding.sayang.text = georaeData.getsayangHP()
         binding.balhudanwi.text = georaeData.getBalhudanwiHP()
         binding.seq.text = georaeData.getSeqHP()
         binding.jungyojajeyeobu.text = georaeData.getJungyojajeyeobuHP()

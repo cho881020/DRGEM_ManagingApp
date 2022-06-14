@@ -47,7 +47,7 @@ data class Georaedetail(
         return dobeon_model
     }
 
-    fun getSayingHP() : String {
+    fun getsayangHP() : String {
         if(sayang == null){
             return "-"
         }

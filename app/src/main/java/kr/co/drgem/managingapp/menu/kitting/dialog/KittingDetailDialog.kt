@@ -163,7 +163,7 @@ class KittingDetailDialog : DialogFragment() {
         binding.pummokcode.text = pummokData.getPummokcodeHP()
         binding.pummyeong.text = pummokData.getpummyeongHP()
         binding.dobeonModel.text = pummokData.getdobeon_modelHP()
-        binding.saying.text = pummokData.getsayingHP()
+        binding.sayang.text = pummokData.getsayangHP()
         binding.danwi.text = pummokData.getdanwiHP()
         binding.location.text = pummokData.getlocationHP()
         binding.hyeonjaegosuryang.text = pummokData.gethyeonjaegosuryangHP()
