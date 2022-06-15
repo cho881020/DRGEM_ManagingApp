@@ -1,6 +1,8 @@
 package kr.co.drgem.managingapp.menu.request.viewholder
 
 import android.app.AlertDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +15,17 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.apis.APIList
+import kr.co.drgem.managingapp.apis.ServerAPI
 import kr.co.drgem.managingapp.menu.request.RequestDetailEditListener
 import kr.co.drgem.managingapp.models.Pummokdetail
+import kr.co.drgem.managingapp.models.TempData
+import kr.co.drgem.managingapp.models.WorkResponse
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetailEditListener) :
     RecyclerView.ViewHolder(
@@ -23,8 +33,9 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             .inflate(R.layout.request_detail_list_item, parent, false)
     ) {
 
+    var data: Pummokdetail? = null
+
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
-    val edtCount = itemView.findViewById<EditText>(R.id.edtCount)
 
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
     val pummyeong = itemView.findViewById<TextView>(R.id.pummyeong)
@@ -36,6 +47,22 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
     val yocheongsuryang = itemView.findViewById<TextView>(R.id.yocheongsuryang)
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
+
+    val textChangeListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            val serialCount = chulgosuryang.text.toString().trim()
+            data?.setSerialCount(serialCount)
+            Log.d("yj", "키팅뷰홀더포지션2 : ${data?.getSerialCount()}")
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
+    }
 
     init {
 
@@ -59,7 +86,9 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
 
     }
 
-    fun bind(data: Pummokdetail) {
+    fun bind(data: Pummokdetail, tempData: TempData) {
+
+        this.data = data
 
         itemView.setOnClickListener {
             chulgosuryang.requestFocus()
@@ -105,6 +134,10 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
 
         chulgosuryang.setText(data.getSerialCount())
 
+
+        chulgosuryang.removeTextChangedListener(textChangeListener)
+        chulgosuryang.addTextChangedListener(textChangeListener)
+
 //        chulgosuryang.setOnFocusChangeListener { view, b ->
 //            val serialCount = chulgosuryang.text.toString().trim()
 //            data.setSerialCount(serialCount)
@@ -129,7 +162,47 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             }
         }
 
+        val apiList: APIList
+        val retrofit = ServerAPI.getRetrofit(itemView.context)
+        apiList = retrofit.create(APIList::class.java)
 
+        chulgosuryang.setOnFocusChangeListener { view, isFocused ->
+            if (!isFocused) {
+
+                val tempMap = hashMapOf(
+                    "requesttype" to "08003",
+                    "saeopjangcode" to tempData.saeopjangcode,
+                    "changgocode" to tempData.changgocode,
+                    "pummokcode" to data.getPummokcodeHP(),
+                    "suryang" to data.getSerialCount(),
+                    "yocheongbeonho" to tempData.yocheongbeonho,
+                    "ipchulgubun" to "2",
+                    "seq" to tempData.seq,
+                    "tablet_ip" to IPUtil.getIpAddress(),
+                    "sawoncode" to tempData.sawoncode,
+                    "status" to "333",
+                )
+
+                Log.d("yj", "tempMap : $tempMap")
+
+                apiList.postRequestTempExtantstock(tempMap).enqueue(object :
+                    Callback<WorkResponse> {
+                    override fun onResponse(
+                        call: Call<WorkResponse>,
+                        response: Response<WorkResponse>
+                    ) {
+                        Log.d("yj", "현재고임시등록 code : ${response.body()?.resultcd}")
+                        Log.d("yj", "현재고임시등록 msg : ${response.body()?.resultmsg}")
+                    }
+
+                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                        Log.d("yj", "현재고임시등록")
+                    }
+
+                })
+
+            }
+        }
 
     }
 

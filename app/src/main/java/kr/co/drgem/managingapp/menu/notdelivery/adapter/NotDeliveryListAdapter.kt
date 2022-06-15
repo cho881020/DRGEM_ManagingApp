@@ -5,10 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.viewholder.NotDeliveryListViewHolder
 import kr.co.drgem.managingapp.models.PummokdetailDelivery
+import kr.co.drgem.managingapp.models.TempData
 
 class NotDeliveryListAdapter(
     val mList : ArrayList<PummokdetailDelivery>,
-    val listener : NotDeliveryEditListener
+    val listener : NotDeliveryEditListener,
+    val tempData : TempData
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return NotDeliveryListViewHolder(parent, listener)
@@ -18,7 +20,7 @@ class NotDeliveryListAdapter(
 
         when (holder) {
             is NotDeliveryListViewHolder -> {
-                holder.bind(mList[position])
+                holder.bind(mList[position], tempData)
             }
         }
 

@@ -44,7 +44,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
     var johoejogeon = "0"
     var migwanri = "0"
-    var companyCode = ""
+    var companyCode = ""    // 조회에서 가져온 회사/창고코드
     var wareHouseCode = ""
 
     var companyCodeOut = "0001"
@@ -94,7 +94,21 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
     override fun setValues() {
 
-        mAdapter = RequestDetailListAdapter(requestDetailData.returnPummokDetail(), this)
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        val tempData = TempData(
+            companyCodeOut,
+            companyCodeOut,
+            mYocheongbeonho,
+            SEQ,
+            IPUtil.getIpAddress(),
+            sawonCode
+        )
+
+        mAdapter = RequestDetailListAdapter(requestDetailData.returnPummokDetail(), this, tempData)
         binding.recyclerView.adapter = mAdapter
 
 

@@ -7,10 +7,12 @@ import kr.co.drgem.managingapp.menu.kitting.viewholder.KittingDetailListViewHold
 import kr.co.drgem.managingapp.menu.kitting.viewholder.KittingListViewHolder
 import kr.co.drgem.managingapp.menu.order.viewholder.OrderListViewHolder
 import kr.co.drgem.managingapp.models.Pummokdetail
+import kr.co.drgem.managingapp.models.TempData
 
 class KittingDetailListAdapter(
     val mList : ArrayList<Pummokdetail>,
-    val listener : KittingDetailEditListener
+    val listener : KittingDetailEditListener,
+    val tempData : TempData
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -19,7 +21,7 @@ class KittingDetailListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is KittingDetailListViewHolder -> holder.bind(mList[position], position)
+            is KittingDetailListViewHolder -> holder.bind(mList[position], tempData)
         }
     }
 

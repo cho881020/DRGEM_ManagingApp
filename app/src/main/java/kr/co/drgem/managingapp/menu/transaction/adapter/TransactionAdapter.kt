@@ -5,9 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.transaction.transactionEditListener
 import kr.co.drgem.managingapp.menu.transaction.viewholder.TransactionListViewHolder
 import kr.co.drgem.managingapp.models.Georaedetail
+import kr.co.drgem.managingapp.models.TempData
 
 class TransactionAdapter(
-    val transactionEditListener : transactionEditListener
+    val transactionEditListener : transactionEditListener,
+    val tempData : TempData
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 ) {
 
@@ -20,7 +22,7 @@ class TransactionAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is TransactionListViewHolder -> {
-                holder.bind(mList[position])
+                holder.bind(mList[position], tempData)
             }
         }
     }

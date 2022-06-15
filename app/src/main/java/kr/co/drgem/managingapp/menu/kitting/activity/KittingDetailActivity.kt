@@ -38,7 +38,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     val dialog = KittingDetailDialog()
 
-    var mkittingbeonho = ""
+    var mkittingbeonho =  ""
     var SEQ = ""
     var status = "111"
 
@@ -71,7 +71,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog() {
+        backDialog(){
             workStatusCancle()
         }
     }
@@ -79,7 +79,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog() {
+            backDialog(){
                 workStatusCancle()
             }
         }
@@ -102,7 +102,21 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     override fun setValues() {
 
-        mAdapter = KittingDetailListAdapter(kittingDetailData.returnKittingDetail(), this)
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        val tempData = TempData(
+            companyCodeOut,
+            wareHouseCodeOut,
+            mkittingbeonho,
+            SEQ,
+            IPUtil.getIpAddress(),
+            sawonCode
+        )
+
+        mAdapter = KittingDetailListAdapter(kittingDetailData.returnKittingDetail(), this, tempData)
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${kittingDetailData.getPummokCount()} 건)"

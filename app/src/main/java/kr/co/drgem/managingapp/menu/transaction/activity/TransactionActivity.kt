@@ -47,7 +47,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     var SEQ = ""
     var status = "111"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    var baljubeonho = ""
+
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
@@ -158,7 +160,23 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             }
         }
 
-        mAdapter = TransactionAdapter(this)
+        var sawonCode = ""
+
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        val tempData = TempData(
+            companyCode,
+            wareHouseCode,
+            baljubeonho,
+            SEQ,
+            IPUtil.getIpAddress(),
+            sawonCode
+        )
+
+
+        mAdapter = TransactionAdapter(this, tempData)
         binding.recyclerView.adapter = mAdapter
 
 
@@ -295,6 +313,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                     if (response.isSuccessful) {
                         response.body()?.let {
                             tranData = it
+                            baljubeonho = it.getGeoraemyeongsebeonhoHP()
 
 
                             if (it.returnGeoraedetail().size == 0) {

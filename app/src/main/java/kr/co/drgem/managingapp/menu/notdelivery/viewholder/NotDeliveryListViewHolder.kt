@@ -1,6 +1,8 @@
 package kr.co.drgem.managingapp.menu.notdelivery.viewholder
 
 import android.app.AlertDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,17 +12,27 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.apis.APIList
+import kr.co.drgem.managingapp.apis.ServerAPI
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.models.PummokdetailDelivery
+import kr.co.drgem.managingapp.models.TempData
+import kr.co.drgem.managingapp.models.WorkResponse
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEditListener) :
     RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.notdelivery_list_item, parent, false)
     ) {
+
+    var data: PummokdetailDelivery? = null
+
     val yocheongil = itemView.findViewById<TextView>(R.id.yocheongil)
     val yocheongbeonho = itemView.findViewById<TextView>(R.id.yocheongbeonho)
     val yocheongchanggo = itemView.findViewById<TextView>(R.id.yocheongchanggo)
@@ -36,6 +48,22 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+
+    val textChangeListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            val serialCount = chulgosuryang.text.toString().trim()
+            data?.setSerialCount(serialCount)
+            Log.d("yj", "키팅뷰홀더포지션2 : ${data?.getSerialCount()}")
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
+    }
 
     init {
 
@@ -59,7 +87,9 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
     }
 
-    fun bind(data: PummokdetailDelivery) {
+    fun bind(data: PummokdetailDelivery, tempData: TempData) {
+
+        this.data = data
 
         itemView.setOnClickListener {
             chulgosuryang.requestFocus()
@@ -83,7 +113,8 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
         btnEdit.isVisible = data.jungyojajeyeobu == "Y"
 
-        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getpummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
+        val savedSerialString =
+            SerialManageUtil.getSerialStringByPummokCode(data.getpummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
 
 
         if (savedSerialString != null) {
@@ -91,8 +122,7 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
             btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
             btnEdit.text = "*수정하기"
-        }
-        else {
+        } else {
 
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
@@ -103,10 +133,8 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
         chulgosuryang.setText(data.getSerialCount())
 
-        chulgosuryang.setOnFocusChangeListener { view, b ->
-            val serialCount = chulgosuryang.text.toString().trim()
-            data.setSerialCount(serialCount)
-        }
+        chulgosuryang.removeTextChangedListener(textChangeListener)
+        chulgosuryang.addTextChangedListener(textChangeListener)
 
 
         btnEdit.setOnClickListener {
@@ -139,7 +167,49 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         }
 
 
-    }
+        val apiList: APIList
+        val retrofit = ServerAPI.getRetrofit(itemView.context)
+        apiList = retrofit.create(APIList::class.java)
 
+        chulgosuryang.setOnFocusChangeListener { view, isFocused ->
+            if (!isFocused) {
+
+                val tempMap = hashMapOf(
+                    "requesttype" to "08003",
+                    "saeopjangcode" to tempData.saeopjangcode,
+                    "changgocode" to tempData.changgocode,
+                    "pummokcode" to data.getpummokcodeHP(),
+                    "suryang" to data.getSerialCount(),
+                    "yocheongbeonho" to data.getyocheongbeonhoHP(),
+                    "ipchulgubun" to "2",
+                    "seq" to tempData.seq,
+                    "tablet_ip" to IPUtil.getIpAddress(),
+                    "sawoncode" to tempData.sawoncode,
+                    "status" to "333",
+                )
+
+                Log.d("yj", "tempMap : $tempMap")
+
+                apiList.postRequestTempExtantstock(tempMap).enqueue(object :
+                    Callback<WorkResponse> {
+                    override fun onResponse(
+                        call: Call<WorkResponse>,
+                        response: Response<WorkResponse>
+                    ) {
+                        Log.d("yj", "현재고임시등록 code : ${response.body()?.resultcd}")
+                        Log.d("yj", "현재고임시등록 msg : ${response.body()?.resultmsg}")
+                    }
+
+                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                        Log.d("yj", "현재고임시등록")
+                    }
+
+                })
+
+            }
+
+        }
+
+    }
 }
 

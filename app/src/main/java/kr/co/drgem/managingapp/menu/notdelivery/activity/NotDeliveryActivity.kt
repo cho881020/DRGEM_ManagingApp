@@ -410,7 +410,21 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     override fun setValues() {
 
-        mAdapter = NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(), this)
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        val tempData = TempData(
+            companyCodeOut,
+            wareHouseCodeOut,
+            "",
+            SEQ,
+            IPUtil.getIpAddress(),
+            sawonCode
+        )
+
+        mAdapter = NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(), this, tempData)
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${notDeliveryData.pummokcount} 건)"

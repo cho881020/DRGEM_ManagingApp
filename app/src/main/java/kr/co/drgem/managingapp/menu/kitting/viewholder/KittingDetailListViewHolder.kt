@@ -13,10 +13,19 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
+import kr.co.drgem.managingapp.apis.APIList
+import kr.co.drgem.managingapp.apis.ServerAPI
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.models.Pummokdetail
+import kr.co.drgem.managingapp.models.TempData
+import kr.co.drgem.managingapp.models.WorkResponse
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetailEditListener) :
     RecyclerView.ViewHolder(
@@ -77,7 +86,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 
     }
 
-    fun bind(data: Pummokdetail, position: Int) {
+    fun bind(data: Pummokdetail, tempData: TempData) {
 
         this.data = data
 
@@ -168,6 +177,49 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
                 chulgosuryang.text = null
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
                 Log.d("yj", "키팅뷰홀더 Exception : $e")
+            }
+        }
+
+
+        val apiList: APIList
+        val retrofit = ServerAPI.getRetrofit(itemView.context)
+        apiList = retrofit.create(APIList::class.java)
+
+        chulgosuryang.setOnFocusChangeListener { view, isFocused ->
+            if (!isFocused) {
+
+                val tempMap = hashMapOf(
+                    "requesttype" to "08003",
+                    "saeopjangcode" to tempData.saeopjangcode,
+                    "changgocode" to tempData.changgocode,
+                    "pummokcode" to data.getPummokcodeHP(),
+                    "suryang" to data.getSerialCount(),
+                    "yocheongbeonho" to tempData.yocheongbeonho,
+                    "ipchulgubun" to "2",
+                    "seq" to tempData.seq,
+                    "tablet_ip" to IPUtil.getIpAddress(),
+                    "sawoncode" to tempData.sawoncode,
+                    "status" to "333",
+                )
+
+                Log.d("yj", "tempMap : $tempMap")
+
+                apiList.postRequestTempExtantstock(tempMap).enqueue(object :
+                    Callback<WorkResponse> {
+                    override fun onResponse(
+                        call: Call<WorkResponse>,
+                        response: Response<WorkResponse>
+                    ) {
+                        Log.d("yj", "현재고임시등록 code : ${response.body()?.resultcd}")
+                        Log.d("yj", "현재고임시등록 msg : ${response.body()?.resultmsg}")
+                    }
+
+                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                        Log.d("yj", "현재고임시등록")
+                    }
+
+                })
+
             }
         }
 
