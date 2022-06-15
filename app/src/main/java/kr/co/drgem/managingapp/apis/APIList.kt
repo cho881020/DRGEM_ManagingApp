@@ -159,7 +159,6 @@ interface APIList {
         @Query("changgocode") changgocode : String,
     ):Call<ProductInfoResponse>
 
-
     @POST("tablet/stock/register")
     fun postRequestStock(
         @Body params: HashMap<String, Any>,
