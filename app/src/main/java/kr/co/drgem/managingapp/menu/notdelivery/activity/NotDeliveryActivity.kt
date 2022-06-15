@@ -10,6 +10,7 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
@@ -285,7 +286,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         val chulgodamdangjacode = binding.edtOutName.text.toString()
         val ipgodamdangjacode = binding.edtInName.text.toString()
 
-        val chulgodetail: ArrayList<NotDeliveryChulgodetail> = arrayListOf()
+        val chulgodetail = JsonArray()
 
         notDeliveryData.returnPummokdetailDetail().forEach {
 
@@ -307,27 +308,27 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         serialData.split(",").size.toString(),
                         it.getjungyojajeyeobuHP(),
                         serialData
-                    )
+                    ).toJsonObject()
                 )
             }
         }
 
-        val notDeliveryAdd = NotDeliveryAdd(
-            "02072",
-            calDate,
-            companyCodeOut,
-            wareHouseCodeOut,
-            chulgodamdangjacode,
-            companyCodeIn,
-            wareHouseCodeIn,
-            ipgodamdangjacode,
-            SEQ,
-            "777",
-            chulgodetail.size.toString(),
-            chulgodetail
+        val notDeliveryAdd = hashMapOf(
+            "requesttype" to "02072",
+            "chulgoilja" to calDate,
+            "chulgosaupjangcode" to companyCodeOut,
+            "chulgochanggocode" to wareHouseCodeOut,
+            "chulgodamdangjacode" to chulgodamdangjacode,
+            "ipgosaupjangcode" to companyCodeIn,
+            "ipgodamdangjacode" to wareHouseCodeIn,
+            "ipgochanggocode" to ipgodamdangjacode,
+            "seq" to SEQ,
+            "status" to "777",
+            "pummokcount" to chulgodetail.size().toString(),
+            "chulgodetail" to chulgodetail
         )
 
-        if (chulgodetail.size > 0) {
+        if (chulgodetail.size() > 0) {
             apiList.postRequestNotDeliveryDelivery(notDeliveryAdd)
                 .enqueue(object : Callback<WorkResponse> {
                     override fun onResponse(

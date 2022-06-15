@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
@@ -291,7 +292,7 @@ class StockActivity : BaseActivity() {
 
     fun postRequestStock() {
 
-        val stockAddList: ArrayList<StockPummokdetail> = arrayListOf()
+        val stockAddList = JsonArray()
 
         mList.forEach {
             var pummokcode = ""
@@ -300,17 +301,17 @@ class StockActivity : BaseActivity() {
             pummokcode = it.getPummokcodeHP()
             suryang = it.gethyeonjaegosuryangHP()
 
-            stockAddList.add(StockPummokdetail(pummokcode, suryang))
+            stockAddList.add(StockPummokdetail(pummokcode, suryang).toJsonObject())
         }
 
-        val stockAdd = StockAdd(
-            "02092",
-            companyCode,    // TODO : 창고코드/로케이션 확인
-            wareHouseCode,
-            SEQ,
-            "777",
-            mList.size.toString(),
-            stockAddList
+        val stockAdd = hashMapOf(
+            "requesttype" to "02092",
+            "changgocode" to companyCode,    // TODO : 창고코드/로케이션 확인
+            "location" to wareHouseCode,
+            "seq" to SEQ,
+            "status" to "777",
+            "pummokcount" to mList.size.toString(),
+            "pummokdetail" to stockAddList
         )
 
         Log.d("yj", "재고등록맵확인 : $stockAdd")

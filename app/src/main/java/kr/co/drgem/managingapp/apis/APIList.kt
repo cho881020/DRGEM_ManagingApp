@@ -46,7 +46,7 @@ interface APIList {
 
     @POST("tablet/tran/detail/register")
     fun postRequestTranDetail(
-        @Body params: HashMap<String, String>,
+        @Body params: HashMap<String, Any>,
     ) : Call<BasicResponse>
 
     @GET("tablet/order/number/request")
@@ -90,7 +90,7 @@ interface APIList {
 
     @POST("tablet/delivery/batch/register")
     fun postRequestDeliveryBatch(
-        @Body params: KittingAdd
+        @Body params: HashMap<String, Any>,
     ) : Call<WorkResponse>
 
 
@@ -117,7 +117,7 @@ interface APIList {
 
     @POST("tablet/request/delivery/register")
     fun postRequestRequestDelivery(
-        @Body params: RequestAdd
+        @Body params: HashMap<String, Any>,
     ) : Call<WorkResponse>
 
     @GET("tablet/not-delivery/detail/request")
@@ -135,7 +135,7 @@ interface APIList {
 
     @POST("tablet/not-delivery/delivery/register")
     fun postRequestNotDeliveryDelivery(
-        @Body params: NotDeliveryAdd
+        @Body params: HashMap<String, Any>,
     ) : Call<WorkResponse>
 
     @GET("tablet/location/request")
@@ -148,7 +148,7 @@ interface APIList {
 
     @POST("tablet/location/register")
     fun postRequestLocation(
-        @Body params: LocationAdd
+        @Body params: HashMap<String, Any>,
     ) : Call<WorkResponse>
 
     @GET("tablet/product-info/request")
@@ -162,7 +162,7 @@ interface APIList {
 
     @POST("tablet/stock/register")
     fun postRequestStock(
-        @Body params: StockAdd
+        @Body params: HashMap<String, Any>,
     ) : Call<WorkResponse>
 
 

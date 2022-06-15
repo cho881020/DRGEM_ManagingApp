@@ -10,6 +10,7 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
@@ -194,7 +195,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         val chulgodamdangjacode = binding.edtOutName.text.toString()
         val ipgodamdangjacode = binding.edtInName.text.toString()
 
-        val requestChulgodetail: ArrayList<RequestChulgodetail> = arrayListOf()
+        val requestChulgodetail = JsonArray()
 
         requestDetailData.returnPummokDetail().forEach {
 
@@ -215,29 +216,29 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                         serialData.split(",").size.toString(),
                         it.getjungyojajeyeobuHP(),
                         serialData
-                    )
+                    ).toJsonObject()
                 )
             }
 
         }
 
-        val requestAdd = RequestAdd(
-            "02063",
-            mYocheongbeonho,
-            calDate,
-            companyCodeOut,
-            wareHouseCodeOut,
-            chulgodamdangjacode,
-            companyCodeIn,
-            wareHouseCodeIn,
-            ipgodamdangjacode,
-            SEQ,
-            "777",
-            requestChulgodetail.size.toString(),
-            requestChulgodetail
+        val requestAdd = hashMapOf(
+            "requesttype" to "02063",
+            "yocheongbeonho" to mYocheongbeonho,
+            "chulgoilja" to calDate,
+            "chulgosaupjangcode" to companyCodeOut,
+            "chulgochanggocode" to wareHouseCodeOut,
+            "chulgodamdangjacode" to chulgodamdangjacode,
+            "ipgosaupjangcode" to companyCodeIn,
+            "ipgochanggocode" to wareHouseCodeIn,
+            "ipgodamdangjacode" to ipgodamdangjacode,
+            "seq" to SEQ,
+            "status" to "777",
+            "pummokcount" to requestChulgodetail.size().toString(),
+            "chulgodetail" to requestChulgodetail
         )
 
-        if (requestChulgodetail.size > 0) {
+        if (requestChulgodetail.size() > 0) {
             apiList.postRequestRequestDelivery(requestAdd).enqueue(object : Callback<WorkResponse> {
                 override fun onResponse(
                     call: Call<WorkResponse>,

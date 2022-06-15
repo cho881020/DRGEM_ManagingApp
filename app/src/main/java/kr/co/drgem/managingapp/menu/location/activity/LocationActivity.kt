@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
@@ -16,7 +16,6 @@ import kr.co.drgem.managingapp.menu.location.adapter.LocationListAdapter
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.LoginUserUtil
-import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,7 +41,7 @@ class LocationActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        backDialog(){
+        backDialog() {
             workStatusCancle()
         }
     }
@@ -50,7 +49,7 @@ class LocationActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(){
+            backDialog() {
                 workStatusCancle()
             }
         }
@@ -197,7 +196,7 @@ class LocationActivity : BaseActivity() {
 
     fun postRequestLocationAdd() {
 
-        val pummokdetail: ArrayList<LocationPummokdetail> = arrayListOf()
+        val pummokdetail = JsonArray()
 
         mList.forEach {
 
@@ -206,18 +205,27 @@ class LocationActivity : BaseActivity() {
             if (txtLocation.isNullOrEmpty()) {
                 txtLocation = ""
             } else {
-                pummokdetail.add(LocationPummokdetail(it.getPummokcodeHP(), it.getLocationAdd()))
+                pummokdetail.add(
+                    LocationPummokdetail(
+                        it.getPummokcodeHP(),
+                        it.getLocationAdd()
+                    ).toJsonObject()
+                )
             }
         }
 
-        val locationAdd = LocationAdd(
-            "02082", pummokdetail.size.toString(), SEQ, "777", pummokdetail
+        val locationAdd = hashMapOf(
+            "requesttype" to "02082",
+            "pummokcount" to pummokdetail.size().toString(),
+            "seq" to SEQ,
+            "status" to "777",
+            "pummokdetail" to pummokdetail
         )
 
 
         Log.d("yj", "로케이션등록 맵확인 : $locationAdd")
 
-        if (pummokdetail.size > 0) {
+        if (pummokdetail.size() > 0) {
             apiList.postRequestLocation(locationAdd).enqueue(object : Callback<WorkResponse> {
                 override fun onResponse(
                     call: Call<WorkResponse>,

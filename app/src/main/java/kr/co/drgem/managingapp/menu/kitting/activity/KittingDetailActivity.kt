@@ -10,6 +10,7 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
@@ -194,10 +195,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         binding.btnSave.setOnClickListener {
             saveDialog() {
+
+                val chulgodetail = JsonArray()   // 등록용 리스트
                 val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
 
-                val chulgodetail: ArrayList<KittingChulgodetail> = arrayListOf()
 
 
                 kittingDetailData.returnKittingDetail().forEach {
@@ -243,31 +245,31 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                 serialData.split(",").size.toString(),
                                 it.getjungyojajeyeobuHP(),
                                 serialData
-                            )
+                            ).toJsonObject()
                         )
                     }
                 }
 
-                val kittingAdd = KittingAdd(
-                    "02053",
-                    mkittingbeonho,
-                    calDate,
-                    companyCodeOut,
-                    wareHouseCodeOut,
-                    chulgodamdangjacode,
-                    companyCodeIn,
-                    wareHouseCodeIn,
-                    ipgodamdangjacode,
-                    SEQ,
-                    "777",
-                    chulgodetail.size.toString(),
-                    chulgodetail
+                val kittingAdd = hashMapOf(
+                    "requesttype" to "02053",
+                    "kittingbeonho" to mkittingbeonho,
+                    "chulgoilja" to calDate,
+                    "chulgosaupjangcode" to companyCodeOut,
+                    "chulgochanggocode" to wareHouseCodeOut,
+                    "chulgodamdangjacode" to chulgodamdangjacode,
+                    "ipgosaupjangcode" to companyCodeIn,
+                    "ipgodamdangjacode" to wareHouseCodeIn,
+                    "ipgochanggocode" to ipgodamdangjacode,
+                    "seq" to SEQ,
+                    "status" to "777",
+                    "pummokcount" to chulgodetail.size().toString(),
+                    "chulgodetail" to chulgodetail
                 )
 
 
                 Log.d("yj", "일괄출고등록 맵확인 : $kittingAdd")
 
-                if (chulgodetail.size > 0) {
+                if (chulgodetail.size() > 0) {
                     apiList.postRequestDeliveryBatch(kittingAdd)
                         .enqueue(object : Callback<WorkResponse> {
                             override fun onResponse(

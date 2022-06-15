@@ -375,7 +375,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
             "status" to "777",
             "pummokcount" to georaedetail.size().toString(),
-            "georaedetail" to georaedetail.toString()
+            "georaedetail" to georaedetail
         )
 
         Log.d("yj", "거래명세등록 맵확인 : $georaeMap")
