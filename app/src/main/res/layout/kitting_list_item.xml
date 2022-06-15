@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:gravity="center_vertical"
-        android:paddingHorizontal="10dp"
+        android:paddingHorizontal="1dp"
         android:orientation="horizontal">
 
         <TextView
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingRight="10dp"
+            android:paddingRight="3dp"
             tools:text="K22042700001"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingRight="10dp"
+            android:paddingRight="3dp"
             tools:text="20220402"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingRight="10dp"
+            android:paddingRight="3dp"
             tools:text="일지매"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingRight="10dp"
+            android:paddingRight="3dp"
             tools:text="자재창고2"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingRight="10dp"
+            android:paddingRight="3dp"
             tools:text="뉴스티치 2대 일반 스티치 3대"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingRight="10dp"
+            android:paddingRight="3dp"
             tools:text="R22041800077,R22041800078"
             android:textSize="12dp"
             android:textColor="@color/black" />
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:paddingRight="10dp"
+            android:paddingRight="3dp"
             tools:text="C22-A43-00,C22-A55-00"
             android:textSize="12dp"
             android:textColor="@color/black" />

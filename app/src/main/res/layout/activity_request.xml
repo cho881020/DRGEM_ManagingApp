@@ -57,7 +57,7 @@
             android:id="@+id/layoutFind"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="5dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/layout_find_background"
             android:gravity="bottom"
@@ -302,7 +302,7 @@
             android:id="@+id/layoutEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/layout_find_background"
@@ -332,7 +332,7 @@
             android:id="@+id/layoutList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="5dp"
             android:layout_marginVertical="10dp"
             android:background="@drawable/layout_find_background"
             android:orientation="vertical"
@@ -404,7 +404,7 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="1dp"
                 android:layout_marginTop="10dp"
                 android:fillViewport="true">
 
