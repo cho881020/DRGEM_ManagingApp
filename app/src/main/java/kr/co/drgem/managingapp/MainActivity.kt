@@ -10,6 +10,7 @@ import kr.co.drgem.managingapp.databinding.ActivityMainBinding
 import kr.co.drgem.managingapp.localdb.DBHelper
 import kr.co.drgem.managingapp.models.BasicResponse
 import kr.co.drgem.managingapp.utils.ContextUtil
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.LoginUserUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -45,8 +46,10 @@ class MainActivity : BaseActivity() {
 
 //           JSON 바디로 보낼때 => 해쉬맵을 보내는 방향으로
            val dataMap = hashMapOf(
+               "requesttype" to "01001",
                "username" to inputId,
                "password" to md5(inputPw), // md5 변환해서 첨부
+               "tabletip" to IPUtil.getIpAddress(), // IP획득 후 첨부
            )
 
            Log.d("맵확인", dataMap.toString())
