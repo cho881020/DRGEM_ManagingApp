@@ -120,7 +120,7 @@ class LocationActivity : BaseActivity() {
 
         // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
-            "requesttype" to "",
+            "requesttype" to "08001",
             "pid" to "06",
             "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,
@@ -268,7 +268,7 @@ class LocationActivity : BaseActivity() {
 
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
-            "requesttype" to "",
+            "requesttype" to "08002",
             "seq" to SEQ,
             "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,

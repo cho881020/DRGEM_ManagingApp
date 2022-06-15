@@ -23,6 +23,7 @@ import kr.co.drgem.managingapp.apis.ServerAPI
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.activity.OrderDetailDetailActivity
 import kr.co.drgem.managingapp.models.Baljudetail
+import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.models.TempData
 import kr.co.drgem.managingapp.models.WorkResponse
 import kr.co.drgem.managingapp.utils.IPUtil
@@ -38,6 +39,7 @@ class OrderDetailListViewHolder(
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.order_detail_list_item, parent, false)
 ) {
+    var data: Baljudetail? = null
 
     val txtSeq = itemView.findViewById<TextView>(R.id.txtSeq)
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
@@ -52,6 +54,23 @@ class OrderDetailListViewHolder(
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
     val edtCount = itemView.findViewById<EditText>(R.id.edtCount)
+
+    val textChangeListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            val serialCount = edtCount.text.toString().trim()
+            data?.setSerialCount(serialCount)
+            Log.d("yj", "오더뷰홀더 : ${data?.getSerialCount()}")
+
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
+    }
 
     init {
 
@@ -78,6 +97,8 @@ class OrderDetailListViewHolder(
 
     fun bind(data: Baljudetail, tempData: TempData) {
 
+        this.data = data
+
         txtSeq.text = data.getSeqHP()
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getPummyeongHP()
@@ -88,7 +109,6 @@ class OrderDetailListViewHolder(
         ipgoyejeongil.text = data.getIpgoyejeongilHP()
         giipgosuryang.text = data.getGiipgosuryangHP()
         location.text = data.getLocationHP()
-        edtCount.setText(data.ipgosuryang)
 
 
         itemView.setOnClickListener {
@@ -134,17 +154,36 @@ class OrderDetailListViewHolder(
 
         }
 
+
         edtCount.setText(data.getSerialCount())
 
-        edtCount.setOnFocusChangeListener { view, b ->
-            val serialCount = edtCount.text.toString().trim()
-            data.setSerialCount(serialCount)
+        edtCount.removeTextChangedListener(textChangeListener)
+        edtCount.addTextChangedListener(textChangeListener)
+
+
+
+        if (data.serialCheck) {
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.red
+                )
+            )
+        } else {
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.color_FFFFFF
+                )
+            )
         }
+
 
 
         btnEdit.setOnClickListener {
 
             val inputCount = edtCount.text.toString()
+            Log.d("yj", "inputCount : $inputCount")
 
             try {
                 val count: Int = inputCount.toInt()
@@ -157,11 +196,13 @@ class OrderDetailListViewHolder(
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                edtCount.setText("")
+//                edtCount.setText("")
                 Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
                 Log.d("yj", "btnEdit.setOnClickListener Exception $e")
             }
         }
+
+
 
         val apiList: APIList
         val retrofit = ServerAPI.getRetrofit(itemView.context)
@@ -174,7 +215,7 @@ class OrderDetailListViewHolder(
                 (mContext as BaseActivity).mSqliteDB.updateBaljuDetail(data)
 
                 val tempMap = hashMapOf(
-                    "requesttype" to "",
+                    "requesttype" to "08003",
                     "saeopjangcode" to tempData.saeopjangcode,
                     "changgocode" to tempData.changgocode,
                     "pummokcode" to data.getPummokcodeHP(),

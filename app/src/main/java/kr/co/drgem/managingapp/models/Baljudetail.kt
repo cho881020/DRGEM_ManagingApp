@@ -106,4 +106,7 @@ data class Baljudetail(
     }
 
 
+    var serialCheck = false
+
+
 }

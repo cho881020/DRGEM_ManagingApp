@@ -62,6 +62,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         setValues()
         spinnerSet()
         getRequestOrderDetail()
+        postRequestOrderDetail()
 
     }
 
@@ -123,13 +124,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         }
 
-        binding.btnSave.setOnClickListener {
 
-            saveDialog() {
-                postRequestOrderDetail()
-            }
-
-        }
     }
 
     override fun setValues() {
@@ -138,7 +133,14 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             sawonCode = it.sawoncode.toString()
         }
 
-        val tempData = TempData(companyCode, wareHouseCode, mBaljubeonho, SEQ, IPUtil.getIpAddress(), sawonCode)
+        val tempData = TempData(
+            companyCode,
+            wareHouseCode,
+            mBaljubeonho,
+            SEQ,
+            IPUtil.getIpAddress(),
+            sawonCode
+        )
 
         mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail, tempData)
         binding.recyclerView.adapter = mAdapter
@@ -338,87 +340,131 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     fun postRequestOrderDetail() {
-        val ipgodetail = JsonArray()   // 등록용 리스트
-        val inputName = binding.edtName.text.toString()
+        binding.btnSave.setOnClickListener {
+
+            saveDialog() {
+
+                val ipgodetail = JsonArray()   // 등록용 리스트
+                val inputName = binding.edtName.text.toString()
 
 
-        orderDetailData.returnBaljudetail().forEach {
+                orderDetailData.returnBaljudetail().forEach {
 
-            var serialData =
-                SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP()).toString()
+                    var serialData =
+                        SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                            .toString()
 
-            Log.d("yj", "serialData : $serialData")
+                    Log.d("yj", "serialData : $serialData")
 
-            if (serialData.isEmpty()) {        // null값 까지 같이 들어옴
+                    if (serialData == "null") {
+                        serialData = ""
+                    }
 
-                serialData = ""
+                    if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
+                        val serialSize = serialData.split(",").size
 
-            }
+                        Log.d("yj", "serialDataSize : $serialSize")
+                        Log.d("yj", "serialData : $serialData")
 
-            if (serialData != "null") {
-                ipgodetail.add(
-                    IpgodetaildetailAdd(
-                        it.getSeqHP(),
-                        it.getPummokcodeHP(),
-                        serialData.split(",").size.toString(),
-                        it.getJungyojajeyeobuHP(),
-                        serialData
-                    ).toJsonObject()
-                )
-            }
+                        Log.d("yj", "시리얼입력수량 : ${it.getSerialCount()}")
 
-        }
+//                        if(serialSize > 0){
+                        if (serialSize.toString() != it.getSerialCount()) {
+                            Toast.makeText(
+                                mContext,
+                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            it.serialCheck = true
+                            mAdapter.notifyDataSetChanged()
+                            serialData = ""
 
-        val georaeMap = hashMapOf(
-            "requesttype" to "02014",
-            "baljubeonho" to mBaljubeonho,
-            "ipgoilja" to calDate,
-            "ipgosaupjangcode" to companyCode,
-            "ipgochanggocode" to wareHouseCode,
-            "ipgodamdangja" to inputName,
-            "georaecheocode" to orderDetailData.getGeoraecheocodeHP(),
-            "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
-            "status" to "777",
-            "pummokcount" to ipgodetail.size().toString(),
-            "ipgodetail" to ipgodetail
-        )
-
-        Log.d("yj", "georaeMap : ${georaeMap}")
-        Log.d("yj", "발주입고등록SEQ : $SEQ")
-        Log.d("yj", "ipgodetail : ${Gson().toJson(ipgodetail)}")
-
-        if (ipgodetail.size() > 0) {
-            apiList.postRequestOrderReceive(georaeMap).enqueue(object : Callback<WorkResponse> {
-                override fun onResponse(
-                    call: Call<WorkResponse>,
-                    response: Response<WorkResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            if (it.resultcd == "000") {
-
-                                SerialManageUtil.clearData()
-                                mAdapter.notifyDataSetChanged()
-
-                                Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
-                            }
-
-                            Log.d("yj", "요청명세등록 콜 결과코드 : ${it.resultcd}")
-                            Log.d("yj", "요청명세등록 콜 결과메시지 : ${it.resultmsg}")
-                            Log.d("yj", "요청명세등록 콜  : ${it}")
-
+                            return@saveDialog
+                        } else {
+                            it.serialCheck = false
+                            mAdapter.notifyDataSetChanged()
                         }
                     }
+//                    }
+
+
+
+                    if (serialData.isNotEmpty()) {
+                        ipgodetail.add(
+                            IpgodetaildetailAdd(
+                                it.getSeqHP(),
+                                it.getPummokcodeHP(),
+                                serialData.split(",").size.toString(),
+                                it.getJungyojajeyeobuHP(),
+                                serialData
+                            ).toJsonObject()
+                        )
+                    }
+
                 }
 
-                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                    Log.d("yj", "요청명세등록 실패메시지 : ${t.message}")
+                val georaeMap = hashMapOf(
+                    "requesttype" to "02014",
+                    "baljubeonho" to mBaljubeonho,
+                    "ipgoilja" to calDate,
+                    "ipgosaupjangcode" to companyCode,
+                    "ipgochanggocode" to wareHouseCode,
+                    "ipgodamdangja" to inputName,
+                    "georaecheocode" to orderDetailData.getGeoraecheocodeHP(),
+                    "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
+                    "status" to "777",
+                    "pummokcount" to ipgodetail.size().toString(),
+                    "ipgodetail" to ipgodetail
+                )
+
+                Log.d("yj", "georaeMap : ${georaeMap}")
+                Log.d("yj", "발주입고등록SEQ : $SEQ")
+                Log.d("yj", "ipgodetail : ${Gson().toJson(ipgodetail)}")
+
+                if (ipgodetail.size() > 0) {
+                    apiList.postRequestOrderReceive(georaeMap)
+                        .enqueue(object : Callback<WorkResponse> {
+                            override fun onResponse(
+                                call: Call<WorkResponse>,
+                                response: Response<WorkResponse>
+                            ) {
+                                if (response.isSuccessful) {
+                                    response.body()?.let {
+                                        if (it.resultcd == "000") {
+
+                                            SerialManageUtil.clearData()
+                                            mAdapter.notifyDataSetChanged()
+
+                                            Toast.makeText(
+                                                mContext,
+                                                "저장이 완료되었습니다.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        } else {
+                                            Toast.makeText(
+                                                mContext,
+                                                it.resultmsg,
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+
+                                        Log.d("yj", "요청명세등록 콜 결과코드 : ${it.resultcd}")
+                                        Log.d("yj", "요청명세등록 콜 결과메시지 : ${it.resultmsg}")
+                                        Log.d("yj", "요청명세등록 콜  : ${it}")
+
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                                Log.d("yj", "요청명세등록 실패메시지 : ${t.message}")
+                            }
+                        })
+                } else {
+                    Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
                 }
-            })
-        } else {
-            Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
@@ -426,7 +472,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
-            "requesttype" to "",
+            "requesttype" to "08002",
             "seq" to SEQ,
             "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,

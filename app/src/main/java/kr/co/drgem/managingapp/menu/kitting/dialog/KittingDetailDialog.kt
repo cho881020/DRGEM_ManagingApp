@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.kitting.dialog
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -29,8 +30,6 @@ class KittingDetailDialog : DialogFragment() {
     lateinit var pummokData: Pummokdetail
     var mKittingbeonho = ""
 
-    var itemCount = 0
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,9 +53,10 @@ class KittingDetailDialog : DialogFragment() {
 
     fun setupEvents() {
 
+
         binding.btnAdd.setOnClickListener {
 
-            val contentString = StringBuilder()     //String 문자열 만들기
+            val contentString = StringBuilder()      //String 문자열 만들기
 
             for (data in mSerialDataList) {         //시리얼데이터 목록을 돌기 (data 변수 명으로)
 
@@ -80,37 +80,52 @@ class KittingDetailDialog : DialogFragment() {
             }
 
 
-            var isSerialBlank = false
-            mSerialDataList.forEach {
-                if (it.serial.isEmpty()) {
-                    isSerialBlank = true
-                }
-            }
-
-            if(isSerialBlank){
-                Toast.makeText(requireContext(), "시리얼번호 입력이 완료되지 않았습니다.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-
             Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
             dismiss()
+
+            /**
+             * 시리얼번호 개수 체크
+             */
+//            var isSerialBlank = false
+//            mSerialDataList.forEach {
+//                if (it.serial.isEmpty()) {
+//                    isSerialBlank = true
+//                }
+//            }
+//
+//            if(isSerialBlank){
+//                Toast.makeText(requireContext(), "시리얼번호 입력이 완료되지 않았습니다.", Toast.LENGTH_SHORT).show()
+//                return@setOnClickListener
+//            }
+//
+//
+//            Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
+//            dismiss()
         }
 
-        binding.btnCancel.setOnClickListener {
-            dismiss()
-        }
 
         binding.btnCancel.setOnClickListener {
-            dismiss()
+
+            AlertDialog.Builder(requireContext())
+                .setTitle("아직 저장하지 않은 사항이 있습니다.")
+                .setMessage("그래도 이 화면을 종료하시겠습니까?")
+                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+
+                    dismiss()
+                })
+                .setNegativeButton("아니오", null)
+                .show()
+
+
         }
+
 
     }
 
 
     fun setValues() {
 
-
+        var itemCount = 0
 
         val serialData = SerialManageUtil.getSerialStringByPummokCode(pummokData.getPummokcodeHP())
             .toString()

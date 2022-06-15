@@ -22,7 +22,7 @@ class OrderDetailListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         Log.d("뷰홀더바인딩", "${position}번째 줄")
-        (holder as OrderDetailListViewHolder).bind(mList[position], tempData)
+        (holder as OrderDetailListViewHolder).bind(mList[position], tempData, )
 
     }
 

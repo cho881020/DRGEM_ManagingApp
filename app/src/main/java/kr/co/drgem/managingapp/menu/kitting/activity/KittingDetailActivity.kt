@@ -38,7 +38,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     val dialog = KittingDetailDialog()
 
-    var mkittingbeonho =  ""
+    var mkittingbeonho = ""
     var SEQ = ""
     var status = "111"
 
@@ -71,7 +71,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog(){
+        backDialog() {
             workStatusCancle()
         }
     }
@@ -79,7 +79,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(){
+            backDialog() {
                 workStatusCancle()
             }
         }
@@ -125,7 +125,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
-            "requesttype" to "",
+            "requesttype" to "08001",
             "pid" to "05",
             "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,
@@ -204,10 +204,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                 kittingDetailData.returnKittingDetail().forEach {
 
-                    var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
-                        .toString()      // 시리얼 데이터 꺼내오기
+                    var serialData =
+                        SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                            .toString()      // 시리얼 데이터 꺼내오기
 
-                    if(serialData == "null"){
+                    if (serialData == "null") {
                         serialData = ""
                     }
 
@@ -219,21 +220,24 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                         Log.d("yj", "시리얼입력수량 : ${it.getSerialCount()}")
 
-                        if(serialSize > 0){
-                            if(serialSize.toString() != it.getSerialCount()){
-                                Toast.makeText(mContext, "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
-                                it.serialCheck = true
-                                mAdapter.notifyDataSetChanged()
-                                serialData = ""
+//                        if(serialSize > 0){
+                        if (serialSize.toString() != it.getSerialCount()) {
+                            Toast.makeText(
+                                mContext,
+                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            it.serialCheck = true
+                            mAdapter.notifyDataSetChanged()
+                            serialData = ""
 
-                                return@saveDialog
-                            }
-                            else {
-                                it.serialCheck = false
-                                mAdapter.notifyDataSetChanged()
-                            }
+                            return@saveDialog
+                        } else {
+                            it.serialCheck = false
+                            mAdapter.notifyDataSetChanged()
                         }
                     }
+//                    }
 
 
                     if (serialData.isNotEmpty()) {
@@ -284,10 +288,18 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                             SerialManageUtil.clearData()
                                             mAdapter.notifyDataSetChanged()
 
-                                            Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                            Toast.makeText(
+                                                mContext,
+                                                "저장이 완료되었습니다.",
+                                                Toast.LENGTH_SHORT
+                                            )
                                                 .show()
                                         } else {
-                                            Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
+                                            Toast.makeText(
+                                                mContext,
+                                                it.resultmsg,
+                                                Toast.LENGTH_SHORT
+                                            )
                                                 .show()
                                         }
 
@@ -324,7 +336,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
-            "requesttype" to "",
+            "requesttype" to "08002",
             "seq" to SEQ,
             "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,

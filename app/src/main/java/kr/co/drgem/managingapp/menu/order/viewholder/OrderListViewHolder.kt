@@ -45,7 +45,7 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
             // TODO - API 정상 연동시 수정
             val SEQMap = hashMapOf(
-                "requesttype" to "",
+                "requesttype" to "08001",
                 "pid" to "02",
                 "tablet_ip" to IPUtil.getIpAddress(),
                 "sawoncode" to sawonCode,

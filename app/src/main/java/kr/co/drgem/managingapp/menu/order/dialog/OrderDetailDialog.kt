@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.order.dialog
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -21,11 +22,11 @@ import kr.co.drgem.managingapp.utils.SerialManageUtil
 
 class OrderDetailDialog : BaseDialogFragment() {
 
-    lateinit var binding : DialogOrderDetailBinding
-    lateinit var mAdapter : DialogEditOrderAdapter
+    lateinit var binding: DialogOrderDetailBinding
+    lateinit var mAdapter: DialogEditOrderAdapter
 
     var viewholderCount = 0
-    lateinit var baljuData : Baljudetail
+    lateinit var baljuData: Baljudetail
     var mBaljubeonho = ""
 
     val mSerialDataList = ArrayList<SerialLocalDB>()
@@ -51,7 +52,7 @@ class OrderDetailDialog : BaseDialogFragment() {
 
     }
 
-    override fun setupEvents(){
+    override fun setupEvents() {
 
         binding.btnAdd.setOnClickListener {
 
@@ -77,7 +78,10 @@ class OrderDetailDialog : BaseDialogFragment() {
 
                 contentString.setLength(contentString.length - 1)
 
-                SerialManageUtil.putSerialStringByPummokCode(baljuData.getPummokcodeHP(), contentString.toString())
+                SerialManageUtil.putSerialStringByPummokCode(
+                    baljuData.getPummokcodeHP(),
+                    contentString.toString()
+                )
 
                 Log.d("품목코드", baljuData.getPummokcodeHP())
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
@@ -88,33 +92,67 @@ class OrderDetailDialog : BaseDialogFragment() {
         }
 
         binding.btnCancel.setOnClickListener {
-            dismiss()
+            AlertDialog.Builder(requireContext())
+                .setTitle("아직 저장하지 않은 사항이 있습니다.")
+                .setMessage("그래도 이 화면을 종료하시겠습니까?")
+                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+
+                    dismiss()
+                })
+                .setNegativeButton("아니오", null)
+                .show()
+
         }
 
     }
 
-    override fun setValues(){
+    override fun setValues() {
 
-        mSerialDataList.clear()
-        for (i in 0..viewholderCount) {
+        var itemCount = 0
 
-            val searchedSerial = mSqliteDB.getFirstSerialByPummokcodeAndPosition(baljuData.getPummokcodeHP(), "${i}")
+        val serialData = SerialManageUtil.getSerialStringByPummokCode(baljuData.getPummokcodeHP())
+            .toString()
+        val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
 
-            if (searchedSerial != null) {
-                mSerialDataList.add(searchedSerial)
-            }
-            else {
-                mSerialDataList.add(SerialLocalDB(
-                    baljuData.pummokcode!!,
-                    "",
-                    "${i}"
-                ))
-            }
 
+        if (serialList.size > viewholderCount) {
+            itemCount = serialList.size
+        } else if (serialList.size < viewholderCount) {
+            itemCount = viewholderCount
+        } else {
+            itemCount = viewholderCount
         }
 
 
-        mAdapter = DialogEditOrderAdapter(baljuData, viewholderCount, mSerialDataList)
+        /**
+         *  serial데이터가 있다면, 시리얼을 목록에 담고,
+         *  없다면 그때 빈값으로 만들 수 있도록
+         */
+
+        mSerialDataList.clear()
+
+
+        for (i in 0 until itemCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+
+            var serial = ""
+
+            if (serialList.isNotEmpty() && serialList.size > i) {      // 시리얼리스트가 사이즈 i보다 크거나 같을 때
+
+                serial = serialList[i]
+
+            }
+
+            mSerialDataList.add(
+                SerialLocalDB(
+                    baljuData.pummokcode!!,
+                    serial,
+                    "${i}"
+                )
+            )
+        }
+
+
+        mAdapter = DialogEditOrderAdapter(baljuData, itemCount, mSerialDataList, serialList)
         binding.recyclerView.adapter = mAdapter
 
         binding.baljubeonho.text = mBaljubeonho

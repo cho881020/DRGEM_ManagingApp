@@ -128,7 +128,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         chulgosuryang.setText(data.getSerialCount())
 
 
-
         chulgosuryang.removeTextChangedListener(textChangeListener)
         chulgosuryang.addTextChangedListener(textChangeListener)
 
