@@ -54,6 +54,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     var calDate = ""
 
     var SEQ = ""
+    var status = "111"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +73,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(null)
+            backDialog(){
+                workStatusCancle()
+            }
         }
 
         binding.btnSave.setOnClickListener {
@@ -200,6 +203,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
+                            status = "333"
 
                             getRequestNotDelivery()
 
@@ -361,6 +365,47 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         }
 
     }
+
+    fun workStatusCancle() {
+
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val workCancelMap = hashMapOf(
+            "requesttype" to "",
+            "seq" to SEQ,
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to status,
+        )
+
+        apiList.postRequestWorkstatusCancle(workCancelMap)
+            .enqueue(object : Callback<WorkResponse> {
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+
+                            Log.d("yj", "거래 작업상태취소 code : ${it.resultcd}")
+                            Log.d("yj", "거래 작업상태취소 msg : ${it.resultmsg}")
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
+                }
+
+            })
+
+    }
+
 
     override fun setValues() {
 
@@ -629,7 +674,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog(null)
+        backDialog(){
+            workStatusCancle()
+        }
     }
 
     override fun onClickedEdit(count: Int, data: PummokdetailDelivery) {

@@ -37,8 +37,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     val dialog = KittingDetailDialog()
 
-    lateinit var mkittingbeonho: String
-    lateinit var SEQ: String
+    var mkittingbeonho =  ""
+    var SEQ = ""
+    var status = "111"
 
     var johoejogeon = "0"
     var migwanri = "0"
@@ -69,13 +70,17 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog(null)
+        backDialog(){
+            workStatusCancle()
+        }
     }
 
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(null)
+            backDialog(){
+                workStatusCancle()
+            }
         }
 
 
@@ -138,6 +143,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
+                            status = "333"
 
                             getRequestKittingDetail()
 
@@ -305,9 +311,48 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             }
         }
 
+    }
 
+    fun workStatusCancle() {
+
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val workCancelMap = hashMapOf(
+            "requesttype" to "",
+            "seq" to SEQ,
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to status,
+        )
+
+        apiList.postRequestWorkstatusCancle(workCancelMap)
+            .enqueue(object : Callback<WorkResponse> {
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+
+                            Log.d("yj", "거래 작업상태취소 code : ${it.resultcd}")
+                            Log.d("yj", "거래 작업상태취소 msg : ${it.resultmsg}")
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
+                }
+
+            })
 
     }
+
 
     fun spinnerSetOut() {
 

@@ -45,6 +45,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     val dialogEdit = TransactionDialog()
 
     var SEQ = ""
+    var status = "111"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +105,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         binding.btnBack.setOnClickListener {
 
-            backDialog(null)
+            backDialog(){
+                workStatusCancle()
+            }
 
         }
 
@@ -248,7 +251,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
 
-
         apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
 
             override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
@@ -258,6 +260,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
+                            status = "333"
 
                             getRequestTran()
 
@@ -415,6 +418,46 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     }
 
+    fun workStatusCancle() {
+
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val workCancelMap = hashMapOf(
+            "requesttype" to "",
+            "seq" to SEQ,
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to status,
+        )
+
+        apiList.postRequestWorkstatusCancle(workCancelMap)
+            .enqueue(object : Callback<WorkResponse> {
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+
+                            Log.d("yj", "거래 작업상태취소 code : ${it.resultcd}")
+                            Log.d("yj", "거래 작업상태취소 msg : ${it.resultmsg}")
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
+                }
+
+            })
+
+    }
+
 
     fun sort() {
 
@@ -491,7 +534,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     override fun onBackPressed() {
 
-        backDialog(null)
+        backDialog(){
+            workStatusCancle()
+        }
 
     }
 

@@ -29,6 +29,10 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             data.serial = edtSerial.text.toString()
         }
 
+        btnRemove.setOnClickListener {
+            edtSerial.setText("")
+        }
+
 
     }
 

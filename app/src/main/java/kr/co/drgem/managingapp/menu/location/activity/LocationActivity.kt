@@ -30,6 +30,7 @@ class LocationActivity : BaseActivity() {
     var changgocode = ""
     var inputPummyeong = ""
     var SEQ = ""
+    var status = "111"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +42,21 @@ class LocationActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        backDialog(null)
+        backDialog(){
+            workStatusCancle()
+        }
     }
 
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(null)
+            backDialog(){
+                workStatusCancle()
+            }
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog(){
+            saveDialog() {
                 postRequestLocationAdd()
             }
         }
@@ -135,6 +140,7 @@ class LocationActivity : BaseActivity() {
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
+                            status = "333"
 
                             getRequestLocation()
 
@@ -156,47 +162,38 @@ class LocationActivity : BaseActivity() {
     }
 
     fun getRequestLocation() {
+        val changgocode = ""
+        val location = binding.edtLocation.text.toString()
+        inputPummyeong = binding.pummyeong.text.toString()
 
+        apiList.getRequestLocation("02081", changgocode, location, inputPummyeong)
+            .enqueue(object : Callback<LocationResponse> {
+                override fun onResponse(
+                    call: Call<LocationResponse>,
+                    response: Response<LocationResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            if (it.returnPummokDetail().size == 0) {
+                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
+                                    .show()
+                            } else {
+                                mList = it.returnPummokDetail()
 
-            val changgocode = ""
-            val location = binding.edtLocation.text.toString()
-            inputPummyeong = binding.pummyeong.text.toString()
+                                setValues()
 
-
-
-            apiList.getRequestLocation("02081", changgocode, location, inputPummyeong)
-                .enqueue(object : Callback<LocationResponse> {
-                    override fun onResponse(
-                        call: Call<LocationResponse>,
-                        response: Response<LocationResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            response.body()?.let {
-                                if (it.returnPummokDetail().size == 0) {
-                                    Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
-                                        .show()
-                                } else {
-                                    mList = it.returnPummokDetail()
-
-                                    setValues()
-
-                                    binding.layoutList.isVisible = true
-                                    binding.layoutEmpty.isVisible = false
-                                }
-
+                                binding.layoutList.isVisible = true
+                                binding.layoutEmpty.isVisible = false
                             }
                         }
                     }
+                }
 
-                    override fun onFailure(call: Call<LocationResponse>, t: Throwable) {
+                override fun onFailure(call: Call<LocationResponse>, t: Throwable) {
 
-                    }
-
-                })
-
-        }
-
-
+                }
+            })
+    }
 
     fun postRequestLocationAdd() {
 
@@ -208,7 +205,7 @@ class LocationActivity : BaseActivity() {
 
             if (txtLocation.isNullOrEmpty()) {
                 txtLocation = ""
-            }else{
+            } else {
                 pummokdetail.add(LocationPummokdetail(it.getPummokcodeHP(), it.getLocationAdd()))
             }
         }
@@ -251,6 +248,46 @@ class LocationActivity : BaseActivity() {
             })
         }
 
+
+    }
+
+    fun workStatusCancle() {
+
+        var sawonCode = ""
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        // TODO - API 정상 연동시 수정
+        val workCancelMap = hashMapOf(
+            "requesttype" to "",
+            "seq" to SEQ,
+            "tablet_ip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "status" to status,
+        )
+
+        apiList.postRequestWorkstatusCancle(workCancelMap)
+            .enqueue(object : Callback<WorkResponse> {
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+
+                            Log.d("yj", "거래 작업상태취소 code : ${it.resultcd}")
+                            Log.d("yj", "거래 작업상태취소 msg : ${it.resultmsg}")
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
+                }
+
+            })
 
     }
 

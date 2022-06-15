@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 ) {
     val txtNumber = itemView.findViewById<TextView>(R.id.txtNumber)
     val edtSerial = itemView.findViewById<EditText>(R.id.edtSerial)
+    val btnRemove = itemView.findViewById<ImageView>(R.id.btnRemove)
 
     fun bind(position: Int, data: SerialLocalDB) {
         txtNumber.text = "${position+1}"
@@ -24,6 +26,12 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
         edtSerial.addTextChangedListener {
             data.serial = edtSerial.text.toString()
         }
+
+
+        btnRemove.setOnClickListener {
+            edtSerial.setText("")
+        }
+
     }
 
 }

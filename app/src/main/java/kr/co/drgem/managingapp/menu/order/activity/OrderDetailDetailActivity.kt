@@ -23,7 +23,6 @@ import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
-import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,25 +37,23 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     lateinit var orderDetailData: OrderDetailResponse
 
     val dialog = OrderDetailDialog()
+    lateinit var masterData: MasterDataResponse
     val baljuDetail = ArrayList<Baljudetail>()
-    lateinit var mBaljubeonho: String
-    lateinit var seq: String
-
+    var mBaljubeonho = ""
+    var SEQ = ""
+    var status = "333"
 
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var companyCode = "0001"
     var wareHouseCode = "1001"
     var calDate = ""
 
-    lateinit var masterData: MasterDataResponse
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_detail)
 
         mBaljubeonho = intent.getStringExtra("baljubeonho").toString()
-        seq = intent.getStringExtra("seq").toString()
+        SEQ = intent.getStringExtra("seq").toString()
 
 
         setupEvents()
@@ -69,7 +66,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     override fun onBackPressed() {
         backDialog {
             clearAndCancelWork()
-            WorkstatusCancle()
+            workStatusCancle()
         }
     }
 
@@ -88,7 +85,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         binding.btnBack.setOnClickListener {
             backDialog {
                 clearAndCancelWork()
-                WorkstatusCancle()
+                workStatusCancle()
             }
         }
 
@@ -126,7 +123,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         binding.btnSave.setOnClickListener {
 
-            saveDialog(){
+            saveDialog() {
                 postRequestOrderDetail()
             }
 
@@ -332,7 +329,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     }
 
-    fun postRequestOrderDetail(){
+    fun postRequestOrderDetail() {
         val ipgodetail = JsonArray()   // 등록용 리스트
         val inputName = binding.edtName.text.toString()
 
@@ -350,7 +347,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
             }
 
-            if(serialData != "null"){
+            if (serialData != "null") {
                 ipgodetail.add(
                     IpgodetaildetailAdd(
                         it.getSeqHP(),
@@ -372,18 +369,18 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             "ipgochanggocode" to wareHouseCode,
             "ipgodamdangja" to inputName,
             "georaecheocode" to orderDetailData.getGeoraecheocodeHP(),
-            "seq" to seq, // TODO - SEQ 관련 API 연동 성공시 수정해야함
+            "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
             "status" to "777",
             "pummokcount" to ipgodetail.size().toString(),
             "ipgodetail" to ipgodetail
         )
 
         Log.d("yj", "georaeMap : ${georaeMap}")
-        Log.d("yj", "발주입고등록SEQ : $seq")
+        Log.d("yj", "발주입고등록SEQ : $SEQ")
         Log.d("yj", "ipgodetail : ${Gson().toJson(ipgodetail)}")
 
-        if(ipgodetail.size() > 0){
-            apiList.postRequestOrderReceive(georaeMap).enqueue(object : Callback<WorkResponse>{
+        if (ipgodetail.size() > 0) {
+            apiList.postRequestOrderReceive(georaeMap).enqueue(object : Callback<WorkResponse> {
                 override fun onResponse(
                     call: Call<WorkResponse>,
                     response: Response<WorkResponse>
@@ -396,8 +393,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                                 mAdapter.notifyDataSetChanged()
 
                                 Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT).show()
                             }
 
@@ -418,7 +414,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         }
     }
 
-    fun WorkstatusCancle() {
+    fun workStatusCancle() {
 
         var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
@@ -428,10 +424,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "",
-            "seq" to seq,
+            "seq" to SEQ,
             "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,
-            "status" to "111",
+            "status" to status,
         )
 
         apiList.postRequestWorkstatusCancle(workCancelMap)
@@ -443,15 +439,15 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                     if (response.isSuccessful) {
                         response.body()?.let {
 
-                            Log.d("yj", "작업상태취소 code : ${it.resultcd}")
-                            Log.d("yj", "작업상태취소 msg : ${it.resultmsg}")
+                            Log.d("yj", "발주 작업상태취소 code : ${it.resultcd}")
+                            Log.d("yj", "발주 작업상태취소 msg : ${it.resultmsg}")
 
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                    Log.d("yj", "SEQ 서버 실패 : ${t.message}")
+                    Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
                 }
 
             })

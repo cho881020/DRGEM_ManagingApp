@@ -3,6 +3,7 @@ package kr.co.drgem.managingapp.menu.request.dialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ class RequestSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 ) {
     val txtNumber = itemView.findViewById<TextView>(R.id.txtNumber)
     val edtSerial = itemView.findViewById<EditText>(R.id.edtSerial)
+    val btnRemove = itemView.findViewById<ImageView>(R.id.btnRemove)
 
     fun bind(position: Int, data: SerialLocalDB) {
 
@@ -24,6 +26,9 @@ class RequestSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
             data.serial = edtSerial.text.toString()
         }
 
+        btnRemove.setOnClickListener {
+            edtSerial.setText("")
+        }
     }
 
 }
