@@ -48,6 +48,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     var wareHouseCode = "1001"
     var calDate = ""
 
+    var sawonCode = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_detail)
@@ -132,7 +134,13 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     override fun setValues() {
 
-        mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail)
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        val tempData = TempData(companyCode, wareHouseCode, mBaljubeonho, SEQ, IPUtil.getIpAddress(), sawonCode)
+
+        mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail, tempData)
         binding.recyclerView.adapter = mAdapter
 
 
@@ -415,11 +423,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     fun workStatusCancle() {
-
-        var sawonCode = ""
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
