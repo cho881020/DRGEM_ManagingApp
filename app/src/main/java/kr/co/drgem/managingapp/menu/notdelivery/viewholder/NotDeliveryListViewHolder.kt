@@ -130,6 +130,13 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
         }
 
+        if(data.chulgosuryang?.isNotEmpty() == true){
+            data.setSerialCount(data.getchulgosuryangHP())
+        }
+
+        if(data.getSerialCount().isNullOrEmpty()){
+            data.setSerialCount("0")
+        }
 
         chulgosuryang.setText(data.getSerialCount())
 

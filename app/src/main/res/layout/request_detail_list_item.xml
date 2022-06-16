@@ -133,6 +133,7 @@
                     android:selectAllOnFocus="true"
                     android:imeOptions="actionNext"
                     android:textSize="12dp"
+                    android:gravity="center"
                     android:background="@drawable/light_gray_box"
                     android:textColor="@color/black" />
 

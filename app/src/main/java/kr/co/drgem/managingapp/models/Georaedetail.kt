@@ -83,8 +83,8 @@ data class Georaedetail(
     }
 
     fun getIpgosuryangHP() : String {
-        if(ipgosuryang == null){
-            return "-"
+        if(ipgosuryang.isNullOrEmpty()){
+            return "0"
         }
         return ipgosuryang
     }

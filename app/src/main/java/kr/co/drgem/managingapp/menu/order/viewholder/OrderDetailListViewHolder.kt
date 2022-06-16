@@ -154,6 +154,9 @@ class OrderDetailListViewHolder(
 
         }
 
+        if(data.getSerialCount().isNullOrEmpty()){
+            data.setSerialCount("0")
+        }
 
         edtCount.setText(data.getSerialCount())
 
@@ -219,7 +222,7 @@ class OrderDetailListViewHolder(
                     "saeopjangcode" to tempData.saeopjangcode,
                     "changgocode" to tempData.changgocode,
                     "pummokcode" to data.getPummokcodeHP(),
-                    "suryang" to data.ipgosuryang.toString(),
+                    "suryang" to data.getSerialCount(),
                     "yocheongbeonho" to tempData.yocheongbeonho,
                     "ipchulgubun" to "1",   //TODO - 입출구분확인
                     "seq" to tempData.seq,

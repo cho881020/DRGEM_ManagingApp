@@ -116,8 +116,18 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
         }
 
+        if(data.ipgosuryang?.isNotEmpty() == true){
+            data.setSerialCount(data.getIpgosuryangHP())
+        }
 
-        ipgosuryang.setText(data.getSerialCount())
+        if(data.getSerialCount().isNullOrEmpty()){
+            data.setSerialCount("0")
+        }
+
+            ipgosuryang.setText(data.getSerialCount())
+
+
+
 
         ipgosuryang.setOnFocusChangeListener { view, b ->
             val serialCount = ipgosuryang.text.toString().trim()
@@ -157,7 +167,7 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
                     "saeopjangcode" to tempData.saeopjangcode,
                     "changgocode" to tempData.changgocode,
                     "pummokcode" to data.getPummokcodeHP(),
-                    "suryang" to data.ipgosuryang.toString(),
+                    "suryang" to data.getSerialCount(),
                     "yocheongbeonho" to data.getBaljubeonhoHP(),
                     "ipchulgubun" to "1",   //TODO - 입출구분확인
                     "seq" to tempData.seq,

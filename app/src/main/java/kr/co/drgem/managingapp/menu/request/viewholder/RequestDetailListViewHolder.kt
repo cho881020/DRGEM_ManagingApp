@@ -131,7 +131,9 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             btnEdit.text = "정보입력"
         }
 
-
+        if(data.getSerialCount().isNullOrEmpty()){
+            data.setSerialCount("0")
+        }
         chulgosuryang.setText(data.getSerialCount())
 
 
