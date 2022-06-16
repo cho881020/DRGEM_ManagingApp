@@ -63,9 +63,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         setupEvents()
         spinnerSet()
-
-        spinnerSetIn()
-        spinnerSetOut()
+        dateSet()
 
         postRequestNotDelivery()
 
@@ -440,10 +438,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     }
 
-
-    override fun setValues() {
-
+    fun setTempData(): TempData {
         var sawonCode = ""
+
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -457,9 +454,16 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             sawonCode
         )
 
+        return tempData
+
+    }
+
+    override fun setValues() {
+
         mAdapter =
-            NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(), this, tempData)
+            NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(), this)
         binding.recyclerView.adapter = mAdapter
+        mAdapter.setTemp(setTempData())
 
         binding.txtCount.text = "(${notDeliveryData.pummokcount} 건)"
 
@@ -468,6 +472,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 binding.serialDetail.isVisible = true
             }
         }
+
+        spinnerSetIn()
+        spinnerSetOut()
 
     }
 
@@ -589,6 +596,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
                         }
+
+                        mAdapter.setTemp(setTempData())
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -603,7 +612,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
-
+                        mAdapter.setTemp(setTempData())
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {

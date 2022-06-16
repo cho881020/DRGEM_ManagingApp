@@ -10,8 +10,10 @@ import kr.co.drgem.managingapp.models.TempData
 class RequestDetailListAdapter(
     val mList : ArrayList<Pummokdetail>,
     val listener : RequestDetailEditListener,
-    val tempData : TempData
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var tempData = TempData("","","","","","",)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RequestDetailListViewHolder(parent, listener)
     }
@@ -23,4 +25,10 @@ class RequestDetailListAdapter(
     }
 
     override fun getItemCount() = mList.size
+
+    fun setTemp(tempData : TempData) {
+        this.tempData = tempData
+        notifyDataSetChanged()
+    }
+
 }

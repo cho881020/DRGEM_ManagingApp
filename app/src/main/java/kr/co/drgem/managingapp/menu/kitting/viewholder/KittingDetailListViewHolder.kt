@@ -55,7 +55,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             val serialCount = chulgosuryang.text.toString().trim()
             data?.setSerialCount(serialCount)
-            Log.d("yj", "키팅뷰홀더포지션2 : ${data?.getSerialCount()}")
         }
 
         override fun afterTextChanged(p0: Editable?) {

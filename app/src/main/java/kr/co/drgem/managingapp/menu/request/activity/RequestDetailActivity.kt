@@ -66,8 +66,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
 
         setupEvents()
-        spinnerSetOut()
-        spinnerSetIn()
         dateSet()
         PostRequestRequest()
 
@@ -81,31 +79,36 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             }
         }
 
-
-
         binding.btnFind.setOnClickListener {
             requestWorkseq()
         }
 
     }
 
-    override fun setValues() {
-
+    fun setTempData(): TempData {
         var sawonCode = ""
+
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
 
         val tempData = TempData(
             companyCodeOut,
-            companyCodeOut,
+            wareHouseCodeOut,
             mYocheongbeonho,
             SEQ,
             IPUtil.getIpAddress(),
             sawonCode
         )
 
-        mAdapter = RequestDetailListAdapter(requestDetailData.returnPummokDetail(), this, tempData)
+        return tempData
+
+    }
+
+    override fun setValues() {
+
+        mAdapter = RequestDetailListAdapter(requestDetailData.returnPummokDetail(), this)
+        mAdapter.setTemp(setTempData())
         binding.recyclerView.adapter = mAdapter
 
 
@@ -116,6 +119,9 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 binding.serialDetail.isVisible = true
             }
         }
+        spinnerSetOut()
+        spinnerSetIn()
+
     }
 
     fun requestWorkseq() {
@@ -410,6 +416,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
                         }
+
+                        mAdapter.setTemp(setTempData())
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -424,6 +432,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
+                        mAdapter.setTemp(setTempData())
 
                     }
 

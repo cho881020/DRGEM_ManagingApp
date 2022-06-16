@@ -64,8 +64,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         binding.kittingbeonho.text = "키팅번호 - $mkittingbeonho"
 
         setupEvents()
-        spinnerSetOut()
-        spinnerSetIn()
         dateSet()
         postRequestKitting()
     }
@@ -100,9 +98,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     }
 
-    override fun setValues() {
-
+    fun setTempData(): TempData {
         var sawonCode = ""
+
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -116,7 +114,15 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             sawonCode
         )
 
-        mAdapter = KittingDetailListAdapter(kittingDetailData.returnKittingDetail(), this, tempData)
+        return tempData
+
+    }
+
+    override fun setValues() {
+
+
+        mAdapter = KittingDetailListAdapter(kittingDetailData.returnKittingDetail(), this)
+        mAdapter.setTemp(setTempData())
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${kittingDetailData.getPummokCount()} 건)"
@@ -128,6 +134,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             }
         }
 
+        spinnerSetOut()
+        spinnerSetIn()
 
     }
 
@@ -162,6 +170,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                             getRequestKittingDetail()
 
+
                             Log.d("yj", "SEQ : ${it.seq}")
                         } else {
                             Log.d("yj", "SEQ 실패 코드 : ${it.resultmsg}")
@@ -192,6 +201,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                             kittingDetailData = it
 
                             setValues()
+
 
                         }
                     }
@@ -427,6 +437,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
                         }
+
+                        mAdapter.setTemp(setTempData())
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -441,6 +453,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
+                        mAdapter.setTemp(setTempData())
 
                     }
 

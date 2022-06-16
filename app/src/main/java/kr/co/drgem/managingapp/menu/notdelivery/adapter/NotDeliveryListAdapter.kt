@@ -10,8 +10,10 @@ import kr.co.drgem.managingapp.models.TempData
 class NotDeliveryListAdapter(
     val mList : ArrayList<PummokdetailDelivery>,
     val listener : NotDeliveryEditListener,
-    val tempData : TempData
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var tempData = TempData("","","","","","",)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return NotDeliveryListViewHolder(parent, listener)
     }
@@ -23,8 +25,12 @@ class NotDeliveryListAdapter(
                 holder.bind(mList[position], tempData)
             }
         }
-
     }
 
     override fun getItemCount() = mList.size
+
+    fun setTemp(tempData : TempData) {
+        this.tempData = tempData
+        notifyDataSetChanged()
+    }
 }

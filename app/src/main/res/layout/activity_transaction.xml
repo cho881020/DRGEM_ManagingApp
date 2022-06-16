@@ -654,38 +654,44 @@
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="50dp"
+                            android:layout_width="60dp"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="단위"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="50dp"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="발주수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="50dp"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="기입고수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="54dp"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="입고수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
                             android:id="@+id/serialDetail"
-                            android:layout_width="60dp"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="시리얼/상세"
+                            tools:visibility="visible"
                             android:visibility="gone"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />

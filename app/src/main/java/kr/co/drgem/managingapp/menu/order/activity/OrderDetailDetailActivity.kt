@@ -60,7 +60,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         setupEvents()
         setValues()
-        spinnerSet()
         getRequestOrderDetail()
         postRequestOrderDetail()
 
@@ -127,7 +126,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     }
 
-    override fun setValues() {
+
+    fun setTempData(): TempData {
+        var sawonCode = ""
 
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
@@ -142,9 +143,19 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             sawonCode
         )
 
-        mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail, tempData)
+        return tempData
+
+    }
+
+
+    override fun setValues() {
+
+
+        mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail)
+        mAdapter.setTemp(setTempData())
         binding.recyclerView.adapter = mAdapter
 
+        spinnerSet()
 
     }
 
@@ -176,6 +187,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
                         mWareHouseList.clear()
                         mWareHouseList.addAll(masterData.getGwangmyeongCode())
+                        binding.spinnerWareHouse.setSelection(0, false)
 
                         if (mWareHouseList.size > 0) {
                             wareHouseCode = mWareHouseList[0].code
@@ -189,12 +201,14 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
                         mWareHouseList.clear()
                         mWareHouseList.addAll(masterData.getGumiCode())
+                        binding.spinnerWareHouse.setSelection(0, false)
 
                         if (mWareHouseList.size > 0) {
                             wareHouseCode = mWareHouseList[0].code
                         }
 
                     }
+                    mAdapter.setTemp(setTempData())
 
                 }
 
@@ -211,6 +225,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                 ) {
 
                     wareHouseCode = mWareHouseList[position].code
+                    mAdapter.setTemp(setTempData())
 
                 }
 

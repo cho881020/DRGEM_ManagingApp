@@ -12,8 +12,9 @@ import kr.co.drgem.managingapp.models.TempData
 class KittingDetailListAdapter(
     val mList : ArrayList<Pummokdetail>,
     val listener : KittingDetailEditListener,
-    val tempData : TempData
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var tempData = TempData("","","","","","",)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return KittingDetailListViewHolder(parent, listener)
@@ -26,4 +27,9 @@ class KittingDetailListAdapter(
     }
 
     override fun getItemCount() = mList.size
+
+    fun setTemp(tempData : TempData) {
+        this.tempData = tempData
+        notifyDataSetChanged()
+    }
 }

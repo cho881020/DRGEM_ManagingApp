@@ -41,7 +41,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     var wareHouseCode = "1001"
     var calDate = ""
     lateinit var tranData: TranResponse
-    lateinit var tempData: TempData
 
     val dialogEdit = TransactionDialog()
 
@@ -56,7 +55,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
 
         setupEvents()
-        spinnerSet()
         sort()
         postRequestTran()
 
@@ -148,7 +146,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             sawonCode = it.sawoncode.toString()
         }
 
-        tempData = TempData(
+        val tempData = TempData(
             companyCode,
             wareHouseCode,
             baljubeonho,
@@ -179,8 +177,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
 
         mAdapter = TransactionAdapter(this)
-        mAdapter.setTemp(tempData)
+        mAdapter.setTemp(setTempData())
         binding.recyclerView.adapter = mAdapter
+
+
+        spinnerSet()
 
     }
 
@@ -326,8 +327,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                         response.body()?.let {
                             tranData = it
                             baljubeonho = it.getGeoraemyeongsebeonhoHP()
-
-                            setTempData()
 
                             if (it.returnGeoraedetail().size == 0) {
                                 Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
