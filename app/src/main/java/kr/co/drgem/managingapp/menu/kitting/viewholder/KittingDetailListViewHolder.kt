@@ -134,13 +134,19 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         }
 
 
-        if(data.chulgosuryang?.isNotEmpty() == true){
-            data.setSerialCount(data.getchulgosuryangHP())
+        if(data.getSerialCount().isNullOrEmpty()){
+
+            if(data.chulgosuryang?.isNotEmpty() == true){
+                data.setSerialCount(data.getchulgosuryangHP())
+            }
+            else{
+                data.setSerialCount("0")
+            }
         }
 
-        if(data.getSerialCount().isNullOrEmpty()){
-            data.setSerialCount("0")
-        }
+
+
+
 
         chulgosuryang.setText(data.getSerialCount())
 

@@ -41,6 +41,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     var wareHouseCode = "1001"
     var calDate = ""
     lateinit var tranData: TranResponse
+    lateinit var tempData: TempData
 
     val dialogEdit = TransactionDialog()
 
@@ -49,14 +50,14 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     var baljubeonho = ""
 
-        override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
 
         setupEvents()
+        spinnerSet()
         sort()
-
 
     }
 
@@ -107,7 +108,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         binding.btnBack.setOnClickListener {
 
-            backDialog(){
+            backDialog() {
                 workStatusCancle()
             }
 
@@ -144,8 +145,28 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     }
 
+    fun setTempData() : TempData  {
+        var sawonCode = ""
+
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        tempData = TempData(
+            companyCode,
+            wareHouseCode,
+            baljubeonho,
+            SEQ,
+            IPUtil.getIpAddress(),
+            sawonCode
+        )
+
+        return tempData
+
+    }
 
     override fun setValues() {
+
 
         binding.georaecheomyeong.text = tranData.getGeoraecheomyeongHP()
         binding.nappumcheomyeong.text = tranData.getNappumcheomyeongHP()
@@ -160,25 +181,15 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             }
         }
 
-        var sawonCode = ""
 
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
-
-        val tempData = TempData(
-            companyCode,
-            wareHouseCode,
-            baljubeonho,
-            SEQ,
-            IPUtil.getIpAddress(),
-            sawonCode
-        )
-
-
-        mAdapter = TransactionAdapter(this, tempData)
+        mAdapter = TransactionAdapter(this)
+        mAdapter.setTemp(tempData)
         binding.recyclerView.adapter = mAdapter
 
+    }
+
+
+    fun spinnerSet() {
 
         val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
 
@@ -206,10 +217,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                         mWareHouseList.clear()
                         mWareHouseList.addAll(masterData.getGwangmyeongCode())
+                        binding.spinnerWareHouse.setSelection(0, false)
 
                         if (mWareHouseList.size > 0) {
                             wareHouseCode = mWareHouseList[0].code
                         }
+
 
                     }
 
@@ -219,12 +232,15 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                         mWareHouseList.clear()
                         mWareHouseList.addAll(masterData.getGumiCode())
+                        binding.spinnerWareHouse.setSelection(0, false)
 
                         if (mWareHouseList.size > 0) {
                             wareHouseCode = mWareHouseList[0].code
                         }
 
                     }
+                    mAdapter.setTemp(setTempData())
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -240,7 +256,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 ) {
 
                     wareHouseCode = mWareHouseList[position].code
-
+                    mAdapter.setTemp(setTempData())
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -315,6 +331,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                             tranData = it
                             baljubeonho = it.getGeoraemyeongsebeonhoHP()
 
+                            setTempData()
 
                             if (it.returnGeoraedetail().size == 0) {
                                 Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
@@ -323,6 +340,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                                 setValues()
                                 mAdapter.setList(it.returnGeoraedetail())
+
 
                                 binding.layoutEmpty.isVisible = false
                                 binding.layoutList.isVisible = true
@@ -553,7 +571,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     override fun onBackPressed() {
 
-        backDialog(){
+        backDialog() {
             workStatusCancle()
         }
 

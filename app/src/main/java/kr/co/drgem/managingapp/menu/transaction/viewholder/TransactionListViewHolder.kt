@@ -116,12 +116,13 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
         }
 
-        if(data.ipgosuryang?.isNotEmpty() == true){
-            data.setSerialCount(data.getIpgosuryangHP())
-        }
-
         if(data.getSerialCount().isNullOrEmpty()){
-            data.setSerialCount("0")
+
+            if(data.ipgosuryang?.isNotEmpty() == true){
+                data.setSerialCount(data.getIpgosuryangHP())
+            }else{
+                data.setSerialCount("0")
+            }
         }
 
             ipgosuryang.setText(data.getSerialCount())
