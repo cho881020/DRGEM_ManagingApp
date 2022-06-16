@@ -67,6 +67,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         spinnerSetIn()
         spinnerSetOut()
 
+        postRequestNotDelivery()
+
 
     }
 
@@ -74,14 +76,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(){
+            backDialog() {
                 workStatusCancle()
-            }
-        }
-
-        binding.btnSave.setOnClickListener {
-            saveDialog() {
-                postRequestNotDelivery()
             }
         }
 
@@ -283,86 +279,123 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     fun postRequestNotDelivery() {
 
-        val chulgodamdangjacode = binding.edtOutName.text.toString()
-        val ipgodamdangjacode = binding.edtInName.text.toString()
+        binding.btnSave.setOnClickListener {
+            saveDialog() {
+                val chulgodamdangjacode = binding.edtOutName.text.toString()
+                val ipgodamdangjacode = binding.edtInName.text.toString()
 
-        val chulgodetail = JsonArray()
+                val chulgodetail = JsonArray()
 
-        notDeliveryData.returnPummokdetailDetail().forEach {
+                notDeliveryData.returnPummokdetailDetail().forEach {
 
-            var serialData = SerialManageUtil.getSerialStringByPummokCode(it.getpummokcodeHP())
-                .toString()
+                    var serialData =
+                        SerialManageUtil.getSerialStringByPummokCode(it.getpummokcodeHP())
+                            .toString()
 
-            if (serialData.isEmpty()) {
+                    if (serialData == "null") {
+                        serialData = ""
+                    }
 
-                serialData = ""
+                    if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
+                        val serialSize = serialData.split(",").size
 
-            }
 
-            if (serialData != "null") {
+//                        if(serialSize > 0){
+                        if (serialSize.toString() != it.getSerialCount()) {
 
-                chulgodetail.add(
-                    NotDeliveryChulgodetail(
-                        it.getyocheongbeonhoHP(),
-                        it.getpummokcodeHP(),
-                        serialData.split(",").size.toString(),
-                        it.getjungyojajeyeobuHP(),
-                        serialData
-                    ).toJsonObject()
-                )
-            }
-        }
 
-        val notDeliveryAdd = hashMapOf(
-            "requesttype" to "02072",
-            "chulgoilja" to calDate,
-            "chulgosaupjangcode" to companyCodeOut,
-            "chulgochanggocode" to wareHouseCodeOut,
-            "chulgodamdangjacode" to chulgodamdangjacode,
-            "ipgosaupjangcode" to companyCodeIn,
-            "ipgodamdangjacode" to wareHouseCodeIn,
-            "ipgochanggocode" to ipgodamdangjacode,
-            "seq" to SEQ,
-            "status" to "777",
-            "pummokcount" to chulgodetail.size().toString(),
-            "chulgodetail" to chulgodetail
-        )
+                            Log.d("yj", "시리얼사이즈: ${serialSize}, 입력시리얼${it.getSerialCount()}")
 
-        if (chulgodetail.size() > 0) {
-            apiList.postRequestNotDeliveryDelivery(notDeliveryAdd)
-                .enqueue(object : Callback<WorkResponse> {
-                    override fun onResponse(
-                        call: Call<WorkResponse>,
-                        response: Response<WorkResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            response.body()?.let {
-                                if (it.resultcd == "000") {
+                            Toast.makeText(
+                                mContext,
+                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            it.serialCheck = true
+                            mAdapter.notifyDataSetChanged()
+                            serialData = ""
 
-                                    SerialManageUtil.clearData()
-                                    mAdapter.notifyDataSetChanged()
-
-                                    Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
-                                        .show()
-                                } else {
-                                    Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
-                                        .show()
-                                }
-
-                                Log.d("yj", "미출고등록 콜 결과코드 : ${it.resultcd}")
-                                Log.d("yj", "미출고등록 콜 결과메시지 : ${it.resultmsg}")
-
-                            }
+                            return@saveDialog
+                        } else {
+                            it.serialCheck = false
+                            mAdapter.notifyDataSetChanged()
                         }
                     }
 
-                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                        Log.d("yj", "미출고등록 실패 결과메시지 : ${t.message}")
-                    }
+                    if (serialData.isNotEmpty()) {
 
-                })
-        } else {
-            Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+                        chulgodetail.add(
+                            NotDeliveryChulgodetail(
+                                it.getyocheongbeonhoHP(),
+                                it.getpummokcodeHP(),
+                                serialData.split(",").size.toString(),
+                                it.getjungyojajeyeobuHP(),
+                                serialData
+                            ).toJsonObject()
+                        )
+                    }
+                }
+
+                val notDeliveryAdd = hashMapOf(
+                    "requesttype" to "02072",
+                    "chulgoilja" to calDate,
+                    "chulgosaupjangcode" to companyCodeOut,
+                    "chulgochanggocode" to wareHouseCodeOut,
+                    "chulgodamdangjacode" to chulgodamdangjacode,
+                    "ipgosaupjangcode" to companyCodeIn,
+                    "ipgodamdangjacode" to wareHouseCodeIn,
+                    "ipgochanggocode" to ipgodamdangjacode,
+                    "seq" to SEQ,
+                    "status" to "777",
+                    "pummokcount" to chulgodetail.size().toString(),
+                    "chulgodetail" to chulgodetail
+                )
+
+                if (chulgodetail.size() > 0) {
+                    apiList.postRequestNotDeliveryDelivery(notDeliveryAdd)
+                        .enqueue(object : Callback<WorkResponse> {
+                            override fun onResponse(
+                                call: Call<WorkResponse>,
+                                response: Response<WorkResponse>
+                            ) {
+                                if (response.isSuccessful) {
+                                    response.body()?.let {
+                                        if (it.resultcd == "000") {
+
+                                            SerialManageUtil.clearData()
+                                            mAdapter.notifyDataSetChanged()
+
+                                            Toast.makeText(
+                                                mContext,
+                                                "저장이 완료되었습니다.",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        } else {
+                                            Toast.makeText(
+                                                mContext,
+                                                it.resultmsg,
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        }
+
+                                        Log.d("yj", "미출고등록 콜 결과코드 : ${it.resultcd}")
+                                        Log.d("yj", "미출고등록 콜 결과메시지 : ${it.resultmsg}")
+
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                                Log.d("yj", "미출고등록 실패 결과메시지 : ${t.message}")
+                            }
+
+                        })
+                } else {
+                    Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
     }
@@ -424,7 +457,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             sawonCode
         )
 
-        mAdapter = NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(), this, tempData)
+        mAdapter =
+            NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(), this, tempData)
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${notDeliveryData.pummokcount} 건)"
@@ -689,7 +723,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog(){
+        backDialog() {
             workStatusCancle()
         }
     }

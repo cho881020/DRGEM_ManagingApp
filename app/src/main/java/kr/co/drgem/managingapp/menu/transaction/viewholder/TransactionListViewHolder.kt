@@ -1,5 +1,7 @@
 package kr.co.drgem.managingapp.menu.transaction.viewholder
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.apis.APIList
 import kr.co.drgem.managingapp.apis.ServerAPI
@@ -27,7 +28,11 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
     RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.transaction_list_item, parent, false)
     ) {
+
+    var data: Georaedetail? = null
+
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+    val ipgosuryang = itemView.findViewById<EditText>(R.id.ipgosuryang)
 
     val seq = itemView.findViewById<TextView>(R.id.seq)
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
@@ -38,9 +43,24 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
     val baljubeonho = itemView.findViewById<TextView>(R.id.baljubeonho)
     val baljusuryang = itemView.findViewById<TextView>(R.id.baljusuryang)
     val giipgosuryang = itemView.findViewById<TextView>(R.id.giipgosuryang)
-    val ipgosuryang = itemView.findViewById<EditText>(R.id.ipgosuryang)
     val baljuseq = itemView.findViewById<TextView>(R.id.baljuseq)
     val location = itemView.findViewById<TextView>(R.id.location)
+
+    val textChangeListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            val serialCount = ipgosuryang.text.toString().trim()
+            data?.setSerialCount(serialCount)
+            Log.d("yj", "키팅뷰홀더포지션2 : ${data?.getSerialCount()}")
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
+    }
 
 
     init {
@@ -66,6 +86,8 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
     }
 
     fun bind(data: Georaedetail, tempData: TempData) {
+
+        this.data = data
 
         itemView.setOnClickListener {
             ipgosuryang.requestFocus()
@@ -116,23 +138,35 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
         }
 
-        if(data.getSerialCount().isNullOrEmpty()){
+        if (data.getSerialCount().isNullOrEmpty()) {
 
-            if(data.ipgosuryang?.isNotEmpty() == true){
+            if (data.ipgosuryang?.isNotEmpty() == true) {
                 data.setSerialCount(data.getIpgosuryangHP())
-            }else{
+            } else {
                 data.setSerialCount("0")
             }
         }
 
-            ipgosuryang.setText(data.getSerialCount())
+        ipgosuryang.setText(data.getSerialCount())
+
+        ipgosuryang.removeTextChangedListener(textChangeListener)
+        ipgosuryang.addTextChangedListener(textChangeListener)
 
 
-
-
-        ipgosuryang.setOnFocusChangeListener { view, b ->
-            val serialCount = ipgosuryang.text.toString().trim()
-            data.setSerialCount(serialCount)
+        if (data.serialCheck) {
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.red
+                )
+            )
+        } else {
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.color_FFFFFF
+                )
+            )
         }
 
 

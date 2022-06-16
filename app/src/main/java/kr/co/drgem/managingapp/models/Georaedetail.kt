@@ -123,5 +123,6 @@ data class Georaedetail(
         return SerialCount
     }
 
+    var serialCheck = false
 
 }

@@ -87,21 +87,50 @@ class RequestDetailDialog : DialogFragment() {
 
     fun setValues() {
 
+        var itemCount = 0
+
+        val serialData = SerialManageUtil.getSerialStringByPummokCode(pummokData.getPummokcodeHP())
+            .toString()
+        val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
+
+
+        if (serialList.size > viewholderCount) {
+            itemCount = serialList.size
+        } else if (serialList.size < viewholderCount) {
+            itemCount = viewholderCount
+        } else {
+            itemCount = viewholderCount
+        }
+
+
+        /**
+         *  serial데이터가 있다면, 시리얼을 목록에 담고,
+         *  없다면 그때 빈값으로 만들 수 있도록
+         */
+
         mSerialDataList.clear()
 
-        for (i in 0..viewholderCount) {             // 뷰 홀더 갯수만큼 돌아
 
-            // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+        for (i in 0 until itemCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+
+            var serial = ""
+
+            if (serialList.isNotEmpty() && serialList.size > i) {      // 시리얼리스트가 사이즈 i보다 크거나 같을 때
+
+                serial = serialList[i]
+
+            }
+
             mSerialDataList.add(
                 SerialLocalDB(
                     pummokData.pummokcode!!,
-                    "",
+                    serial,
                     "${i}"
                 )
             )
         }
 
-        mAdapter = DialogEditRequestAdapter(viewholderCount, mSerialDataList)
+        mAdapter = DialogEditRequestAdapter(itemCount, mSerialDataList, serialList)
         binding.recyclerView.adapter = mAdapter
 
         binding.yocheongbeonho.text = mYocheongbeonho

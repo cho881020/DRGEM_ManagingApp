@@ -17,9 +17,11 @@ class RequestSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
     val edtSerial = itemView.findViewById<EditText>(R.id.edtSerial)
     val btnRemove = itemView.findViewById<ImageView>(R.id.btnRemove)
 
-    fun bind(position: Int, data: SerialLocalDB) {
+    fun bind(position: Int, data: SerialLocalDB, serialData: String) {
 
         txtNumber.text = "${position+1}"
+
+        edtSerial.setText(serialData)
 
         edtSerial.addTextChangedListener {
 

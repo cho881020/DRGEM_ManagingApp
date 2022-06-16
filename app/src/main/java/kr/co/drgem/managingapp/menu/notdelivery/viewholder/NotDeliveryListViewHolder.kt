@@ -108,7 +108,6 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
-        chulgosuryang.setText(data.getchulgosuryangHP())
 
 
         btnEdit.isVisible = data.jungyojajeyeobu == "Y"
@@ -143,6 +142,22 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
         chulgosuryang.removeTextChangedListener(textChangeListener)
         chulgosuryang.addTextChangedListener(textChangeListener)
+
+        if (data.serialCheck) {
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.red
+                )
+            )
+        } else {
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.color_FFFFFF
+                )
+            )
+        }
 
 
         btnEdit.setOnClickListener {

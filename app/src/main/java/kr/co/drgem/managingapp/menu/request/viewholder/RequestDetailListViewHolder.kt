@@ -136,14 +136,25 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         }
         chulgosuryang.setText(data.getSerialCount())
 
-
         chulgosuryang.removeTextChangedListener(textChangeListener)
         chulgosuryang.addTextChangedListener(textChangeListener)
 
-//        chulgosuryang.setOnFocusChangeListener { view, b ->
-//            val serialCount = chulgosuryang.text.toString().trim()
-//            data.setSerialCount(serialCount)
-//        }
+        if (data.serialCheck) {
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.red
+                )
+            )
+        } else {
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.color_FFFFFF
+                )
+            )
+        }
+
 
         btnEdit.setOnClickListener {
 

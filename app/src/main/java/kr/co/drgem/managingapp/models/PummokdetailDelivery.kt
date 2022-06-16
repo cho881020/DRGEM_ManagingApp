@@ -134,5 +134,6 @@ data class PummokdetailDelivery(
         return SerialCount
     }
 
+    var serialCheck = false
 
 }
