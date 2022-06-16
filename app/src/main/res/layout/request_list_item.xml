@@ -10,13 +10,13 @@
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:gravity="center_vertical"
-            android:paddingHorizontal="1dp"
+            android:paddingHorizontal="10dp"
             android:orientation="horizontal">
 
 
             <TextView
                 android:id="@+id/yocheongil"
-                android:layout_width="100dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -49,7 +49,7 @@
 
             <TextView
                 android:id="@+id/yocheongja"
-                android:layout_width="100dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"

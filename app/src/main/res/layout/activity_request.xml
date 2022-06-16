@@ -422,7 +422,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:text="요청일"
                             android:textColor="@color/color_808080"
@@ -445,7 +445,7 @@
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:text="요청자"
                             android:textColor="@color/color_808080"

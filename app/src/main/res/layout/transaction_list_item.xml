@@ -11,7 +11,7 @@
         android:layout_height="45dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="1dp">
+        android:paddingHorizontal="10dp">
 
         <TextView
             android:id="@+id/seq"

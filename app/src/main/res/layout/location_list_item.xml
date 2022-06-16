@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center_vertical"
-        android:paddingHorizontal="1dp"
+        android:paddingHorizontal="10dp"
         android:orientation="horizontal">
 
 
@@ -59,8 +59,9 @@
 
         <TextView
             android:id="@+id/danwi"
-            android:layout_width="100dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:maxLines="1"
             android:ellipsize="end"
             android:paddingRight="3dp"
@@ -70,7 +71,7 @@
 
         <TextView
             android:id="@+id/location"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
@@ -81,8 +82,9 @@
 
         <TextView
             android:id="@+id/hyeonjaegosuryang"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:maxLines="1"
             android:ellipsize="end"
             android:paddingRight="3dp"

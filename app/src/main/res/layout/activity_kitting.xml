@@ -368,7 +368,7 @@
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="60dp"
                             android:layout_height="17dp"
                             android:text="키팅자"
                             android:textColor="@color/color_808080"
@@ -377,7 +377,7 @@
 
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="80dp"
                             android:layout_height="17dp"
                             android:text="불출창고"
                             android:textColor="@color/color_808080"

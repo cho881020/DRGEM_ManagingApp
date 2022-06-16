@@ -559,14 +559,14 @@
 
                         <TextView
                             android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="품목코드"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="품명"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
@@ -574,58 +574,63 @@
 
                         <TextView
                             android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="도번/모델"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
                             android:text="사양"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="단위"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
                             android:text="창고위치"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="현재재고수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="요청수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="기출고수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
 
                         <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
                             android:text="출고수량"
+                            android:gravity="center"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
@@ -633,12 +638,13 @@
 
                         <TextView
                             android:id="@+id/serialDetail"
-                            android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
                             android:text="시리얼/상세"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp"
-                            android:visibility="gone"/>
+                            android:visibility="gone"
+                            tools:visibility="visible"/>
 
 
                     </LinearLayout>

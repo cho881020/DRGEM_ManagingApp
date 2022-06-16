@@ -491,7 +491,7 @@
                             android:paddingHorizontal="10dp">
 
                             <TextView
-                                android:layout_width="40dp"
+                                android:layout_width="35dp"
                                 android:layout_height="17dp"
                                 android:text="순번"
                                 android:textColor="@color/color_808080"
@@ -522,13 +522,12 @@
                             <TextView
                                 android:layout_width="60dp"
                                 android:layout_height="17dp"
-                                android:gravity="center"
                                 android:text="사양"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="50dp"
+                                android:layout_width="60dp"
                                 android:layout_height="17dp"
                                 android:gravity="center"
                                 android:text="단위"
@@ -536,7 +535,7 @@
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="60dp"
+                                android:layout_width="80dp"
                                 android:layout_height="17dp"
                                 android:gravity="center"
                                 android:text="발주수량"
@@ -552,7 +551,7 @@
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="70dp"
+                                android:layout_width="80dp"
                                 android:layout_height="17dp"
                                 android:gravity="center"
                                 android:text="기입고수량"
@@ -560,7 +559,7 @@
                                 android:textSize="12dp" />
 
                             <TextView
-                                android:layout_width="60dp"
+                                android:layout_width="80dp"
                                 android:layout_height="17dp"
                                 android:gravity="center"
                                 android:text="입고수량"

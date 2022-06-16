@@ -10,7 +10,7 @@
         android:layout_height="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="1dp">
+        android:paddingHorizontal="10dp">
 
 
         <TextView
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/sayang"
-            android:layout_width="100dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
@@ -59,8 +59,9 @@
 
         <TextView
             android:id="@+id/danwi"
-            android:layout_width="100dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:maxLines="1"
             android:ellipsize="end"
             android:paddingRight="3dp"
@@ -70,7 +71,7 @@
 
         <TextView
             android:id="@+id/location"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
@@ -81,8 +82,9 @@
 
         <TextView
             android:id="@+id/hyeonjaegosuryang"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:maxLines="1"
             android:ellipsize="end"
             android:paddingRight="3dp"
@@ -93,8 +95,9 @@
 
         <TextView
             android:id="@+id/yocheongsuryang"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:maxLines="1"
             android:ellipsize="end"
             android:paddingRight="3dp"
@@ -105,8 +108,9 @@
 
         <TextView
             android:id="@+id/gichulgosuryang"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:maxLines="1"
             android:ellipsize="end"
             android:paddingRight="3dp"
@@ -115,8 +119,9 @@
             android:textColor="@color/black" />
 
         <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="wrap_content">
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <EditText
                 android:id="@+id/chulgosuryang"
@@ -128,14 +133,13 @@
                 android:selectAllOnFocus="true"
                 android:imeOptions="actionNext"
                 android:textSize="12dp"
-                android:gravity="center"
                 android:background="@drawable/light_gray_box"
                 android:textColor="@color/black" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content">
 
             <TextView
