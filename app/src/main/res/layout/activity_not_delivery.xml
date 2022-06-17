@@ -280,7 +280,6 @@
                         android:maxLines="1"
                         android:inputType="text"
                         android:privateImeOptions="defaultInputmode=korean"
-                        android:text="김영진"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
@@ -869,13 +868,32 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutLocation"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="창고위치"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtLocation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="창고위치"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+
+
+                            <ImageView
+                                android:id="@+id/imgLocation"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"/>
+
+
+                        </LinearLayout>
+
 
                         <TextView
                             android:layout_width="80dp"

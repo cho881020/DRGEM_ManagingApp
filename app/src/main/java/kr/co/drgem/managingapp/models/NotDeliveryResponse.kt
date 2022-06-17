@@ -20,4 +20,25 @@ data class NotDeliveryResponse(
         return pummokdetailList
     }
 
+
+    fun getUpLocation(): ArrayList<PummokdetailDelivery>{
+        val sortList : ArrayList<PummokdetailDelivery> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortBy { it.location }
+        return sortList
+    }
+
+    fun getDownLocation(): ArrayList<PummokdetailDelivery>{
+        val sortList : ArrayList<PummokdetailDelivery> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortByDescending { it.location }
+        return sortList
+    }
+
 }

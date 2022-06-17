@@ -109,10 +109,6 @@ class KittingActivity : BaseActivity() {
 
         }
 
-        binding.btnFind.setOnClickListener {
-            binding.layoutList.isVisible = true
-            binding.layoutEmpty.isVisible = false
-        }
 
         binding.btnKittingjaRemove.setOnClickListener {
             binding.edtKittingja.text = null
@@ -144,6 +140,8 @@ class KittingActivity : BaseActivity() {
 
     }
 
+
+
     fun getRequestKitting(){
         binding.btnFind.setOnClickListener {
 
@@ -158,14 +156,16 @@ class KittingActivity : BaseActivity() {
                     if(response.isSuccessful){
                         response.body()?.let {
 
+                            kittingData = it
+                            setValues()
+
                             if(it.returnKittingDetail().size == 0){
                                 Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                mAdapter.clearList()
+                                binding.txtCount.text = "(0건)"
 
                             }
                             else {
-                                kittingData = it
-
-                                setValues()
 
                                 binding.layoutList.isVisible = true
                                 binding.layoutEmpty.isVisible = false
@@ -178,7 +178,9 @@ class KittingActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<KittingResponse>, t: Throwable) {
-                    Log.d("yj", "키팅번호요청실패 : ${t.message}" )
+
+                    mAdapter.clearList()
+                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
                 }
 
             })
@@ -188,7 +190,8 @@ class KittingActivity : BaseActivity() {
 
     override fun setValues() {
 
-        mAdapter = KittingListAdapter(kittingData.returnKittingDetail())
+        mAdapter = KittingListAdapter()
+        mAdapter.setList(kittingData.returnKittingDetail())
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${kittingData.returnKittingDetail().size}건)"

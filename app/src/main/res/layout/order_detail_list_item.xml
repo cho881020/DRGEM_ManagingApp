@@ -173,7 +173,6 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:paddingRight="3dp"
-            android:gravity="center"
             android:text="구미공장"
             android:textSize="12dp"
             android:textColor="@color/black" />

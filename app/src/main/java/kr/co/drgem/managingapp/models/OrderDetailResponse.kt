@@ -62,6 +62,24 @@ data class OrderDetailResponse(
         return nappumjangso
     }
 
+    fun getUpLocation(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortBy { it.location }
+        return sortList
+    }
 
+    fun getDownLocation(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortByDescending { it.location }
+        return sortList
+    }
 
 }

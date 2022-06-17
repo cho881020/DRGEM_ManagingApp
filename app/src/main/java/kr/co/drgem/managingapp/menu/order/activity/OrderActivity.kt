@@ -24,6 +24,8 @@ class OrderActivity : BaseActivity() {
 
     lateinit var binding: ActivityOrderBinding
     lateinit var mOrderAdapter: OrderListAdapter
+
+    lateinit var masterData: MasterDataResponse
     val baljuList = ArrayList<Baljubeonho>()
 
 
@@ -39,9 +41,11 @@ class OrderActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order)
 
+        masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
+
+
         setupEvents()
         setValues()
-
         getAllBaljubeonhoInLocalDB()
     }
 
@@ -131,9 +135,9 @@ class OrderActivity : BaseActivity() {
                                 baljuList.clear()
                                 baljuList.addAll(it.returnBaljubeonho())
 
-
                                 if(baljuList.size == 0){
                                     Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                    mOrderAdapter.clearList()
                                 }
 
                                 setBaljubeonhoListData()
@@ -149,7 +153,9 @@ class OrderActivity : BaseActivity() {
                     }
 
                     override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
-                        Log.d("yj", "발주 번호 오류 : ${t.message}")
+
+                        mOrderAdapter.clearList()
+                        Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
                     }
 
                 })
@@ -206,12 +212,8 @@ class OrderActivity : BaseActivity() {
 
     override fun setValues() {
 
-        val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
-
-        mOrderAdapter = OrderListAdapter(baljuList, masterData)
+        mOrderAdapter = OrderListAdapter(masterData, baljuList)
         binding.recyclerView.adapter = mOrderAdapter
-
-
 
     }
 
@@ -222,8 +224,8 @@ class OrderActivity : BaseActivity() {
             binding.layoutEmpty.isVisible = false
         }
 
-        binding.txtCount.text = "(${baljuList.size}건)"
 
+        binding.txtCount.text = "(${baljuList.size}건)"
 
         mOrderAdapter.notifyDataSetChanged()
 

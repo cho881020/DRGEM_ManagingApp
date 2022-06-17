@@ -6,15 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.viewholder.OrderDetailListViewHolder
+import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.Baljudetail
 import kr.co.drgem.managingapp.models.TempData
 
 class OrderDetailListAdapter(
     val listener: OrderDetailEditListener,
     val mContext: Context,
-    val mList: List<Baljudetail>,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    val mList = ArrayList<Baljudetail>()
     var tempData = TempData("","","","","","",)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -32,6 +33,17 @@ class OrderDetailListAdapter(
 
     fun setTemp(tempData : TempData) {
         this.tempData = tempData
+        notifyDataSetChanged()
+    }
+
+    fun setList(list: ArrayList<Baljudetail>) {
+        mList.clear()
+        mList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun clearList() {
+        mList.clear()
         notifyDataSetChanged()
     }
 

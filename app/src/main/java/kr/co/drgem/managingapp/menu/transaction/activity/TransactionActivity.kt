@@ -177,6 +177,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
 
         mAdapter = TransactionAdapter(this)
+        mAdapter.setList(tranData.returnGeoraedetail())
         mAdapter.setTemp(setTempData())
         binding.recyclerView.adapter = mAdapter
 
@@ -292,7 +293,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                         if (it.resultcd == "000") {
                             SEQ = it.seq
                             status = "333"
-
                             getRequestTran()
 
                             Log.d("yj", "SEQ : ${it.seq}")
@@ -325,17 +325,20 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let {
+
                             tranData = it
                             baljubeonho = it.getGeoraemyeongsebeonhoHP()
+                            setValues()
 
                             if (it.returnGeoraedetail().size == 0) {
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
-                                    .show()
+
+                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                mAdapter.clearList()
+                                binding.txtCount.text = "(0건)"
+                                binding.layoutInfo.isVisible = false
+
+
                             } else {
-
-                                setValues()
-                                mAdapter.setList(it.returnGeoraedetail())
-
 
                                 binding.layoutEmpty.isVisible = false
                                 binding.layoutList.isVisible = true
@@ -350,7 +353,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 }
 
                 override fun onFailure(call: Call<TranResponse>, t: Throwable) {
-                    Log.d("yj", "거래명세요청실패 : ${t.message}")
+                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    mAdapter.clearList()
                 }
 
             })
@@ -360,6 +364,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     fun postRequestTran() {
 
         binding.btnSave.setOnClickListener {
+
             saveDialog() {
                 val georaedetail = JsonArray()   // 등록용 리스트
                 val inputName = binding.edtName.text.toString()
@@ -449,7 +454,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            mAdapter.notifyDataSetChanged()
+                                            getRequestTran()
 
                                             Toast.makeText(
                                                 mContext,

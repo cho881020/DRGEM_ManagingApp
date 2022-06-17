@@ -90,8 +90,7 @@
             android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="15dp"
             android:layout_marginTop="10dp"
             android:background="@color/color_FFFFFF"
             android:orientation="vertical">

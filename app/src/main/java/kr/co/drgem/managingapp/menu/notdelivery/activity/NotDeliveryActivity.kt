@@ -15,6 +15,7 @@ import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityNotDeliveryBinding
+import kr.co.drgem.managingapp.menu.kitting.adapter.KittingListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.adapter.NotDeliveryListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.dialog.NotDeliveryDialog
@@ -66,6 +67,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         dateSet()
 
         postRequestNotDelivery()
+        sort()
 
 
     }
@@ -222,14 +224,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     fun getRequestNotDelivery() {
 
         val yocheongja = binding.edtName.text.toString()
-        if (yocheongja.isEmpty()) {
-            Toast.makeText(mContext, "요청자를 입력하세요", Toast.LENGTH_SHORT).show()
 
-        }
-        var yocheongpummok = binding.edtCode.text.toString()
-        if (yocheongpummok.isEmpty()) {
-            yocheongpummok = "1"
-        }
+        val yocheongpummok = binding.edtCode.text.toString()
+
 
 
         apiList.getRequestNotDeliveryDetail(
@@ -248,12 +245,16 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
+
+                        notDeliveryData = it
+                        setValues()
+
                         if (it.returnPummokdetailDetail().size == 0) {
                             Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
-                        } else {
-                            notDeliveryData = it
-
                             setValues()
+                            mAdapter.clearList()
+
+                        } else {
 
                             binding.layoutList.isVisible = true
                             binding.layoutEmpty.isVisible = false
@@ -267,7 +268,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
 
             override fun onFailure(call: Call<NotDeliveryResponse>, t: Throwable) {
-                Log.d("yj", "미출고명세 실패 : ${t.message}")
+                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                mAdapter.clearList()
             }
 
         })
@@ -361,7 +363,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            mAdapter.notifyDataSetChanged()
+                                            getRequestNotDelivery()
 
                                             Toast.makeText(
                                                 mContext,
@@ -461,8 +463,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     override fun setValues() {
 
         mAdapter =
-            NotDeliveryListAdapter(notDeliveryData.returnPummokdetailDetail(), this)
+            NotDeliveryListAdapter(this)
         binding.recyclerView.adapter = mAdapter
+        mAdapter.setList(notDeliveryData.returnPummokdetailDetail())
         mAdapter.setTemp(setTempData())
 
         binding.txtCount.text = "(${notDeliveryData.pummokcount} 건)"
@@ -695,6 +698,39 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         }
 
+    }
+
+    fun sort() {
+
+        var onClickLocation = 0
+
+        binding.layoutLocation.setOnClickListener {
+
+            if (onClickLocation < 2) {
+                onClickLocation++
+            } else {
+                onClickLocation = 0
+            }
+
+            when (onClickLocation) {
+
+                0 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(notDeliveryData.returnPummokdetailDetail())
+                }
+
+                1 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(notDeliveryData.getDownLocation())
+                }
+
+                2 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(notDeliveryData.getUpLocation())
+                }
+            }
+
+        }
     }
 
     fun dateSet() {

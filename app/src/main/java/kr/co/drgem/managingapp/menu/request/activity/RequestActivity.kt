@@ -142,13 +142,16 @@ class RequestActivity : BaseActivity() {
 
                         response.body()?.let {
 
+                            yocheongdetail = it.returnYocheongDetail()
+                            setValues()
+
                             if(it.returnYocheongDetail().size == 0){
+                                mAdapter.clearList()
                                 Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                binding.txtCount.text = "(0건)"
+
                             }
                             else {
-                                yocheongdetail = it.returnYocheongDetail()
-
-                                setValues()
 
                                 binding.layoutList.isVisible = true
                                 binding.layoutEmpty.isVisible = false
@@ -162,7 +165,8 @@ class RequestActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<RequestResponse>, t: Throwable) {
-                    Log.d("yj", "요청번호요청 실패 : ${t.message}" )
+                    mAdapter.clearList()
+                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
                }
 
             })
@@ -173,7 +177,8 @@ class RequestActivity : BaseActivity() {
 
     override fun setValues() {
 
-        mAdapter = RequestListAdapter(yocheongdetail, companyCode, wareHouseCode)
+        mAdapter = RequestListAdapter(companyCode, wareHouseCode)
+        mAdapter.setList(yocheongdetail)
         binding.recyclerView.adapter = mAdapter
 
 

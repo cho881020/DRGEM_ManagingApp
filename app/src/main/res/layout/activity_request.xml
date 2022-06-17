@@ -264,7 +264,6 @@
                         android:background="@null"
                         android:maxLines="1"
                         android:inputType="text"
-                        android:text="김영진"
                         android:privateImeOptions="defaultInputmode=korean"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />

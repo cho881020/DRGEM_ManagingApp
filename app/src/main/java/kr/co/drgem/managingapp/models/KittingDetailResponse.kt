@@ -33,5 +33,25 @@ data class KittingDetailResponse(
         return pummokdetailList
     }
 
+    fun getUpLocation(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortBy { it.location }
+        return sortList
+    }
+
+    fun getDownLocation(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortByDescending { it.location }
+        return sortList
+    }
+
 
 }

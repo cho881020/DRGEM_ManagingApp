@@ -38,7 +38,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     val dialog = KittingDetailDialog()
 
-    var mkittingbeonho =  ""
+    var mkittingbeonho = ""
     var SEQ = ""
     var status = "111"
 
@@ -66,10 +66,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         setupEvents()
         dateSet()
         postRequestKitting()
+        sort()
     }
 
     override fun onBackPressed() {
-        backDialog(){
+        backDialog() {
             workStatusCancle()
         }
     }
@@ -77,7 +78,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(){
+            backDialog() {
                 workStatusCancle()
             }
         }
@@ -121,8 +122,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     override fun setValues() {
 
 
-        mAdapter = KittingDetailListAdapter(kittingDetailData.returnKittingDetail(), this)
+        mAdapter = KittingDetailListAdapter(this)
         mAdapter.setTemp(setTempData())
+        mAdapter.setList(kittingDetailData.returnKittingDetail())
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${kittingDetailData.getPummokCount()} 건)"
@@ -199,16 +201,21 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                     if (response.isSuccessful) {
                         response.body()?.let {
                             kittingDetailData = it
-
                             setValues()
 
+                            if (it.returnKittingDetail().size == 0) {
+                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                mAdapter.clearList()
+
+                            }
 
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<KittingDetailResponse>, t: Throwable) {
-                    Log.d("yj", "키팅명세요청실패 : ${t.message}")
+                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    mAdapter.clearList()
                 }
 
             })
@@ -310,7 +317,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            mAdapter.notifyDataSetChanged()
+                                            getRequestKittingDetail()
 
                                             Toast.makeText(
                                                 mContext,
@@ -538,6 +545,40 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         }
 
     }
+
+    fun sort() {
+
+        var onClickLocation = 0
+
+        binding.layoutLocation.setOnClickListener {
+
+            if (onClickLocation < 2) {
+                onClickLocation++
+            } else {
+                onClickLocation = 0
+            }
+
+            when (onClickLocation) {
+
+                0 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(kittingDetailData.returnKittingDetail())
+                }
+
+                1 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(kittingDetailData.getDownLocation())
+                }
+
+                2 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(kittingDetailData.getUpLocation())
+                }
+            }
+
+        }
+    }
+
 
     fun dateSet() {
         val cal = Calendar.getInstance()

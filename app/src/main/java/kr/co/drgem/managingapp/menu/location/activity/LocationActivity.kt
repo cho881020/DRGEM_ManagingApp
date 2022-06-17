@@ -173,23 +173,27 @@ class LocationActivity : BaseActivity() {
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let {
+
+                            mList = it.returnPummokDetail()
+
                             if (it.returnPummokDetail().size == 0) {
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
-                                    .show()
+                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                mList.clear()
+
                             } else {
-                                mList = it.returnPummokDetail()
-
-                                setValues()
-
                                 binding.layoutList.isVisible = true
                                 binding.layoutEmpty.isVisible = false
                             }
+
+                            setValues()
+
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<LocationResponse>, t: Throwable) {
-
+                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    mList.clear()
                 }
             })
     }
@@ -238,6 +242,8 @@ class LocationActivity : BaseActivity() {
 
                                 Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
                                     .show()
+                                getRequestLocation()
+
                             } else {
                                 Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
                                     .show()

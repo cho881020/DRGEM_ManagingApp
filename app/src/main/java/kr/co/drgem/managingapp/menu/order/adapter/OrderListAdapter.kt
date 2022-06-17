@@ -5,12 +5,14 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.order.viewholder.OrderListViewHolder
 import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.Detailcode
+import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.models.MasterDataResponse
 
 class OrderListAdapter(
-    val baljuList : ArrayList<Baljubeonho>,
-    val masterData: MasterDataResponse
+    val masterData: MasterDataResponse,
+    val baljuList : ArrayList<Baljubeonho>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return OrderListViewHolder(parent)
@@ -23,5 +25,12 @@ class OrderListAdapter(
     }
 
     override fun getItemCount() = baljuList.size
+
+
+
+    fun clearList() {
+        baljuList.clear()
+        notifyDataSetChanged()
+    }
 
 }

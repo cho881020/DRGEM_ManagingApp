@@ -6,14 +6,15 @@ import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.menu.kitting.viewholder.KittingDetailListViewHolder
 import kr.co.drgem.managingapp.menu.kitting.viewholder.KittingListViewHolder
 import kr.co.drgem.managingapp.menu.order.viewholder.OrderListViewHolder
+import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.models.TempData
 
 class KittingDetailListAdapter(
-    val mList : ArrayList<Pummokdetail>,
     val listener : KittingDetailEditListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    val mList = ArrayList<Pummokdetail>()
     var tempData = TempData("","","","","","",)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -30,6 +31,17 @@ class KittingDetailListAdapter(
 
     fun setTemp(tempData : TempData) {
         this.tempData = tempData
+        notifyDataSetChanged()
+    }
+
+    fun setList(list: ArrayList<Pummokdetail>) {
+        mList.clear()
+        mList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun clearList() {
+        mList.clear()
         notifyDataSetChanged()
     }
 }

@@ -20,4 +20,6 @@ class LocationListAdapter(
     }
 
     override fun getItemCount() = mList.size
+
+
 }

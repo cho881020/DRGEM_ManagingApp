@@ -59,9 +59,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
 
         setupEvents()
-        setValues()
         getRequestOrderDetail()
         postRequestOrderDetail()
+        sort()
 
     }
 
@@ -151,7 +151,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     override fun setValues() {
 
 
-        mAdapter = OrderDetailListAdapter(this, mContext, baljuDetail)
+        mAdapter = OrderDetailListAdapter(this, mContext)
+        mAdapter.setList(orderDetailData.returnBaljudetail())
         mAdapter.setTemp(setTempData())
         binding.recyclerView.adapter = mAdapter
 
@@ -235,6 +236,39 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
             }
     }
+
+    fun sort() {
+        var onClickLocation = 0
+
+        binding.layoutLocation.setOnClickListener {
+
+            if (onClickLocation < 2) {
+                onClickLocation++
+            } else {
+                onClickLocation = 0
+            }
+
+            when (onClickLocation) {
+
+                0 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(orderDetailData.returnBaljudetail())
+                }
+
+                1 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(orderDetailData.getDownLocation())
+                }
+
+                2 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(orderDetailData.getUpLocation())
+                }
+            }
+
+        }
+    }
+
 
     fun setOrderDetailDataToUI() {
 
@@ -331,6 +365,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                         response.body()?.let {
 
                             orderDetailData = it
+                            setValues()
 
                             baljuDetail.clear()
                             baljuDetail.addAll(it.returnBaljudetail())
@@ -338,7 +373,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                             setOrderDetailDataToUI()
 
 
-                            clearAndSaveDataToDB()
+                            /**
+                             * clearAndSaveDataToDB() 에서 계속 오류발생 테스트 위해 임시 주석처리
+                             */
+//                            clearAndSaveDataToDB()
 
                         }
                     }
@@ -448,7 +486,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            mAdapter.notifyDataSetChanged()
+                                            getRequestOrderDetail()
 
                                             Toast.makeText(
                                                 mContext,

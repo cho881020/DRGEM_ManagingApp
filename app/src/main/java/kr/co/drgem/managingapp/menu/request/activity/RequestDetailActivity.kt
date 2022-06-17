@@ -68,6 +68,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         setupEvents()
         dateSet()
         PostRequestRequest()
+        sort()
 
     }
 
@@ -107,8 +108,9 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
     override fun setValues() {
 
-        mAdapter = RequestDetailListAdapter(requestDetailData.returnPummokDetail(), this)
+        mAdapter = RequestDetailListAdapter(this)
         mAdapter.setTemp(setTempData())
+        mAdapter.setList(requestDetailData.returnPummokDetail())
         binding.recyclerView.adapter = mAdapter
 
 
@@ -294,7 +296,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            mAdapter.notifyDataSetChanged()
+                                            getRequestDetail()
 
                                             Toast.makeText(
                                                 mContext,
@@ -517,6 +519,40 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         }
 
     }
+
+    fun sort() {
+
+        var onClickLocation = 0
+
+        binding.layoutLocation.setOnClickListener {
+
+            if (onClickLocation < 2) {
+                onClickLocation++
+            } else {
+                onClickLocation = 0
+            }
+
+            when (onClickLocation) {
+
+                0 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(requestDetailData.returnPummokDetail())
+                }
+
+                1 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(requestDetailData.getDownLocation())
+                }
+
+                2 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(requestDetailData.getUpLocation())
+                }
+            }
+
+        }
+    }
+
 
     fun dateSet() {
         val cal = Calendar.getInstance()
