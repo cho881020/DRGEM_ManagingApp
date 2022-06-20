@@ -26,7 +26,7 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
 
         edtSerial.addTextChangedListener {
-
+            data.serial = edtSerial.text.toString()
         }
 
         edtSerial.setOnEditorActionListener { textView, actionId, keyEvent ->
@@ -38,7 +38,6 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
                 }
             }
 
-            data.serial = edtSerial.text.toString()
 
             return@setOnEditorActionListener actionId != 5
 

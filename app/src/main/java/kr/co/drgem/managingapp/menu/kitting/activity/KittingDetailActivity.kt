@@ -276,7 +276,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                     chulgodetail.add(
                         KittingChulgodetail(
-                            mkittingbeonho,
+                            it.getyocheongbeonhoHP(),
                             it.getPummokcodeHP(),
                             it.getSerialCount(),
                             it.getjungyojajeyeobuHP(),

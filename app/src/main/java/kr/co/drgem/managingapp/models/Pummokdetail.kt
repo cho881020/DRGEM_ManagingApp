@@ -12,6 +12,7 @@ data class Pummokdetail(
     val gichulgosuryang: String?,        //기출고수량
     val chulgosuryang: String?,          //출고수량
     val jungyojajeyeobu: String?,        //중요자재여부
+    val yocheongbeonho: String?,        //요청번호
 
 
 ) {
@@ -91,6 +92,13 @@ data class Pummokdetail(
             return "-"
         }
         return jungyojajeyeobu
+    }
+
+    fun getyocheongbeonhoHP() : String {
+        if(yocheongbeonho == null){
+            return "-"
+        }
+        return yocheongbeonho
     }
 
     private var locationAdd = ""
