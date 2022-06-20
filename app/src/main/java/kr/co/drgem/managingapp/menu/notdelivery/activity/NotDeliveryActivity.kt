@@ -15,7 +15,6 @@ import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityNotDeliveryBinding
-import kr.co.drgem.managingapp.menu.kitting.adapter.KittingListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.adapter.NotDeliveryListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.dialog.NotDeliveryDialog
@@ -295,33 +294,34 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         serialData = ""
                     }
 
-                    if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
-                        val serialSize = serialData.split(",").size
+
+                    if (it.jungyojajeyeobu == "Y") {
+
+                        if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
+                            val serialSize = serialData.split(",").size
 
 
-//                        if(serialSize > 0){
-                        if (serialSize.toString() != it.getSerialCount()) {
+                            if (serialSize.toString() != it.getSerialCount()) {
 
+                                Log.d("yj", "시리얼사이즈: ${serialSize}, 입력시리얼${it.getSerialCount()}")
 
-                            Log.d("yj", "시리얼사이즈: ${serialSize}, 입력시리얼${it.getSerialCount()}")
+                                Toast.makeText(
+                                    mContext,
+                                    "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                it.serialCheck = true
+                                mAdapter.notifyDataSetChanged()
+                                serialData = ""
 
-                            Toast.makeText(
-                                mContext,
-                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            it.serialCheck = true
-                            mAdapter.notifyDataSetChanged()
-                            serialData = ""
-
-                            return@saveDialog
-                        } else {
-                            it.serialCheck = false
-                            mAdapter.notifyDataSetChanged()
+                                return@saveDialog
+                            } else {
+                                it.serialCheck = false
+                                mAdapter.notifyDataSetChanged()
+                            }
                         }
                     }
 
-                    if (serialData.isNotEmpty()) {
 
                         chulgodetail.add(
                             NotDeliveryChulgodetail(
@@ -333,7 +333,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             ).toJsonObject()
                         )
                     }
-                }
 
                 val notDeliveryAdd = hashMapOf(
                     "requesttype" to "02072",

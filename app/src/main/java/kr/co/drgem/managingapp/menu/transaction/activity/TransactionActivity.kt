@@ -380,47 +380,40 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                         serialData = ""
                     }
 
-                    if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
-                        val serialSize = serialData.split(",").size
+                    if (it.jungyojajeyeobu == "Y") {
 
-                        Log.d("yj", "serialDataSize : $serialSize")
-                        Log.d("yj", "serialData : $serialData")
+                        if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
+                            val serialSize = serialData.split(",").size
 
-                        Log.d("yj", "시리얼입력수량 : ${it.getSerialCount()}")
+                            if (serialSize.toString() != it.getSerialCount()) {
+                                Toast.makeText(
+                                    mContext,
+                                    "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                it.serialCheck = true
+                                mAdapter.notifyDataSetChanged()
+                                serialData = ""
 
-//                        if(serialSize > 0){
-                        if (serialSize.toString() != it.getSerialCount()) {
-                            Toast.makeText(
-                                mContext,
-                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            it.serialCheck = true
-                            mAdapter.notifyDataSetChanged()
-                            serialData = ""
-
-                            return@saveDialog
-                        } else {
-                            it.serialCheck = false
-                            mAdapter.notifyDataSetChanged()
+                                return@saveDialog
+                            } else {
+                                it.serialCheck = false
+                                mAdapter.notifyDataSetChanged()
+                            }
                         }
                     }
 
 
-                    if (serialData .isNotEmpty()) {
-
-                        georaedetail.add(                         // 리스트에 담기
-                            GeoraedetailAdd(
-                                it.getSeqHP(),
-                                it.getPummokcodeHP(),
-                                serialData.split(",").size.toString(),
-                                it.getJungyojajeyeobuHP(),
-                                it.getBaljubeonhoHP(),
-                                serialData
-                            ).toJsonObject()                            // JSONObject로 제작
-                        )
-                    }
-
+                    georaedetail.add(                         // 리스트에 담기
+                        GeoraedetailAdd(
+                            it.getSeqHP(),
+                            it.getPummokcodeHP(),
+                            serialData.split(",").size.toString(),
+                            it.getJungyojajeyeobuHP(),
+                            it.getBaljubeonhoHP(),
+                            serialData
+                        ).toJsonObject()                            // JSONObject로 제작
+                    )
 
                 }
 

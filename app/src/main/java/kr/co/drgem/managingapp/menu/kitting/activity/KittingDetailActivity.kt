@@ -242,47 +242,40 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         serialData = ""
                     }
 
-                    if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
-                        val serialSize = serialData.split(",").size
+                    if (it.jungyojajeyeobu == "Y") {
+                        if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
+                            val serialSize = serialData.split(",").size
 
-                        Log.d("yj", "serialDataSize : $serialSize")
-                        Log.d("yj", "serialData : $serialData")
+                            if (serialSize.toString() != it.getSerialCount()) {
+                                Toast.makeText(
+                                    mContext,
+                                    "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                it.serialCheck = true
+                                mAdapter.notifyDataSetChanged()
+                                serialData = ""
 
-                        Log.d("yj", "시리얼입력수량 : ${it.getSerialCount()}")
-
-//                        if(serialSize > 0){
-                        if (serialSize.toString() != it.getSerialCount()) {
-                            Toast.makeText(
-                                mContext,
-                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            it.serialCheck = true
-                            mAdapter.notifyDataSetChanged()
-                            serialData = ""
-
-                            return@saveDialog
-                        } else {
-                            it.serialCheck = false
-                            mAdapter.notifyDataSetChanged()
+                                return@saveDialog
+                            } else {
+                                it.serialCheck = false
+                                mAdapter.notifyDataSetChanged()
+                            }
                         }
                     }
-//                    }
 
 
-                    if (serialData.isNotEmpty()) {
-
-                        chulgodetail.add(
-                            KittingChulgodetail(
-                                mkittingbeonho,
-                                it.getPummokcodeHP(),
-                                serialData.split(",").size.toString(),
-                                it.getjungyojajeyeobuHP(),
-                                serialData
-                            ).toJsonObject()
-                        )
-                    }
+                    chulgodetail.add(
+                        KittingChulgodetail(
+                            mkittingbeonho,
+                            it.getPummokcodeHP(),
+                            serialData.split(",").size.toString(),
+                            it.getjungyojajeyeobuHP(),
+                            serialData
+                        ).toJsonObject()
+                    )
                 }
+
 
                 val kittingAdd = hashMapOf(
                     "requesttype" to "02053",
