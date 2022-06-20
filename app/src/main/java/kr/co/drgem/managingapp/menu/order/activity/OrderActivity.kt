@@ -154,7 +154,6 @@ class OrderActivity : BaseActivity() {
 
                     override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
 
-                        mOrderAdapter.clearList()
                         Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
                     }
 

@@ -20,8 +20,9 @@ class RequestListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     val bigo = itemView.findViewById<TextView>(R.id.bigo)
     val chulgojisicode = itemView.findViewById<TextView>(R.id.chulgojisicode)
     val gongheong = itemView.findViewById<TextView>(R.id.gongheong)
+    val seq = itemView.findViewById<TextView>(R.id.seq)
 
-    fun bind(data: Yocheongdetail, companyCode: String, wareHouseCode: String) {
+    fun bind(data: Yocheongdetail, companyCode: String, wareHouseCode: String, position: Int) {
 
         itemView.setOnClickListener {
 
@@ -41,6 +42,7 @@ class RequestListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         bigo.text = data.getbigoHP()
         chulgojisicode.text = data.getchulgojisicodeHP()
         gongheong.text = data.getgongheongHP()
+        seq.text = "${position+1}"
 
     }
 

@@ -4,9 +4,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.menu.kitting.viewholder.KittingDetailListViewHolder
-import kr.co.drgem.managingapp.menu.kitting.viewholder.KittingListViewHolder
-import kr.co.drgem.managingapp.menu.order.viewholder.OrderListViewHolder
-import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.models.TempData
 
@@ -23,7 +20,7 @@ class KittingDetailListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is KittingDetailListViewHolder -> holder.bind(mList[position], tempData)
+            is KittingDetailListViewHolder -> holder.bind(mList[position], tempData, position)
         }
     }
 

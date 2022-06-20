@@ -28,8 +28,9 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
     val baljuil = itemView.findViewById<TextView>(R.id.baljuil)
     val nappumjangso = itemView.findViewById<TextView>(R.id.nappumjangso)
     val bigo = itemView.findViewById<TextView>(R.id.bigo)
+    val seq = itemView.findViewById<TextView>(R.id.seq)
 
-    fun bind(baljuData : Baljubeonho, masterData : MasterDataResponse){
+    fun bind(baljuData: Baljubeonho, masterData: MasterDataResponse, position: Int){
 
 
         val apiList: APIList
@@ -88,12 +89,14 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
         }
 
+
         georaecheomyeong.text = baljuData.getGeoraecheomyeongHP()
         baljubeonho.text = baljuData.getBaljubeonhoHP()
         georaecheocode.text = baljuData.getGeoraecheocodeHP()
         baljuil.text = baljuData.getBaljuilHP()
         nappumjangso.text = baljuData.getNappumjangsoHP()
         bigo.text = baljuData.getbigoHP()
+        seq.text = "${position+1}"
 
     }
 

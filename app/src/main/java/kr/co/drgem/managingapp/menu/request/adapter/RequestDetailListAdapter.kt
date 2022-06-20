@@ -20,7 +20,7 @@ class RequestDetailListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is RequestDetailListViewHolder -> holder.bind(mList[position], tempData)
+            is RequestDetailListViewHolder -> holder.bind(mList[position], tempData, position)
         }
     }
 

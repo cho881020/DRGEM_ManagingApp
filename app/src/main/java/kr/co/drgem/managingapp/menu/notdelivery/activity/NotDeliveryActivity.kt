@@ -269,7 +269,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
             override fun onFailure(call: Call<NotDeliveryResponse>, t: Throwable) {
                 Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
-                mAdapter.clearList()
             }
 
         })

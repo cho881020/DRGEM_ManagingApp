@@ -46,6 +46,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
     val yocheongsuryang = itemView.findViewById<TextView>(R.id.yocheongsuryang)
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
+    val seq = itemView.findViewById<TextView>(R.id.seq)
 
     val textChangeListener = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -85,7 +86,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 
     }
 
-    fun bind(data: Pummokdetail, tempData: TempData) {
+    fun bind(data: Pummokdetail, tempData: TempData, position: Int) {
 
         this.data = data
 
@@ -102,6 +103,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
+        seq.text = "${position+1}"
 
 
 

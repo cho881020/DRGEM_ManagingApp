@@ -21,9 +21,10 @@ class KittingListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     val yocheongbeonho = itemView.findViewById<TextView>(R.id.yocheongbeonho)
     val chulgojisicode = itemView.findViewById<TextView>(R.id.chulgojisicode)
     val deviceinfo = itemView.findViewById<TextView>(R.id.deviceinfo)
+    val seq = itemView.findViewById<TextView>(R.id.seq)
 
 
-    fun bind(data: Kittingdetail) {
+    fun bind(data: Kittingdetail, position: Int) {
 
 
         itemView.setOnClickListener {
@@ -44,6 +45,7 @@ class KittingListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         yocheongbeonho.text = data.getYocheongbeonhoHP()
         chulgojisicode.text = data.getChulgojisicodeHP()
         deviceinfo.text = data.getDeviceinfoHP()
+        seq.text = "${position+1}"
 
 
     }

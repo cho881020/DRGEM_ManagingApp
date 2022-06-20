@@ -165,7 +165,6 @@ class RequestActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<RequestResponse>, t: Throwable) {
-                    mAdapter.clearList()
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
                }
 

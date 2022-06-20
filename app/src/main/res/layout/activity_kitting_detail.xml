@@ -558,6 +558,13 @@
                         android:paddingHorizontal="10dp">
 
                         <TextView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:text="순번"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
+
+                        <TextView
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="품목코드"

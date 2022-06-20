@@ -47,6 +47,7 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
     val yocheongsuryang = itemView.findViewById<TextView>(R.id.yocheongsuryang)
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
+    val seq = itemView.findViewById<TextView>(R.id.seq)
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
 
     val textChangeListener = object : TextWatcher {
@@ -86,7 +87,7 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
     }
 
-    fun bind(data: PummokdetailDelivery, tempData: TempData) {
+    fun bind(data: PummokdetailDelivery, tempData: TempData, position: Int) {
 
         this.data = data
 
@@ -107,6 +108,7 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
+        seq.text = "${position+1}"
 
 
         btnEdit.isVisible = data.jungyojajeyeobu == "Y"

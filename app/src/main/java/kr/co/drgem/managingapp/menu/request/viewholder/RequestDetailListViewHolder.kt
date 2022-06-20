@@ -46,6 +46,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
     val hyeonjaegosuryang = itemView.findViewById<TextView>(R.id.hyeonjaegosuryang)
     val yocheongsuryang = itemView.findViewById<TextView>(R.id.yocheongsuryang)
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
+    val seq = itemView.findViewById<TextView>(R.id.seq)
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
 
     val textChangeListener = object : TextWatcher {
@@ -85,7 +86,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
 
     }
 
-    fun bind(data: Pummokdetail, tempData: TempData) {
+    fun bind(data: Pummokdetail, tempData: TempData, position: Int) {
 
         this.data = data
 
@@ -102,6 +103,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
+        seq.text = "${position+1}"
 
 
         btnEdit.isVisible = data.jungyojajeyeobu == "Y"

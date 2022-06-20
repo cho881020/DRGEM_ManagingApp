@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.viewholder.NotDeliveryListViewHolder
-import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.models.PummokdetailDelivery
 import kr.co.drgem.managingapp.models.TempData
 
@@ -24,7 +23,7 @@ class NotDeliveryListAdapter(
 
         when (holder) {
             is NotDeliveryListViewHolder -> {
-                holder.bind(mList[position], tempData)
+                holder.bind(mList[position], tempData, position)
             }
         }
     }

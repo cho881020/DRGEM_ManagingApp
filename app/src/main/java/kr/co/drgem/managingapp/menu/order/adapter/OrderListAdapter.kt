@@ -4,8 +4,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.order.viewholder.OrderListViewHolder
 import kr.co.drgem.managingapp.models.Baljubeonho
-import kr.co.drgem.managingapp.models.Detailcode
-import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.models.MasterDataResponse
 
 class OrderListAdapter(
@@ -20,7 +18,7 @@ class OrderListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is OrderListViewHolder -> holder.bind(baljuList[position],masterData)
+            is OrderListViewHolder -> holder.bind(baljuList[position],masterData, position)
         }
     }
 

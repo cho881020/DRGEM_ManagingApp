@@ -354,7 +354,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                 override fun onFailure(call: Call<TranResponse>, t: Throwable) {
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
-                    mAdapter.clearList()
                 }
 
             })

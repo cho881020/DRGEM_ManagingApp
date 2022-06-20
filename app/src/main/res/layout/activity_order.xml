@@ -351,6 +351,12 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
+                        <TextView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:text="순번"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="65dp"

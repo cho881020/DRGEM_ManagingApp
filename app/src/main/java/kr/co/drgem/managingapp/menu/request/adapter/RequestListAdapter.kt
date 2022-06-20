@@ -3,7 +3,6 @@ package kr.co.drgem.managingapp.menu.request.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.request.viewholder.RequestListViewHolder
-import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.models.Yocheongdetail
 
 class RequestListAdapter(
@@ -19,7 +18,7 @@ class RequestListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is RequestListViewHolder -> holder.bind(mList[position], companyCode, wareHouseCode)
+            is RequestListViewHolder -> holder.bind(mList[position], companyCode, wareHouseCode, position)
         }
     }
 

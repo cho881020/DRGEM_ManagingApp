@@ -3,8 +3,6 @@ package kr.co.drgem.managingapp.menu.kitting.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.menu.kitting.viewholder.KittingListViewHolder
-import kr.co.drgem.managingapp.menu.order.viewholder.OrderListViewHolder
-import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.models.Kittingdetail
 
 class KittingListAdapter(
@@ -19,7 +17,7 @@ class KittingListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is KittingListViewHolder -> holder.bind(mList[position])
+            is KittingListViewHolder -> holder.bind(mList[position], position)
         }
     }
 

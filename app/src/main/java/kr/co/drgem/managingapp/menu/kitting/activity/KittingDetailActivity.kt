@@ -215,7 +215,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                 override fun onFailure(call: Call<KittingDetailResponse>, t: Throwable) {
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
-                    mAdapter.clearList()
                 }
 
             })
@@ -275,7 +274,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                         chulgodetail.add(
                             KittingChulgodetail(
-                                "000",         //check : 요청번호?
+                                mkittingbeonho,
                                 it.getPummokcodeHP(),
                                 serialData.split(",").size.toString(),
                                 it.getjungyojajeyeobuHP(),
@@ -293,8 +292,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                     "chulgochanggocode" to wareHouseCodeOut,
                     "chulgodamdangjacode" to chulgodamdangjacode,
                     "ipgosaupjangcode" to companyCodeIn,
-                    "ipgodamdangjacode" to wareHouseCodeIn,
-                    "ipgochanggocode" to ipgodamdangjacode,
+                    "ipgodamdangjacode" to ipgodamdangjacode,
+                    "ipgochanggocode" to companyCodeOut,
                     "seq" to SEQ,
                     "status" to "777",
                     "pummokcount" to chulgodetail.size().toString(),
@@ -460,6 +459,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
+                        Log.d("yj", "wareHouseCodeOut : $wareHouseCodeOut")
                         mAdapter.setTemp(setTempData())
 
                     }
@@ -533,6 +533,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeIn = mWareHouseListIn[position].code
+                        Log.d("yj", "wareHouseCodeIn : $wareHouseCodeIn")
 
                     }
 

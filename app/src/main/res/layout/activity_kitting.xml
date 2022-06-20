@@ -354,22 +354,29 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:text="순번"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
+
+                        <TextView
                             android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="키팅번호"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="키팅등록일"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="60dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="키팅자"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
@@ -378,28 +385,28 @@
 
                         <TextView
                             android:layout_width="80dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="불출창고"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="100dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="비고"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="200dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="요청번호"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="200dp"
-                            android:layout_height="17dp"
+                            android:layout_height="wrap_content"
                             android:text="출하요청번호"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />

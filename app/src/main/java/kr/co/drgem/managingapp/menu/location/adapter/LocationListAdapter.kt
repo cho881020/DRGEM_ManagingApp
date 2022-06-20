@@ -14,7 +14,7 @@ class LocationListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is LocationListViewHolder -> holder.bind(mList[position])
+            is LocationListViewHolder -> holder.bind(mList[position], position)
         }
 
     }

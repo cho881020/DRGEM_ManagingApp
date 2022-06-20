@@ -179,7 +179,6 @@ class KittingActivity : BaseActivity() {
 
                 override fun onFailure(call: Call<KittingResponse>, t: Throwable) {
 
-                    mAdapter.clearList()
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
                 }
 

@@ -24,6 +24,7 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     val sayang = itemView.findViewById<TextView>(R.id.sayang)
     val danwi = itemView.findViewById<TextView>(R.id.danwi)
     val location = itemView.findViewById<TextView>(R.id.location)
+    val seq = itemView.findViewById<TextView>(R.id.seq)
     val hyeonjaegosuryang = itemView.findViewById<TextView>(R.id.hyeonjaegosuryang)
 
     init {
@@ -48,7 +49,7 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
     }
 
-    fun bind(data: Pummokdetail) {
+    fun bind(data: Pummokdetail, position: Int) {
 
         itemView.setOnClickListener {
             edtWarehouse.requestFocus()
@@ -61,8 +62,6 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
         }
 
-
-
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
         dobeon_model.text = data.getdobeon_modelHP()
@@ -70,6 +69,7 @@ class LocationListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         danwi.text = data.getdanwiHP()
         location.text = data.getlocationHP()
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
+        seq.text = "${position+1}"
 
 
         pummyeong.setOnClickListener {
