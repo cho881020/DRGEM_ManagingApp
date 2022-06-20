@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : OrderDetailDetailActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 매입입고 화면으로 발주명세요청 및 발주대비입고등록 기능
+ */
+
 package kr.co.drgem.managingapp.menu.order.activity
 
 import android.app.DatePickerDialog
@@ -318,6 +325,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     }
 
+    //    발주명세요청
     fun getRequestOrderDetail() {
         loadingDialog.show(supportFragmentManager, null)
 
@@ -397,8 +405,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     }
 
+    //    발주대비입고등록
     fun postRequestOrderDetail() {
-
 
         binding.btnSave.setOnClickListener {
 
@@ -409,7 +417,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
                 orderDetailData.returnBaljudetail().forEach {
 
-                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){
+                    if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
                         return@forEach
                     }
 
@@ -420,25 +428,25 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
                     if (it.jungyojajeyeobu == "Y") {
 
-                            val serialSize = serialData.split(",").size
+                        val serialSize = serialData.split(",").size
 
 
-                            if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
-                                Toast.makeText(
-                                    mContext,
-                                    "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                it.serialCheck = true
-                                mAdapter.notifyDataSetChanged()
-                                serialData = ""
+                        if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                            Toast.makeText(
+                                mContext,
+                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            it.serialCheck = true
+                            mAdapter.notifyDataSetChanged()
+                            serialData = ""
 
-                                return@saveDialog
-                            } else {
-                                it.serialCheck = false
-                                mAdapter.notifyDataSetChanged()
-                            }
+                            return@saveDialog
+                        } else {
+                            it.serialCheck = false
+                            mAdapter.notifyDataSetChanged()
                         }
+                    }
 
 
 
@@ -514,6 +522,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         }
     }
 
+    //    작업상태취소
     fun workStatusCancle() {
 
         // TODO - API 정상 연동시 수정

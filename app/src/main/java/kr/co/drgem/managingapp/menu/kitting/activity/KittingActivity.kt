@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : KittingActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 키팅출고 화면으로 키팅번호요청 기능
+ */
+
 package kr.co.drgem.managingapp.menu.kitting.activity
 
 import android.app.DatePickerDialog
@@ -143,7 +150,7 @@ class KittingActivity : BaseActivity() {
     }
 
 
-
+//    키팅번호요청
     fun getRequestKitting(){
         binding.btnFind.setOnClickListener {
 

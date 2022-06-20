@@ -1,13 +1,18 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : MainActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 메뉴 선택 화면으로 공통 마스터데이터 요청 및 화면 전환 기능
+ */
+
 package kr.co.drgem.managingapp
 
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityMenuBinding
 import kr.co.drgem.managingapp.menu.kitting.activity.KittingActivity
 import kr.co.drgem.managingapp.menu.location.activity.LocationActivity
@@ -25,12 +30,12 @@ import retrofit2.Response
 
 class MenuActivity : BaseActivity() {
 
-    lateinit var binding : ActivityMenuBinding
-    lateinit var masterData : MasterDataResponse
+    lateinit var binding: ActivityMenuBinding
+    lateinit var masterData: MasterDataResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_menu)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_menu)
 
         getRequestMasterCode()
 
@@ -41,41 +46,41 @@ class MenuActivity : BaseActivity() {
 
     override fun setupEvents() {
 
-        binding.transaction.setOnClickListener{
+        binding.transaction.setOnClickListener {
             val myIntent = Intent(this, TransactionActivity::class.java)
             myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
-        binding.orderReceipt.setOnClickListener{
+        binding.orderReceipt.setOnClickListener {
             val myIntent = Intent(this, OrderActivity::class.java)
             myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
-        binding.kitting.setOnClickListener{
+        binding.kitting.setOnClickListener {
             val myIntent = Intent(this, KittingActivity::class.java)
             startActivity(myIntent)
         }
 
-        binding.request.setOnClickListener{
+        binding.request.setOnClickListener {
             val myIntent = Intent(this, RequestActivity::class.java)
             myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
-        binding.notDelivery.setOnClickListener{
+        binding.notDelivery.setOnClickListener {
             val myIntent = Intent(this, NotDeliveryActivity::class.java)
             myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
-        binding.location.setOnClickListener{
+        binding.location.setOnClickListener {
             val myIntent = Intent(this, LocationActivity::class.java)
             startActivity(myIntent)
         }
 
-        binding.stock.setOnClickListener{
+        binding.stock.setOnClickListener {
             val myIntent = Intent(this, StockActivity::class.java)
             startActivity(myIntent)
         }
@@ -86,8 +91,8 @@ class MenuActivity : BaseActivity() {
                 .setTitle("로그아웃")
                 .setMessage("정말 로그아웃 하시겠습니까?")
                 .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
-                    ContextUtil.setToken(mContext,"")
-                    val myIntent = Intent(this,MainActivity::class.java)
+                    ContextUtil.setToken(mContext, "")
+                    val myIntent = Intent(this, MainActivity::class.java)
                     startActivity(myIntent)
                     finish()
                 })
@@ -109,15 +114,15 @@ class MenuActivity : BaseActivity() {
 
     }
 
-    fun getRequestMasterCode(){
+    fun getRequestMasterCode() {
 
-        apiList.getRequestMasterData().enqueue(object : Callback<MasterDataResponse>{
+        apiList.getRequestMasterData().enqueue(object : Callback<MasterDataResponse> {
             override fun onResponse(
                 call: Call<MasterDataResponse>,
                 response: Response<MasterDataResponse>
             ) {
 
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     response.body()?.let {
                         masterData = it
                         MainDataManager.setMainData(it)

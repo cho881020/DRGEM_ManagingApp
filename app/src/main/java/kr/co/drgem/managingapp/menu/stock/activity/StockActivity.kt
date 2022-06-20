@@ -1,3 +1,11 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : StockActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 재고조사 화면으로 품목정보요청 및 재고수량등록 기능
+ */
+
+
 package kr.co.drgem.managingapp.menu.stock.activity
 
 import android.os.Bundle
@@ -197,7 +205,7 @@ class StockActivity : BaseActivity() {
         }
 
     }
-
+    //    작업 SEQ 요청
     fun requestWorkseq() {
         var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
@@ -243,13 +251,13 @@ class StockActivity : BaseActivity() {
         })
 
     }
-
+//    품목정보요청
     fun getRequestStock(){
         inputCode = binding.edtCode.text.toString()
-        if (inputCode.isEmpty()) {
-            Toast.makeText(mContext, "요청코드를 입력하세요", Toast.LENGTH_SHORT).show()
-        }
-        else{
+//        if (inputCode.isEmpty()) {
+//            Toast.makeText(mContext, "요청코드를 입력하세요", Toast.LENGTH_SHORT).show()
+//        }
+//        else{
             apiList.getRequestProductinfo("02091", inputCode, companyCode, wareHouseCode)
                 .enqueue(object : Callback<ProductInfoResponse> {
                     override fun onResponse(
@@ -286,10 +294,10 @@ class StockActivity : BaseActivity() {
 
                     }
                 })
-        }
+//        }
 
     }
-
+    //    재고수량등록
     fun postRequestStock() {
 
         val stockAddList = JsonArray()
@@ -345,7 +353,7 @@ class StockActivity : BaseActivity() {
         })
 
     }
-
+    //    작업상태취소
     fun workStatusCancle() {
 
         var sawonCode = ""

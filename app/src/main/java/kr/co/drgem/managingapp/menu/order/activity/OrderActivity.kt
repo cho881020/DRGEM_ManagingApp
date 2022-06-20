@@ -1,8 +1,14 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : OrderActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 매입입고 화면으로 발주번호요청 기능
+ */
+
 package kr.co.drgem.managingapp.menu.order.activity
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -119,50 +125,59 @@ class OrderActivity : BaseActivity() {
         }
 
 
+
         binding.btnFind.setOnClickListener {
-
-            loadingDialog.show(supportFragmentManager, null)
-
-            val georaecheomyeong = binding.edtGeoraecheomyeong.text.toString()
-            val baljubeonho = binding.edtBaljubeonho.text.toString()
-
-            apiList.getRequestOrderNumber("02011", calStartStr, calEndStr, georaecheomyeong, baljubeonho)
-                .enqueue(object : Callback<OrderResponse> {
-                    override fun onResponse(
-                        call: Call<OrderResponse>,
-                        response: Response<OrderResponse>
-                    ) {
-                            response.body()?.let {
-
-                                baljuList.clear()
-                                baljuList.addAll(it.returnBaljubeonho())
-
-                                if(baljuList.size == 0){
-                                    Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
-                                    mOrderAdapter.clearList()
-                                }
-
-                                setBaljubeonhoListData()
-
-                                clearDbAndInsertAllSearchedData()
-
-
-
-                            }
-                        loadingDialog.dismiss()
-
-                    }
-
-                    override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
-                        Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
-                        loadingDialog.dismiss()
-                    }
-
-                })
+            getRequestOrderNum()
         }
 
+    }
+
+    //    발주번호요청
+    fun getRequestOrderNum() {
+
+        loadingDialog.show(supportFragmentManager, null)
+
+        val georaecheomyeong = binding.edtGeoraecheomyeong.text.toString()
+        val baljubeonho = binding.edtBaljubeonho.text.toString()
+
+        apiList.getRequestOrderNumber(
+            "02011",
+            calStartStr,
+            calEndStr,
+            georaecheomyeong,
+            baljubeonho
+        )
+            .enqueue(object : Callback<OrderResponse> {
+                override fun onResponse(
+                    call: Call<OrderResponse>,
+                    response: Response<OrderResponse>
+                ) {
+                    response.body()?.let {
+
+                        baljuList.clear()
+                        baljuList.addAll(it.returnBaljubeonho())
+
+                        if (baljuList.size == 0) {
+                            Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                            mOrderAdapter.clearList()
+                        }
+
+                        setBaljubeonhoListData()
+
+                        clearDbAndInsertAllSearchedData()
 
 
+                    }
+                    loadingDialog.dismiss()
+
+                }
+
+                override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
+                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    loadingDialog.dismiss()
+                }
+
+            })
     }
 
     private fun clearDbAndInsertAllSearchedData() {
@@ -219,7 +234,7 @@ class OrderActivity : BaseActivity() {
 
     fun setBaljubeonhoListData() {
 
-        if(baljuList.size > 0){
+        if (baljuList.size > 0) {
             binding.layoutList.isVisible = true
             binding.layoutEmpty.isVisible = false
         }

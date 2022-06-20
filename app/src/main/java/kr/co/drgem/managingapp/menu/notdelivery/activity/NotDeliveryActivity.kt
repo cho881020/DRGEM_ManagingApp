@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : NotDeliveryActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 미출자재출고 화면으로 미출고명세요청 및 출고명세요청 기능
+ */
+
 package kr.co.drgem.managingapp.menu.notdelivery.activity
 
 import android.app.DatePickerDialog
@@ -173,7 +180,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
 
     }
-
+    //    작업 SEQ 요청
     fun requestWorkseq() {
         var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
@@ -222,6 +229,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     }
 
+//    미출고명세요청
     fun getRequestNotDelivery() {
 
         loadingDialog.show(supportFragmentManager, null)
@@ -272,7 +280,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         })
 
     }
-
+    //    미출고출고등록
     fun postRequestNotDelivery() {
 
         binding.btnSave.setOnClickListener {
@@ -389,7 +397,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         }
 
     }
-
+    //    작업상태취소
     fun workStatusCancle() {
 
         var sawonCode = ""

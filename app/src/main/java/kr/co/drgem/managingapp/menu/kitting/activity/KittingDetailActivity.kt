@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : KittingDetailActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 키팅출고 화면으로 키팅명세요청 및 일괄출고등록 기능
+ */
+
 package kr.co.drgem.managingapp.menu.kitting.activity
 
 import android.app.DatePickerDialog
@@ -142,7 +149,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         spinnerSetIn()
 
     }
-
+    //    작업 SEQ 요청
     fun requestWorkseq() {
         var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
@@ -191,7 +198,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         })
 
     }
-
+    //    키팅명세요청
     fun getRequestKittingDetail() {
 
         loadingDialog.show(supportFragmentManager, null)
@@ -225,7 +232,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             })
 
     }
-
+    //    일괄출고등록
     fun postRequestKitting() {
 
         binding.btnSave.setOnClickListener {
@@ -346,7 +353,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         }
 
     }
-
+    //    작업상태취소
     fun workStatusCancle() {
 
         var sawonCode = ""

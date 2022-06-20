@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : TransactionActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 거래명세입고 화면으로 거래명세요청, 거래명세등록 기능
+ */
+
 package kr.co.drgem.managingapp.menu.transaction.activity
 
 import android.app.AlertDialog
@@ -63,7 +70,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     }
 
     override fun setupEvents() {
-
 
         binding.layoutBigo.setOnClickListener {
             AlertDialog.Builder(mContext)
@@ -268,6 +274,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     }
 
+    //    작업 SEQ 요청
     fun requestWorkseq() {
         var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
@@ -314,8 +321,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     }
 
+    //    거래명세조회
     fun getRequestTran() {
-
 
         val inputNum = binding.edtTranNum.text.toString()
 
@@ -365,6 +372,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     }
 
 
+//    거래명세등록
     fun postRequestTran() {
 
         binding.btnSave.setOnClickListener {
@@ -376,7 +384,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                 tranData.returnGeoraedetail().forEach {
 
-                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){
+                    if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
                         return@forEach
                     }
 
@@ -408,11 +416,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                     georaedetail.add(                         // 리스트에 담기
                         GeoraedetailAdd(
+                            it.getBaljubeonhoHP(),
                             it.getSeqHP(),
                             it.getPummokcodeHP(),
                             it.getSerialCount(),
                             it.getJungyojajeyeobuHP(),
-                            it.getBaljubeonhoHP(),
                             serialData
                         ).toJsonObject()                            // JSONObject로 제작
                     )
@@ -482,7 +490,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         }
 
     }
-
+    //    작업상태취소
     fun workStatusCancle() {
 
         var sawonCode = ""

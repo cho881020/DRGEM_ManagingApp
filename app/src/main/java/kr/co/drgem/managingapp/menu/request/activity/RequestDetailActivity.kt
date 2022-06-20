@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : RequestDetailActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 자재출고 화면으로 요청명세요청 및 요청출고등록 기능
+ */
+
 package kr.co.drgem.managingapp.menu.request.activity
 
 import android.app.DatePickerDialog
@@ -127,7 +134,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         spinnerSetIn()
 
     }
-
+    //    작업 SEQ 요청
     fun requestWorkseq() {
         var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
@@ -331,7 +338,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         }
 
     }
-
+    //    작업상태취소
     fun workStatusCancle() {
 
         var sawonCode = ""

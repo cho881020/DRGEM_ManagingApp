@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : LocationActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 로케이션조회 화면으로 로케이션요청 및 로케이션등록 기능
+ */
+
 package kr.co.drgem.managingapp.menu.location.activity
 
 import android.os.Bundle
@@ -113,7 +120,7 @@ class LocationActivity : BaseActivity() {
         binding.txtCount.text = "(${mList.size}건)"
 
     }
-
+    //    작업 SEQ 요청
     fun requestWorkseq() {
         var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
@@ -161,7 +168,7 @@ class LocationActivity : BaseActivity() {
         })
 
     }
-
+    //    로케이션요청
     fun getRequestLocation() {
         loadingDialog.show(supportFragmentManager, null)
 
@@ -203,7 +210,7 @@ class LocationActivity : BaseActivity() {
                 }
             })
     }
-
+    //    로케이션등록
     fun postRequestLocationAdd() {
         val pummokdetail = JsonArray()
 
@@ -267,7 +274,7 @@ class LocationActivity : BaseActivity() {
 
 
     }
-
+    //    작업상태취소
     fun workStatusCancle() {
 
         var sawonCode = ""

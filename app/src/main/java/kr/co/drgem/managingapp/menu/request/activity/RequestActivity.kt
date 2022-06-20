@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : RequestActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 자재출고 화면으로 요청번호요청 기능
+ */
+
 package kr.co.drgem.managingapp.menu.request.activity
 
 import android.app.DatePickerDialog
@@ -123,6 +130,8 @@ class RequestActivity : BaseActivity() {
             binding.edtName.text = null
         }
 
+
+        //    요청번호요청
         binding.btnFind.setOnClickListener {
 
             loadingDialog.show(supportFragmentManager, null)
@@ -194,6 +203,10 @@ class RequestActivity : BaseActivity() {
         binding.txtDate.text = setDate
 
         binding.txtCount.text = "(${yocheongdetail.size} 건)"
+
+    }
+
+    fun getRequestRequest(){
 
     }
 
