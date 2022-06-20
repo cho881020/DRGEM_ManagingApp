@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
@@ -28,6 +29,14 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
             data.serial = edtSerial.text.toString()
         }
 
+        edtSerial.setOnKeyListener { view, keyCode, keyEvent ->
+            Log.d("키이벤트", keyCode.toString())
+
+            if (keyCode == 66) {
+//                다음 edt로 어케 넘기지..?
+            }
+            return@setOnKeyListener true
+        }
 
         btnRemove.setOnClickListener {
             edtSerial.setText("")
