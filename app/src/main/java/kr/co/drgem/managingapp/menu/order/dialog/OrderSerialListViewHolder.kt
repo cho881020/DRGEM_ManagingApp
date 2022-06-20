@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.order.dialog
 
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
@@ -29,10 +30,18 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
             data.serial = edtSerial.text.toString()
         }
 
-        edtSerial.setOnKeyListener { view, keyCode, keyEvent ->
-            Log.d("키이벤트", keyCode.toString())
+        edtSerial.setOnEditorActionListener { textView, actionId, keyEvent ->
+            Log.d("액션코드", actionId.toString())
 
-            return@setOnKeyListener keyCode == 66
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    edtSerial.onEditorAction(5)
+                    return@setOnEditorActionListener true
+                }
+            }
+//            if (keyEvent ==)
+
+            return@setOnEditorActionListener actionId != 5
 
         }
 
