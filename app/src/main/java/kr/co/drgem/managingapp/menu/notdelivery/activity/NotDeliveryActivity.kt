@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityNotDeliveryBinding
@@ -36,6 +37,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     lateinit var mAdapter: NotDeliveryListAdapter
     lateinit var notDeliveryData: NotDeliveryResponse
     val dialog = NotDeliveryDialog()
+    val loadingDialog = LoadingDialogFragment()
 
     var calStart = ""
     var calEnd = ""
@@ -222,10 +224,10 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     fun getRequestNotDelivery() {
 
+        loadingDialog.show(supportFragmentManager, null)
+
         val yocheongja = binding.edtName.text.toString()
-
         val yocheongpummok = binding.edtCode.text.toString()
-
 
 
         apiList.getRequestNotDeliveryDetail(
@@ -258,27 +260,25 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             binding.layoutList.isVisible = true
                             binding.layoutEmpty.isVisible = false
                         }
-
                     }
-
-
                 }
-
+                loadingDialog.dismiss()
             }
 
             override fun onFailure(call: Call<NotDeliveryResponse>, t: Throwable) {
                 Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                loadingDialog.dismiss()
             }
-
         })
-
 
     }
 
     fun postRequestNotDelivery() {
 
         binding.btnSave.setOnClickListener {
+
             saveDialog() {
+                loadingDialog.show(supportFragmentManager, null)
                 val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
 
@@ -323,16 +323,16 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     }
 
 
-                        chulgodetail.add(
-                            NotDeliveryChulgodetail(
-                                it.getyocheongbeonhoHP(),
-                                it.getpummokcodeHP(),
-                                serialData.split(",").size.toString(),
-                                it.getjungyojajeyeobuHP(),
-                                serialData
-                            ).toJsonObject()
-                        )
-                    }
+                    chulgodetail.add(
+                        NotDeliveryChulgodetail(
+                            it.getyocheongbeonhoHP(),
+                            it.getpummokcodeHP(),
+                            serialData.split(",").size.toString(),
+                            it.getjungyojajeyeobuHP(),
+                            serialData
+                        ).toJsonObject()
+                    )
+                }
 
                 val notDeliveryAdd = hashMapOf(
                     "requesttype" to "02072",
@@ -378,15 +378,14 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                                 .show()
                                         }
 
-                                        Log.d("yj", "미출고등록 콜 결과코드 : ${it.resultcd}")
-                                        Log.d("yj", "미출고등록 콜 결과메시지 : ${it.resultmsg}")
-
                                     }
                                 }
+                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                                Log.d("yj", "미출고등록 실패 결과메시지 : ${t.message}")
+                                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                                loadingDialog.dismiss()
                             }
 
                         })

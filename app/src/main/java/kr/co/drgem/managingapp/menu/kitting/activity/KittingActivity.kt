@@ -11,6 +11,7 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityKittingBinding
@@ -29,6 +30,7 @@ class KittingActivity : BaseActivity() {
     lateinit var binding : ActivityKittingBinding
     lateinit var mAdapter : KittingListAdapter
     lateinit  var kittingData : KittingResponse
+    val loadingDialog = LoadingDialogFragment()
 
     var changgocode = ""
     var calStart = ""
@@ -145,6 +147,8 @@ class KittingActivity : BaseActivity() {
     fun getRequestKitting(){
         binding.btnFind.setOnClickListener {
 
+            loadingDialog.show(supportFragmentManager, null)
+
             val inputKittingja = binding.edtKittingja.text.toString()
 
             apiList.getRequestKittingNumber("02501", calStart, calEnd, inputKittingja, changgocode).enqueue(object :
@@ -171,14 +175,13 @@ class KittingActivity : BaseActivity() {
                                 binding.layoutEmpty.isVisible = false
 
                             }
-
-
                         }
                     }
+                    loadingDialog.dismiss()
                 }
 
                 override fun onFailure(call: Call<KittingResponse>, t: Throwable) {
-
+                    loadingDialog.dismiss()
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
                 }
 

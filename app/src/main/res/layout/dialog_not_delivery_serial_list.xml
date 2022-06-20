@@ -36,7 +36,6 @@
         android:imeOptions="actionNext"
         android:selectAllOnFocus="true"
         android:paddingHorizontal="7dp"
-        android:text=""
         android:textColor="@color/color_000000"
         android:textSize="12dp" />
 

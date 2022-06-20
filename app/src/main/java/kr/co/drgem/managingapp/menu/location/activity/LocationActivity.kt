@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityLocationBinding
@@ -25,6 +26,7 @@ class LocationActivity : BaseActivity() {
     lateinit var binding: ActivityLocationBinding
     lateinit var mAdapter: LocationListAdapter
     lateinit var mList: ArrayList<Pummokdetail>
+    val loadingDialog = LoadingDialogFragment()
 
     var changgocode = ""
     var inputPummyeong = ""
@@ -161,6 +163,8 @@ class LocationActivity : BaseActivity() {
     }
 
     fun getRequestLocation() {
+        loadingDialog.show(supportFragmentManager, null)
+
         val changgocode = ""
         val location = binding.edtLocation.text.toString()
         inputPummyeong = binding.pummyeong.text.toString()
@@ -189,16 +193,20 @@ class LocationActivity : BaseActivity() {
 
                         }
                     }
+                    loadingDialog.dismiss()
                 }
 
                 override fun onFailure(call: Call<LocationResponse>, t: Throwable) {
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    loadingDialog.dismiss()
                     mList.clear()
                 }
             })
     }
 
     fun postRequestLocationAdd() {
+
+        loadingDialog.show(supportFragmentManager, null)
 
         val pummokdetail = JsonArray()
 
@@ -249,14 +257,14 @@ class LocationActivity : BaseActivity() {
                                     .show()
                             }
 
-                            Log.d("yj", "로케이션등록 콜 결과코드 : ${it.resultcd}")
-                            Log.d("yj", "로케이션등록 콜 결과메시지 : ${it.resultmsg}")
                         }
                     }
+                    loadingDialog.dismiss()
                 }
 
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                    Log.d("yj", "로케이션등록 실패 결과메시지 : ${t.message}")
+                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    loadingDialog.dismiss()
                 }
 
             })

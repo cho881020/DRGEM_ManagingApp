@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityOrderDetailBinding
@@ -36,6 +37,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     lateinit var mAdapter: OrderDetailListAdapter
     lateinit var orderDetailData: OrderDetailResponse
 
+    val loadingDialog = LoadingDialogFragment()
     val dialog = OrderDetailDialog()
     lateinit var masterData: MasterDataResponse
     val baljuDetail = ArrayList<Baljudetail>()
@@ -317,6 +319,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     fun getRequestOrderDetail() {
+        loadingDialog.show(supportFragmentManager, null)
 
         val savedOrderDetailList = mSqliteDB.getSavedOrderDetail()
         if (savedOrderDetailList.size > 0 && savedOrderDetailList[0].baljubeonho == mBaljubeonho) {
@@ -379,11 +382,13 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 //                            clearAndSaveDataToDB()
 
                         }
+
+                        loadingDialog.dismiss()
                     }
 
                     override fun onFailure(call: Call<OrderDetailResponse>, t: Throwable) {
-
-                        Log.d("yj", "OrderDetail 실패 : ${t.message}")
+                        Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                        loadingDialog.dismiss()
                     }
 
                 })
@@ -393,10 +398,12 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     fun postRequestOrderDetail() {
+
+
         binding.btnSave.setOnClickListener {
 
             saveDialog() {
-
+                loadingDialog.show(supportFragmentManager, null)
                 val ipgodetail = JsonArray()   // 등록용 리스트
                 val inputName = binding.edtName.text.toString()
 
@@ -493,17 +500,15 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         }
-
-                                        Log.d("yj", "요청명세등록 콜 결과코드 : ${it.resultcd}")
-                                        Log.d("yj", "요청명세등록 콜 결과메시지 : ${it.resultmsg}")
-                                        Log.d("yj", "요청명세등록 콜  : ${it}")
-
                                     }
                                 }
+
+                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                                Log.d("yj", "요청명세등록 실패메시지 : ${t.message}")
+                                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                                loadingDialog.dismiss()
                             }
                         })
                 } else {

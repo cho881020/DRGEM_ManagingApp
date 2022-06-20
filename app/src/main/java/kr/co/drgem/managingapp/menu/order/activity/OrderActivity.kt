@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.ActivityOrderBinding
 import kr.co.drgem.managingapp.menu.order.adapter.OrderListAdapter
@@ -24,6 +25,7 @@ class OrderActivity : BaseActivity() {
 
     lateinit var binding: ActivityOrderBinding
     lateinit var mOrderAdapter: OrderListAdapter
+    val loadingDialog = LoadingDialogFragment()
 
     lateinit var masterData: MasterDataResponse
     val baljuList = ArrayList<Baljubeonho>()
@@ -119,6 +121,8 @@ class OrderActivity : BaseActivity() {
 
         binding.btnFind.setOnClickListener {
 
+            loadingDialog.show(supportFragmentManager, null)
+
             val georaecheomyeong = binding.edtGeoraecheomyeong.text.toString()
             val baljubeonho = binding.edtBaljubeonho.text.toString()
 
@@ -128,8 +132,6 @@ class OrderActivity : BaseActivity() {
                         call: Call<OrderResponse>,
                         response: Response<OrderResponse>
                     ) {
-                        Log.d("yj", "cal:$calStartStr $calEndStr, 거래처명:$georaecheomyeong, 발주번호:$baljubeonho" )
-
                             response.body()?.let {
 
                                 baljuList.clear()
@@ -147,14 +149,13 @@ class OrderActivity : BaseActivity() {
 
 
                             }
-
-
+                        loadingDialog.dismiss()
 
                     }
 
                     override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
-
                         Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                        loadingDialog.dismiss()
                     }
 
                 })

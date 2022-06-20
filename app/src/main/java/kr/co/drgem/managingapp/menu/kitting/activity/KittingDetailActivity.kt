@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityKittingDetailBinding
@@ -37,6 +38,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     lateinit var kittingDetailData: KittingDetailResponse
 
     val dialog = KittingDetailDialog()
+    val loadingDialog = LoadingDialogFragment()
 
     var mkittingbeonho = ""
     var SEQ = ""
@@ -192,6 +194,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     fun getRequestKittingDetail() {
 
+        loadingDialog.show(supportFragmentManager, null)
+
         apiList.getRequestKittingDetail("02502", mkittingbeonho, johoejogeon, migwanri, changgocode)
             .enqueue(object : Callback<KittingDetailResponse> {
                 override fun onResponse(
@@ -208,12 +212,13 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                 mAdapter.clearList()
 
                             }
-
                         }
                     }
+                    loadingDialog.dismiss()
                 }
 
                 override fun onFailure(call: Call<KittingDetailResponse>, t: Throwable) {
+                    loadingDialog.dismiss()
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
                 }
 
@@ -225,12 +230,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         binding.btnSave.setOnClickListener {
             saveDialog() {
+                loadingDialog.show(supportFragmentManager, null)
 
                 val chulgodetail = JsonArray()   // 등록용 리스트
                 val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
-
-
 
                 kittingDetailData.returnKittingDetail().forEach {
 
@@ -325,17 +329,14 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                             )
                                                 .show()
                                         }
-
-                                        Log.d("yj", "일괄출고등록 콜 결과코드 : ${it.resultcd}")
-                                        Log.d("yj", "일괄출고등록 콜 결과메시지 : ${it.resultmsg}")
-
                                     }
                                 }
+                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-
-                                Log.d("yj", "일괄출고등록 실패 결과메시지 : ${t.message}")
+                                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                                loadingDialog.dismiss()
                             }
 
                         })

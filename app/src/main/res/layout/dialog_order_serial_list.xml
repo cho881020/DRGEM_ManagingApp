@@ -32,7 +32,6 @@
         android:gravity="center_vertical"
         android:background="@null"
         android:paddingHorizontal="7dp"
-        android:text=""
         android:maxLines="1"
         android:inputType="text"
         android:privateImeOptions="defaultInputmode=english"

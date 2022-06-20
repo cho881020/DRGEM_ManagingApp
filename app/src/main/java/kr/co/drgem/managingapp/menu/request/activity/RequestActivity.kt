@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityRequestBinding
@@ -28,6 +29,7 @@ class RequestActivity : BaseActivity() {
 
     var mWareHouseList : ArrayList<Detailcode> = arrayListOf()
     var yocheongdetail = ArrayList<Yocheongdetail>()
+    val loadingDialog = LoadingDialogFragment()
 
     var companyCode = "0002"
     var wareHouseCode = "2001"
@@ -123,6 +125,8 @@ class RequestActivity : BaseActivity() {
 
         binding.btnFind.setOnClickListener {
 
+            loadingDialog.show(supportFragmentManager, null)
+
             var yocheongja = binding.edtName.text.toString()
 
             if(binding.edtName.text.toString().isEmpty()){
@@ -157,15 +161,14 @@ class RequestActivity : BaseActivity() {
                                 binding.layoutEmpty.isVisible = false
 
                             }
-
                         }
-
                     }
-
+                    loadingDialog.dismiss()
                 }
 
                 override fun onFailure(call: Call<RequestResponse>, t: Throwable) {
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    loadingDialog.dismiss()
                }
 
             })

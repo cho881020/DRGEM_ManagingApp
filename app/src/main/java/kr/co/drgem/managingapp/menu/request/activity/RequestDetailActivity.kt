@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityRequestDetailBinding
@@ -37,6 +38,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     lateinit var requestDetailData: RequestDetailResponse
 
     val dialog = RequestDetailDialog()
+    val loadingDialog = LoadingDialogFragment()
 
     var mYocheongbeonho = ""
     var SEQ = ""
@@ -175,6 +177,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
     fun getRequestDetail() {
 
+        loadingDialog.show(supportFragmentManager, null)
+
         companyCode = intent.getStringExtra("companyCode").toString()
         wareHouseCode = intent.getStringExtra("wareHouseCode").toString()
 
@@ -198,9 +202,12 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
                     }
                 }
+                loadingDialog.dismiss()
             }
 
             override fun onFailure(call: Call<RequestDetailResponse>, t: Throwable) {
+                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                loadingDialog.dismiss()
 
             }
 
@@ -213,6 +220,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         binding.btnSave.setOnClickListener {
             saveDialog() {
 
+                loadingDialog.show(supportFragmentManager, null)
                 val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
 
@@ -310,14 +318,15 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         }
-
-
                                     }
                                 }
+
+                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                                Log.d("yj", "요청출고등록 실패 결과메시지 : ${t.message}")
+                                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                                loadingDialog.dismiss()
                             }
 
                         })

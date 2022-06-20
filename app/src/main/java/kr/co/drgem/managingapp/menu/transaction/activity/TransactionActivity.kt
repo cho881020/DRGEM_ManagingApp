@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityTransactionBinding
@@ -43,6 +44,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     lateinit var tranData: TranResponse
 
     val dialogEdit = TransactionDialog()
+    val loadingDialog = LoadingDialogFragment()
 
     var SEQ = ""
     var status = "111"
@@ -317,6 +319,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         val inputNum = binding.edtTranNum.text.toString()
 
+        loadingDialog.show(supportFragmentManager, null)
+
         apiList.getRequestTranDetail("02001", inputNum)
             .enqueue(object : Callback<TranResponse> {
                 override fun onResponse(
@@ -347,13 +351,14 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                 binding.btnSave.isVisible = true
 
                             }
-
                         }
+                        loadingDialog.dismiss()
                     }
                 }
 
                 override fun onFailure(call: Call<TranResponse>, t: Throwable) {
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    loadingDialog.dismiss()
                 }
 
             })
@@ -365,6 +370,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         binding.btnSave.setOnClickListener {
 
             saveDialog() {
+                loadingDialog.show(supportFragmentManager, null)
                 val georaedetail = JsonArray()   // 등록용 리스트
                 val inputName = binding.edtName.text.toString()
 
@@ -394,8 +400,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                 it.serialCheck = true
                                 mAdapter.notifyDataSetChanged()
                                 serialData = ""
-
                                 return@saveDialog
+
                             } else {
                                 it.serialCheck = false
                                 mAdapter.notifyDataSetChanged()
@@ -466,10 +472,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                                     }
                                 }
+                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
-
+                                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                                loadingDialog.dismiss()
                             }
 
                         })

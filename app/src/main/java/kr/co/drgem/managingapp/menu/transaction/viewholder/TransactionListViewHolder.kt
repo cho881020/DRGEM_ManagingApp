@@ -118,10 +118,6 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
         val savedSerialString =
             SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
 
-        Log.d("품목코드", data.getPummokcodeHP())
-        Log.d("품목코드", data.getPummokcodeHP())
-        Log.d("불러내는 씨리얼스트링", savedSerialString.toString())
-        Log.d("입고수량", data.ipgosuryang.toString())
 
         if (savedSerialString != null) {
 
