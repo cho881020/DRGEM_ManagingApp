@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.kitting.dialog
 
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
@@ -26,7 +27,21 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
         edtSerial.addTextChangedListener {
 
+        }
+
+        edtSerial.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    edtSerial.onEditorAction(5)
+                    return@setOnEditorActionListener true
+                }
+            }
+
             data.serial = edtSerial.text.toString()
+
+            return@setOnEditorActionListener actionId != 5
+
         }
 
         btnRemove.setOnClickListener {

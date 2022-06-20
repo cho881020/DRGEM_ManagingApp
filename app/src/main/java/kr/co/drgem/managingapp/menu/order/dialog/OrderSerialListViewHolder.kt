@@ -31,7 +31,6 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
         }
 
         edtSerial.setOnEditorActionListener { textView, actionId, keyEvent ->
-            Log.d("액션코드", actionId.toString())
 
             if (actionId == 0) {
                 if (keyEvent.action == KeyEvent.ACTION_UP) {
@@ -39,7 +38,6 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
                     return@setOnEditorActionListener true
                 }
             }
-//            if (keyEvent ==)
 
             return@setOnEditorActionListener actionId != 5
 
