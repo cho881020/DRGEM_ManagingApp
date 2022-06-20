@@ -32,10 +32,8 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
         edtSerial.setOnKeyListener { view, keyCode, keyEvent ->
             Log.d("키이벤트", keyCode.toString())
 
-            if (keyCode == 66) {
-//                다음 edt로 어케 넘기지..?
-            }
-            return@setOnKeyListener true
+            return@setOnKeyListener keyCode == 66
+
         }
 
         btnRemove.setOnClickListener {
