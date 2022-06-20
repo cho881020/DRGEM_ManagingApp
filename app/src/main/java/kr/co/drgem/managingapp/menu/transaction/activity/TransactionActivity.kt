@@ -370,42 +370,38 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         binding.btnSave.setOnClickListener {
 
             saveDialog() {
-                loadingDialog.show(supportFragmentManager, null)
                 val georaedetail = JsonArray()   // 등록용 리스트
                 val inputName = binding.edtName.text.toString()
 
 
                 tranData.returnGeoraedetail().forEach {
 
+                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){
+                        return@forEach
+                    }
+
                     var serialData =
                         SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                             .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
 
 
-                    if (serialData == "null") {
-                        serialData = ""
-                    }
+                    if (it.getJungyojajeyeobuHP() == "Y") {
+                        val serialSize = serialData.trim().split(",").size
 
-                    if (it.jungyojajeyeobu == "Y") {
+                        if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                            Toast.makeText(
+                                mContext,
+                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            it.serialCheck = true
+                            mAdapter.notifyDataSetChanged()
+                            serialData = ""
+                            return@saveDialog
 
-                        if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
-                            val serialSize = serialData.split(",").size
-
-                            if (serialSize.toString() != it.getSerialCount()) {
-                                Toast.makeText(
-                                    mContext,
-                                    "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                it.serialCheck = true
-                                mAdapter.notifyDataSetChanged()
-                                serialData = ""
-                                return@saveDialog
-
-                            } else {
-                                it.serialCheck = false
-                                mAdapter.notifyDataSetChanged()
-                            }
+                        } else {
+                            it.serialCheck = false
+                            mAdapter.notifyDataSetChanged()
                         }
                     }
 
@@ -414,7 +410,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                         GeoraedetailAdd(
                             it.getSeqHP(),
                             it.getPummokcodeHP(),
-                            serialData.split(",").size.toString(),
+                            it.getSerialCount(),
                             it.getJungyojajeyeobuHP(),
                             it.getBaljubeonhoHP(),
                             serialData
@@ -440,6 +436,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 Log.d("yj", "거래명세등록 맵확인 : $georaeMap")
 
                 if (georaedetail.size() > 0) {
+                    loadingDialog.show(supportFragmentManager, null)
                     apiList.postRequestTranDetail(georaeMap)
                         .enqueue(object : Callback<BasicResponse> {
                             override fun onResponse(
@@ -466,9 +463,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         }
-
-                                        Log.d("yj", "거래명세등록 콜 결과코드 : ${it.resultcd}")
-                                        Log.d("yj", "거래명세등록 콜 결과메시지 : ${it.resultmsg}")
 
                                     }
                                 }

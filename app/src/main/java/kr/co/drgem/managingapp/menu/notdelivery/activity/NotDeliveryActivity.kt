@@ -278,7 +278,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         binding.btnSave.setOnClickListener {
 
             saveDialog() {
-                loadingDialog.show(supportFragmentManager, null)
                 val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
 
@@ -286,48 +285,44 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                 notDeliveryData.returnPummokdetailDetail().forEach {
 
+                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){
+                        return@forEach
+                    }
+
                     var serialData =
                         SerialManageUtil.getSerialStringByPummokCode(it.getpummokcodeHP())
                             .toString()
 
-                    if (serialData == "null") {
-                        serialData = ""
-                    }
-
-
                     if (it.jungyojajeyeobu == "Y") {
 
-                        if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
-                            val serialSize = serialData.split(",").size
+                        val serialSize = serialData.split(",").size
 
+                        if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
 
-                            if (serialSize.toString() != it.getSerialCount()) {
+                            Log.d("yj", "시리얼사이즈: ${serialSize}, 입력시리얼${it.getSerialCount()}")
 
-                                Log.d("yj", "시리얼사이즈: ${serialSize}, 입력시리얼${it.getSerialCount()}")
+                            Toast.makeText(
+                                mContext,
+                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            it.serialCheck = true
+                            mAdapter.notifyDataSetChanged()
+                            serialData = ""
 
-                                Toast.makeText(
-                                    mContext,
-                                    "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                it.serialCheck = true
-                                mAdapter.notifyDataSetChanged()
-                                serialData = ""
-
-                                return@saveDialog
-                            } else {
-                                it.serialCheck = false
-                                mAdapter.notifyDataSetChanged()
-                            }
+                            return@saveDialog
+                        }
+                        else {
+                            it.serialCheck = false
+                            mAdapter.notifyDataSetChanged()
                         }
                     }
-
 
                     chulgodetail.add(
                         NotDeliveryChulgodetail(
                             it.getyocheongbeonhoHP(),
                             it.getpummokcodeHP(),
-                            serialData.split(",").size.toString(),
+                            it.getSerialCount(),
                             it.getjungyojajeyeobuHP(),
                             serialData
                         ).toJsonObject()
@@ -380,12 +375,10 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                                     }
                                 }
-                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                                 Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
-                                loadingDialog.dismiss()
                             }
 
                         })

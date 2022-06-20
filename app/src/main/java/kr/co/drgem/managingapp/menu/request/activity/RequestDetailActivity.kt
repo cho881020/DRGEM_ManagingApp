@@ -220,7 +220,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         binding.btnSave.setOnClickListener {
             saveDialog() {
 
-                loadingDialog.show(supportFragmentManager, null)
                 val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
 
@@ -228,21 +227,19 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
                 requestDetailData.returnPummokDetail().forEach {
 
+                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){
+                        return@forEach
+                    }
+
                     var serialData =
                         SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                             .toString()
 
-                    if (serialData == "null") {
-                        serialData = ""
-                    }
-
-
                     if (it.jungyojajeyeobu == "Y") {
 
-                        if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
                             val serialSize = serialData.split(",").size
 
-                            if (serialSize.toString() != it.getSerialCount()) {
+                            if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
                                 Toast.makeText(
                                     mContext,
                                     "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
@@ -260,12 +257,10 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                             }
                         }
 
-                    }
-
                     requestChulgodetail.add(
                         RequestChulgodetail(        //check : 요청번호?
                             it.getPummokcodeHP(),
-                            serialData.split(",").size.toString(),
+                            it.getSerialCount(),
                             it.getjungyojajeyeobuHP(),
                             serialData
                         ).toJsonObject()
@@ -292,6 +287,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 Log.d("yj", "requestAdd : $requestAdd")
 
                 if (requestChulgodetail.size() > 0) {
+
                     apiList.postRequestRequestDelivery(requestAdd)
                         .enqueue(object : Callback<WorkResponse> {
                             override fun onResponse(
@@ -321,12 +317,10 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                     }
                                 }
 
-                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                                 Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
-                                loadingDialog.dismiss()
                             }
 
                         })

@@ -205,9 +205,6 @@ class LocationActivity : BaseActivity() {
     }
 
     fun postRequestLocationAdd() {
-
-        loadingDialog.show(supportFragmentManager, null)
-
         val pummokdetail = JsonArray()
 
         mList.forEach {
@@ -259,12 +256,10 @@ class LocationActivity : BaseActivity() {
 
                         }
                     }
-                    loadingDialog.dismiss()
                 }
 
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
-                    loadingDialog.dismiss()
                 }
 
             })

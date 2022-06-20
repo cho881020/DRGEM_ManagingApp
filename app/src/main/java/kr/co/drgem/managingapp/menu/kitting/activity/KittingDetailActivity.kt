@@ -230,7 +230,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         binding.btnSave.setOnClickListener {
             saveDialog() {
-                loadingDialog.show(supportFragmentManager, null)
 
                 val chulgodetail = JsonArray()   // 등록용 리스트
                 val chulgodamdangjacode = binding.edtOutName.text.toString()
@@ -238,19 +237,18 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                 kittingDetailData.returnKittingDetail().forEach {
 
+                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){
+                        return@forEach
+                    }
+
                     var serialData =
                         SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                             .toString()      // 시리얼 데이터 꺼내오기
 
-                    if (serialData == "null") {
-                        serialData = ""
-                    }
-
                     if (it.jungyojajeyeobu == "Y") {
-                        if (serialData.isNotEmpty()) {        // 시리얼 데이터가 null아닐때만
                             val serialSize = serialData.split(",").size
 
-                            if (serialSize.toString() != it.getSerialCount()) {
+                            if (serialSize.toString() != it.getSerialCount()|| serialData == "null") {
                                 Toast.makeText(
                                     mContext,
                                     "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
@@ -265,7 +263,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                 it.serialCheck = false
                                 mAdapter.notifyDataSetChanged()
                             }
-                        }
+
                     }
 
 
@@ -273,7 +271,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         KittingChulgodetail(
                             mkittingbeonho,
                             it.getPummokcodeHP(),
-                            serialData.split(",").size.toString(),
+                            it.getSerialCount(),
                             it.getjungyojajeyeobuHP(),
                             serialData
                         ).toJsonObject()
@@ -331,12 +329,10 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                         }
                                     }
                                 }
-                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                                 Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
-                                loadingDialog.dismiss()
                             }
 
                         })

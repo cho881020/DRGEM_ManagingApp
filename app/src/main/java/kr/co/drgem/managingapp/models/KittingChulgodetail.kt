@@ -14,7 +14,7 @@ data class KittingChulgodetail(
         val jsonObj = JsonObject()
         jsonObj.addProperty("yocheongbeonho", yocheongbeonho)
         jsonObj.addProperty("pummokcode", pummokcode)
-        jsonObj.addProperty("georaesuryang", georaesuryang)
+        jsonObj.addProperty("chulgosuryang", georaesuryang)
         jsonObj.addProperty("jungyojajeyeobu", jungyojajeyeobu)
         jsonObj.addProperty("serialnumber", serialnumber)
 
