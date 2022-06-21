@@ -23,16 +23,6 @@
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
 
-        <TextView
-            android:id="@+id/yocheongil"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            android:text="20220526"
-            android:textSize="12dp"
-            android:textColor="@color/color_000000"/>
 
         <TextView
             android:id="@+id/yocheongbeonho"
@@ -44,28 +34,6 @@
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
-        <TextView
-            android:id="@+id/yocheongchanggo"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            android:text="생산자재창고"
-            android:textSize="12dp"
-            android:textColor="@color/color_000000"/>
-
-        <TextView
-            android:id="@+id/yocheongja"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            android:text="홍길동"
-            android:textSize="12dp"
-            android:textColor="@color/color_000000"/>
-
 
         <TextView
             android:id="@+id/pummokcode"
@@ -77,6 +45,7 @@
             android:text="G22042600391"
             android:textSize="12dp"
             android:textColor="@color/color_000000"/>
+
 
         <TextView
             android:id="@+id/pummyeong"
@@ -123,29 +92,6 @@
             android:textSize="12dp"
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            android:text="광명창고"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/hyeonjaegosuryang"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            android:text="3"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
 
         <TextView
             android:id="@+id/yocheongsuryang"
@@ -156,19 +102,6 @@
             android:ellipsize="end"
             android:paddingRight="3dp"
             android:text="3"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-
-        <TextView
-            android:id="@+id/gichulgosuryang"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            android:text="Y"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -196,13 +129,15 @@
 
         <LinearLayout
             android:layout_width="80dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/btnEdit"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:visibility="gone"
+                tools:visibility="visible"
                 android:gravity="center"
                 android:text="정보입력"
                 android:textSize="12dp"
@@ -210,6 +145,79 @@
                 android:textColor="@color/color_9A9A9A" />
 
         </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/yocheongil"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            android:text="20220526"
+            android:textSize="12dp"
+            android:textColor="@color/color_000000"/>
+
+
+        <TextView
+            android:id="@+id/yocheongchanggo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            android:text="생산자재창고"
+            android:textSize="12dp"
+            android:textColor="@color/color_000000"/>
+
+        <TextView
+            android:id="@+id/yocheongja"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            android:text="홍길동"
+            android:textSize="12dp"
+            android:textColor="@color/color_000000"/>
+
+
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            android:text="광명창고"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/hyeonjaegosuryang"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            android:text="3"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/gichulgosuryang"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            android:text="Y"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
 
 
 

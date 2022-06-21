@@ -669,13 +669,7 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-                        <TextView
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="기입고수량"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+
 
                         <TextView
                             android:layout_width="70dp"
@@ -696,7 +690,13 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="기입고수량"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
 
 
                         <LinearLayout

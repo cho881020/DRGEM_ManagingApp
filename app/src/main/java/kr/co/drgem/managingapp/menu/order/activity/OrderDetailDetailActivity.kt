@@ -491,7 +491,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            getRequestOrderDetail()
 
                                             Toast.makeText(
                                                 mContext,

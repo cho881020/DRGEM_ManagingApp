@@ -22,7 +22,10 @@ class TranSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
     fun bind(position: Int, data: SerialLocalDB, serialData: String) {
         txtNumber.text = "${position+1}"
 
-        edtSerial.setText(serialData)
+        if(serialData.isNotEmpty()){
+            edtSerial.setText(serialData)
+        }
+
 
         edtSerial.addTextChangedListener {
 

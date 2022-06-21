@@ -82,12 +82,13 @@ class StockActivity : BaseActivity() {
 
         binding.btnFind.setOnClickListener {
 
-            getRequestStock()
+
 
         }
 
         binding.btnReady.setOnClickListener {
             requestWorkseq()
+            getRequestStock()
         }
 
         binding.btnAdd.setOnClickListener {
@@ -253,11 +254,7 @@ class StockActivity : BaseActivity() {
     }
 //    품목정보요청
     fun getRequestStock(){
-        inputCode = binding.edtCode.text.toString()
-//        if (inputCode.isEmpty()) {
-//            Toast.makeText(mContext, "요청코드를 입력하세요", Toast.LENGTH_SHORT).show()
-//        }
-//        else{
+
             apiList.getRequestProductinfo("02091", inputCode, companyCode, wareHouseCode)
                 .enqueue(object : Callback<ProductInfoResponse> {
                     override fun onResponse(
@@ -284,7 +281,6 @@ class StockActivity : BaseActivity() {
                                     binding.layoutAdd.isVisible = true
                                     binding.layoutList.isVisible = true
 
-                                    setText()
                                 }
                             }
                         }
@@ -294,7 +290,6 @@ class StockActivity : BaseActivity() {
 
                     }
                 })
-//        }
 
     }
     //    재고수량등록
@@ -393,4 +388,14 @@ class StockActivity : BaseActivity() {
             })
 
     }
+
+    fun searchStock(){
+        val searchCode = binding.edtCode.text.toString()
+
+
+
+
+
+    }
+
 }

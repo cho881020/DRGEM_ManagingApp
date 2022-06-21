@@ -254,7 +254,6 @@ class LocationActivity : BaseActivity() {
 
                                 Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
                                     .show()
-                                getRequestLocation()
 
                             } else {
                                 Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)

@@ -94,17 +94,6 @@
             android:textSize="12dp"
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/giipgosuryang"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingRight="3dp"
-            tools:text="12"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
 
 
         <LinearLayout
@@ -145,6 +134,18 @@
                 android:textColor="@color/color_9A9A9A" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/giipgosuryang"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingRight="3dp"
+            tools:text="12"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/location"

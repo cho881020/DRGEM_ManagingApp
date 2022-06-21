@@ -75,33 +75,9 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:paddingRight="3dp"
-            tools:text="5"
+            tools:text="ea"
             android:textSize="12dp"
             android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            tools:text="광명창고"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/hyeonjaegosuryang"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            tools:text="3"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
 
         <TextView
             android:id="@+id/yocheongsuryang"
@@ -112,19 +88,6 @@
             android:ellipsize="end"
             android:paddingRight="3dp"
             tools:text="3"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
-
-
-        <TextView
-            android:id="@+id/gichulgosuryang"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            tools:text="Y"
             android:textSize="12dp"
             android:textColor="@color/black" />
 
@@ -165,6 +128,47 @@
                 android:textColor="@color/color_9A9A9A" />
 
         </LinearLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            tools:text="광명창고"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/hyeonjaegosuryang"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            tools:text="3"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
+
+
+        <TextView
+            android:id="@+id/gichulgosuryang"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            tools:text="Y"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
+
 
 
 

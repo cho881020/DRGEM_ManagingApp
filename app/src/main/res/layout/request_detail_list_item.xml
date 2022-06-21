@@ -76,9 +76,62 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:paddingRight="3dp"
-                android:text="5"
+                android:text="ea"
                 android:textSize="12dp"
                 android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/yocheongsuryang"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:paddingRight="3dp"
+                android:text="3"
+                android:textSize="12dp"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/chulgosuryang"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:text="1"
+                    android:selectAllOnFocus="true"
+                    android:imeOptions="actionNext"
+                    android:textSize="12dp"
+                    android:gravity="center"
+                    android:background="@drawable/light_gray_box"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:text="정보입력"
+                    android:textSize="12dp"
+                    android:background="@drawable/btn_light_gray"
+                    android:textColor="@color/color_9A9A9A" />
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/location"
@@ -104,17 +157,6 @@
                 android:textColor="@color/black" />
 
 
-            <TextView
-                android:id="@+id/yocheongsuryang"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:paddingRight="3dp"
-                android:text="3"
-                android:textSize="12dp"
-                android:textColor="@color/black" />
 
 
             <TextView
@@ -129,56 +171,6 @@
                 android:textSize="12dp"
                 android:textColor="@color/black" />
 
-            <LinearLayout
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <EditText
-                    android:id="@+id/chulgosuryang"
-                    android:layout_width="50dp"
-                    android:layout_height="30dp"
-                    android:maxLines="1"
-                    android:inputType="number"
-                    android:text="1"
-                    android:selectAllOnFocus="true"
-                    android:imeOptions="actionNext"
-                    android:textSize="12dp"
-                    android:gravity="center"
-                    android:background="@drawable/light_gray_box"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/jungyojajeyeobu"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:paddingRight="3dp"
-                android:text="Y"
-                android:textSize="12dp"
-                android:textColor="@color/black"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/btnEdit"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:gravity="center"
-                    android:text="정보입력"
-                    android:textSize="12dp"
-                    android:background="@drawable/btn_light_gray"
-                    android:textColor="@color/color_9A9A9A" />
-
-            </LinearLayout>
 
 
 

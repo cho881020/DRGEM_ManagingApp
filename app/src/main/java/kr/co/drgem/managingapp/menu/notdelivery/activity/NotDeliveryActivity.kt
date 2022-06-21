@@ -364,7 +364,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            getRequestNotDelivery()
 
                                             Toast.makeText(
                                                 mContext,

@@ -318,7 +318,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            getRequestKittingDetail()
 
                                             Toast.makeText(
                                                 mContext,

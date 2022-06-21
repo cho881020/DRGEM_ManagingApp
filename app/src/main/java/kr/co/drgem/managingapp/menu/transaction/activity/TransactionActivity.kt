@@ -457,7 +457,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
-                                            getRequestTran()
 
                                             Toast.makeText(
                                                 mContext,
