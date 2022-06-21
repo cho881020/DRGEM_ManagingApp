@@ -88,6 +88,15 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             clearAndSaveDataToDB()
         }
 
+        binding.btnFold.setOnClickListener {
+            binding.layoutFold.isVisible = false
+            binding.btnOpen.isVisible = true
+        }
+
+        binding.btnOpen.setOnClickListener {
+            binding.layoutFold.isVisible = true
+            binding.btnOpen.isVisible = false
+        }
 
         binding.btnNameRemove.setOnClickListener {
             binding.edtName.text = null

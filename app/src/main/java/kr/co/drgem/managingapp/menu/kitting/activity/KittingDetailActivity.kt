@@ -92,6 +92,17 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             }
         }
 
+        binding.btnFold.setOnClickListener {
+            binding.layoutFold.isVisible = false
+            binding.btnOpen.isVisible = true
+            binding.btnFold.isVisible = false
+        }
+
+        binding.btnOpen.setOnClickListener {
+            binding.layoutFold.isVisible = true
+            binding.btnOpen.isVisible = false
+            binding.btnFold.isVisible = true
+        }
 
 
         binding.btnOutNameRemove.setOnClickListener {
@@ -104,6 +115,22 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         binding.btnFind.setOnClickListener {
             requestWorkseq()
+        }
+
+        binding.radio0.setOnClickListener {
+            johoejogeon = "0"
+        }
+
+        binding.radio1.setOnClickListener {
+            johoejogeon = "1"
+        }
+
+        binding.checkMigwanri.setOnCheckedChangeListener { button, isChecked ->
+            if(isChecked){
+                migwanri = "0"
+            }else{
+                migwanri = "1"
+            }
         }
 
     }
@@ -203,6 +230,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         loadingDialog.show(supportFragmentManager, null)
 
+        Log.d("yj", "조회조건 : $johoejogeon , 미관리 :$migwanri")
         apiList.getRequestKittingDetail("02502", mkittingbeonho, johoejogeon, migwanri, changgocode)
             .enqueue(object : Callback<KittingDetailResponse> {
                 override fun onResponse(
@@ -455,7 +483,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
-                        Log.d("yj", "wareHouseCodeOut : $wareHouseCodeOut")
                         mAdapter.setTemp(setTempData())
 
                     }

@@ -89,6 +89,19 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
         }
 
+        binding.btnFold.setOnClickListener {
+            binding.layoutFold.isVisible = false
+            binding.btnOpen.isVisible = true
+            binding.btnFold.isVisible = false
+        }
+
+        binding.btnOpen.setOnClickListener {
+            binding.layoutFold.isVisible = true
+            binding.btnOpen.isVisible = false
+            binding.btnFold.isVisible = true
+        }
+
+
         val cal = Calendar.getInstance()
         val dateSet = SimpleDateFormat("yyyyMMdd")
         val dateFormat = SimpleDateFormat("MM-dd")
@@ -165,6 +178,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         binding.btnInName.setOnClickListener {
             binding.edtInName.text = null
         }
+
 
         binding.checkMigwanri.setOnCheckedChangeListener { button, ischecked ->
             if (ischecked) {

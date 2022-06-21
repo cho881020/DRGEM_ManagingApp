@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="280dp"
+            android:layout_height="180dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/borderbox_white_round12">
+
+            <LinearLayout
+                android:id="@+id/layoutLoadingIng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottie"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/lottie_loading" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="로딩 중입니다. 잠시만 기다려주세요."
+                    android:textSize="12dp"
+                    android:textColor="@color/color_333333"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="(최대 10분 소요)"
+                    android:textSize="14dp"
+                    android:textColor="@color/color_808080"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutLoadingOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/loading_end"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="로딩이 완료되었습니다."
+                    android:textSize="12dp"
+                    android:textColor="@color/color_333333"
+                    android:textStyle="bold"/>
+                
+                <TextView
+                    android:id="@+id/btnOk"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center"
+                    android:background="@drawable/light_gray_box"
+                    android:text="확인"
+                    android:textColor="@color/color_808080"
+                    android:textSize="14dp"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
