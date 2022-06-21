@@ -83,24 +83,7 @@ class KittingDetailDialog : DialogFragment() {
             Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
             dismiss()
 
-            /**
-             * 시리얼번호 개수 체크
-             */
-//            var isSerialBlank = false
-//            mSerialDataList.forEach {
-//                if (it.serial.isEmpty()) {
-//                    isSerialBlank = true
-//                }
-//            }
-//
-//            if(isSerialBlank){
-//                Toast.makeText(requireContext(), "시리얼번호 입력이 완료되지 않았습니다.", Toast.LENGTH_SHORT).show()
-//                return@setOnClickListener
-//            }
-//
-//
-//            Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
-//            dismiss()
+
         }
 
 
@@ -141,11 +124,6 @@ class KittingDetailDialog : DialogFragment() {
         }
 
 
-        /**
-         *  serial데이터가 있다면, 시리얼을 목록에 담고,
-         *  없다면 그때 빈값으로 만들 수 있도록
-         */
-
         mSerialDataList.clear()
 
 
@@ -171,7 +149,7 @@ class KittingDetailDialog : DialogFragment() {
         Log.d("yj", "serialList = $serialList")
 
 
-        mAdapter = DialogEditKittingAdapter(itemCount, mSerialDataList, serialList)
+        mAdapter = DialogEditKittingAdapter(itemCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
 
         binding.kittingbeonho.text = mKittingbeonho

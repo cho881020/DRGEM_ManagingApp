@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.transaction.dialog
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -76,7 +77,16 @@ class TransactionDialog : DialogFragment() {
         }
 
         binding.btnCancel.setOnClickListener {
-            dismiss()
+            AlertDialog.Builder(requireContext())
+                .setTitle("아직 저장하지 않은 사항이 있습니다.")
+                .setMessage("그래도 이 화면을 종료하시겠습니까?")
+                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+
+                    dismiss()
+                })
+                .setNegativeButton("아니오", null)
+                .show()
+
         }
 
     }
@@ -127,8 +137,7 @@ class TransactionDialog : DialogFragment() {
         }
 
 
-
-        val mAdapter = DialogEditTranAdapter(itemCount, mSerialDataList, serialList)
+        val mAdapter = DialogEditTranAdapter(itemCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
 
         binding.baljubeonho.text = georaeData.getBaljubeonhoHP()

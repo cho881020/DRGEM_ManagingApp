@@ -8,7 +8,6 @@ import kr.co.drgem.managingapp.models.Baljudetail
 class DialogEditTranAdapter(
     val viewholderCount : Int,
     val mList: List<SerialLocalDB>,
-    val serialList: List<String>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -21,7 +20,7 @@ class DialogEditTranAdapter(
         when(holder){
             is TranSerialListViewHolder -> {
                 val data = mList[position]
-                holder.bind(position,data, getSerialData(position))
+                holder.bind(position,mList)
             }
 
         }
@@ -29,14 +28,6 @@ class DialogEditTranAdapter(
 
     override fun getItemCount() = viewholderCount
 
-    private fun getSerialData(position: Int): String{
-
-        if (serialList.isNotEmpty() && serialList.size > position) {
-            return serialList[position]
-        }
-
-        return ""
-    }
 
 
 }

@@ -7,7 +7,6 @@ import kr.co.drgem.managingapp.localdb.SerialLocalDB
 class DialogEditRequestAdapter(
     val viewholderCount : Int,
     val mList: List<SerialLocalDB>,
-    val serialList: List<String>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -21,22 +20,13 @@ class DialogEditRequestAdapter(
         when(holder){
             is RequestSerialListViewHolder -> {
                 val data = mList[position]
-                holder.bind(position, data, getSerialData(position))
+                holder.bind(position,mList)
             }
 
         }
     }
 
     override fun getItemCount() = viewholderCount
-
-    private fun getSerialData(position: Int): String{
-
-        if (serialList.isNotEmpty() && serialList.size > position) {
-            return serialList[position]
-        }
-
-        return ""
-    }
 
 
 }

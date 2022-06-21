@@ -5,7 +5,7 @@ import org.json.JSONObject
 
 data class GeoraedetailAdd(
 
-    val baljuheonho: String,
+    val baljubeonho : String,
     val seq: String,
     val pummokcode: String,
     val georaesuryang: String,
@@ -15,7 +15,7 @@ data class GeoraedetailAdd(
     fun toJsonObject() : JsonObject {       // JSONObject 로 제작하는
         val jsonObj = JsonObject()
 
-        jsonObj.addProperty("baljuheonho", baljuheonho)
+        jsonObj.addProperty("baljubeonho ", baljubeonho)
         jsonObj.addProperty("seq", seq)
         jsonObj.addProperty("pummokcode", pummokcode)
         jsonObj.addProperty("georaesuryang", georaesuryang)

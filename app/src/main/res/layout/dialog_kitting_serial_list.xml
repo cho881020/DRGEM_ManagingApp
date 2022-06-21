@@ -27,8 +27,9 @@
     <EditText
         android:id="@+id/edtSerial"
         android:layout_marginStart="5dp"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:background="@null"
         android:paddingHorizontal="7dp"
@@ -42,7 +43,7 @@
 
     <ImageView
         android:id="@+id/btnRemove"
-        android:layout_width="wrap_content"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="7dp"
         android:focusable="false"

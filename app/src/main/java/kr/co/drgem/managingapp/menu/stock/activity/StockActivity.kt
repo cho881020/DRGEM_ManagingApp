@@ -234,7 +234,7 @@ class StockActivity : BaseActivity() {
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
-                            status = it.status
+                            status = "333"
 
                             Log.d("yj", "SEQ : ${it.seq}")
                         } else {

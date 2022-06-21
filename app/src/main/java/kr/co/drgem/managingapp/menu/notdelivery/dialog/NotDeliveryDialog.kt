@@ -1,6 +1,7 @@
 package kr.co.drgem.managingapp.menu.notdelivery.dialog
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -75,7 +76,15 @@ class NotDeliveryDialog : DialogFragment() {
         }
 
         binding.btnCancel.setOnClickListener {
-            dismiss()
+            AlertDialog.Builder(requireContext())
+                .setTitle("아직 저장하지 않은 사항이 있습니다.")
+                .setMessage("그래도 이 화면을 종료하시겠습니까?")
+                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+
+                    dismiss()
+                })
+                .setNegativeButton("아니오", null)
+                .show()
         }
 
     }
@@ -96,12 +105,6 @@ class NotDeliveryDialog : DialogFragment() {
         } else {
             itemCount = viewholderCount
         }
-
-
-        /**
-         *  serial데이터가 있다면, 시리얼을 목록에 담고,
-         *  없다면 그때 빈값으로 만들 수 있도록
-         */
 
         mSerialDataList.clear()
 
@@ -125,7 +128,7 @@ class NotDeliveryDialog : DialogFragment() {
             )
         }
 
-        val mAdapter = DialogEditNotDeliveryAdapter(itemCount, mSerialDataList, serialList)
+        val mAdapter = DialogEditNotDeliveryAdapter(itemCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
 
         binding.yocheongbeonho.text = pummokData.getyocheongbeonhoHP()

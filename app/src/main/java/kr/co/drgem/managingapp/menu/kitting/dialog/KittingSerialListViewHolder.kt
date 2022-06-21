@@ -1,5 +1,7 @@
 package kr.co.drgem.managingapp.menu.kitting.dialog
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,20 +16,40 @@ import kr.co.drgem.managingapp.localdb.SerialLocalDB
 class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.dialog_kitting_serial_list, parent, false)
 ) {
+    var data: List<SerialLocalDB> = listOf()
+    var serialPosition = -1
+
+
     val txtNumber = itemView.findViewById<TextView>(R.id.txtNumber)
     val edtSerial = itemView.findViewById<EditText>(R.id.edtSerial)
     val btnRemove = itemView.findViewById<ImageView>(R.id.btnRemove)
 
-    fun bind(position: Int, data: SerialLocalDB, serialData: String) {
+    val textChangeListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            val serial = edtSerial.text.toString()
+            data[serialPosition].serial = serial
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+        }
+    }
+
+    fun bind(position: Int, data: List<SerialLocalDB>) {
+
+        this.data = data
+        this.serialPosition = position
 
         txtNumber.text = "${position + 1}"
 
-        edtSerial.setText(serialData)
+        edtSerial.setText(data[position].serial)
 
 
-        edtSerial.addTextChangedListener {
-            data.serial = edtSerial.text.toString()
-        }
+        edtSerial.removeTextChangedListener(textChangeListener)
+        edtSerial.addTextChangedListener(textChangeListener)
 
         edtSerial.setOnEditorActionListener { textView, actionId, keyEvent ->
 

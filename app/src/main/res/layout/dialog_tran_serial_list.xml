@@ -27,18 +27,21 @@
 
     <EditText
         android:id="@+id/edtSerial"
-        android:layout_width="250dp"
+        android:layout_marginStart="5dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:background="@null"
+        android:paddingHorizontal="7dp"
         android:maxLines="1"
         android:inputType="text"
         android:privateImeOptions="defaultInputmode=english"
         android:imeOptions="actionNext"
         android:selectAllOnFocus="true"
-        android:paddingHorizontal="7dp"
         android:textColor="@color/color_000000"
         android:textSize="12dp" />
+
     <ImageView
         android:id="@+id/btnRemove"
         android:layout_width="wrap_content"

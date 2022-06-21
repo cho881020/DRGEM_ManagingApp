@@ -152,7 +152,7 @@ class OrderDetailDialog : BaseDialogFragment() {
         }
 
 
-        mAdapter = DialogEditOrderAdapter(baljuData, itemCount, mSerialDataList, serialList)
+        mAdapter = DialogEditOrderAdapter(baljuData, itemCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
 
         binding.baljubeonho.text = mBaljubeonho

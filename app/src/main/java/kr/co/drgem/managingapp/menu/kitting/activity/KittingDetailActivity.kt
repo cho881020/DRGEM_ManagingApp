@@ -118,7 +118,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         val tempData = TempData(
             companyCodeOut,
             wareHouseCodeOut,
-            mkittingbeonho,
+            "",
             SEQ,
             IPUtil.getIpAddress(),
             sawonCode

@@ -209,7 +209,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
                     "changgocode" to tempData.changgocode,
                     "pummokcode" to data.getPummokcodeHP(),
                     "suryang" to data.getSerialCount(),
-                    "yocheongbeonho" to tempData.yocheongbeonho,
+                    "yocheongbeonho" to data.getyocheongbeonhoHP(),
                     "ipchulgubun" to "2",
                     "seq" to tempData.seq,
                     "tablet_ip" to IPUtil.getIpAddress(),
