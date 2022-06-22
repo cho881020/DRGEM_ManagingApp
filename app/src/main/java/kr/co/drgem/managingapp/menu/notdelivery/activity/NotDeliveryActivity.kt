@@ -368,6 +368,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
+
+                                            mAdapter.notifyDataSetChanged()
                                             saveDoneDialog()
 
                                         } else {

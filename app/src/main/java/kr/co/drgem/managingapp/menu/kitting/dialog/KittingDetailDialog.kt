@@ -72,7 +72,7 @@ class KittingDetailDialog : BaseDialogFragment() {
                 contentString.setLength(contentString.length - 1)           // contentString 길이를 1개 줄임 (, 때문에 빈 값을 제외)
 
                 SerialManageUtil.putSerialStringByPummokCode(
-                    pummokData.getPummokcodeHP(),
+                    "${pummokData.getPummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}",
                     contentString.toString()
                 )        // SerialManageUtil 에 값을 담기 (hashMap 형태로)
 
@@ -110,7 +110,7 @@ class KittingDetailDialog : BaseDialogFragment() {
 
         var itemCount = 0
 
-        val serialData = SerialManageUtil.getSerialStringByPummokCode(pummokData.getPummokcodeHP())
+        val serialData = SerialManageUtil.getSerialStringByPummokCode("${pummokData.getPummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}")
             .toString()
         val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
 

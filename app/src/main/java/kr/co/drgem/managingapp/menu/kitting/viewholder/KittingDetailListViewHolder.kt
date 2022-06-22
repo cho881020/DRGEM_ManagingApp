@@ -120,7 +120,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         }
 
         val savedSerialString =
-            SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
+            SerialManageUtil.getSerialStringByPummokCode("${data.getPummokcodeHP()}/${data.getyocheongbeonhoHP()}")        // 품목 코드에 맞는 시리얼 가져와서
 
         if (savedSerialString != null) {
 

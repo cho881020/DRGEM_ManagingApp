@@ -329,6 +329,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
+                                            mAdapter.notifyDataSetChanged()
                                             saveDoneDialog()
 
                                         } else {

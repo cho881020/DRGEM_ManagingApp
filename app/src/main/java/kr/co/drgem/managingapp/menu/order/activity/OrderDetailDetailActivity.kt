@@ -490,6 +490,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
+                                            mAdapter.notifyDataSetChanged()
                                             saveDoneDialog()
 
                                         } else {

@@ -456,6 +456,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                                             SerialManageUtil.clearData()
 
+                                            mAdapter.notifyDataSetChanged()
                                             saveDoneDialog()
 
                                         } else {

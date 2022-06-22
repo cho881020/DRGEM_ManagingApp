@@ -268,7 +268,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                     }
 
                     var serialData =
-                        SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                        SerialManageUtil.getSerialStringByPummokCode("${it.getPummokcodeHP()}/${it.getyocheongbeonhoHP()}")
                             .toString()      // 시리얼 데이터 꺼내오기
 
                     if (it.jungyojajeyeobu == "Y") {
@@ -333,6 +333,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
+                                            mAdapter.notifyDataSetChanged()
                                             saveDoneDialog()
 
                                         } else {
