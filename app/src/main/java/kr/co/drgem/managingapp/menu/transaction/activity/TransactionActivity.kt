@@ -115,8 +115,13 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         binding.btnBack.setOnClickListener {
 
-            backDialog() {
-                workStatusCancle()
+            if(status=="333"){
+                backDialog() {
+                    workStatusCancle()
+                }
+            }
+            else{
+                finish()
             }
 
         }
@@ -138,7 +143,15 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
 
         binding.btnFind.setOnClickListener {
-            requestWorkseq()
+
+            if(status=="111"){
+                requestWorkseq()
+            }
+            else if (status == "333"){
+                status333Dialog(){
+                    requestWorkseq()
+                }
+            }
         }
 
     }
@@ -579,9 +592,15 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     override fun onBackPressed() {
 
-        backDialog() {
-            workStatusCancle()
+        if(status=="333"){
+            backDialog() {
+                workStatusCancle()
+            }
         }
+        else {
+            finish()
+        }
+
 
     }
 

@@ -123,4 +123,19 @@ abstract class BaseActivity : AppCompatActivity() {
             .show()
     }
 
+    fun status333Dialog(runnable: Runnable?){
+
+        AlertDialog.Builder(mContext)
+            .setTitle("현재 진행중인 작업이 있습니다.")
+            .setMessage("정말 재 조회 하시겠습니까?")
+            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                runnable?.let {
+                    Handler(Looper.getMainLooper()).post(it)
+                }
+            })
+            .setNegativeButton("아니오", null)
+            .show()
+    }
+
+
 }

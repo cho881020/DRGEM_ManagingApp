@@ -131,13 +131,6 @@ class StockActivity : BaseActivity() {
 
     }
 
-    fun setText() {
-        binding.pummokcode.text = (inputCode)
-        binding.pummyeong.text = productData.returnPummokDetail()[0].getPummokcodeHP()
-        binding.dobeonModel.text = productData.returnPummokDetail()[0].getdobeon_modelHP()
-        binding.sayang.text = productData.returnPummokDetail()[0].getsayangHP()
-        binding.hyeonjaegosuryang.setText(productData.returnPummokDetail()[0].gethyeonjaegosuryangHP())
-    }
 
     fun spinnerSet() {
 
@@ -388,10 +381,24 @@ class StockActivity : BaseActivity() {
     fun searchStock(){
         val searchCode = binding.edtCode.text.toString()
 
+        var searchCodeData : Pummokdetail
 
+        productData.returnPummokDetail().forEach {
 
+            if(searchCode == it.pummokcode){
+                searchCodeData = it
+            }
 
+        }
 
+    }
+
+    fun setText() {
+        binding.pummokcode.text = (inputCode)
+        binding.pummyeong.text = productData.returnPummokDetail()[0].getPummokcodeHP()
+        binding.dobeonModel.text = productData.returnPummokDetail()[0].getdobeon_modelHP()
+        binding.sayang.text = productData.returnPummokDetail()[0].getsayangHP()
+        binding.hyeonjaegosuryang.setText(productData.returnPummokDetail()[0].gethyeonjaegosuryangHP())
     }
 
 }
