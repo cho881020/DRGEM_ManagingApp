@@ -113,7 +113,6 @@
                         android:inputType="text"
                         android:privateImeOptions="defaultInputmode=english"
                         android:textColor="@color/color_000000"
-                        android:text="G22011900032"
                         android:textSize="12dp" />
 
                     <ImageView

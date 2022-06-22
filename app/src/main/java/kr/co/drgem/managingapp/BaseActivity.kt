@@ -94,6 +94,13 @@ abstract class BaseActivity : AppCompatActivity() {
             .show()
     }
 
+    fun saveNotDoneDialog(){
+        AlertDialog.Builder(mContext)
+            .setMessage("저장할 자료가 없습니다.")
+            .setNegativeButton("확인", null)
+            .show()
+    }
+
 
     fun searchZeroDialog(){
         AlertDialog.Builder(mContext)
@@ -105,6 +112,13 @@ abstract class BaseActivity : AppCompatActivity() {
     fun countSerialDialog(){
         AlertDialog.Builder(mContext)
             .setMessage("입력 수량과 시리얼넘버 수량이 일치하지 않습니다.")
+            .setNegativeButton("확인", null)
+            .show()
+    }
+
+    fun serverErrorDialog(message : String){
+        AlertDialog.Builder(mContext)
+            .setMessage(message)
             .setNegativeButton("확인", null)
             .show()
     }

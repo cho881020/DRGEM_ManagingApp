@@ -13,7 +13,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -22,7 +21,10 @@ import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityRequestBinding
 import kr.co.drgem.managingapp.menu.request.adapter.RequestListAdapter
-import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.models.Detailcode
+import kr.co.drgem.managingapp.models.MasterDataResponse
+import kr.co.drgem.managingapp.models.RequestResponse
+import kr.co.drgem.managingapp.models.Yocheongdetail
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -176,7 +178,7 @@ class RequestActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<RequestResponse>, t: Throwable) {
-                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                     loadingDialog.dismiss()
                }
 

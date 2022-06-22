@@ -14,7 +14,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
@@ -254,7 +253,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                 override fun onFailure(call: Call<KittingDetailResponse>, t: Throwable) {
                     loadingDialog.dismiss()
-                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                 }
 
             })
@@ -345,26 +344,21 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                             saveDoneDialog()
 
                                         } else {
-                                            Toast.makeText(
-                                                mContext,
-                                                it.resultmsg,
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
+                                            serverErrorDialog(it.resultmsg)
                                         }
                                     }
                                 }
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                                serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                             }
 
                         })
 
 
                 } else {
-                    Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+                    saveNotDoneDialog()
                 }
 
             }

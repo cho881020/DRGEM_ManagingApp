@@ -14,7 +14,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
@@ -194,6 +193,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
 
     }
+
     //    작업 SEQ 요청
     fun requestWorkseq() {
         var sawonCode = ""
@@ -243,7 +243,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     }
 
-//    미출고명세요청
+    //    미출고명세요청
     fun getRequestNotDelivery() {
 
         loadingDialog.show(supportFragmentManager, null)
@@ -288,12 +288,13 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
 
             override fun onFailure(call: Call<NotDeliveryResponse>, t: Throwable) {
-                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                 loadingDialog.dismiss()
             }
         })
 
     }
+
     //    미출고출고등록
     fun postRequestNotDelivery() {
 
@@ -307,7 +308,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                 notDeliveryData.returnPummokdetailDetail().forEach {
 
-                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){
+                    if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
                         return@forEach
                     }
 
@@ -329,8 +330,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             serialData = ""
 
                             return@saveDialog
-                        }
-                        else {
+                        } else {
                             it.serialCheck = false
                             mAdapter.notifyDataSetChanged()
                         }
@@ -377,12 +377,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                             saveDoneDialog()
 
                                         } else {
-                                            Toast.makeText(
-                                                mContext,
-                                                it.resultmsg,
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
+                                            serverErrorDialog(it.resultmsg)
                                         }
 
                                     }
@@ -390,17 +385,18 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                                Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                                serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                             }
 
                         })
                 } else {
-                    Toast.makeText(mContext, "저장할 자료가 없습니다.", Toast.LENGTH_SHORT).show()
+                    saveNotDoneDialog()
                 }
             }
         }
 
     }
+
     //    작업상태취소
     fun workStatusCancle() {
 

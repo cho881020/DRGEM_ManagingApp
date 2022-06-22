@@ -10,7 +10,6 @@ package kr.co.drgem.managingapp.menu.order.activity
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -173,7 +172,7 @@ class OrderActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
-                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                     loadingDialog.dismiss()
                 }
 

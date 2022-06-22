@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
@@ -204,7 +203,7 @@ class LocationActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<LocationResponse>, t: Throwable) {
-                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                     loadingDialog.dismiss()
                     mList.clear()
                 }
@@ -255,8 +254,7 @@ class LocationActivity : BaseActivity() {
                                 saveDoneDialog()
 
                             } else {
-                                Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
-                                    .show()
+                                serverErrorDialog(it.resultmsg)
                             }
 
                         }
@@ -264,7 +262,7 @@ class LocationActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                    Toast.makeText(mContext, "${t.message}", Toast.LENGTH_SHORT)
+                    serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                 }
 
             })

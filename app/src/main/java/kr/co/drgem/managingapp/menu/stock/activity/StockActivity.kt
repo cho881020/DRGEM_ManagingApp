@@ -8,11 +8,11 @@
 
 package kr.co.drgem.managingapp.menu.stock.activity
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
@@ -98,7 +98,11 @@ class StockActivity : BaseActivity() {
 
             mList.forEach {
                 if (it.pummokcode == addList[0].pummokcode) {
-                    Toast.makeText(mContext, "이미 작성 된 품목입니다.", Toast.LENGTH_SHORT).show()
+
+                    AlertDialog.Builder(mContext)
+                        .setMessage("이미 작성 된 품목입니다.")
+                        .setNegativeButton("확인", null)
+                        .show()
 
                     binding.layoutAdd.isVisible = false
                     binding.layoutFind.isVisible = true
@@ -329,8 +333,7 @@ class StockActivity : BaseActivity() {
                             mList.clear()
                             setValues()
                         } else {
-                            Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)
-                                .show()
+                            serverErrorDialog(it.resultmsg)
                         }
 
                         Log.d("yj", "재고등록 콜 결과코드 : ${it.resultcd}")
@@ -340,7 +343,7 @@ class StockActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                Log.d("yj", "재고등록 실패 결과메시지 : ${t.message}")
+                serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
             }
 
         })
