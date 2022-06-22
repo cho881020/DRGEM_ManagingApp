@@ -52,7 +52,7 @@ class KittingActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(null)
+            finish()
         }
 
         val cal = Calendar.getInstance()

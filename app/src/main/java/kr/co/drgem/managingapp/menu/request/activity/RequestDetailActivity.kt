@@ -84,13 +84,25 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog() {
-                workStatusCancle()
+            if(status=="333"){
+                backDialog() {
+                    workStatusCancle()
+                }
+            }
+            else {
+                finish()
             }
         }
 
         binding.btnFind.setOnClickListener {
-            requestWorkseq()
+            if(status=="111"){
+                requestWorkseq()
+            }
+            else if (status == "333"){
+                status333Dialog(){
+                    requestWorkseq()
+                }
+            }
         }
 
         binding.btnFold.setOnClickListener {
@@ -613,8 +625,13 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog() {
-            workStatusCancle()
+        if(status=="333"){
+            backDialog() {
+                workStatusCancle()
+            }
+        }
+        else {
+            finish()
         }
     }
 

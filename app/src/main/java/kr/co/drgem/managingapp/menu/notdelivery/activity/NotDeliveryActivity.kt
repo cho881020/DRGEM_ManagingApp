@@ -84,9 +84,15 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog() {
-                workStatusCancle()
+            if(status=="333"){
+                backDialog() {
+                    workStatusCancle()
+                }
             }
+            else {
+                finish()
+            }
+
         }
 
         binding.btnFold.setOnClickListener {
@@ -184,7 +190,14 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         }
 
         binding.btnFind.setOnClickListener {
-            requestWorkseq()
+            if(status=="111"){
+                requestWorkseq()
+            }
+            else if (status == "333"){
+                status333Dialog(){
+                    requestWorkseq()
+                }
+            }
         }
 
 
@@ -753,9 +766,15 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog() {
-            workStatusCancle()
+        if(status=="333"){
+            backDialog() {
+                workStatusCancle()
+            }
         }
+        else {
+            finish()
+        }
+
     }
 
     override fun onClickedEdit(count: Int, data: PummokdetailDelivery) {

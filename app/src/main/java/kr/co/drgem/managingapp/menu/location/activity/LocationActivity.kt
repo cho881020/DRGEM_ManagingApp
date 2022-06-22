@@ -50,17 +50,29 @@ class LocationActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        backDialog() {
-            workStatusCancle()
+        if(status=="333"){
+            backDialog() {
+                workStatusCancle()
+            }
         }
+        else {
+            finish()
+        }
+
     }
 
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog() {
-                workStatusCancle()
+            if(status=="333"){
+                backDialog() {
+                    workStatusCancle()
+                }
             }
+            else {
+                finish()
+            }
+
         }
 
         binding.btnSave.setOnClickListener {
@@ -107,7 +119,14 @@ class LocationActivity : BaseActivity() {
             }
 
         binding.btnFind.setOnClickListener {
-            requestWorkseq()
+            if(status=="111"){
+                requestWorkseq()
+            }
+            else if (status == "333"){
+                status333Dialog(){
+                    requestWorkseq()
+                }
+            }
         }
 
     }

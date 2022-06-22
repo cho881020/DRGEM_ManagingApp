@@ -56,7 +56,7 @@ class RequestActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(null)
+            finish()
         }
 
         val cal = Calendar.getInstance()
@@ -289,10 +289,6 @@ class RequestActivity : BaseActivity() {
 
             }
 
-    }
-
-    override fun onBackPressed() {
-        backDialog(null)
     }
 
 
