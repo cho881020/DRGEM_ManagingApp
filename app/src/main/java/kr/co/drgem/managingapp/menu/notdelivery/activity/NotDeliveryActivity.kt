@@ -273,7 +273,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         setValues()
 
                         if (it.returnPummokdetailDetail().size == 0) {
-                            Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                            searchZeroDialog()
                             setValues()
                             mAdapter.clearList()
 
@@ -323,11 +323,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                             Log.d("yj", "시리얼사이즈: ${serialSize}, 입력시리얼${it.getSerialCount()}")
 
-                            Toast.makeText(
-                                mContext,
-                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            countSerialDialog()
                             it.serialCheck = true
                             mAdapter.notifyDataSetChanged()
                             serialData = ""
@@ -378,13 +374,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
+                                            saveDoneDialog()
 
-                                            Toast.makeText(
-                                                mContext,
-                                                "저장이 완료되었습니다.",
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
                                         } else {
                                             Toast.makeText(
                                                 mContext,

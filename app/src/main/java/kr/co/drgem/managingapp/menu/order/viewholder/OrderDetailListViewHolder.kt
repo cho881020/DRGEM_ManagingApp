@@ -193,14 +193,20 @@ class OrderDetailListViewHolder(
                 if (count >= 1) {
                     listener.onClickedEdit(count, data)
                 } else {
-                    Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                    AlertDialog.Builder(itemView.context)
+                        .setMessage("수량을 입력해 주세요.")
+                        .setNegativeButton("확인", null)
+                        .show()
                 }
 
 
             } catch (e: Exception) {
                 e.printStackTrace()
 //                edtCount.setText("")
-                Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                AlertDialog.Builder(itemView.context)
+                    .setMessage("수량을 입력해 주세요.")
+                    .setNegativeButton("확인", null)
+                    .show()
                 Log.d("yj", "btnEdit.setOnClickListener Exception $e")
             }
         }

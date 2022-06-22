@@ -343,7 +343,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                             if (it.returnGeoraedetail().size == 0) {
 
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                searchZeroDialog()
                                 mAdapter.clearList()
                                 binding.txtCount.text = "(0건)"
                                 binding.layoutInfo.isVisible = false
@@ -397,11 +397,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                         val serialSize = serialData.trim().split(",").size
 
                         if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
-                            Toast.makeText(
-                                mContext,
-                                "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            countSerialDialog()
                             it.serialCheck = true
                             mAdapter.notifyDataSetChanged()
                             serialData = ""
@@ -458,11 +454,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                                             SerialManageUtil.clearData()
 
-                                            Toast.makeText(
-                                                mContext,
-                                                "저장이 완료되었습니다.",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            saveDoneDialog()
+
                                         } else {
                                             Toast.makeText(
                                                 mContext,

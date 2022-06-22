@@ -87,5 +87,26 @@ abstract class BaseActivity : AppCompatActivity() {
             .show()
     }
 
+    fun saveDoneDialog(){
+        AlertDialog.Builder(mContext)
+            .setMessage("저장이 완료되었습니다.")
+            .setNegativeButton("확인", null)
+            .show()
+    }
+
+
+    fun searchZeroDialog(){
+        AlertDialog.Builder(mContext)
+            .setMessage("검색된 내역이 없습니다.")
+            .setNegativeButton("확인", null)
+            .show()
+    }
+
+    fun countSerialDialog(){
+        AlertDialog.Builder(mContext)
+            .setMessage("입력 수량과 시리얼넘버 수량이 일치하지 않습니다.")
+            .setNegativeButton("확인", null)
+            .show()
+    }
 
 }

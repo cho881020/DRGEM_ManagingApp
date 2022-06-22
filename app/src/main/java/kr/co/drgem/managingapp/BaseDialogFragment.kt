@@ -42,5 +42,11 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     abstract fun setValues()
 
+    fun saveDoneDialog(){
+        AlertDialog.Builder(mContext)
+            .setMessage("등록이 완료되었습니다.")
+            .setNegativeButton("확인", null)
+            .show()
+    }
 
 }

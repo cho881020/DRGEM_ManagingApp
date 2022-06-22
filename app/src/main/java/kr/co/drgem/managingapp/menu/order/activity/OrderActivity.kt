@@ -158,7 +158,7 @@ class OrderActivity : BaseActivity() {
                         baljuList.addAll(it.returnBaljubeonho())
 
                         if (baljuList.size == 0) {
-                            Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                            searchZeroDialog()
                             mOrderAdapter.clearList()
                         }
 

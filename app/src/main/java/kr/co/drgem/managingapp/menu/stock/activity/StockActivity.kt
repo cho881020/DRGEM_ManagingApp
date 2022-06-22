@@ -267,8 +267,7 @@ class StockActivity : BaseActivity() {
 
 
                                 if (it.returnPummokDetail().size == 0) {
-                                    Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT)
-                                        .show()
+                                    searchZeroDialog()
 
                                 } else {
                                     productData = it
@@ -325,9 +324,8 @@ class StockActivity : BaseActivity() {
                     response.body()?.let {
                         if (it.resultcd == "000") {
 
+                            saveDoneDialog()
 
-                            Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
-                                .show()
                             mList.clear()
                             setValues()
                         } else {

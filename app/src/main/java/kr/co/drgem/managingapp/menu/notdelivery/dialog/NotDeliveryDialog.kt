@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogNotDeliveryBinding
 import kr.co.drgem.managingapp.databinding.DialogTransactionBinding
@@ -21,7 +22,7 @@ import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.models.PummokdetailDelivery
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 
-class NotDeliveryDialog : DialogFragment() {
+class NotDeliveryDialog : BaseDialogFragment() {
 
     lateinit var binding: DialogNotDeliveryBinding
     lateinit var pummokData : PummokdetailDelivery
@@ -49,7 +50,7 @@ class NotDeliveryDialog : DialogFragment() {
 
     }
 
-    fun setupEvents(){
+    override fun setupEvents(){
 
         binding.btnAdd.setOnClickListener {
 
@@ -71,7 +72,7 @@ class NotDeliveryDialog : DialogFragment() {
 
             }
 
-            Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
+            saveDoneDialog()
             dismiss()
         }
 
@@ -89,7 +90,7 @@ class NotDeliveryDialog : DialogFragment() {
 
     }
 
-    fun setValues() {
+    override fun setValues() {
 
         var itemCount = 0
 

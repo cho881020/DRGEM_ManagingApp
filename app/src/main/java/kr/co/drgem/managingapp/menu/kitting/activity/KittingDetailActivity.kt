@@ -243,7 +243,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                             setValues()
 
                             if (it.returnKittingDetail().size == 0) {
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                searchZeroDialog()
                                 mAdapter.clearList()
 
                             }
@@ -284,11 +284,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                             val serialSize = serialData.split(",").size
 
                             if (serialSize.toString() != it.getSerialCount()|| serialData == "null") {
-                                Toast.makeText(
-                                    mContext,
-                                    "입력 수량과 시리얼넘버 수량이 일치하지 않습니다.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                countSerialDialog()
                                 it.serialCheck = true
                                 mAdapter.notifyDataSetChanged()
                                 serialData = ""
@@ -346,13 +342,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                         if (it.resultcd == "000") {
 
                                             SerialManageUtil.clearData()
+                                            saveDoneDialog()
 
-                                            Toast.makeText(
-                                                mContext,
-                                                "저장이 완료되었습니다.",
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
                                         } else {
                                             Toast.makeText(
                                                 mContext,

@@ -188,7 +188,7 @@ class LocationActivity : BaseActivity() {
                             mList = it.returnPummokDetail()
 
                             if (it.returnPummokDetail().size == 0) {
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                searchZeroDialog()
                                 mList.clear()
 
                             } else {
@@ -252,8 +252,7 @@ class LocationActivity : BaseActivity() {
                             if (it.resultcd == "000") {
 
 
-                                Toast.makeText(mContext, "저장이 완료되었습니다.", Toast.LENGTH_SHORT)
-                                    .show()
+                                saveDoneDialog()
 
                             } else {
                                 Toast.makeText(mContext, it.resultmsg, Toast.LENGTH_SHORT)

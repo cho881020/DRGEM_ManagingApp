@@ -15,7 +15,7 @@ data class GeoraedetailAdd(
     fun toJsonObject() : JsonObject {       // JSONObject 로 제작하는
         val jsonObj = JsonObject()
 
-        jsonObj.addProperty("baljubeonho ", baljubeonho)
+        jsonObj.addProperty("baljubeonho", baljubeonho)
         jsonObj.addProperty("seq", seq)
         jsonObj.addProperty("pummokcode", pummokcode)
         jsonObj.addProperty("georaesuryang", georaesuryang)

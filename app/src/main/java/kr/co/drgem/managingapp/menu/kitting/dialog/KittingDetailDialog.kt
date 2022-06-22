@@ -13,13 +13,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogKittingDetailBinding
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
 import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 
-class KittingDetailDialog : DialogFragment() {
+class KittingDetailDialog : BaseDialogFragment() {
 
     lateinit var binding: DialogKittingDetailBinding
     lateinit var mAdapter: DialogEditKittingAdapter
@@ -51,7 +52,7 @@ class KittingDetailDialog : DialogFragment() {
 
     }
 
-    fun setupEvents() {
+    override fun setupEvents() {
 
 
         binding.btnAdd.setOnClickListener {
@@ -80,7 +81,6 @@ class KittingDetailDialog : DialogFragment() {
             }
 
 
-            Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
             dismiss()
 
 
@@ -106,7 +106,7 @@ class KittingDetailDialog : DialogFragment() {
     }
 
 
-    fun setValues() {
+    override fun setValues() {
 
         var itemCount = 0
 

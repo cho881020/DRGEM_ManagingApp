@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.transaction.viewholder
 
+import android.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -175,13 +176,19 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
                 if (count >= 1) {
                     listener.onClickedEdit(count, data)
                 } else {
-                    Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                    AlertDialog.Builder(itemView.context)
+                        .setMessage("수량을 입력해 주세요.")
+                        .setNegativeButton("확인", null)
+                        .show()
                 }
 
 
             } catch (e: Exception) {
                 ipgosuryang.text = null
-                Toast.makeText(itemView.context, "수량을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                AlertDialog.Builder(itemView.context)
+                    .setMessage("수량을 입력해 주세요.")
+                    .setNegativeButton("확인", null)
+                    .show()
             }
         }
 

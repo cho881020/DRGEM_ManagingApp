@@ -87,7 +87,7 @@ class OrderDetailDialog : BaseDialogFragment() {
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
 
-            Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
+            saveDoneDialog()
             dismiss()
         }
 

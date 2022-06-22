@@ -160,7 +160,7 @@ class RequestActivity : BaseActivity() {
 
                             if(it.returnYocheongDetail().size == 0){
                                 mAdapter.clearList()
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                searchZeroDialog()
                                 binding.txtCount.text = "(0건)"
 
                             }

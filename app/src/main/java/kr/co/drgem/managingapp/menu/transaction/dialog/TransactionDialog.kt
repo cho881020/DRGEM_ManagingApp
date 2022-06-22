@@ -13,13 +13,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogTransactionBinding
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
 import kr.co.drgem.managingapp.models.Georaedetail
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 
-class TransactionDialog : DialogFragment() {
+class TransactionDialog : BaseDialogFragment() {
 
     lateinit var binding: DialogTransactionBinding
     lateinit var georaeData: Georaedetail
@@ -48,7 +49,7 @@ class TransactionDialog : DialogFragment() {
 
     }
 
-    fun setupEvents() {
+    override fun setupEvents() {
 
         binding.btnAdd.setOnClickListener {
 
@@ -72,7 +73,7 @@ class TransactionDialog : DialogFragment() {
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
 
-            Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
+            saveDoneDialog()
             dismiss()
         }
 
@@ -91,7 +92,7 @@ class TransactionDialog : DialogFragment() {
 
     }
 
-    fun setValues() {
+    override fun setValues() {
 
         var itemCount = 0
 

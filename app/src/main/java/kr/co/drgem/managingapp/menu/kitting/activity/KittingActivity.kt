@@ -171,7 +171,7 @@ class KittingActivity : BaseActivity() {
                             setValues()
 
                             if(it.returnKittingDetail().size == 0){
-                                Toast.makeText(mContext, "검색된 내역이 없습니다.", Toast.LENGTH_SHORT).show()
+                                searchZeroDialog()
                                 mAdapter.clearList()
                                 binding.txtCount.text = "(0건)"
 

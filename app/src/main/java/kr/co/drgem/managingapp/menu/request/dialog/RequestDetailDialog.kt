@@ -13,13 +13,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogRequestDetailBinding
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
 import kr.co.drgem.managingapp.models.Pummokdetail
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 
-class RequestDetailDialog : DialogFragment() {
+class RequestDetailDialog : BaseDialogFragment() {
 
     lateinit var binding: DialogRequestDetailBinding
     lateinit var mAdapter: DialogEditRequestAdapter
@@ -51,7 +52,7 @@ class RequestDetailDialog : DialogFragment() {
 
     }
 
-    fun setupEvents() {
+    override fun setupEvents() {
 
         binding.btnAdd.setOnClickListener {
 
@@ -75,7 +76,7 @@ class RequestDetailDialog : DialogFragment() {
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
 
-            Toast.makeText(requireContext(), "등록이 완료 되었습니다", Toast.LENGTH_SHORT).show()
+            saveDoneDialog()
             dismiss()
         }
 
@@ -94,7 +95,7 @@ class RequestDetailDialog : DialogFragment() {
     }
 
 
-    fun setValues() {
+    override fun setValues() {
 
         var itemCount = 0
 
