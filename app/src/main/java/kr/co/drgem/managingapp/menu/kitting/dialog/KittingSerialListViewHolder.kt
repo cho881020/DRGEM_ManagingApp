@@ -5,10 +5,10 @@ import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
@@ -51,19 +51,30 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         edtSerial.removeTextChangedListener(textChangeListener)
         edtSerial.addTextChangedListener(textChangeListener)
 
+
+        if (data.size == position + 1) {
+            edtSerial.imeOptions = EditorInfo.IME_ACTION_DONE
+        }
+
         edtSerial.setOnEditorActionListener { textView, actionId, keyEvent ->
 
             if (actionId == 0) {
                 if (keyEvent.action == KeyEvent.ACTION_UP) {
-                    edtSerial.onEditorAction(5)
+
+                    if (data.size == position + 1) {
+                        edtSerial.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                    } else {
+                        edtSerial.onEditorAction(5)
+                    }
+
                     return@setOnEditorActionListener true
                 }
             }
 
-
             return@setOnEditorActionListener actionId != 5
-
         }
+
+
 
         btnRemove.setOnClickListener {
             edtSerial.setText("")
