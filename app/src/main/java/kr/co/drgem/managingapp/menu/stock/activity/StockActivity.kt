@@ -43,6 +43,7 @@ class StockActivity : BaseActivity() {
 
     var SEQ = ""
     var status = "111"
+    var sawonCode = ""
 
     val mList: ArrayList<Pummokdetail> = arrayListOf()  // 리스트 추가시 화면에 보일 목록
     var addList: ArrayList<Pummokdetail> = arrayListOf()   //mList 에 담을 목록
@@ -212,7 +213,6 @@ class StockActivity : BaseActivity() {
     }
     //    작업 SEQ 요청
     fun requestWorkseq() {
-        var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -351,11 +351,6 @@ class StockActivity : BaseActivity() {
     }
     //    작업상태취소
     fun workStatusCancle() {
-
-        var sawonCode = ""
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(

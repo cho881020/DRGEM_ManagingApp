@@ -38,6 +38,7 @@ class LocationActivity : BaseActivity() {
     var inputPummyeong = ""
     var SEQ = ""
     var status = "111"
+    var sawonCode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,7 +122,6 @@ class LocationActivity : BaseActivity() {
     }
     //    작업 SEQ 요청
     fun requestWorkseq() {
-        var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -272,11 +272,6 @@ class LocationActivity : BaseActivity() {
     }
     //    작업상태취소
     fun workStatusCancle() {
-
-        var sawonCode = ""
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(

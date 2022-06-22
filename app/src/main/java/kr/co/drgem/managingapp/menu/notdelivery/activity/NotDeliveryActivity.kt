@@ -64,6 +64,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     var SEQ = ""
     var status = "111"
+    var sawonCode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,11 +170,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             binding.edtCode.text = null
         }
 
-
-        binding.btnOutName.setOnClickListener {
-            binding.edtOutName.text = null
-        }
-
         binding.btnInName.setOnClickListener {
             binding.edtInName.text = null
         }
@@ -196,7 +192,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     //    작업 SEQ 요청
     fun requestWorkseq() {
-        var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -301,7 +296,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         binding.btnSave.setOnClickListener {
 
             saveDialog() {
-                val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
 
                 val chulgodetail = JsonArray()
@@ -352,7 +346,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     "chulgoilja" to calDate,
                     "chulgosaupjangcode" to companyCodeOut,
                     "chulgochanggocode" to wareHouseCodeOut,
-                    "chulgodamdangjacode" to chulgodamdangjacode,
+                    "chulgodamdangjacode" to sawonCode,
                     "ipgosaupjangcode" to companyCodeIn,
                     "ipgochanggocode" to wareHouseCodeIn,
                     "ipgodamdangjacode" to ipgodamdangjacode,
@@ -400,11 +394,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     //    작업상태취소
     fun workStatusCancle() {
 
-        var sawonCode = ""
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
-
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
@@ -439,11 +428,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     }
 
     fun setTempData(): TempData {
-        var sawonCode = ""
-
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         val tempData = TempData(
             companyCodeOut,
@@ -467,6 +451,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         mAdapter.setTemp(setTempData())
 
         binding.txtCount.text = "(${notDeliveryData.pummokcount} 건)"
+        binding.chulgodamdangjacode.text = sawonCode
 
         notDeliveryData.returnPummokdetailDetail().forEach {
             if (it.jungyojajeyeobu == "Y") {

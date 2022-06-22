@@ -399,8 +399,8 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/edtName"
+                        <TextView
+                            android:id="@+id/ipgodamdangja"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -413,13 +413,6 @@
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
-                        <ImageView
-                            android:id="@+id/btnNameRemove"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="7dp"
-                            android:focusable="false"
-                            android:src="@drawable/btn_x" />
 
                     </LinearLayout>
 

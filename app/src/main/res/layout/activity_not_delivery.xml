@@ -681,15 +681,15 @@
                         android:textSize="12dp" />
 
                     <LinearLayout
-                        android:layout_width="95dp"
+                        android:layout_width="80dp"
                         android:layout_height="35dp"
                         android:layout_marginTop="2dp"
                         android:background="@drawable/light_gray_box"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/edtOutName"
+                        <TextView
+                            android:id="@+id/chulgodamdangjacode"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -699,15 +699,10 @@
                             android:maxLines="1"
                             android:inputType="text"
                             android:privateImeOptions="defaultInputmode=korean"
+                            tools:text="홍길동"
                             android:textColor="@color/color_000000"
                             android:textSize="12dp" />
 
-                        <ImageView
-                            android:id="@+id/btnOutName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="7dp"
-                            android:src="@drawable/btn_x" />
 
                     </LinearLayout>
 
@@ -814,7 +809,7 @@
                         android:textSize="12dp" />
 
                     <LinearLayout
-                        android:layout_width="95dp"
+                        android:layout_width="80dp"
                         android:layout_height="35dp"
                         android:layout_marginTop="2dp"
                         android:background="@drawable/light_gray_box"

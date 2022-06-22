@@ -49,6 +49,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     var mkittingbeonho = ""
     var SEQ = ""
     var status = "111"
+    var sawonCode = ""
 
     var johoejogeon = "0"
     var migwanri = "0"
@@ -104,9 +105,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         }
 
 
-        binding.btnOutNameRemove.setOnClickListener {
-            binding.edtOutName.text = null
-        }
 
         binding.btnInNameRemove.setOnClickListener {
             binding.edtInName.text = null
@@ -135,11 +133,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
 
     fun setTempData(): TempData {
-        var sawonCode = ""
-
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         val tempData = TempData(
             companyCodeOut,
@@ -156,13 +149,13 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
     override fun setValues() {
 
-
         mAdapter = KittingDetailListAdapter(this)
         mAdapter.setTemp(setTempData())
         mAdapter.setList(kittingDetailData.returnKittingDetail())
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${kittingDetailData.getPummokCount()} 건)"
+        binding.chulgodamdangjacode.text = sawonCode
 
 
         kittingDetailData.returnKittingDetail().forEach {
@@ -177,7 +170,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
     //    작업 SEQ 요청
     fun requestWorkseq() {
-        var sawonCode = ""
+
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -266,7 +259,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             saveDialog() {
 
                 val chulgodetail = JsonArray()   // 등록용 리스트
-                val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
 
                 kittingDetailData.returnKittingDetail().forEach {
@@ -315,7 +307,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                     "chulgoilja" to calDate,
                     "chulgosaupjangcode" to companyCodeOut,
                     "chulgochanggocode" to wareHouseCodeOut,
-                    "chulgodamdangjacode" to chulgodamdangjacode,
+                    "chulgodamdangjacode" to sawonCode,
                     "ipgosaupjangcode" to companyCodeIn,
                     "ipgodamdangjacode" to ipgodamdangjacode,
                     "ipgochanggocode" to wareHouseCodeIn,
@@ -367,11 +359,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
     //    작업상태취소
     fun workStatusCancle() {
-
-        var sawonCode = ""
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(

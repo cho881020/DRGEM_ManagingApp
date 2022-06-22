@@ -98,9 +98,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             binding.btnOpen.isVisible = false
         }
 
-        binding.btnNameRemove.setOnClickListener {
-            binding.edtName.text = null
-        }
 
         binding.btnBack.setOnClickListener {
             backDialog {
@@ -146,7 +143,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
 
     fun setTempData(): TempData {
-        var sawonCode = ""
 
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
@@ -292,7 +288,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         binding.baljubeonho.text = "발주번호 - $mBaljubeonho"
         binding.baljubeonho2.text = mBaljubeonho
-
+        binding.ipgodamdangja.text = sawonCode
         binding.baljuil.text = orderDetailData.getBaljuilHP()
         binding.georaecheocode.text = orderDetailData.getGeoraecheocodeHP()
         binding.georaecheomyeong.text = orderDetailData.getGeoraecheomyeongHP()
@@ -371,7 +367,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             binding.spinnerWareHouse.setSelection(wareHouseIndex)
 
 
-            binding.edtName.setText(baljuDetailInfoLocalDB.IPGODAMDANGJA)
+//            binding.edtName.setText(baljuDetailInfoLocalDB.IPGODAMDANGJA)
 
             setOrderDetailDataToUI()
         } else {
@@ -421,8 +417,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
             saveDialog() {
                 val ipgodetail = JsonArray()   // 등록용 리스트
-                val inputName = binding.edtName.text.toString()
-
 
                 orderDetailData.returnBaljudetail().forEach {
 
@@ -472,7 +466,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                     "ipgoilja" to calDate,
                     "ipgosaupjangcode" to companyCode,
                     "ipgochanggocode" to wareHouseCode,
-                    "ipgodamdangja" to inputName,
+                    "ipgodamdangja" to sawonCode,
                     "georaecheocode" to orderDetailData.getGeoraecheocodeHP(),
                     "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
                     "status" to "777",
@@ -574,7 +568,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             binding.txtDate.text.toString(),
             masterData.getCompanyCode()[binding.spinnerCompany.selectedItemPosition].code,
             mWareHouseList[binding.spinnerCompany.selectedItemPosition].code,
-            binding.edtName.text.toString()
+            sawonCode
 
         )
 

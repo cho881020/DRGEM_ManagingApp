@@ -49,6 +49,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     var mYocheongbeonho = ""
     var SEQ = ""
     var status = "111"
+    var sawonCode = ""
 
     var johoejogeon = "0"
     var migwanri = "0"
@@ -123,7 +124,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     }
 
     fun setTempData(): TempData {
-        var sawonCode = ""
 
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
@@ -149,8 +149,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         mAdapter.setList(requestDetailData.returnPummokDetail())
         binding.recyclerView.adapter = mAdapter
 
-
         binding.txtCount.text = "(${requestDetailData.pummokcount}건)"
+        binding.chulgodamdangjacode.text = sawonCode
 
         requestDetailData.returnPummokDetail().forEach {
             if (it.jungyojajeyeobu == "Y") {
@@ -163,7 +163,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     }
     //    작업 SEQ 요청
     fun requestWorkseq() {
-        var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -256,7 +255,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         binding.btnSave.setOnClickListener {
             saveDialog() {
 
-                val chulgodamdangjacode = binding.edtOutName.text.toString()
                 val ipgodamdangjacode = binding.edtInName.text.toString()
 
                 val requestChulgodetail = JsonArray()
@@ -306,7 +304,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                     "chulgoilja" to calDate,
                     "chulgosaupjangcode" to companyCodeOut,
                     "chulgochanggocode" to wareHouseCodeOut,
-                    "chulgodamdangjacode" to chulgodamdangjacode,
+                    "chulgodamdangjacode" to sawonCode,
                     "ipgosaupjangcode" to companyCodeIn,
                     "ipgochanggocode" to wareHouseCodeIn,
                     "ipgodamdangjacode" to ipgodamdangjacode,
@@ -356,7 +354,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     //    작업상태취소
     fun workStatusCancle() {
 
-        var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }

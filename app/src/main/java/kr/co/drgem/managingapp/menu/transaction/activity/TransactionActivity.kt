@@ -54,6 +54,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     var SEQ = ""
     var status = "111"
+    var sawonCode = ""
 
     var baljubeonho = ""
 
@@ -135,10 +136,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             binding.layoutInfo.isVisible = false
         }
 
-        binding.btnNameRemove.setOnClickListener {
-            binding.edtName.text = null
-        }
-
 
         binding.btnFind.setOnClickListener {
             requestWorkseq()
@@ -147,11 +144,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     }
 
     fun setTempData(): TempData {
-        var sawonCode = ""
-
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         val tempData = TempData(
             companyCode,
@@ -168,7 +160,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     override fun setValues() {
 
-
+        binding.ipgodamdangja.text = sawonCode
         binding.georaecheomyeong.text = tranData.getGeoraecheomyeongHP()
         binding.nappumcheomyeong.text = tranData.getNappumcheomyeongHP()
         binding.bigo.text = tranData.getBigoHP()
@@ -275,7 +267,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     //    작업 SEQ 요청
     fun requestWorkseq() {
-        var sawonCode = ""
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -379,8 +370,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
             saveDialog() {
                 val georaedetail = JsonArray()   // 등록용 리스트
-                val inputName = binding.edtName.text.toString()
-
 
                 tranData.returnGeoraedetail().forEach {
 
@@ -430,7 +419,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                     "ipgoilja" to calDate,
                     "ipgosaupjangcode" to companyCode,
                     "ipgochanggocode" to wareHouseCode,
-                    "ipgodamdangja" to inputName,
+                    "ipgodamdangja" to sawonCode,
                     "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
                     "status" to "777",
                     "pummokcount" to georaedetail.size().toString(),
@@ -480,11 +469,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     }
     //    작업상태취소
     fun workStatusCancle() {
-
-        var sawonCode = ""
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
