@@ -83,6 +83,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         dateSet()
         PostRequestRequest()
         sort()
+        spinnerSetOut()
+        spinnerSetIn()
 
     }
 
@@ -169,8 +171,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 binding.serialDetail.isVisible = true
             }
         }
-        spinnerSetOut()
-        spinnerSetIn()
+
 
     }
     //    작업 SEQ 요청
@@ -450,7 +451,11 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                             }
                         }
 
-                        mAdapter.setTemp(setTempData())
+                        try{
+                            mAdapter.setTemp(setTempData())
+                        }catch (e: Exception){
+
+                        }
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -465,7 +470,11 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
-                        mAdapter.setTemp(setTempData())
+                        try{
+                            mAdapter.setTemp(setTempData())
+                        }catch (e: Exception){
+
+                        }
 
                     }
 

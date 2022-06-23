@@ -81,6 +81,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         dateSet()
         postRequestKitting()
         sort()
+
+        spinnerSetOut()
+        spinnerSetIn()
     }
 
     override fun onBackPressed() {
@@ -185,8 +188,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             }
         }
 
-        spinnerSetOut()
-        spinnerSetIn()
 
     }
     //    작업 SEQ 요청
@@ -459,7 +460,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                             }
                         }
 
-                        mAdapter.setTemp(setTempData())
+                        try{
+                            mAdapter.setTemp(setTempData())
+                        }catch (e: Exception){
+
+                        }
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -474,7 +479,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
-                        mAdapter.setTemp(setTempData())
+                        try{
+                            mAdapter.setTemp(setTempData())
+                        }catch (e: Exception){
+
+                        }
 
                     }
 

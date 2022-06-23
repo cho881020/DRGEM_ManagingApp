@@ -72,6 +72,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         sort()
         postRequestTran()
 
+        spinnerSet()
+
     }
 
     override fun setupEvents() {
@@ -198,7 +200,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         binding.recyclerView.adapter = mAdapter
 
 
-        spinnerSet()
+
 
     }
 
@@ -253,7 +255,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                         }
 
                     }
-                    mAdapter.setTemp(setTempData())
+                    try{
+                        mAdapter.setTemp(setTempData())
+                    }catch (e: Exception){
+
+                    }
+
 
                 }
 
@@ -270,7 +277,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 ) {
 
                     wareHouseCode = mWareHouseList[position].code
-                    mAdapter.setTemp(setTempData())
+
+                    try{
+                        mAdapter.setTemp(setTempData())
+                    }catch (e: Exception){
+
+                    }
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {

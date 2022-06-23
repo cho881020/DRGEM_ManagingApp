@@ -82,6 +82,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         postRequestNotDelivery()
         sort()
+        spinnerSetIn()
+        spinnerSetOut()
 
 
     }
@@ -476,8 +478,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
         }
 
-        spinnerSetIn()
-        spinnerSetOut()
 
     }
 
@@ -600,7 +600,11 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             }
                         }
 
-                        mAdapter.setTemp(setTempData())
+                        try{
+                            mAdapter.setTemp(setTempData())
+                        }catch (e: Exception){
+
+                        }
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -615,7 +619,11 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
-                        mAdapter.setTemp(setTempData())
+                        try{
+                            mAdapter.setTemp(setTempData())
+                        }catch (e: Exception){
+
+                        }
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
