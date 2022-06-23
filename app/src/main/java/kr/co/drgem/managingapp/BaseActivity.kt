@@ -130,6 +130,13 @@ abstract class BaseActivity : AppCompatActivity() {
             .show()
     }
 
+    fun ipgodamdangjacodeDialog(){
+        AlertDialog.Builder(mContext)
+            .setMessage("입고담당자를 입력해 주세요.")
+            .setNegativeButton("확인", null)
+            .show()
+    }
+
     fun status333Dialog(runnable: Runnable?){
 
         AlertDialog.Builder(mContext)

@@ -22,8 +22,10 @@ import kr.co.drgem.managingapp.menu.request.activity.RequestActivity
 import kr.co.drgem.managingapp.menu.stock.activity.StockActivity
 import kr.co.drgem.managingapp.menu.transaction.activity.TransactionActivity
 import kr.co.drgem.managingapp.models.MasterDataResponse
+import kr.co.drgem.managingapp.models.MasterSawonResponse
 import kr.co.drgem.managingapp.utils.ContextUtil
 import kr.co.drgem.managingapp.utils.MainDataManager
+import kr.co.drgem.managingapp.utils.SawonDataManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +40,7 @@ class MenuActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu)
 
         getRequestMasterCode()
+        getRequestMasterSawon()
 
         setupEvents()
         setValues()
@@ -134,6 +137,27 @@ class MenuActivity : BaseActivity() {
             override fun onFailure(call: Call<MasterDataResponse>, t: Throwable) {
                 Log.d("yj", "MasterCode 실패 : ${t.message}")
             }
+
+        })
+    }
+
+    fun getRequestMasterSawon(){
+        apiList.getRequestMasterSawon().enqueue(object : Callback<MasterSawonResponse>{
+            override fun onResponse(
+                call: Call<MasterSawonResponse>,
+                response: Response<MasterSawonResponse>
+            ) {
+                if(response.isSuccessful){
+                    response.body()?.let{
+                        SawonDataManager.setSawonData(it)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<MasterSawonResponse>, t: Throwable) {
+
+            }
+
 
         })
     }

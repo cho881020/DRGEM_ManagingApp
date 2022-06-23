@@ -21,6 +21,12 @@ interface APIList {
         @Query("mastertype") mastertype : String = "all"
     ) : Call<MasterDataResponse>
 
+    @GET("tablet/master-sawon/request")
+    fun getRequestMasterSawon(
+        @Query("requesttype") requesttype : String = "09003",
+        @Query("mastertype") mastertype : String = "all"
+    ) : Call<MasterSawonResponse>
+
 
     @POST("tablet/workseq/request")
     fun postRequestSEQ(

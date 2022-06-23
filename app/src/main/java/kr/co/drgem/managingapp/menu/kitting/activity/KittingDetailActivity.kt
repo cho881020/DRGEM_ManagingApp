@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -26,10 +27,7 @@ import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingDetailListAdapter
 import kr.co.drgem.managingapp.menu.kitting.dialog.KittingDetailDialog
 import kr.co.drgem.managingapp.models.*
-import kr.co.drgem.managingapp.utils.IPUtil
-import kr.co.drgem.managingapp.utils.LoginUserUtil
-import kr.co.drgem.managingapp.utils.MainDataManager
-import kr.co.drgem.managingapp.utils.SerialManageUtil
+import kr.co.drgem.managingapp.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,11 +47,14 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     var mkittingbeonho = ""
     var SEQ = ""
     var status = "111"
+
+    var sawonData = ArrayList<SawonData>()
     var sawonCode = ""
 
     var johoejogeon = "0"
     var migwanri = "0"
     var changgocode = ""
+    var ipgodamdangjacode = ""
 
     var companyCodeOut = "0001"
     var wareHouseCodeOut = "1001"
@@ -84,6 +85,8 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         spinnerSetOut()
         spinnerSetIn()
+
+        completeTextView()
     }
 
     override fun onBackPressed() {
@@ -99,6 +102,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
 
     override fun setupEvents() {
+
 
         binding.btnBack.setOnClickListener {
             if(status=="333"){
@@ -125,10 +129,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         }
 
 
-
-        binding.btnInNameRemove.setOnClickListener {
-            binding.edtInName.text = null
-        }
 
         binding.btnFind.setOnClickListener {
             if(status=="111"){
@@ -280,8 +280,22 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         binding.btnSave.setOnClickListener {
             saveDialog() {
 
+//                사원코드 가져오기
+                val selecSawon = binding.autoCompleteTextView.text.toString()
+                sawonData.forEach {
+                    if(it.sawonmyeong == selecSawon){
+                        ipgodamdangjacode = it.sawoncode
+                        Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
+                    }
+                }
+
+                if(ipgodamdangjacode == ""){
+                    ipgodamdangjacodeDialog()
+                    return@saveDialog
+                }
+
+
                 val chulgodetail = JsonArray()   // 등록용 리스트
-                val ipgodamdangjacode = binding.edtInName.text.toString()
 
                 kittingDetailData.returnKittingDetail().forEach {
 
@@ -640,6 +654,28 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         }
 
     }
+
+
+    private fun completeTextView(){
+
+        val sawonmyeongList = ArrayList<String>()
+
+        SawonDataManager.getSawonData()?.let{
+            sawonData = it.sawon
+        }
+
+        sawonData.forEach {
+            sawonmyeongList.add(it.sawonmyeong)
+        }
+
+        val autoCompleteTextView = binding.autoCompleteTextView
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
+
+        autoCompleteTextView.setAdapter(adapter)
+
+    }
+
 
     override fun onClickedEdit(count: Int, data: Pummokdetail) {
 
