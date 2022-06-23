@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -33,6 +34,7 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
     var data: Georaedetail? = null
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+    val layoutEdit = itemView.findViewById<LinearLayout>(R.id.layoutEdit)
     val ipgosuryang = itemView.findViewById<EditText>(R.id.ipgosuryang)
 
     val seq = itemView.findViewById<TextView>(R.id.seq)
@@ -110,9 +112,9 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
 
         if (data.jungyojajeyeobu == "Y") {
-            btnEdit.visibility = View.VISIBLE
+            layoutEdit.visibility = View.VISIBLE
         } else {
-            btnEdit.visibility = View.GONE
+            layoutEdit.visibility = View.GONE
         }
 
 

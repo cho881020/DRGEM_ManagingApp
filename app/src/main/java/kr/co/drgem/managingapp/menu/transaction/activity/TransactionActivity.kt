@@ -598,6 +598,39 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             }
 
         }
+
+
+
+        var onClickPummyeong = 0
+
+
+        binding.layoutPummyeong.setOnClickListener {
+
+            if (onClickPummyeong < 2) {
+                onClickPummyeong++
+            } else {
+                onClickPummyeong = 0
+            }
+
+            when (onClickPummyeong) {
+
+                0 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(tranData.returnGeoraedetail())
+                }
+
+                1 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(tranData.getDownPummyeong())
+                }
+
+                2 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(tranData.getUpPummyeong())
+                }
+            }
+
+        }
     }
 
 

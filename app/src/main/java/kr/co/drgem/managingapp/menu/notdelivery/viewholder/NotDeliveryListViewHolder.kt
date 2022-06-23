@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -49,6 +50,7 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
     val chulgosuryang = itemView.findViewById<EditText>(R.id.chulgosuryang)
     val seq = itemView.findViewById<TextView>(R.id.seq)
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+    val layoutEdit = itemView.findViewById<LinearLayout>(R.id.layoutEdit)
 
     val textChangeListener = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -111,7 +113,11 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         seq.text = "${position+1}"
 
 
-        btnEdit.isVisible = data.jungyojajeyeobu == "Y"
+        if (data.jungyojajeyeobu == "Y") {
+            layoutEdit.visibility = View.VISIBLE
+        } else {
+            layoutEdit.visibility = View.GONE
+        }
 
         val savedSerialString =
             SerialManageUtil.getSerialStringByPummokCode(data.getpummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서

@@ -96,9 +96,13 @@ data class TranResponse (
         if (georaedetail != null) {
             sortList.addAll(georaedetail)
         }
-        sortList.sortBy { it.seq }
+
+
+
+        sortList.sortBy { it.seq?.toInt() }
         return sortList
     }
+
 
     fun getDownSeq(): ArrayList<Georaedetail>{
         val sortList : ArrayList<Georaedetail> = arrayListOf()
@@ -106,7 +110,7 @@ data class TranResponse (
         if (georaedetail != null) {
             sortList.addAll(georaedetail)
         }
-        sortList.sortByDescending { it.seq }
+        sortList.sortByDescending { it.seq?.toInt() }
         return sortList
     }
 
@@ -130,6 +134,25 @@ data class TranResponse (
         return sortList
     }
 
+    fun getUpPummyeong(): ArrayList<Georaedetail>{
+        val sortList : ArrayList<Georaedetail> = arrayListOf()
+        sortList.clear()
+        if (georaedetail != null) {
+            sortList.addAll(georaedetail)
+        }
+        sortList.sortBy { it.pummyeong }
+        return sortList
+    }
+
+    fun getDownPummyeong(): ArrayList<Georaedetail>{
+        val sortList : ArrayList<Georaedetail> = arrayListOf()
+        sortList.clear()
+        if (georaedetail != null) {
+            sortList.addAll(georaedetail)
+        }
+        sortList.sortByDescending { it.pummyeong }
+        return sortList
+    }
 
 
 

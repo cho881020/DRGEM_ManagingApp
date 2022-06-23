@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -53,6 +54,7 @@ class OrderDetailListViewHolder(
     val location = itemView.findViewById<TextView>(R.id.location)
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+    val layoutEdit = itemView.findViewById<LinearLayout>(R.id.layoutEdit)
     val edtCount = itemView.findViewById<EditText>(R.id.edtCount)
 
     val textChangeListener = object : TextWatcher {
@@ -127,9 +129,9 @@ class OrderDetailListViewHolder(
 
 
         if (data.jungyojajeyeobu == "Y") {
-            btnEdit.visibility = View.VISIBLE
+            layoutEdit.visibility = View.VISIBLE
         } else {
-            btnEdit.visibility = View.GONE
+            layoutEdit.visibility = View.GONE
         }
 
         val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())

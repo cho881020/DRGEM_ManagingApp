@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -36,6 +37,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
     var data: Pummokdetail? = null
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
+    val layoutEdit = itemView.findViewById<LinearLayout>(R.id.layoutEdit)
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
     val pummyeong = itemView.findViewById<TextView>(R.id.pummyeong)
     val dobeon_model = itemView.findViewById<TextView>(R.id.dobeon_model)
@@ -108,8 +110,11 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         seq.text = "${position+1}"
 
 
-
-        btnEdit.isVisible = data.jungyojajeyeobu == "Y"
+        if (data.jungyojajeyeobu == "Y") {
+            layoutEdit.visibility = View.VISIBLE
+        } else {
+            layoutEdit.visibility = View.GONE
+        }
 
 
         pummyeong.setOnClickListener {
