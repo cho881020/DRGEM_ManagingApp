@@ -62,6 +62,7 @@ class TranSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
                     if (data.size == position + 1) {
                         edtSerial.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                        edtSerial.selectAll()
                     } else {
                         edtSerial.onEditorAction(5)
                     }

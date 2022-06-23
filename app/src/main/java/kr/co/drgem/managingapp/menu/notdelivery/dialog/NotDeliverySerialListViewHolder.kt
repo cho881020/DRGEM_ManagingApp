@@ -60,6 +60,7 @@ class NotDeliverySerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHold
                 if (keyEvent.action == KeyEvent.ACTION_UP) {
                     if (data.size == position + 1) {
                         edtSerial.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                        edtSerial.selectAll()
                     } else {
                         edtSerial.onEditorAction(5)
                     }
