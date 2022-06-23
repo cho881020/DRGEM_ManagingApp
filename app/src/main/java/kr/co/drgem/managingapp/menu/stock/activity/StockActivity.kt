@@ -17,6 +17,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
+import kr.co.drgem.managingapp.LoadingStockDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityStockBinding
@@ -41,12 +42,14 @@ class StockActivity : BaseActivity() {
     var wareHouseCode = "2001"
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
 
+    val loadingDialog = LoadingStockDialogFragment()
+
     var SEQ = ""
     var status = "111"
     var sawonCode = ""
 
     val mList: ArrayList<Pummokdetail> = arrayListOf()  // 리스트 추가시 화면에 보일 목록
-    var addList: ArrayList<Pummokdetail> = arrayListOf()   //mList 에 담을 목록
+    lateinit var searchCodeData: Pummokdetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +60,7 @@ class StockActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        backDialog(){
+        backDialog() {
             workStatusCancle()
         }
     }
@@ -65,13 +68,13 @@ class StockActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            backDialog(){
+            backDialog() {
                 workStatusCancle()
             }
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog(){
+            saveDialog() {
                 postRequestStock()
             }
         }
@@ -80,25 +83,30 @@ class StockActivity : BaseActivity() {
             binding.edtCode.text = null
         }
 
-
-        binding.btnFind.setOnClickListener {
-
-
-
-        }
-
         binding.btnReady.setOnClickListener {
             requestWorkseq()
-            getRequestStock()
         }
+
+        searchStock()
+
 
         binding.btnAdd.setOnClickListener {
 
-            addList[0].hyeonjaegosuryang =
-                binding.hyeonjaegosuryang.text.toString()    // 품목리스트는 배열 0개로 고정
+            searchCodeData.hyeonjaegosuryang =
+                binding.hyeonjaegosuryang.text.toString()
+
+
+            if(searchCodeData.gethyeonjaegosuryangHP() == "-" ){
+                AlertDialog.Builder(mContext)
+                    .setMessage("수량을 입력 해 주세요.")
+                    .setNegativeButton("확인", null)
+                    .show()
+                return@setOnClickListener
+            }
+
 
             mList.forEach {
-                if (it.pummokcode == addList[0].pummokcode) {
+                if (it.pummokcode == searchCodeData.pummokcode) {
 
                     AlertDialog.Builder(mContext)
                         .setMessage("이미 작성 된 품목입니다.")
@@ -112,8 +120,7 @@ class StockActivity : BaseActivity() {
                 }
             }
 
-            mList.addAll(addList)
-            addList.clear()
+            mList.addAll(listOf(searchCodeData))
 
             Log.d("yj", "mList : $mList")
             setValues()
@@ -204,8 +211,12 @@ class StockActivity : BaseActivity() {
         }
 
     }
+
     //    작업 SEQ 요청
     fun requestWorkseq() {
+
+        loadingDialog.show(supportFragmentManager, null)
+
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -233,6 +244,8 @@ class StockActivity : BaseActivity() {
                             SEQ = it.seq
                             status = "333"
 
+                            getRequestStock()
+
                             Log.d("yj", "SEQ : ${it.seq}")
                         } else {
                             Log.d("yj", "SEQ 실패 코드 : ${it.resultmsg}")
@@ -249,45 +262,50 @@ class StockActivity : BaseActivity() {
         })
 
     }
-//    품목정보요청
-    fun getRequestStock(){
 
-            apiList.getRequestProductinfo("02091", inputCode, companyCode, wareHouseCode)
-                .enqueue(object : Callback<ProductInfoResponse> {
-                    override fun onResponse(
-                        call: Call<ProductInfoResponse>,
-                        response: Response<ProductInfoResponse>
-                    ) {
-                        if (response.isSuccessful) {
+    //    품목정보요청
+    fun getRequestStock() {
 
-                            response.body()?.let {
+        apiList.getRequestProductinfo("02091", "", companyCode, wareHouseCode)
+            .enqueue(object : Callback<ProductInfoResponse> {
+                override fun onResponse(
+                    call: Call<ProductInfoResponse>,
+                    response: Response<ProductInfoResponse>
+                ) {
+                    if (response.isSuccessful) {
+
+                        response.body()?.let {
 
 
-                                if (it.returnPummokDetail().size == 0) {
-                                    searchZeroDialog()
+                            if (it.returnPummokDetail().size == 0) {
+                                searchZeroDialog()
 
-                                } else {
-                                    productData = it
-                                    addList.clear()
-                                    addList.addAll(it.returnPummokDetail())
-                                    Log.d("yj", "addList : $addList")
+                            } else {
 
-                                    binding.layoutEmpty.isVisible = false
-                                    binding.layoutFind.isVisible = false
-                                    binding.layoutAdd.isVisible = true
-                                    binding.layoutList.isVisible = true
+                                loadingDialog.loadingEnd()
 
-                                }
+                                productData = it
+
+                                binding.layoutEmpty.isVisible = false
+                                binding.layoutReady.isVisible = false
+                                binding.layoutFind.isVisible = true
+                                binding.layoutAdd.isVisible = true
+                                binding.layoutList.isVisible = true
+
                             }
                         }
-                    }
 
-                    override fun onFailure(call: Call<ProductInfoResponse>, t: Throwable) {
 
                     }
-                })
+                }
+
+                override fun onFailure(call: Call<ProductInfoResponse>, t: Throwable) {
+                    loadingDialog.dismiss()
+                }
+            })
 
     }
+
     //    재고수량등록
     fun postRequestStock() {
 
@@ -300,14 +318,16 @@ class StockActivity : BaseActivity() {
             pummokcode = it.getPummokcodeHP()
             suryang = it.gethyeonjaegosuryangHP()
 
-            stockAddList.add(StockPummokdetail(pummokcode, suryang).toJsonObject())
+            stockAddList.add(StockPummokdetail(pummokcode, suryang, "", "").toJsonObject()) // TODO : 조사시간,로케이션 확인
         }
 
         val stockAdd = hashMapOf(
             "requesttype" to "02092",
-            "changgocode" to companyCode,    // TODO : 창고코드/로케이션 확인
-            "location" to wareHouseCode,
             "seq" to SEQ,
+            "tabletip" to IPUtil.getIpAddress(),
+            "sawoncode" to sawonCode,
+            "saeopjangcode" to companyCode,
+            "changgocode" to wareHouseCode,
             "status" to "777",
             "pummokcount" to mList.size.toString(),
             "pummokdetail" to stockAddList
@@ -315,7 +335,7 @@ class StockActivity : BaseActivity() {
 
         Log.d("yj", "재고등록맵확인 : $stockAdd")
 
-        apiList.postRequestStock(stockAdd).enqueue(object : Callback<WorkResponse>{
+        apiList.postRequestStock(stockAdd).enqueue(object : Callback<WorkResponse> {
             override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -342,6 +362,7 @@ class StockActivity : BaseActivity() {
         })
 
     }
+
     //    작업상태취소
     fun workStatusCancle() {
 
@@ -378,27 +399,42 @@ class StockActivity : BaseActivity() {
 
     }
 
-    fun searchStock(){
-        val searchCode = binding.edtCode.text.toString()
+    fun searchStock() {
 
-        var searchCodeData : Pummokdetail
+        binding.btnFind.setOnClickListener {
 
-        productData.returnPummokDetail().forEach {
 
-            if(searchCode == it.pummokcode){
-                searchCodeData = it
+            inputCode = binding.edtCode.text.toString()
+
+            searchCodeData = Pummokdetail("", "", "", "", "", "", "", "", "", "", "", "")
+
+            productData.returnPummokDetail().forEach {
+
+                if (inputCode == it.pummokcode) {
+                    searchCodeData = it
+
+                    binding.pummokcode.text = (inputCode)
+                    binding.pummyeong.text = searchCodeData.getPummokcodeHP()
+                    binding.dobeonModel.text = searchCodeData.getdobeon_modelHP()
+                    binding.sayang.text = searchCodeData.getsayangHP()
+                    binding.hyeonjaegosuryang.setText(searchCodeData.gethyeonjaegosuryangHP())
+
+                }
+
             }
+
+            if (searchCodeData.pummokcode == "") {
+                searchZeroDialog()
+                return@setOnClickListener
+            }
+
+            binding.layoutAdd.isVisible = true
+            binding.layoutFind.isVisible = false
+
 
         }
 
-    }
 
-    fun setText() {
-        binding.pummokcode.text = (inputCode)
-        binding.pummyeong.text = productData.returnPummokDetail()[0].getPummokcodeHP()
-        binding.dobeonModel.text = productData.returnPummokDetail()[0].getdobeon_modelHP()
-        binding.sayang.text = productData.returnPummokDetail()[0].getsayangHP()
-        binding.hyeonjaegosuryang.setText(productData.returnPummokDetail()[0].gethyeonjaegosuryangHP())
     }
 
 }

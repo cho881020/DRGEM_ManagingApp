@@ -13,14 +13,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.databinding.DialogKittingDetailBinding
 import kr.co.drgem.managingapp.databinding.DialogLoadingBinding
+import kr.co.drgem.managingapp.databinding.DialogLoadingStockBinding
 
 class LoadingStockDialogFragment : DialogFragment() {
 
-    lateinit var binding: DialogLoadingBinding
+    lateinit var binding: DialogLoadingStockBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +44,15 @@ class LoadingStockDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        binding.btnOk.setOnClickListener {
+            dismiss()
+        }
 
+    }
+
+    fun loadingEnd() {
+        binding.layoutLoadingEnd.isVisible = true
+        binding.layoutLoadingIng.isVisible = false
     }
 
 

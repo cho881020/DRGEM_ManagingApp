@@ -7,7 +7,7 @@ data class Pummokdetail(
     val sayang: String?,         //사양
     val danwi: String?,          //단위
     val location: String?,       //위치
-    var hyeonjaegosuryang: String?,      //현재재고수량
+    var hyeonjaegosuryang: String?,      //현재고수량
     val yocheongsuryang: String?,        //요청수량
     val gichulgosuryang: String?,        //기출고수량
     val chulgosuryang: String?,          //출고수량

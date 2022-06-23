@@ -76,7 +76,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/color_FFFFFF"
             android:gravity="bottom"
-            android:paddingBottom="5dp"
+            android:paddingBottom="10dp"
             android:visibility="visible"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp">
@@ -166,39 +166,34 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/btnReady"
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_find"
+                    android:gravity="center"
+                    android:text="재고조사준비"
+                    android:textColor="@color/color_FFFFFF"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/btnReady"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/btn_find"
-                android:gravity="center"
-                android:text="재고조사준비"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="14dp"
-                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="재고조사 준비 완료 시 작업이 가능합니다 (최대 1분 소요)"
+                android:text="재고조사 준비 완료 시 작업이 가능합니다\n (최대 10분 소요)"
                 android:textColor="@color/color_000000"
                 android:textSize="12dp" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottie"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                app:lottie_autoPlay="true"
-                app:lottie_rawRes="@raw/lottie_loading" />
 
         </LinearLayout>
 
@@ -207,9 +202,11 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:gravity="bottom"
-            android:paddingBottom="5dp"
+            android:paddingBottom="10dp"
             android:layout_marginHorizontal="5dp"
             android:layout_marginTop="1dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:background="@color/color_FFFFFF"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp">
@@ -467,6 +464,7 @@
                     android:gravity="center_vertical"
                     android:inputType="number"
                     android:maxLines="1"
+                    android:selectAllOnFocus="true"
                     android:paddingHorizontal="7dp"
                     tools:text="3"
                     android:textColor="@color/color_000000"
