@@ -70,6 +70,12 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_not_delivery)
 
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+
+        binding.chulgodamdangjacode.text = sawonCode
+
         setupEvents()
         spinnerSet()
         dateSet()
@@ -205,9 +211,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     //    작업 SEQ 요청
     fun requestWorkseq() {
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
+
+        loadingDialog.show(supportFragmentManager, null)
 
         // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
@@ -253,8 +258,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     //    미출고명세요청
     fun getRequestNotDelivery() {
-
-        loadingDialog.show(supportFragmentManager, null)
 
         val yocheongja = binding.edtName.text.toString()
         val yocheongpummok = binding.edtCode.text.toString()
@@ -466,7 +469,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         mAdapter.setTemp(setTempData())
 
         binding.txtCount.text = "(${notDeliveryData.pummokcount} 건)"
-        binding.chulgodamdangjacode.text = sawonCode
 
         notDeliveryData.returnPummokdetailDetail().forEach {
             if (it.jungyojajeyeobu == "Y") {

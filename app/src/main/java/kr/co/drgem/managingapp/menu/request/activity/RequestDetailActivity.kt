@@ -73,6 +73,11 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         mYocheongbeonho = intent.getStringExtra("yocheongbeonho").toString()
         binding.yocheongbeonho.text = "요청번호 - $mYocheongbeonho"
 
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+        binding.chulgodamdangjacode.text = sawonCode
+
 
         setupEvents()
         dateSet()
@@ -137,10 +142,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
     fun setTempData(): TempData {
 
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
-
         val tempData = TempData(
             companyCodeOut,
             wareHouseCodeOut,
@@ -162,7 +163,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${requestDetailData.pummokcount}건)"
-        binding.chulgodamdangjacode.text = sawonCode
 
         requestDetailData.returnPummokDetail().forEach {
             if (it.jungyojajeyeobu == "Y") {
@@ -175,6 +175,9 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     }
     //    작업 SEQ 요청
     fun requestWorkseq() {
+
+        loadingDialog.show(supportFragmentManager, null)
+
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -221,8 +224,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     }
 
     fun getRequestDetail() {
-
-        loadingDialog.show(supportFragmentManager, null)
 
         companyCode = intent.getStringExtra("companyCode").toString()
         wareHouseCode = intent.getStringExtra("wareHouseCode").toString()

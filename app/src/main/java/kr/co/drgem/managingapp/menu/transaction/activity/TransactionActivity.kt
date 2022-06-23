@@ -62,6 +62,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+        binding.ipgodamdangja.text = sawonCode
+
 
         setupEvents()
         sort()
@@ -173,7 +178,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     override fun setValues() {
 
-        binding.ipgodamdangja.text = sawonCode
         binding.georaecheomyeong.text = tranData.getGeoraecheomyeongHP()
         binding.nappumcheomyeong.text = tranData.getNappumcheomyeongHP()
         binding.bigo.text = tranData.getBigoHP()
@@ -280,9 +284,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     //    작업 SEQ 요청
     fun requestWorkseq() {
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
+
+        loadingDialog.show(supportFragmentManager, null)
+
 
         // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
@@ -329,7 +333,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         val inputNum = binding.edtTranNum.text.toString()
 
-        loadingDialog.show(supportFragmentManager, null)
 
         apiList.getRequestTranDetail("02001", inputNum)
             .enqueue(object : Callback<TranResponse> {

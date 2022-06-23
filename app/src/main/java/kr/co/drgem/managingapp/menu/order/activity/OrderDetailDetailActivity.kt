@@ -66,6 +66,11 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         mBaljubeonho = intent.getStringExtra("baljubeonho").toString()
         SEQ = intent.getStringExtra("seq").toString()
 
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+        binding.ipgodamdangja.text = sawonCode
+
 
         setupEvents()
         getRequestOrderDetail()
@@ -144,9 +149,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     fun setTempData(): TempData {
 
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
 
         val tempData = TempData(
             companyCode,
@@ -288,7 +290,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         binding.baljubeonho.text = "발주번호 - $mBaljubeonho"
         binding.baljubeonho2.text = mBaljubeonho
-        binding.ipgodamdangja.text = sawonCode
         binding.baljuil.text = orderDetailData.getBaljuilHP()
         binding.georaecheocode.text = orderDetailData.getGeoraecheocodeHP()
         binding.georaecheomyeong.text = orderDetailData.getGeoraecheomyeongHP()

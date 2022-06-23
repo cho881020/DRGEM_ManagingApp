@@ -728,7 +728,12 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="요청번호"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
 
 
                     </LinearLayout>

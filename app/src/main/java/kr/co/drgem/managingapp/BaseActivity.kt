@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : BaseActivity
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 모든 액티비티에 전체 적용되는 기본설정
+ */
+
 package kr.co.drgem.managingapp
 
 import android.app.AlertDialog

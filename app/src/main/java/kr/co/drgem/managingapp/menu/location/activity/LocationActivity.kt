@@ -141,6 +141,9 @@ class LocationActivity : BaseActivity() {
     }
     //    작업 SEQ 요청
     fun requestWorkseq() {
+
+        loadingDialog.show(supportFragmentManager, null)
+
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
         }
@@ -188,7 +191,6 @@ class LocationActivity : BaseActivity() {
     }
     //    로케이션요청
     fun getRequestLocation() {
-        loadingDialog.show(supportFragmentManager, null)
 
         val changgocode = ""
         val location = binding.edtLocation.text.toString()

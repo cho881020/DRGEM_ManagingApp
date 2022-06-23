@@ -72,6 +72,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         mkittingbeonho = intent.getStringExtra("kittingbeonho").toString()
         binding.kittingbeonho.text = "키팅번호 - $mkittingbeonho"
 
+        LoginUserUtil.getLoginData()?.let {
+            sawonCode = it.sawoncode.toString()
+        }
+        binding.chulgodamdangjacode.text = sawonCode
+
         setupEvents()
         dateSet()
         postRequestKitting()
@@ -172,7 +177,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${kittingDetailData.getPummokCount()} 건)"
-        binding.chulgodamdangjacode.text = sawonCode
 
 
         kittingDetailData.returnKittingDetail().forEach {
@@ -188,9 +192,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     //    작업 SEQ 요청
     fun requestWorkseq() {
 
-        LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
-        }
+        loadingDialog.show(supportFragmentManager, null)
 
         // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
@@ -237,7 +239,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     //    키팅명세요청
     fun getRequestKittingDetail() {
 
-        loadingDialog.show(supportFragmentManager, null)
 
         Log.d("yj", "조회조건 : $johoejogeon , 미관리 :$migwanri")
         apiList.getRequestKittingDetail("02502", mkittingbeonho, johoejogeon, migwanri, changgocode)

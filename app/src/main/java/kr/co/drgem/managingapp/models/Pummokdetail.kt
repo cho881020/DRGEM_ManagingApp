@@ -101,6 +101,8 @@ data class Pummokdetail(
         return yocheongbeonho
     }
 
+
+
     private var locationAdd = ""
 
     fun setLocationAdd( locationAdd : String) {
