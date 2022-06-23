@@ -83,6 +83,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         backDialog {
             clearAndCancelWork()
             workStatusCancle()
+            SerialManageUtil.clearData()
         }
     }
 
@@ -108,6 +109,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             backDialog {
                 clearAndCancelWork()
                 workStatusCancle()
+                SerialManageUtil.clearData()
             }
         }
 

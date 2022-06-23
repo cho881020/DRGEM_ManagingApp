@@ -124,6 +124,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
             if(status=="333"){
                 backDialog() {
+                    SerialManageUtil.clearData()
                     workStatusCancle()
                 }
             }
@@ -156,6 +157,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             }
             else if (status == "333"){
                 status333Dialog(){
+                    SerialManageUtil.clearData()
                     requestWorkseq()
                 }
             }
@@ -610,6 +612,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         if(status=="333"){
             backDialog() {
+                SerialManageUtil.clearData()
                 workStatusCancle()
             }
         }

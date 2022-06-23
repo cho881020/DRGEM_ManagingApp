@@ -89,6 +89,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     override fun onBackPressed() {
         if(status=="333"){
             backDialog() {
+                SerialManageUtil.clearData()
                 workStatusCancle()
             }
         }
@@ -103,6 +104,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             if(status=="333"){
                 backDialog() {
                     workStatusCancle()
+                    SerialManageUtil.clearData()
                 }
             }
             else{
@@ -135,6 +137,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             else if (status == "333"){
                 status333Dialog(){
                     requestWorkseq()
+                    SerialManageUtil.clearData()
                 }
             }
         }

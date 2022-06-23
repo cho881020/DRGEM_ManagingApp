@@ -34,7 +34,7 @@
         android:background="@null"
         android:paddingHorizontal="7dp"
         android:maxLines="1"
-        android:inputType="text"
+        android:inputType="textVisiblePassword"
         android:privateImeOptions="defaultInputmode=english"
         android:imeOptions="actionNext"
         android:selectAllOnFocus="true"

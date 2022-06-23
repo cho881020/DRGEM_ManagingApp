@@ -95,6 +95,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             if(status=="333"){
                 backDialog() {
                     workStatusCancle()
+                    SerialManageUtil.clearData()
                 }
             }
             else {
@@ -203,6 +204,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
             else if (status == "333"){
                 status333Dialog(){
+                    SerialManageUtil.clearData()
                     requestWorkseq()
                 }
             }
@@ -779,6 +781,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         if(status=="333"){
             backDialog() {
                 workStatusCancle()
+                SerialManageUtil.clearData()
             }
         }
         else {

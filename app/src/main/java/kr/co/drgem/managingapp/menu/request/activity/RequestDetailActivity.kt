@@ -94,6 +94,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             if(status=="333"){
                 backDialog() {
                     workStatusCancle()
+                    SerialManageUtil.clearData()
                 }
             }
             else {
@@ -107,6 +108,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             }
             else if (status == "333"){
                 status333Dialog(){
+                    SerialManageUtil.clearData()
                     requestWorkseq()
                 }
             }
@@ -637,6 +639,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     override fun onBackPressed() {
         if(status=="333"){
             backDialog() {
+                SerialManageUtil.clearData()
                 workStatusCancle()
             }
         }
