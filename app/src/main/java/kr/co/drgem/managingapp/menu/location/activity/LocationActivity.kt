@@ -31,7 +31,7 @@ class LocationActivity : BaseActivity() {
 
     lateinit var binding: ActivityLocationBinding
     lateinit var mAdapter: LocationListAdapter
-    lateinit var mList: ArrayList<Pummokdetail>
+    lateinit var locationData: LocationResponse
     val loadingDialog = LoadingDialogFragment()
 
     var changgocode = ""
@@ -46,6 +46,7 @@ class LocationActivity : BaseActivity() {
 
 
         setupEvents()
+        sort()
 
     }
 
@@ -133,13 +134,52 @@ class LocationActivity : BaseActivity() {
 
     override fun setValues() {
 
-        mAdapter = LocationListAdapter(mList)
+        mAdapter = LocationListAdapter()
+        mAdapter.setList(locationData.returnPummokDetail())
         binding.recyclerView.adapter = mAdapter
 //        binding.txtTitle.text = HtmlCompat.fromHtml(getString(R.string.locationProduct, "$inputPummyeong"), HtmlCompat.FROM_HTML_MODE_LEGACY)
-        binding.txtCount.text = "(${mList.size}건)"
+        binding.txtCount.text = "(${locationData.returnPummokDetail().size}건)"
 
         binding.btnSave.isVisible = true
     }
+
+    fun sort() {
+
+        var onClickPummyeong = 0
+
+        binding.layoutPummyeong.setOnClickListener {
+
+            if (onClickPummyeong < 2) {
+                onClickPummyeong++
+            } else {
+                onClickPummyeong = 0
+            }
+
+            when (onClickPummyeong) {
+
+                0 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(locationData.returnPummokDetail())
+                }
+
+                1 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(locationData.getDownPummyeong())
+                }
+
+                2 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(locationData.getUpPummyeong())
+                }
+            }
+
+        }
+
+
+    }
+
+
+
     //    작업 SEQ 요청
     fun requestWorkseq() {
 
@@ -206,11 +246,11 @@ class LocationActivity : BaseActivity() {
                     if (response.isSuccessful) {
                         response.body()?.let {
 
-                            mList = it.returnPummokDetail()
+                            locationData = it
 
                             if (it.returnPummokDetail().size == 0) {
                                 searchZeroDialog()
-                                mList.clear()
+                                mAdapter.clearList()
 
                             } else {
                                 binding.layoutList.isVisible = true
@@ -227,7 +267,7 @@ class LocationActivity : BaseActivity() {
                 override fun onFailure(call: Call<LocationResponse>, t: Throwable) {
                     serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
                     loadingDialog.dismiss()
-                    mList.clear()
+                    mAdapter.clearList()
                 }
             })
     }
@@ -235,7 +275,7 @@ class LocationActivity : BaseActivity() {
     fun postRequestLocationAdd() {
         val pummokdetail = JsonArray()
 
-        mList.forEach {
+        locationData.returnPummokDetail().forEach {
 
             var txtLocation = it.getLocationAdd()
 

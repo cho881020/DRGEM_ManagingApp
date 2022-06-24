@@ -607,8 +607,39 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                     mAdapter.setList(requestDetailData.getUpLocation())
                 }
             }
+        }
+
+        var onClickPummyeong = 0
+
+        binding.layoutPummyeong.setOnClickListener {
+
+            if (onClickPummyeong < 2) {
+                onClickPummyeong++
+            } else {
+                onClickPummyeong = 0
+            }
+
+            when (onClickPummyeong) {
+
+                0 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(requestDetailData.returnPummokDetail())
+                }
+
+                1 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(requestDetailData.getDownPummyeong())
+                }
+
+                2 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(requestDetailData.getUpPummyeong())
+                }
+            }
 
         }
+
+
     }
 
 

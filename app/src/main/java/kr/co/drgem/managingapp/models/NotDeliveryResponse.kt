@@ -41,4 +41,26 @@ data class NotDeliveryResponse(
         return sortList
     }
 
+    fun getUpPummyeong(): ArrayList<PummokdetailDelivery>{
+        val sortList : ArrayList<PummokdetailDelivery> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortBy { it.pummyeong }
+        return sortList
+    }
+
+    fun getDownPummyeong(): ArrayList<PummokdetailDelivery>{
+        val sortList : ArrayList<PummokdetailDelivery> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortByDescending { it.pummyeong }
+        return sortList
+    }
+
+
+
 }

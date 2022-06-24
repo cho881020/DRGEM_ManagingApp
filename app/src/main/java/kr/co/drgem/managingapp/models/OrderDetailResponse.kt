@@ -82,4 +82,24 @@ data class OrderDetailResponse(
         return sortList
     }
 
+    fun getUpPummyeong(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortBy { it.pummyeong }
+        return sortList
+    }
+
+    fun getDownPummyeong(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortByDescending { it.pummyeong }
+        return sortList
+    }
+
 }

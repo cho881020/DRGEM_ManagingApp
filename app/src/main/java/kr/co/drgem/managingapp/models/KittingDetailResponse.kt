@@ -53,5 +53,25 @@ data class KittingDetailResponse(
         return sortList
     }
 
+    fun getUpPummyeong(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortBy { it.pummyeong }
+        return sortList
+    }
+
+    fun getDownPummyeong(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortByDescending { it.pummyeong }
+        return sortList
+    }
+
 
 }

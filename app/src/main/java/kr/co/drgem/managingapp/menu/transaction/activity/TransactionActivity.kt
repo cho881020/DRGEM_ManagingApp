@@ -603,7 +603,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         var onClickPummyeong = 0
 
-
         binding.layoutPummyeong.setOnClickListener {
 
             if (onClickPummyeong < 2) {

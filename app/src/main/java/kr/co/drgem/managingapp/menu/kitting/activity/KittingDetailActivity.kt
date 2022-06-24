@@ -619,6 +619,38 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             }
 
         }
+
+        var onClickPummyeong = 0
+
+        binding.layoutPummyeong.setOnClickListener {
+
+            if (onClickPummyeong < 2) {
+                onClickPummyeong++
+            } else {
+                onClickPummyeong = 0
+            }
+
+            when (onClickPummyeong) {
+
+                0 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(kittingDetailData.returnKittingDetail())
+                }
+
+                1 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(kittingDetailData.getDownPummyeong())
+                }
+
+                2 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(kittingDetailData.getUpPummyeong())
+                }
+            }
+
+        }
+
+
     }
 
 

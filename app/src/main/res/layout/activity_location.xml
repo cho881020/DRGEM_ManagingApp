@@ -343,12 +343,29 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutPummyeong"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="품명"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtPummyeong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="품명"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+
+
+                            <ImageView
+                                android:id="@+id/imgPummyeong"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
 
 
                         <TextView

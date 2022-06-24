@@ -6,8 +6,10 @@ import kr.co.drgem.managingapp.menu.location.viewholder.LocationListViewHolder
 import kr.co.drgem.managingapp.models.Pummokdetail
 
 class LocationListAdapter(
-    val mList: ArrayList<Pummokdetail>
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    val mList = ArrayList<Pummokdetail>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return LocationListViewHolder(parent)
     }
@@ -21,5 +23,16 @@ class LocationListAdapter(
 
     override fun getItemCount() = mList.size
 
+
+    fun setList(list: ArrayList<Pummokdetail>) {
+        mList.clear()
+        mList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun clearList() {
+        mList.clear()
+        notifyDataSetChanged()
+    }
 
 }

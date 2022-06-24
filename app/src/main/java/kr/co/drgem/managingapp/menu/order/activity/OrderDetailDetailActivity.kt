@@ -285,6 +285,37 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             }
 
         }
+
+        var onClickPummyeong = 0
+
+        binding.layoutPummyeong.setOnClickListener {
+
+            if (onClickPummyeong < 2) {
+                onClickPummyeong++
+            } else {
+                onClickPummyeong = 0
+            }
+
+            when (onClickPummyeong) {
+
+                0 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(orderDetailData.returnBaljudetail())
+                }
+
+                1 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(orderDetailData.getDownPummyeong())
+                }
+
+                2 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(orderDetailData.getUpPummyeong())
+                }
+            }
+
+        }
+
     }
 
 
