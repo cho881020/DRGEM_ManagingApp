@@ -186,7 +186,7 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
 
             } catch (e: Exception) {
-                ipgosuryang.text = null
+                ipgosuryang.setText("0")
                 AlertDialog.Builder(itemView.context)
                     .setMessage("수량을 입력해 주세요.")
                     .setNegativeButton("확인", null)
@@ -200,6 +200,10 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
         ipgosuryang.setOnFocusChangeListener { view, isFocused ->
             if (!isFocused) {
+
+                if(data.getSerialCount() ==""){
+                    data.setSerialCount("0")
+                }
 
                 val tempMap = hashMapOf(
                     "requesttype" to "08003",

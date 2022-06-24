@@ -180,7 +180,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
 
 
             } catch (e: Exception) {
-                chulgosuryang.text = null
+                chulgosuryang.setText("0")
                 AlertDialog.Builder(itemView.context)
                     .setMessage("수량을 입력해 주세요.")
                     .setNegativeButton("확인", null)
@@ -194,6 +194,10 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
 
         chulgosuryang.setOnFocusChangeListener { view, isFocused ->
             if (!isFocused) {
+
+                if(data.getSerialCount() ==""){
+                    data.setSerialCount("0")
+                }
 
                 val tempMap = hashMapOf(
                     "requesttype" to "08003",

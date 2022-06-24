@@ -204,7 +204,7 @@ class OrderDetailListViewHolder(
 
             } catch (e: Exception) {
                 e.printStackTrace()
-//                edtCount.setText("")
+                edtCount.setText("0")
                 AlertDialog.Builder(itemView.context)
                     .setMessage("수량을 입력해 주세요.")
                     .setNegativeButton("확인", null)
@@ -221,6 +221,10 @@ class OrderDetailListViewHolder(
 
         edtCount.setOnFocusChangeListener { view, isFocused ->
             if (!isFocused) {
+
+                if(data.getSerialCount() ==""){
+                    data.setSerialCount("0")
+                }
 
                 data.ipgosuryang = edtCount.text.toString()
                 (mContext as BaseActivity).mSqliteDB.updateBaljuDetail(data)

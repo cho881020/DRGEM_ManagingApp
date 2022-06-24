@@ -185,7 +185,7 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
 
             } catch (e: Exception) {
-                chulgosuryang.text = null
+                chulgosuryang.setText("0")
                 AlertDialog.Builder(itemView.context)
                     .setMessage("수량을 입력해 주세요.")
                     .setNegativeButton("확인", null)
@@ -209,6 +209,10 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
         chulgosuryang.setOnFocusChangeListener { view, isFocused ->
             if (!isFocused) {
+
+                if(data.getSerialCount() ==""){
+                    data.setSerialCount("0")
+                }
 
                 val tempMap = hashMapOf(
                     "requesttype" to "08003",
