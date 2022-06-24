@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -26,10 +27,7 @@ import kr.co.drgem.managingapp.menu.request.RequestDetailEditListener
 import kr.co.drgem.managingapp.menu.request.adapter.RequestDetailListAdapter
 import kr.co.drgem.managingapp.menu.request.dialog.RequestDetailDialog
 import kr.co.drgem.managingapp.models.*
-import kr.co.drgem.managingapp.utils.IPUtil
-import kr.co.drgem.managingapp.utils.LoginUserUtil
-import kr.co.drgem.managingapp.utils.MainDataManager
-import kr.co.drgem.managingapp.utils.SerialManageUtil
+import kr.co.drgem.managingapp.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,6 +48,9 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     var SEQ = ""
     var status = "111"
     var sawonCode = ""
+
+    var sawonData = ArrayList<SawonData>()
+    var ipgodamdangjacode = ""
 
     var johoejogeon = "0"
     var migwanri = "0"
@@ -85,6 +86,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         sort()
         spinnerSetOut()
         spinnerSetIn()
+        completeTextView()
 
     }
 
@@ -174,6 +176,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             }
         }
 
+        binding.btnSave.isVisible = true
 
     }
     //    작업 SEQ 요청
@@ -271,7 +274,20 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         binding.btnSave.setOnClickListener {
             saveDialog() {
 
-                val ipgodamdangjacode = binding.edtInName.text.toString()
+                //                사원코드 가져오기
+                val selecSawon = binding.autoCompleteTextView.text.toString()
+                sawonData.forEach {
+                    if(it.sawonmyeong == selecSawon){
+                        ipgodamdangjacode = it.sawoncode
+                        Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
+                    }
+                }
+
+                if(ipgodamdangjacode == ""){
+                    ipgodamdangjacodeDialog()
+                    return@saveDialog
+                }
+
 
                 val requestChulgodetail = JsonArray()
 
@@ -629,6 +645,27 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         }
 
     }
+
+    private fun completeTextView(){
+
+        val sawonmyeongList = ArrayList<String>()
+
+        SawonDataManager.getSawonData()?.let{
+            sawonData = it.sawon
+        }
+
+        sawonData.forEach {
+            sawonmyeongList.add(it.sawonmyeong)
+        }
+
+        val autoCompleteTextView = binding.autoCompleteTextView
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
+
+        autoCompleteTextView.setAdapter(adapter)
+
+    }
+
 
 
     override fun onClickedEdit(count: Int, data: Pummokdetail) {

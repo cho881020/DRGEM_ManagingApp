@@ -191,6 +191,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
             }
         }
 
+        binding.btnSave.isVisible = true
 
     }
     //    작업 SEQ 요청

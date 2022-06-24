@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -26,10 +27,7 @@ import kr.co.drgem.managingapp.menu.notdelivery.NotDeliveryEditListener
 import kr.co.drgem.managingapp.menu.notdelivery.adapter.NotDeliveryListAdapter
 import kr.co.drgem.managingapp.menu.notdelivery.dialog.NotDeliveryDialog
 import kr.co.drgem.managingapp.models.*
-import kr.co.drgem.managingapp.utils.IPUtil
-import kr.co.drgem.managingapp.utils.LoginUserUtil
-import kr.co.drgem.managingapp.utils.MainDataManager
-import kr.co.drgem.managingapp.utils.SerialManageUtil
+import kr.co.drgem.managingapp.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,11 +48,13 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     var companyCode = "0002"
     var wareHouseCode = "2001"
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
-    var migwanri = "0"
 
+    var migwanri = "0"
     var companyCodeOut = "0001"
     var wareHouseCodeOut = "1001"
     var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
+    var sawonData = ArrayList<SawonData>()
+    var ipgodamdangjacode = ""
 
     var companyCodeIn = "0001"
     var wareHouseCodeIn = "1001"
@@ -92,13 +92,12 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
-            if(status=="333"){
+            if (status == "333") {
                 backDialog() {
                     workStatusCancle()
                     SerialManageUtil.clearData()
                 }
-            }
-            else {
+            } else {
                 finish()
             }
 
@@ -185,10 +184,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             binding.edtCode.text = null
         }
 
-        binding.btnInName.setOnClickListener {
-            binding.edtInName.text = null
-        }
-
 
         binding.checkMigwanri.setOnCheckedChangeListener { button, ischecked ->
             if (ischecked) {
@@ -199,11 +194,10 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         }
 
         binding.btnFind.setOnClickListener {
-            if(status=="111"){
+            if (status == "111") {
                 requestWorkseq()
-            }
-            else if (status == "333"){
-                status333Dialog(){
+            } else if (status == "333") {
+                status333Dialog() {
                     SerialManageUtil.clearData()
                     requestWorkseq()
                 }
@@ -316,7 +310,19 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         binding.btnSave.setOnClickListener {
 
             saveDialog() {
-                val ipgodamdangjacode = binding.edtInName.text.toString()
+
+                val selecSawon = binding.autoCompleteTextView.text.toString()
+                sawonData.forEach {
+                    if(it.sawonmyeong == selecSawon){
+                        ipgodamdangjacode = it.sawoncode
+                        Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
+                    }
+                }
+
+                if(ipgodamdangjacode == ""){
+                    ipgodamdangjacodeDialog()
+                    return@saveDialog
+                }
 
                 val chulgodetail = JsonArray()
 
@@ -480,7 +486,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
         }
 
-
+        binding.btnSave.isVisible = true
     }
 
     fun spinnerSet() {
@@ -602,9 +608,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             }
                         }
 
-                        try{
+                        try {
                             mAdapter.setTemp(setTempData())
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
 
                         }
                     }
@@ -621,9 +627,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeOut = mWareHouseListOut[position].code
-                        try{
+                        try {
                             mAdapter.setTemp(setTempData())
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
 
                         }
                     }
@@ -777,14 +783,34 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     }
 
+    private fun completeTextView(){
+
+        val sawonmyeongList = ArrayList<String>()
+
+        SawonDataManager.getSawonData()?.let{
+            sawonData = it.sawon
+        }
+
+        sawonData.forEach {
+            sawonmyeongList.add(it.sawonmyeong)
+        }
+
+        val autoCompleteTextView = binding.autoCompleteTextView
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
+
+        autoCompleteTextView.setAdapter(adapter)
+
+    }
+
+
     override fun onBackPressed() {
-        if(status=="333"){
+        if (status == "333") {
             backDialog() {
                 workStatusCancle()
                 SerialManageUtil.clearData()
             }
-        }
-        else {
+        } else {
             finish()
         }
 

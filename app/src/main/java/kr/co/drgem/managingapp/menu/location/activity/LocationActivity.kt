@@ -138,6 +138,7 @@ class LocationActivity : BaseActivity() {
 //        binding.txtTitle.text = HtmlCompat.fromHtml(getString(R.string.locationProduct, "$inputPummyeong"), HtmlCompat.FROM_HTML_MODE_LEGACY)
         binding.txtCount.text = "(${mList.size}건)"
 
+        binding.btnSave.isVisible = true
     }
     //    작업 SEQ 요청
     fun requestWorkseq() {
