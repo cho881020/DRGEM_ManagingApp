@@ -9,6 +9,7 @@
 package kr.co.drgem.managingapp.menu.stock.activity
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,11 +18,12 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
 import kr.co.drgem.managingapp.BaseActivity
-import kr.co.drgem.managingapp.LoadingStockDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityStockBinding
 import kr.co.drgem.managingapp.menu.stock.adapter.StockListAdapter
+import kr.co.drgem.managingapp.menu.stock.dialog.LoadingStockDialogFragment
+import kr.co.drgem.managingapp.menu.stock.dialog.StockDialogFragment
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.LoginUserUtil
@@ -29,8 +31,10 @@ import kr.co.drgem.managingapp.utils.MainDataManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
-class StockActivity : BaseActivity() {
+class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
 
     lateinit var binding: ActivityStockBinding
     lateinit var mAdapter: StockListAdapter
@@ -38,11 +42,15 @@ class StockActivity : BaseActivity() {
     lateinit var productData: ProductInfoResponse
     var inputCode = ""
 
-    var companyCode = "0002"
+    var companyCode = "0002"        // 조회코드
     var wareHouseCode = "2001"
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
 
+    var saeopjangcode = ""          // 등록코드
+    var changgocode = ""
+
     val loadingDialog = LoadingStockDialogFragment()
+    val stockCodeDialog = StockDialogFragment()
 
     var SEQ = ""
     var status = "111"
@@ -74,9 +82,7 @@ class StockActivity : BaseActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            saveDialog() {
-                postRequestStock()
-            }
+            stockCodeDialog.show(supportFragmentManager, null)
         }
 
         binding.btnCodeRemove.setOnClickListener {
@@ -92,11 +98,18 @@ class StockActivity : BaseActivity() {
 
         binding.btnAdd.setOnClickListener {
 
+            val cal = Calendar.getInstance()
+            val dateServer = SimpleDateFormat("yyyyMMddhhmmss")  // 서버 전달 포맷
+            val josasigan = dateServer.format(cal.time)
+
+            searchCodeData.setJosasiganAdd(josasigan)
             searchCodeData.hyeonjaegosuryang =
-                binding.hyeonjaegosuryang.text.toString()
+                binding.suryang.text.toString()
+
+            searchCodeData.setLocationAdd(binding.locationAdd.text.toString())
 
 
-            if(searchCodeData.gethyeonjaegosuryangHP() == "-" ){
+            if (searchCodeData.gethyeonjaegosuryangHP() == "") {
                 AlertDialog.Builder(mContext)
                     .setMessage("수량을 입력 해 주세요.")
                     .setNegativeButton("확인", null)
@@ -127,6 +140,10 @@ class StockActivity : BaseActivity() {
 
             binding.layoutAdd.isVisible = false
             binding.layoutFind.isVisible = true
+
+            binding.suryang.setText("0")
+            binding.locationAdd.setText("")
+
 
         }
 
@@ -288,9 +305,10 @@ class StockActivity : BaseActivity() {
 
                                 binding.layoutEmpty.isVisible = false
                                 binding.layoutReady.isVisible = false
+                                binding.layoutAdd.isVisible = false
                                 binding.layoutFind.isVisible = true
-                                binding.layoutAdd.isVisible = true
                                 binding.layoutList.isVisible = true
+                                binding.btnSave.isVisible = true
 
                             }
                         }
@@ -318,7 +336,14 @@ class StockActivity : BaseActivity() {
             pummokcode = it.getPummokcodeHP()
             suryang = it.gethyeonjaegosuryangHP()
 
-            stockAddList.add(StockPummokdetail(pummokcode, suryang, "", "").toJsonObject()) // TODO : 조사시간,로케이션 확인
+            stockAddList.add(
+                StockPummokdetail(
+                    pummokcode,
+                    suryang,
+                    it.getJosasiganAdd(),
+                    it.getLocationAdd()
+                ).toJsonObject()
+            ) // TODO : 조사시간,로케이션 확인
         }
 
         val stockAdd = hashMapOf(
@@ -326,8 +351,8 @@ class StockActivity : BaseActivity() {
             "seq" to SEQ,
             "tabletip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,
-            "saeopjangcode" to companyCode,
-            "changgocode" to wareHouseCode,
+            "saeopjangcode" to saeopjangcode,
+            "changgocode" to changgocode,
             "status" to "777",
             "pummokcount" to mList.size.toString(),
             "pummokdetail" to stockAddList
@@ -345,6 +370,17 @@ class StockActivity : BaseActivity() {
 
                             mList.clear()
                             setValues()
+
+                            binding.layoutEmpty.isVisible = true
+                            binding.layoutReady.isVisible = true
+                            binding.layoutAdd.isVisible = false
+                            binding.layoutFind.isVisible = false
+                            binding.layoutList.isVisible = false
+                            binding.btnSave.isVisible = false
+                            binding.suryang.setText("0")
+                            binding.locationAdd.setText("")
+
+
                         } else {
                             serverErrorDialog(it.resultmsg)
                         }
@@ -417,7 +453,7 @@ class StockActivity : BaseActivity() {
                     binding.pummyeong.text = searchCodeData.getPummokcodeHP()
                     binding.dobeonModel.text = searchCodeData.getdobeon_modelHP()
                     binding.sayang.text = searchCodeData.getsayangHP()
-                    binding.hyeonjaegosuryang.setText(searchCodeData.gethyeonjaegosuryangHP())
+                    binding.suryang.setText(searchCodeData.gethyeonjaegosuryangHP())
 
                 }
 
@@ -436,5 +472,18 @@ class StockActivity : BaseActivity() {
 
 
     }
+
+    override fun onDismiss(p0: DialogInterface?) {
+
+
+        saeopjangcode = stockCodeDialog.companyCode
+        changgocode = stockCodeDialog.wareHouseCode
+        Log.d("yj", "saeopjangcode : $saeopjangcode , changgocode : $changgocode")
+
+        saveDialog() {
+            postRequestStock()
+        }
+    }
+
 
 }

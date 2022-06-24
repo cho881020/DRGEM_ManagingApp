@@ -15,7 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import kr.co.drgem.managingapp.databinding.DialogKittingDetailBinding
+import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogLoadingBinding
 
 class LoadingDialogFragment : DialogFragment() {

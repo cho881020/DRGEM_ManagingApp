@@ -15,6 +15,7 @@ data class Pummokdetail(
     val yocheongbeonho: String?,        //요청번호
 
 
+
 ) {
 
     fun getPummokcodeHP() : String {
@@ -61,7 +62,7 @@ data class Pummokdetail(
 
     fun gethyeonjaegosuryangHP() : String {
         if(hyeonjaegosuryang == null){
-            return "-"
+            return "0"
         }
         return hyeonjaegosuryang as String
     }
@@ -101,6 +102,18 @@ data class Pummokdetail(
         return yocheongbeonho
     }
 
+
+
+    private var josasigan = ""
+
+    fun setJosasiganAdd( josasigan : String) {
+        this.josasigan = josasigan
+    }
+
+    fun getJosasiganAdd() : String {
+
+        return josasigan
+    }
 
 
     private var locationAdd = ""

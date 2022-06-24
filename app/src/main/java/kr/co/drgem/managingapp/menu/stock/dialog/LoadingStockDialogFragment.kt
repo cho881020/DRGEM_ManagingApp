@@ -5,7 +5,7 @@
  * 업무기능 : 재고조사 준비 진행 시 로딩 다이얼로그
  */
 
-package kr.co.drgem.managingapp
+package kr.co.drgem.managingapp.menu.stock.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -16,8 +16,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import kr.co.drgem.managingapp.databinding.DialogKittingDetailBinding
-import kr.co.drgem.managingapp.databinding.DialogLoadingBinding
+import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogLoadingStockBinding
 
 class LoadingStockDialogFragment : DialogFragment() {

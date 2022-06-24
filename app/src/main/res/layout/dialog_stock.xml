@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="230dp"
+            android:background="@drawable/borderbox_white_round12"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="23dp"
+                android:text="재고조사 위치 정보"
+                android:textColor="@color/color_333333"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="사업장"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="140dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/light_gray_box"
+                        android:gravity="center_vertical">
+
+                        <Spinner
+                            android:id="@+id/spinnerCompany"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/light_gray_box"
+                            android:textColor="@color/color_000000"
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:src="@drawable/dropdown" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="창고"
+                        android:textColor="@color/color_808080"
+                        android:textSize="12dp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="140dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/light_gray_box"
+                        android:gravity="center_vertical">
+
+                        <Spinner
+                            android:id="@+id/spinnerWareHouse"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/light_gray_box"
+                            android:textColor="@color/color_000000"
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:src="@drawable/dropdown" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/btnSave"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="23dp"
+                android:layout_marginBottom="23dp"
+                android:background="@drawable/btn_save"
+                android:gravity="center"
+                android:text="저장하기"
+                android:textStyle="bold"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="14dp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>

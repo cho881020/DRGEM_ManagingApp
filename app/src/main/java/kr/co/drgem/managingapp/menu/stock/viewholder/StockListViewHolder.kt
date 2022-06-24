@@ -17,6 +17,7 @@ class StockListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     val danwi = itemView.findViewById<TextView>(R.id.danwi)
     val location = itemView.findViewById<TextView>(R.id.location)
     val hyeonjaegosuryang = itemView.findViewById<TextView>(R.id.hyeonjaegosuryang)
+    val locationAdd = itemView.findViewById<TextView>(R.id.locationAdd)
 
 
     fun bind(data: Pummokdetail) {
@@ -28,6 +29,7 @@ class StockListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         danwi.text = data.getdanwiHP()
         location.text = data.getlocationHP()
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
+        locationAdd.text = data.getLocationAdd()
 
     }
 
