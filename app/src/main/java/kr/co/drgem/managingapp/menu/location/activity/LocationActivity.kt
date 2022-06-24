@@ -189,7 +189,6 @@ class LocationActivity : BaseActivity() {
             sawonCode = it.sawoncode.toString()
         }
 
-        // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
             "requesttype" to "08001",
             "pid" to "06",
@@ -335,7 +334,6 @@ class LocationActivity : BaseActivity() {
     //    작업상태취소
     fun workStatusCancle() {
 
-        // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
             "seq" to SEQ,

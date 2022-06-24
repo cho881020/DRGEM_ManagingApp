@@ -238,10 +238,9 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
             sawonCode = it.sawoncode.toString()
         }
 
-        // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
             "requesttype" to "08001",
-            "pid" to "01",
+            "pid" to "07",
             "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,
             "status" to "111",
@@ -343,7 +342,7 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
                     it.getJosasiganAdd(),
                     it.getLocationAdd()
                 ).toJsonObject()
-            ) // TODO : 조사시간,로케이션 확인
+            )
         }
 
         val stockAdd = hashMapOf(
@@ -402,7 +401,6 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
     //    작업상태취소
     fun workStatusCancle() {
 
-        // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
             "seq" to SEQ,

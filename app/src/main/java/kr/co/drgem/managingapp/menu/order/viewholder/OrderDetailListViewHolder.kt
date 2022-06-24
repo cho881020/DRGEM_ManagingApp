@@ -236,7 +236,7 @@ class OrderDetailListViewHolder(
                     "pummokcode" to data.getPummokcodeHP(),
                     "suryang" to data.getSerialCount(),
                     "yocheongbeonho" to tempData.yocheongbeonho,
-                    "ipchulgubun" to "1",   //TODO - 입출구분확인
+                    "ipchulgubun" to "1",
                     "seq" to tempData.seq,
                     "tablet_ip" to IPUtil.getIpAddress(),
                     "sawoncode" to tempData.sawoncode,

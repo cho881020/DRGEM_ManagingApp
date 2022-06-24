@@ -301,8 +301,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         loadingDialog.show(supportFragmentManager, null)
 
-
-        // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
             "requesttype" to "08001",
             "pid" to "01",
@@ -450,7 +448,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                     "ipgosaupjangcode" to companyCode,
                     "ipgochanggocode" to wareHouseCode,
                     "ipgodamdangja" to sawonCode,
-                    "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
+                    "seq" to SEQ,
                     "status" to "777",
                     "pummokcount" to georaedetail.size().toString(),
                     "georaedetail" to georaedetail
@@ -501,7 +499,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     //    작업상태취소
     fun workStatusCancle() {
 
-        // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
             "seq" to SEQ,

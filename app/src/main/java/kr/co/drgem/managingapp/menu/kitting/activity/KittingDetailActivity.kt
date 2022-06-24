@@ -199,10 +199,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         loadingDialog.show(supportFragmentManager, null)
 
-        // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
             "requesttype" to "08001",
-            "pid" to "05",
+            "pid" to "03",
             "tablet_ip" to IPUtil.getIpAddress(),
             "sawoncode" to sawonCode,
             "status" to "111",
@@ -398,7 +397,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     //    작업상태취소
     fun workStatusCancle() {
 
-        // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
             "seq" to SEQ,

@@ -212,7 +212,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         loadingDialog.show(supportFragmentManager, null)
 
-        // TODO - API 정상 연동시 수정
         val SEQMap = hashMapOf(
             "requesttype" to "08001",
             "pid" to "05",
@@ -422,7 +421,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     //    작업상태취소
     fun workStatusCancle() {
 
-        // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
             "seq" to SEQ,

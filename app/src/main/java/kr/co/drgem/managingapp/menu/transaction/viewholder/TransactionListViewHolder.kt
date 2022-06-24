@@ -212,7 +212,7 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
                     "pummokcode" to data.getPummokcodeHP(),
                     "suryang" to data.getSerialCount(),
                     "yocheongbeonho" to data.getBaljubeonhoHP(),
-                    "ipchulgubun" to "1",   //TODO - 입출구분확인
+                    "ipchulgubun" to "1",
                     "seq" to tempData.seq,
                     "tablet_ip" to IPUtil.getIpAddress(),
                     "sawoncode" to tempData.sawoncode,

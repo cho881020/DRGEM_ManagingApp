@@ -75,6 +75,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         getRequestOrderDetail()
         postRequestOrderDetail()
         sort()
+        spinnerSet()
 
     }
 
@@ -173,7 +174,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         mAdapter.setTemp(setTempData())
         binding.recyclerView.adapter = mAdapter
 
-        spinnerSet()
+
 
     }
 
@@ -226,7 +227,11 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                         }
 
                     }
-                    mAdapter.setTemp(setTempData())
+                    try{
+                        mAdapter.setTemp(setTempData())
+                    }catch (e: Exception){
+
+                    }
 
                 }
 
@@ -243,7 +248,11 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                 ) {
 
                     wareHouseCode = mWareHouseList[position].code
-                    mAdapter.setTemp(setTempData())
+                    try{
+                        mAdapter.setTemp(setTempData())
+                    }catch (e: Exception){
+
+                    }
 
                 }
 
@@ -422,10 +431,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                             setOrderDetailDataToUI()
 
 
-                            /**
-                             * clearAndSaveDataToDB() 에서 계속 오류발생 테스트 위해 임시 주석처리
-                             */
-//                            clearAndSaveDataToDB()
+                            clearAndSaveDataToDB()
 
                         }
 
@@ -501,7 +507,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                     "ipgochanggocode" to wareHouseCode,
                     "ipgodamdangja" to sawonCode,
                     "georaecheocode" to orderDetailData.getGeoraecheocodeHP(),
-                    "seq" to SEQ, // TODO - SEQ 관련 API 연동 성공시 수정해야함
+                    "seq" to SEQ,
                     "status" to "777",
                     "pummokcount" to ipgodetail.size().toString(),
                     "ipgodetail" to ipgodetail
@@ -549,7 +555,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     //    작업상태취소
     fun workStatusCancle() {
 
-        // TODO - API 정상 연동시 수정
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
             "seq" to SEQ,
