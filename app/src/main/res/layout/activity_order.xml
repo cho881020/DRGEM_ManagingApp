@@ -184,13 +184,20 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-                    <ImageView
+                    <LinearLayout
                         android:id="@+id/btnCompanyRemove"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="7dp"
-                        android:focusable="false"
-                        android:src="@drawable/btn_x" />
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:focusable="false"
+                            android:src="@drawable/btn_x" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -232,13 +239,21 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-                    <ImageView
+                    <LinearLayout
                         android:id="@+id/btnOrderRemove"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="7dp"
-                        android:focusable="false"
-                        android:src="@drawable/btn_x" />
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="7dp"
+                            android:focusable="false"
+                            android:src="@drawable/btn_x" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
