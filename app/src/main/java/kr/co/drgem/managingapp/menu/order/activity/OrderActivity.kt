@@ -226,7 +226,7 @@ class OrderActivity : BaseActivity() {
 
     override fun setValues() {
 
-        mOrderAdapter = OrderListAdapter(masterData, baljuList)
+        mOrderAdapter = OrderListAdapter(baljuList)
         binding.recyclerView.adapter = mOrderAdapter
 
     }

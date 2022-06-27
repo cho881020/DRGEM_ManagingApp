@@ -273,13 +273,14 @@
                 android:layout_marginTop="73dp"
                 android:src="@drawable/empty_icon" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginTop="18.43dp"
-                android:text="검색 항목이 없습니다"
-                android:textColor="@color/color_B3B3B3"
-                android:textStyle="bold" />
+<!--   check : 내용 수정    -->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_marginTop="18.43dp"-->
+<!--                android:text="검색 항목이 없습니다"-->
+<!--                android:textColor="@color/color_B3B3B3"-->
+<!--                android:textStyle="bold" />-->
 
         </LinearLayout>
 

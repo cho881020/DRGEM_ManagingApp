@@ -7,7 +7,6 @@ import kr.co.drgem.managingapp.models.Baljubeonho
 import kr.co.drgem.managingapp.models.MasterDataResponse
 
 class OrderListAdapter(
-    val masterData: MasterDataResponse,
     val baljuList : ArrayList<Baljubeonho>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -18,7 +17,7 @@ class OrderListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is OrderListViewHolder -> holder.bind(baljuList[position],masterData, position)
+            is OrderListViewHolder -> holder.bind(baljuList[position], position)
         }
     }
 

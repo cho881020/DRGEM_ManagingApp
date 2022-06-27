@@ -80,7 +80,7 @@ class NotDeliveryDialog : BaseDialogFragment() {
             AlertDialog.Builder(requireContext())
                 .setTitle("아직 저장하지 않은 사항이 있습니다.")
                 .setMessage("그래도 이 화면을 종료하시겠습니까?")
-                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
 
                     dismiss()
                 })

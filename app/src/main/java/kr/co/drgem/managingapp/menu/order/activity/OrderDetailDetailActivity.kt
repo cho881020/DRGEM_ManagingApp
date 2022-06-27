@@ -29,6 +29,7 @@ import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.LoginUserUtil
+import kr.co.drgem.managingapp.utils.MainDataManager
 import kr.co.drgem.managingapp.utils.SerialManageUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -69,6 +70,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             sawonCode = it.sawoncode.toString()
         }
         binding.ipgodamdangja.text = sawonCode
+
+        MainDataManager.getMainData()?.let{
+            masterData = it
+        }
 
 
         setupEvents()
@@ -190,8 +195,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     fun spinnerSet() {
-        masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
-
         val spinnerCompanyAdapter =
             MasterDataSpinnerAdapter(
                 mContext,

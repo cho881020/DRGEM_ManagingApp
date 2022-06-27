@@ -55,7 +55,7 @@ abstract class BaseActivity : AppCompatActivity() {
         AlertDialog.Builder(mContext)
             .setTitle("아직 저장하지 않은 사항이 있습니다.")
             .setMessage("그래도 이 화면을 종료하시겠습니까?")
-            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+            .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
 
                 runnable?.let {
                     Handler(Looper.getMainLooper()).post(it)
@@ -73,7 +73,7 @@ abstract class BaseActivity : AppCompatActivity() {
         AlertDialog.Builder(mContext)
             .setTitle("저장하시겠습니까?")
             .setMessage("변경 사항이 저장됩니다.")
-            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+            .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
                 runnable?.let {
                     Handler(Looper.getMainLooper()).post(it)
                 }
@@ -86,7 +86,7 @@ abstract class BaseActivity : AppCompatActivity() {
     fun endDialog(){
         AlertDialog.Builder(mContext)
             .setMessage("종료하시겠습니까?")
-            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+            .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
                 finishAndRemoveTask()
                 android.os.Process.killProcess(android.os.Process.myPid())
             })
@@ -142,7 +142,7 @@ abstract class BaseActivity : AppCompatActivity() {
         AlertDialog.Builder(mContext)
             .setTitle("현재 진행중인 작업이 있습니다.")
             .setMessage("정말 재 조회 하시겠습니까?")
-            .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+            .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
                 runnable?.let {
                     Handler(Looper.getMainLooper()).post(it)
                 }

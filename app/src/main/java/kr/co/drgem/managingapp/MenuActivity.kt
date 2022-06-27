@@ -93,7 +93,7 @@ class MenuActivity : BaseActivity() {
             AlertDialog.Builder(this)
                 .setTitle("로그아웃")
                 .setMessage("정말 로그아웃 하시겠습니까?")
-                .setPositiveButton("예", DialogInterface.OnClickListener { dialog, which ->
+                .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
                     ContextUtil.setToken(mContext, "")
                     val myIntent = Intent(this, MainActivity::class.java)
                     startActivity(myIntent)

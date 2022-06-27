@@ -30,7 +30,7 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
     val bigo = itemView.findViewById<TextView>(R.id.bigo)
     val seq = itemView.findViewById<TextView>(R.id.seq)
 
-    fun bind(baljuData: Baljubeonho, masterData: MasterDataResponse, position: Int){
+    fun bind(baljuData: Baljubeonho, position: Int){
 
 
         val apiList: APIList
@@ -64,7 +64,6 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
                             if(it.resultcd == "000"){
                                 val myIntent = Intent(itemView.context, OrderDetailDetailActivity::class.java)
-                                myIntent.putExtra("masterData", masterData)
                                 myIntent.putExtra("baljubeonho", baljuData.getBaljubeonhoHP())
                                 myIntent.putExtra("seq", it.seq)
                                 itemView.context.startActivity(myIntent)
