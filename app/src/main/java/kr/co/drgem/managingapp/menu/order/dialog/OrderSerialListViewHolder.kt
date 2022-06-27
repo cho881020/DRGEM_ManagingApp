@@ -7,10 +7,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
@@ -25,7 +22,7 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
     val txtNumber = itemView.findViewById<TextView>(R.id.txtNumber)
     val edtSerial = itemView.findViewById<EditText>(R.id.edtSerial)
-    val btnRemove = itemView.findViewById<ImageView>(R.id.btnRemove)
+    val btnRemove = itemView.findViewById<LinearLayout>(R.id.btnRemove)
 
     val textChangeListener = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
