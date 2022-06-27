@@ -108,7 +108,7 @@ class MainActivity : BaseActivity() {
 
                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
                     Log.d("콜확인", call.request().body().toString())
-                    serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
+                    serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     t.printStackTrace()
                 }
 

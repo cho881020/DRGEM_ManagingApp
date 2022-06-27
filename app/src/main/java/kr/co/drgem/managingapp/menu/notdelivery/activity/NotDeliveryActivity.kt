@@ -297,7 +297,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
 
             override fun onFailure(call: Call<NotDeliveryResponse>, t: Throwable) {
-                serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
+                serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                 loadingDialog.dismiss()
             }
         })
@@ -408,7 +408,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                                serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
+                                serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                             }
 
                         })

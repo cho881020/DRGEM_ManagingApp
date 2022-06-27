@@ -383,7 +383,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                 override fun onFailure(call: Call<TranResponse>, t: Throwable) {
 
-                    serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
+                    serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     loadingDialog.dismiss()
                 }
 
@@ -485,7 +485,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                             }
 
                             override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
-                                serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
+                                serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
+                                Log.d("yj", "거래명세서실패 : ${t.message}")
                                 loadingDialog.dismiss()
                             }
 

@@ -271,7 +271,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                 override fun onFailure(call: Call<KittingDetailResponse>, t: Throwable) {
                     loadingDialog.dismiss()
-                    serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
+                    serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                 }
 
             })
@@ -384,7 +384,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-                                serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
+                                serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                             }
 
                         })

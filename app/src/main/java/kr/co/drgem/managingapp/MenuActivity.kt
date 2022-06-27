@@ -135,6 +135,7 @@ class MenuActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<MasterDataResponse>, t: Throwable) {
+                serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                 Log.d("yj", "MasterCode 실패 : ${t.message}")
             }
 
