@@ -309,6 +309,11 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         binding.btnSave.setOnClickListener {
 
+            if(ipgodamdangjacode == ""){
+                ipgodamdangjacodeDialog()
+                return@setOnClickListener
+            }
+
             saveDialog() {
 
                 val selecSawon = binding.autoCompleteTextView.text.toString()
@@ -319,10 +324,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     }
                 }
 
-                if(ipgodamdangjacode == ""){
-                    ipgodamdangjacodeDialog()
-                    return@saveDialog
-                }
 
                 val chulgodetail = JsonArray()
 

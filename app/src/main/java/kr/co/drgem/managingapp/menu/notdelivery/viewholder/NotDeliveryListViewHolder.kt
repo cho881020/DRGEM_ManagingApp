@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.apis.APIList
@@ -67,28 +65,6 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         }
     }
 
-    init {
-
-        chulgosuryang.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
-            if (hasFocus) {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.color_E0E0E0
-                    )
-                )
-            } else {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.color_FFFFFF
-                    )
-                )
-            }
-        }
-
-    }
-
     fun bind(data: PummokdetailDelivery, tempData: TempData, position: Int) {
 
         this.data = data
@@ -110,7 +86,7 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         hyeonjaegosuryang.text = data.gethyeonjaegosuryangHP()
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
-        seq.text = "${position+1}"
+        seq.text = "${position + 1}"
 
 
         if (data.jungyojajeyeobu == "Y") {
@@ -136,11 +112,11 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
         }
 
-        if(data.getSerialCount().isNullOrEmpty()){
+        if (data.getSerialCount().isNullOrEmpty()) {
 
-            if(data.chulgosuryang?.isNotEmpty() == true){
+            if (data.chulgosuryang?.isNotEmpty() == true) {
                 data.setSerialCount(data.getchulgosuryangHP())
-            }else{
+            } else {
                 data.setSerialCount("0")
             }
         }
@@ -208,9 +184,26 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         apiList = retrofit.create(APIList::class.java)
 
         chulgosuryang.setOnFocusChangeListener { view, isFocused ->
+
+            if (isFocused) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            }
+
             if (!isFocused) {
 
-                if(data.getSerialCount() ==""){
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
+
+                if (data.getSerialCount() == "") {
                     data.setSerialCount("0")
                 }
 

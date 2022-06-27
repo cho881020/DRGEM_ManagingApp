@@ -65,28 +65,6 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
     }
 
 
-    init {
-
-        ipgosuryang.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
-            if (hasFocus) {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.color_E0E0E0
-                    )
-                )
-            } else {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.color_FFFFFF
-                    )
-                )
-            }
-        }
-
-    }
-
     fun bind(data: Georaedetail, tempData: TempData) {
 
         this.data = data
@@ -198,8 +176,26 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
         val retrofit = ServerAPI.getRetrofit(itemView.context)
         apiList = retrofit.create(APIList::class.java)
 
+
         ipgosuryang.setOnFocusChangeListener { view, isFocused ->
+
+            if (isFocused) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            }
+
             if (!isFocused) {
+
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
 
                 if(data.getSerialCount() ==""){
                     data.setSerialCount("0")

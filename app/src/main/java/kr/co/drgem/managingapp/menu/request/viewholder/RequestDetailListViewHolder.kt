@@ -66,28 +66,6 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         }
     }
 
-    init {
-
-        chulgosuryang.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
-            if (hasFocus) {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.color_E0E0E0
-                    )
-                )
-            } else {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.color_FFFFFF
-                    )
-                )
-            }
-        }
-
-    }
-
     fun bind(data: Pummokdetail, tempData: TempData, position: Int) {
 
         this.data = data
@@ -193,7 +171,24 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         apiList = retrofit.create(APIList::class.java)
 
         chulgosuryang.setOnFocusChangeListener { view, isFocused ->
+
+            if (isFocused) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            }
+
             if (!isFocused) {
+
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
 
                 if(data.getSerialCount() ==""){
                     data.setSerialCount("0")

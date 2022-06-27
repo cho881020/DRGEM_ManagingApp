@@ -281,6 +281,13 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     fun postRequestKitting() {
 
         binding.btnSave.setOnClickListener {
+
+            if(ipgodamdangjacode == ""){
+                ipgodamdangjacodeDialog()
+                return@setOnClickListener
+            }
+
+
             saveDialog() {
 
 //                사원코드 가져오기
@@ -290,11 +297,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         ipgodamdangjacode = it.sawoncode
                         Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
                     }
-                }
-
-                if(ipgodamdangjacode == ""){
-                    ipgodamdangjacodeDialog()
-                    return@saveDialog
                 }
 
 

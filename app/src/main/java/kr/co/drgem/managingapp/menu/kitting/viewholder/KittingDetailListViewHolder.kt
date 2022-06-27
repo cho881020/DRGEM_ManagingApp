@@ -10,11 +10,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.apis.APIList
 import kr.co.drgem.managingapp.apis.ServerAPI
@@ -67,28 +64,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
     }
 
 
-    init {
-
-        chulgosuryang.onFocusChangeListener = View.OnFocusChangeListener { p0, hasFocus ->
-            if (hasFocus) {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.color_E0E0E0
-                    )
-                )
-            } else {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.color_FFFFFF
-                    )
-                )
-            }
-        }
-
-    }
-
     fun bind(data: Pummokdetail, tempData: TempData, position: Int) {
 
         this.data = data
@@ -107,7 +82,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         yocheongsuryang.text = data.getyocheongsuryangHP()
         gichulgosuryang.text = data.getgichulgosuryangHP()
         yocheongbeonho.text = data.getyocheongbeonhoHP()
-        seq.text = "${position+1}"
+        seq.text = "${position + 1}"
 
 
         if (data.jungyojajeyeobu == "Y") {
@@ -142,12 +117,11 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         }
 
 
-        if(data.getSerialCount().isNullOrEmpty()){
+        if (data.getSerialCount().isNullOrEmpty()) {
 
-            if(data.chulgosuryang?.isNotEmpty() == true){
+            if (data.chulgosuryang?.isNotEmpty() == true) {
                 data.setSerialCount(data.getchulgosuryangHP())
-            }
-            else{
+            } else {
                 data.setSerialCount("0")
             }
         }
@@ -191,10 +165,10 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
                 if (count >= 1) {
                     listener.onClickedEdit(count, data)
                 } else {
-                        AlertDialog.Builder(itemView.context)
-                            .setMessage("수량을 입력해 주세요.")
-                            .setNegativeButton("확인", null)
-                            .show()
+                    AlertDialog.Builder(itemView.context)
+                        .setMessage("수량을 입력해 주세요.")
+                        .setNegativeButton("확인", null)
+                        .show()
                 }
 
 
@@ -214,9 +188,26 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         apiList = retrofit.create(APIList::class.java)
 
         chulgosuryang.setOnFocusChangeListener { view, isFocused ->
+
+            if (isFocused) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            }
+
             if (!isFocused) {
 
-                if(data.getSerialCount() ==""){
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
+
+                if (data.getSerialCount() == "") {
                     data.setSerialCount("0")
                 }
 
