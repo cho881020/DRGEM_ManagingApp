@@ -280,6 +280,14 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     fun PostRequestRequest() {
 
         binding.btnSave.setOnClickListener {
+            //                사원코드 가져오기
+            val selecSawon = binding.autoCompleteTextView.text.toString()
+            sawonData.forEach {
+                if(it.sawonmyeong == selecSawon){
+                    ipgodamdangjacode = it.sawoncode
+                    Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
+                }
+            }
 
             if(ipgodamdangjacode == ""){
                 ipgodamdangjacodeDialog()
@@ -287,15 +295,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             }
 
             saveDialog() {
-
-                //                사원코드 가져오기
-                val selecSawon = binding.autoCompleteTextView.text.toString()
-                sawonData.forEach {
-                    if(it.sawonmyeong == selecSawon){
-                        ipgodamdangjacode = it.sawoncode
-                        Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
-                    }
-                }
 
                 val requestChulgodetail = JsonArray()
 

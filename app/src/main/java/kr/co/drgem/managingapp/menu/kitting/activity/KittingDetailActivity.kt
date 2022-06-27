@@ -282,6 +282,15 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         binding.btnSave.setOnClickListener {
 
+//                사원코드 가져오기
+            val selecSawon = binding.autoCompleteTextView.text.toString()
+            sawonData.forEach {
+                if(it.sawonmyeong == selecSawon){
+                    ipgodamdangjacode = it.sawoncode
+                    Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
+                }
+            }
+
             if(ipgodamdangjacode == ""){
                 ipgodamdangjacodeDialog()
                 return@setOnClickListener
@@ -289,16 +298,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
 
             saveDialog() {
-
-//                사원코드 가져오기
-                val selecSawon = binding.autoCompleteTextView.text.toString()
-                sawonData.forEach {
-                    if(it.sawonmyeong == selecSawon){
-                        ipgodamdangjacode = it.sawoncode
-                        Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
-                    }
-                }
-
 
                 val chulgodetail = JsonArray()   // 등록용 리스트
 
