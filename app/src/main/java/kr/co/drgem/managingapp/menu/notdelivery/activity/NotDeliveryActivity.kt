@@ -84,7 +84,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         sort()
         spinnerSetIn()
         spinnerSetOut()
-
+        completeTextView()
 
     }
 
@@ -232,7 +232,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
-                            status = "333"
 
                             getRequestNotDelivery()
 
@@ -284,9 +283,11 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             searchZeroDialog()
                             setValues()
                             mAdapter.clearList()
+                            status = "111"
 
                         } else {
 
+                            status = "333"
                             binding.layoutList.isVisible = true
                             binding.layoutEmpty.isVisible = false
                         }
@@ -392,6 +393,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                     response.body()?.let {
                                         if (it.resultcd == "000") {
 
+                                            status = "111"
                                             SerialManageUtil.clearData()
 
                                             mAdapter.notifyDataSetChanged()

@@ -219,7 +219,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
-                            status = "333"
 
                             getRequestKittingDetail()
 
@@ -256,9 +255,13 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                             kittingDetailData = it
                             setValues()
 
+                            status = "333"
+
                             if (it.returnKittingDetail().size == 0) {
                                 searchZeroDialog()
                                 mAdapter.clearList()
+
+                                status = "111"
 
                             }
                         }
@@ -368,6 +371,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                     response.body()?.let {
                                         if (it.resultcd == "000") {
 
+                                            status = "111"
                                             SerialManageUtil.clearData()
                                             mAdapter.notifyDataSetChanged()
                                             saveDoneDialog()

@@ -258,7 +258,6 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
-                            status = "333"
 
                             getRequestStock()
 
@@ -295,9 +294,12 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
 
                             if (it.returnPummokDetail().size == 0) {
                                 searchZeroDialog()
+                                status = "111"
 
                             } else {
 
+
+                                status = "333"
                                 loadingDialog.loadingEnd()
 
                                 productData = it

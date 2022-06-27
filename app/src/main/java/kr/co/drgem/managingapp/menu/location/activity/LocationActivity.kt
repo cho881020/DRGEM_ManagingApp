@@ -209,7 +209,6 @@ class LocationActivity : BaseActivity() {
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
-                            status = "333"
 
                             getRequestLocation()
 
@@ -247,16 +246,20 @@ class LocationActivity : BaseActivity() {
 
                             locationData = it
 
+                            setValues()
+
                             if (it.returnPummokDetail().size == 0) {
                                 searchZeroDialog()
                                 mAdapter.clearList()
+                                status = "111"
 
                             } else {
                                 binding.layoutList.isVisible = true
                                 binding.layoutEmpty.isVisible = false
+
+                                status = "333"
                             }
 
-                            setValues()
 
                         }
                     }
@@ -311,7 +314,7 @@ class LocationActivity : BaseActivity() {
                         response.body()?.let {
                             if (it.resultcd == "000") {
 
-
+                                status = "111"
                                 saveDoneDialog()
 
                             } else {

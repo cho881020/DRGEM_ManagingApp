@@ -70,6 +70,7 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
                                 itemView.context.startActivity(myIntent)
 
                                 Log.d("yj", "SEQ : ${it.seq}")
+                                Log.d("yj", "it : $it")
                             }
 
                             else{

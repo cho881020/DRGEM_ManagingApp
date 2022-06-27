@@ -312,7 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
-                    android:text="거래상세 내역"
+                    android:text="발주번호 리스트"
                     android:textColor="@color/color_000000"
                     android:textSize="14dp"
                     android:textStyle="bold" />

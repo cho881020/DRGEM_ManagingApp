@@ -320,7 +320,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
-                            status = "333"
                             getRequestTran()
 
                             Log.d("yj", "SEQ : ${it.seq}")
@@ -365,10 +364,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                 mAdapter.clearList()
                                 binding.txtCount.text = "(0건)"
                                 binding.layoutInfo.isVisible = false
+                                status = "111"
 
 
                             } else {
-
+                                status = "333"
                                 binding.layoutEmpty.isVisible = false
                                 binding.layoutList.isVisible = true
                                 binding.layoutInfo.isVisible = true
@@ -469,8 +469,9 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                     response.body()?.let {
                                         if (it.resultcd == "000") {
 
-                                            SerialManageUtil.clearData()
 
+                                            status = "111"
+                                            SerialManageUtil.clearData()
                                             mAdapter.notifyDataSetChanged()
                                             saveDoneDialog()
 

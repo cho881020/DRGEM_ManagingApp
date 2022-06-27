@@ -80,11 +80,16 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     }
 
     override fun onBackPressed() {
-        backDialog {
-            clearAndCancelWork()
-            workStatusCancle()
-            SerialManageUtil.clearData()
+        if (status == "333") {
+            backDialog() {
+                clearAndCancelWork()
+                workStatusCancle()
+                SerialManageUtil.clearData()
+            }
+        } else {
+            finish()
         }
+
     }
 
     override fun setupEvents() {
@@ -106,11 +111,17 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
 
         binding.btnBack.setOnClickListener {
-            backDialog {
-                clearAndCancelWork()
-                workStatusCancle()
-                SerialManageUtil.clearData()
+
+            if (status == "333") {
+                backDialog() {
+                    clearAndCancelWork()
+                    workStatusCancle()
+                    SerialManageUtil.clearData()
+                }
+            } else {
+                finish()
             }
+
         }
 
         val cal = Calendar.getInstance()
@@ -518,6 +529,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                 Log.d("yj", "ipgodetail : ${Gson().toJson(ipgodetail)}")
 
                 if (ipgodetail.size() > 0) {
+                    loadingDialog.show(supportFragmentManager, null)
                     apiList.postRequestOrderReceive(georaeMap)
                         .enqueue(object : Callback<WorkResponse> {
                             override fun onResponse(
@@ -538,10 +550,12 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                                     }
                                 }
 
+                                loadingDialog.dismiss()
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                                 serverErrorDialog("서버 연결에 실패하였습니다.\n 관리자에게 문의하세요.")
+                                loadingDialog.dismiss()
                             }
                         })
                 } else {

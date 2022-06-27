@@ -207,7 +207,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
                         if (it.resultcd == "000") {
                             SEQ = it.seq
-                            status = "333"
 
                             getRequestDetail()
 
@@ -249,9 +248,19 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        requestDetailData = it
 
-                        setValues()
+                        if(it.returnPummokDetail().size == 0){
+                            searchZeroDialog()
+                            setValues()
+                            mAdapter.clearList()
+                            status = "111"
+
+                        }else{
+                            requestDetailData = it
+                            setValues()
+                            status = "333"
+                        }
+
 
                     }
                 }
@@ -359,6 +368,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                     response.body()?.let {
                                         if (it.resultcd == "000") {
 
+                                            status = "111"
                                             SerialManageUtil.clearData()
                                             mAdapter.notifyDataSetChanged()
                                             saveDoneDialog()
