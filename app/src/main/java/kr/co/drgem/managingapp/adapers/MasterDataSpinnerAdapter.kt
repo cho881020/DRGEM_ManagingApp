@@ -1,3 +1,10 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : MasterDataSpinnerAdapter
+ * 개발자 : (주)NePP 이윤주
+ * 업무기능 : 사업장/창고 선택 스피너 어댑터
+ */
+
 package kr.co.drgem.managingapp.adapers
 
 import android.content.Context

@@ -880,6 +880,17 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
+
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="품목코드"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
+
+
+
                         <LinearLayout
                             android:id="@+id/layoutPummyeong"
                             android:layout_width="100dp"
@@ -903,14 +914,6 @@
                                 android:layout_height="wrap_content"/>
 
                         </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="품명"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="100dp"
