@@ -294,6 +294,34 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 return@setOnClickListener
             }
 
+            requestDetailData.returnPummokDetail().forEach {
+
+                if (it.getSerialCount() == "0" || it.getSerialCount() == null) {  // 출고수량이 0일때는 체크없음
+                    return@forEach
+                }
+
+                var serialData =
+                    SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                        .toString()      // 시리얼 데이터 꺼내오기
+
+                if (it.jungyojajeyeobu == "Y") {
+                    val serialSize = serialData.split(",").size
+
+                    if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                        countSerialDialog()
+                        it.serialCheck = true
+                        mAdapter.notifyDataSetChanged()
+                        serialData = ""
+
+                        return@setOnClickListener
+                    } else {
+                        it.serialCheck = false
+                        mAdapter.notifyDataSetChanged()
+                    }
+
+                }
+            }
+
             saveDialog() {
 
                 val requestChulgodetail = JsonArray()
@@ -304,27 +332,27 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                         return@forEach
                     }
 
-                    var serialData =
+                    val serialData =
                         SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                             .toString()
 
-                    if (it.jungyojajeyeobu == "Y") {
-
-                            val serialSize = serialData.split(",").size
-
-                            if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
-                                countSerialDialog()
-                                it.serialCheck = true
-                                mAdapter.notifyDataSetChanged()
-                                serialData = ""
-
-                                return@saveDialog
-
-                            } else {
-                                it.serialCheck = false
-                                mAdapter.notifyDataSetChanged()
-                            }
-                        }
+//                    if (it.jungyojajeyeobu == "Y") {
+//
+//                            val serialSize = serialData.split(",").size
+//
+//                            if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+//                                countSerialDialog()
+//                                it.serialCheck = true
+//                                mAdapter.notifyDataSetChanged()
+//                                serialData = ""
+//
+//                                return@saveDialog
+//
+//                            } else {
+//                                it.serialCheck = false
+//                                mAdapter.notifyDataSetChanged()
+//                            }
+//                        }
 
                     requestChulgodetail.add(
                         RequestChulgodetail(        //check : 요청번호?

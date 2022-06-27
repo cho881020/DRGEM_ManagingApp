@@ -396,6 +396,34 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         binding.btnSave.setOnClickListener {
 
+            tranData.returnGeoraedetail().forEach {
+
+                if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
+                    return@forEach
+                }
+
+                var serialData =
+                    SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                        .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
+
+
+                if (it.getJungyojajeyeobuHP() == "Y") {
+                    val serialSize = serialData.trim().split(",").size
+
+                    if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                        countSerialDialog()
+                        it.serialCheck = true
+                        mAdapter.notifyDataSetChanged()
+                        serialData = ""
+                        return@setOnClickListener
+
+                    } else {
+                        it.serialCheck = false
+                        mAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+
             saveDialog() {
                 val georaedetail = JsonArray()   // 등록용 리스트
 
@@ -405,26 +433,26 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                         return@forEach
                     }
 
-                    var serialData =
+                    val serialData =
                         SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                             .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
 
 
-                    if (it.getJungyojajeyeobuHP() == "Y") {
-                        val serialSize = serialData.trim().split(",").size
-
-                        if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
-                            countSerialDialog()
-                            it.serialCheck = true
-                            mAdapter.notifyDataSetChanged()
-                            serialData = ""
-                            return@saveDialog
-
-                        } else {
-                            it.serialCheck = false
-                            mAdapter.notifyDataSetChanged()
-                        }
-                    }
+//                    if (it.getJungyojajeyeobuHP() == "Y") {
+//                        val serialSize = serialData.trim().split(",").size
+//
+//                        if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+//                            countSerialDialog()
+//                            it.serialCheck = true
+//                            mAdapter.notifyDataSetChanged()
+//                            serialData = ""
+//                            return@saveDialog
+//
+//                        } else {
+//                            it.serialCheck = false
+//                            mAdapter.notifyDataSetChanged()
+//                        }
+//                    }
 
 
                     georaedetail.add(                         // 리스트에 담기

@@ -164,6 +164,7 @@
                         android:id="@+id/btnLocationRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:focusable="false"
                         android:gravity="center">
 
                         <ImageView
@@ -220,6 +221,7 @@
                         android:id="@+id/btnProductRemove"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:focusable="false"
                         android:gravity="center">
 
                         <ImageView

@@ -465,6 +465,34 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         binding.btnSave.setOnClickListener {
 
+            orderDetailData.returnBaljudetail().forEach {
+
+                if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
+                    return@forEach
+                }
+
+                var serialData =
+                    SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
+                        .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
+
+
+                if (it.getJungyojajeyeobuHP() == "Y") {
+                    val serialSize = serialData.trim().split(",").size
+
+                    if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                        countSerialDialog()
+                        it.serialCheck = true
+                        mAdapter.notifyDataSetChanged()
+                        serialData = ""
+                        return@setOnClickListener
+
+                    } else {
+                        it.serialCheck = false
+                        mAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+
             saveDialog() {
                 val ipgodetail = JsonArray()   // 등록용 리스트
 
@@ -474,28 +502,28 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                         return@forEach
                     }
 
-                    var serialData =
+                    val serialData =
                         SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                             .toString()
 
 
-                    if (it.jungyojajeyeobu == "Y") {
-
-                        val serialSize = serialData.split(",").size
-
-
-                        if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
-                            countSerialDialog()
-                            it.serialCheck = true
-                            mAdapter.notifyDataSetChanged()
-                            serialData = ""
-
-                            return@saveDialog
-                        } else {
-                            it.serialCheck = false
-                            mAdapter.notifyDataSetChanged()
-                        }
-                    }
+//                    if (it.jungyojajeyeobu == "Y") {
+//
+//                        val serialSize = serialData.split(",").size
+//
+//
+//                        if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+//                            countSerialDialog()
+//                            it.serialCheck = true
+//                            mAdapter.notifyDataSetChanged()
+//                            serialData = ""
+//
+//                            return@saveDialog
+//                        } else {
+//                            it.serialCheck = false
+//                            mAdapter.notifyDataSetChanged()
+//                        }
+//                    }
 
 
 
