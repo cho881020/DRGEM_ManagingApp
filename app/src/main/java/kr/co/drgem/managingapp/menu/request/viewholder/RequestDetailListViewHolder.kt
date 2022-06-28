@@ -10,10 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.apis.APIList
@@ -58,7 +55,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             val serialCount = chulgosuryang.text.toString().trim()
-            data?.setSerialCount(serialCount)
+            data?.setPummokCount(serialCount)
         }
 
         override fun afterTextChanged(p0: Editable?) {
@@ -116,10 +113,10 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             btnEdit.text = "정보입력"
         }
 
-        if(data.getSerialCount().isNullOrEmpty()){
-            data.setSerialCount("0")
+        if(data.getPummokCount().isNullOrEmpty()){
+            data.setPummokCount("0")
         }
-        chulgosuryang.setText(data.getSerialCount())
+        chulgosuryang.setText(data.getPummokCount())
 
         chulgosuryang.removeTextChangedListener(textChangeListener)
         chulgosuryang.addTextChangedListener(textChangeListener)
@@ -190,8 +187,8 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
                     )
                 )
 
-                if(data.getSerialCount() ==""){
-                    data.setSerialCount("0")
+                if(data.getPummokCount() ==""){
+                    data.setPummokCount("0")
                 }
 
                 val tempMap = hashMapOf(
@@ -199,7 +196,7 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
                     "saeopjangcode" to tempData.saeopjangcode,
                     "changgocode" to tempData.changgocode,
                     "pummokcode" to data.getPummokcodeHP(),
-                    "suryang" to data.getSerialCount(),
+                    "suryang" to data.getPummokCount(),
                     "yocheongbeonho" to tempData.yocheongbeonho,
                     "ipchulgubun" to "2",
                     "seq" to tempData.seq,

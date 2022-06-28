@@ -7,18 +7,24 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogKittingDetailBinding
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
 import kr.co.drgem.managingapp.models.Pummokdetail
+import kr.co.drgem.managingapp.models.TempData
+import kr.co.drgem.managingapp.models.WorkResponse
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class KittingDetailDialog : BaseDialogFragment() {
 
@@ -30,6 +36,8 @@ class KittingDetailDialog : BaseDialogFragment() {
     var viewholderCount = 0
     lateinit var pummokData: Pummokdetail
     var mKittingbeonho = ""
+    lateinit var tempData: TempData
+    val mPummokCode = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,7 +88,6 @@ class KittingDetailDialog : BaseDialogFragment() {
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
 
-
             dismiss()
 
 
@@ -95,6 +102,7 @@ class KittingDetailDialog : BaseDialogFragment() {
                 .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
 
                     dismiss()
+
                 })
                 .setNegativeButton("아니오", null)
                 .show()
@@ -103,15 +111,169 @@ class KittingDetailDialog : BaseDialogFragment() {
         }
 
 
+        binding.edtPummokcode.setOnFocusChangeListener { view, isFocused ->
+
+            if (!isFocused) {
+                val inputPummokCode = binding.edtPummokcode.text.toString()
+
+                if (pummokData.getPummokcodeHP() == inputPummokCode) {
+                    binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
+                    binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
+                    binding.btnOk.isVisible = true
+                    binding.layoutCount.isVisible = true
+                } else {
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("품목코드가 일치하지 않습니다..")
+                        .setNegativeButton("확인", null)
+                        .show()
+                }
+            }
+
+
+        }
+
+        binding.btnOk.setOnClickListener {
+
+            val inputCount = binding.edtCount.text.trim().toString()
+
+
+            try {
+                viewholderCount = inputCount.toInt()
+                if (viewholderCount <= 0 ) {
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("수량을 입력해 주세요.")
+                        .setNegativeButton("확인", null)
+                        .show()
+
+                    return@setOnClickListener
+                }
+
+            } catch (e: Exception) {
+                AlertDialog.Builder(requireContext())
+                    .setMessage("수량을 입력해 주세요.")
+                    .setNegativeButton("확인", null)
+                    .show()
+
+                return@setOnClickListener
+            }
+
+
+            pummokData.setPummokCount(inputCount)
+
+            if (pummokData.jungyojajeyeobu == "Y") {
+                adapterSet()
+            }
+
+            val tempMap = hashMapOf(
+                "requesttype" to "08003",
+                "saeopjangcode" to tempData.saeopjangcode,
+                "changgocode" to tempData.changgocode,
+                "pummokcode" to pummokData.getPummokcodeHP(),
+                "suryang" to pummokData.getPummokCount(),
+                "yocheongbeonho" to pummokData.getyocheongbeonhoHP(),
+                "ipchulgubun" to "2",
+                "seq" to tempData.seq,
+                "tablet_ip" to IPUtil.getIpAddress(),
+                "sawoncode" to tempData.sawoncode,
+                "status" to "333",
+            )
+
+            Log.d("yj", "tempMap : $tempMap")
+
+            apiList.postRequestTempExtantstock(tempMap).enqueue(object :
+                Callback<WorkResponse> {
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    Log.d("yj", "현재고임시등록 code : ${response.body()?.resultcd}")
+                    Log.d("yj", "현재고임시등록 msg : ${response.body()?.resultmsg}")
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "현재고임시등록")
+                }
+
+            })
+            binding.btnAdd.isEnabled = true
+
+
+        }
+
+        binding.edtPummokcode.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.edtPummokcode.onEditorAction(5)
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+        binding.edtCount.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.edtCount.onEditorAction(5)
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+
     }
 
 
     override fun setValues() {
 
+        binding.kittingbeonho.text = mKittingbeonho
+        binding.pummokcode.text = pummokData.getPummokcodeHP()
+        binding.pummyeong.text = pummokData.getpummyeongHP()
+        binding.dobeonModel.text = pummokData.getdobeon_modelHP()
+        binding.sayang.text = pummokData.getsayangHP()
+        binding.danwi.text = pummokData.getdanwiHP()
+        binding.location.text = pummokData.getlocationHP()
+        binding.hyeonjaegosuryang.text = pummokData.gethyeonjaegosuryangHP()
+        binding.yocheongsuryang.text = pummokData.getyocheongsuryangHP()
+        binding.gichulgosuryang.text = pummokData.getgichulgosuryangHP()
+        binding.chulgosuryang.text = viewholderCount.toString()
+        binding.jungyojajeyeobu.text = pummokData.getjungyojajeyeobuHP()
+        binding.edtPummokcode.setText("")
+        binding.edtCount.setText("")
+
+
+        if (pummokData.getPummokCount() != "0") {
+
+            binding.edtPummokcode.setText(pummokData.getPummokcodeHP())
+            Log.d("yj", "data.pummokCount : ${pummokData.getPummokcodeHP()} : edtPummokCode ${binding.edtPummokcode}")
+            binding.edtCount.setText(pummokData.getPummokCount())
+
+            binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
+            binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
+            binding.btnOk.isVisible = true
+            binding.layoutCount.isVisible = true
+
+
+            adapterSet()
+
+        }
+
+
+        Log.d("yj", "binding.edtPummokcode : ${binding.edtPummokcode.text}")
+        Log.d("yj", "data.pummokCount : ${pummokData.getPummokCount()}")
+
+    }
+
+    fun adapterSet() {
         var itemCount = 0
 
-        val serialData = SerialManageUtil.getSerialStringByPummokCode("${pummokData.getPummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}")
-            .toString()
+        val serialData =
+            SerialManageUtil.getSerialStringByPummokCode("${pummokData.getPummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}")
+                .toString()
         val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
 
 
@@ -151,25 +313,13 @@ class KittingDetailDialog : BaseDialogFragment() {
 
         mAdapter = DialogEditKittingAdapter(itemCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
-
-        binding.kittingbeonho.text = mKittingbeonho
-        binding.pummokcode.text = pummokData.getPummokcodeHP()
-        binding.pummyeong.text = pummokData.getpummyeongHP()
-        binding.dobeonModel.text = pummokData.getdobeon_modelHP()
-        binding.sayang.text = pummokData.getsayangHP()
-        binding.danwi.text = pummokData.getdanwiHP()
-        binding.location.text = pummokData.getlocationHP()
-        binding.hyeonjaegosuryang.text = pummokData.gethyeonjaegosuryangHP()
-        binding.yocheongsuryang.text = pummokData.getyocheongsuryangHP()
-        binding.gichulgosuryang.text = pummokData.getgichulgosuryangHP()
-        binding.chulgosuryang.text = viewholderCount.toString()
-        binding.jungyojajeyeobu.text = pummokData.getjungyojajeyeobuHP()
     }
 
-    fun setCount(kittingbeonho: String, count: Int, data: Pummokdetail) {
+    fun setCount(kittingbeonho: String, data: Pummokdetail, tempData: TempData) {
         mKittingbeonho = kittingbeonho
-        viewholderCount = count
+//        viewholderCount = count
         pummokData = data
+        this.tempData = tempData
 
     }
 

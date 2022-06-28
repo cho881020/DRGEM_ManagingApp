@@ -41,7 +41,6 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     lateinit var mAdapter: KittingDetailListAdapter
     lateinit var kittingDetailData: KittingDetailResponse
 
-    val dialog = KittingDetailDialog()
     val loadingDialog = LoadingDialogFragment()
 
     var mkittingbeonho = ""
@@ -185,11 +184,11 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         binding.txtCount.text = "(${kittingDetailData.getPummokCount()} 건)"
 
 
-        kittingDetailData.returnKittingDetail().forEach {
-            if (it.jungyojajeyeobu == "Y") {
-                binding.serialDetail.isVisible = true
-            }
-        }
+//        kittingDetailData.returnKittingDetail().forEach {
+//            if (it.jungyojajeyeobu == "Y") {
+//                binding.serialDetail.isVisible = true
+//            }
+//        }
 
         binding.btnSave.isVisible = true
 
@@ -298,7 +297,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
             kittingDetailData.returnKittingDetail().forEach {
 
-                if (it.getSerialCount() == "0" || it.getSerialCount() == null) {  // 출고수량이 0일때는 체크없음
+                if (it.getPummokCount() == "0" || it.getPummokCount() == null) {  // 출고수량이 0일때는 체크없음
                     return@forEach
                 }
 
@@ -309,7 +308,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                 if (it.jungyojajeyeobu == "Y") {
                     val serialSize = serialData.split(",").size
 
-                    if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                    if (serialSize.toString() != it.getPummokCount() || serialData == "null") {
                         countSerialDialog()
                         it.serialCheck = true
                         mAdapter.notifyDataSetChanged()
@@ -331,7 +330,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                 kittingDetailData.returnKittingDetail().forEach {
 
-                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){  // 출고수량이 0일때는 저장하지 않음
+                    if(it.getPummokCount() == "0" || it.getPummokCount() == null){  // 출고수량이 0일때는 저장하지 않음
                         return@forEach
                     }
 
@@ -361,7 +360,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                         KittingChulgodetail(
                             it.getyocheongbeonhoHP(),
                             it.getPummokcodeHP(),
-                            it.getSerialCount(),
+                            it.getPummokCount(),
                             it.getjungyojajeyeobuHP(),
                             serialData
                         ).toJsonObject()
@@ -402,7 +401,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                                             status = "111"
                                             SerialManageUtil.clearData()
-                                            mAdapter.notifyDataSetChanged()
+                                            mAdapter.clearList()
                                             saveDoneDialog()
 
                                         } else {
@@ -741,9 +740,9 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
 
 
-    override fun onClickedEdit(count: Int, data: Pummokdetail) {
-
-        dialog.setCount(mkittingbeonho, count, data)
+    override fun onClickedEdit(data: Pummokdetail) {
+        val dialog = KittingDetailDialog()
+        dialog.setCount(mkittingbeonho,data, setTempData())
         dialog.show(supportFragmentManager, "Kitting_dialog")
     }
 

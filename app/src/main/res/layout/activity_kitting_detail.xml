@@ -695,7 +695,6 @@
                             android:text="시리얼/상세"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp"
-                            android:visibility="gone"
                             tools:visibility="visible"/>
 
 

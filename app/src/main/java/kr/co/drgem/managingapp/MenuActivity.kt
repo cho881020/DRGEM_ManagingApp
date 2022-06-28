@@ -129,6 +129,7 @@ class MenuActivity : BaseActivity() {
                     response.body()?.let {
                         masterData = it
                         MainDataManager.setMainData(it)
+                        Log.d("yj", "masterDataResponse : $it")
 
                     }
                 }

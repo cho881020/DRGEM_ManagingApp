@@ -128,15 +128,16 @@ data class Pummokdetail(
     }
 
 
-    private var SerialCount = ""
+// 시리얼카운트 : 입력카운트
+    private var PummokCount = ""
 
-    fun setSerialCount( count : String) {
-        this.SerialCount = count
+    fun setPummokCount(count : String) {
+        this.PummokCount = count
     }
 
-    fun getSerialCount() : String {
+    fun getPummokCount() : String {
 
-        return SerialCount
+        return PummokCount
     }
 
     var serialCheck = false

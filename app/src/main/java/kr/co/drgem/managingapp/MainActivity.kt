@@ -67,7 +67,7 @@ class MainActivity : BaseActivity() {
 
                 ) {
 
-                    Log.d("콜확인", call.request().body().toString())
+//                    Log.d("콜확인", call.request().body().toString())
 
                     if (response.isSuccessful) {
 
@@ -107,7 +107,7 @@ class MainActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
-                    Log.d("콜확인", call.request().body().toString())
+//                    Log.d("콜확인", call.request().body().toString())
                     serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     t.printStackTrace()
                 }

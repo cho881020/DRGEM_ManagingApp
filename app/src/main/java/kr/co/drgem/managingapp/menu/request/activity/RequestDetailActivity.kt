@@ -296,7 +296,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
             requestDetailData.returnPummokDetail().forEach {
 
-                if (it.getSerialCount() == "0" || it.getSerialCount() == null) {  // 출고수량이 0일때는 체크없음
+                if (it.getPummokCount() == "0" || it.getPummokCount() == null) {  // 출고수량이 0일때는 체크없음
                     return@forEach
                 }
 
@@ -307,7 +307,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 if (it.jungyojajeyeobu == "Y") {
                     val serialSize = serialData.split(",").size
 
-                    if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                    if (serialSize.toString() != it.getPummokCount() || serialData == "null") {
                         countSerialDialog()
                         it.serialCheck = true
                         mAdapter.notifyDataSetChanged()
@@ -328,7 +328,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
                 requestDetailData.returnPummokDetail().forEach {
 
-                    if(it.getSerialCount() == "0" || it.getSerialCount() == null){
+                    if(it.getPummokCount() == "0" || it.getPummokCount() == null){
                         return@forEach
                     }
 
@@ -357,7 +357,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                     requestChulgodetail.add(
                         RequestChulgodetail(        //check : 요청번호?
                             it.getPummokcodeHP(),
-                            it.getSerialCount(),
+                            it.getPummokCount(),
                             it.getjungyojajeyeobuHP(),
                             serialData
                         ).toJsonObject()
