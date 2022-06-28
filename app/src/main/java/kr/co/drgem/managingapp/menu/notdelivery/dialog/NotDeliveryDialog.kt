@@ -68,7 +68,7 @@ class NotDeliveryDialog : BaseDialogFragment() {
 
                 contentString.setLength(contentString.length - 1)
 
-                SerialManageUtil.putSerialStringByPummokCode(pummokData.getpummokcodeHP(), contentString.toString())
+                SerialManageUtil.putSerialStringByPummokCode("${pummokData.getpummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}", contentString.toString())
 
             }
 
@@ -94,7 +94,7 @@ class NotDeliveryDialog : BaseDialogFragment() {
 
         var itemCount = 0
 
-        val serialData = SerialManageUtil.getSerialStringByPummokCode(pummokData.getpummokcodeHP())
+        val serialData = SerialManageUtil.getSerialStringByPummokCode("${pummokData.getpummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}")
             .toString()
         val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
 

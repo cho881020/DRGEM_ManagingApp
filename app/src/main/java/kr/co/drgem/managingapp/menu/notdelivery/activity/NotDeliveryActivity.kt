@@ -329,7 +329,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 }
 
                 var serialData =
-                    SerialManageUtil.getSerialStringByPummokCode(it.getpummokcodeHP())
+                    SerialManageUtil.getSerialStringByPummokCode("${it.getpummokcodeHP()}/${it.getyocheongbeonhoHP()}")
                         .toString()      // 시리얼 데이터 꺼내오기
 
                 if (it.jungyojajeyeobu == "Y") {
@@ -361,7 +361,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     }
 
                     val serialData =
-                        SerialManageUtil.getSerialStringByPummokCode(it.getpummokcodeHP())
+                        SerialManageUtil.getSerialStringByPummokCode("${it.getpummokcodeHP()}/${it.getyocheongbeonhoHP()}")
                             .toString()
 
 //                    if (it.jungyojajeyeobu == "Y") {
