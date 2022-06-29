@@ -403,7 +403,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     tools:visibility="visible"
                     android:orientation="vertical">
 
@@ -420,9 +420,9 @@
                         android:layout_height="35dp"
                         android:layout_marginTop="3dp"
                         android:background="@drawable/light_gray_box"
-                        android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:maxLines="1"
+                        android:selectAllOnFocus="true"
                         android:imeOptions="actionNext"
                         android:paddingHorizontal="7dp"
                         android:textColor="@color/color_000000"
@@ -445,7 +445,7 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="14dp"
                     android:textStyle="bold"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     tools:visibility="visible"/>
 
 

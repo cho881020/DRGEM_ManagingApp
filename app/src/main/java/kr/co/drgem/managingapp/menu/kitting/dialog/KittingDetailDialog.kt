@@ -111,31 +111,9 @@ class KittingDetailDialog : BaseDialogFragment() {
         }
 
 
-        binding.edtPummokcode.setOnFocusChangeListener { view, isFocused ->
-
-            if (!isFocused) {
-                val inputPummokCode = binding.edtPummokcode.text.toString()
-
-                if (pummokData.getPummokcodeHP() == inputPummokCode) {
-                    binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
-                    binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
-                    binding.btnOk.isVisible = true
-                    binding.layoutCount.isVisible = true
-                } else {
-                    AlertDialog.Builder(requireContext())
-                        .setMessage("품목코드가 일치하지 않습니다..")
-                        .setNegativeButton("확인", null)
-                        .show()
-                }
-            }
-
-
-        }
-
         binding.btnOk.setOnClickListener {
 
             val inputCount = binding.edtCount.text.trim().toString()
-
 
             try {
                 viewholderCount = inputCount.toInt()
@@ -197,14 +175,32 @@ class KittingDetailDialog : BaseDialogFragment() {
             })
             binding.btnAdd.isEnabled = true
 
-
         }
 
+
         binding.edtPummokcode.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            val inputPummokCode = binding.edtPummokcode.text.toString()
 
             if (actionId == 0) {
                 if (keyEvent.action == KeyEvent.ACTION_UP) {
                     binding.edtPummokcode.onEditorAction(5)
+
+                    if (pummokData.getPummokcodeHP() == inputPummokCode) {
+                        binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
+                        binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
+                        binding.btnOk.isVisible = true
+                        binding.layoutCount.isVisible = true
+                        binding.edtCount.requestFocus()
+
+
+                    } else {
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("품목코드가 일치하지 않습니다..")
+                            .setNegativeButton("확인", null)
+                            .show()
+                    }
+
                     return@setOnEditorActionListener true
                 }
             }
