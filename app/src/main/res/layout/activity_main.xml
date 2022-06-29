@@ -37,7 +37,7 @@
                 android:drawablePadding="8.35dp"
                 android:maxLines="1"
                 android:privateImeOptions="defaultInputmode=korean"
-                android:inputType="number"
+                android:inputType="textVisiblePassword"
                 android:hint="사원 ID"
                 android:paddingLeft="9dp"
                 android:textSize="14dp" />

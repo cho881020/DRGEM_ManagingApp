@@ -28,9 +28,11 @@ import kr.co.drgem.managingapp.menu.kitting.adapter.KittingDetailListAdapter
 import kr.co.drgem.managingapp.menu.kitting.dialog.KittingDetailDialog
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.*
+import okhttp3.internal.notify
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.FieldPosition
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -744,6 +746,10 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         val dialog = KittingDetailDialog()
         dialog.setCount(mkittingbeonho,data, setTempData())
         dialog.show(supportFragmentManager, "Kitting_dialog")
+    }
+
+    override fun onItemViewClicked(position: Int) {
+        mAdapter.onClickedView(position)
     }
 
     override fun onDismiss(p0: DialogInterface?) {

@@ -142,5 +142,6 @@ data class Pummokdetail(
 
     var serialCheck = false
 
+    var itemViewClicked = false
 
 }

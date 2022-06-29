@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +22,8 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
     var data: Pummokdetail? = null
 
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
-    val layoutEdit = itemView.findViewById<LinearLayout>(R.id.layoutEdit)
+
+    //    val layoutEdit = itemView.findViewById<LinearLayout>(R.id.layoutEdit)
     val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
     val pummyeong = itemView.findViewById<TextView>(R.id.pummyeong)
     val dobeon_model = itemView.findViewById<TextView>(R.id.dobeon_model)
@@ -61,9 +61,40 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 //            chulgosuryang.requestFocus()
 //        }
 
-        itemView.setOnClickListener {
-            layoutEdit.requestFocus()
+        Log.d("yj", "data : ${data.itemViewClicked}")
+
+
+        when {
+            data.itemViewClicked -> {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_E0E0E0
+                    )
+                )
+            }
+            data.serialCheck -> {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.red
+                    )
+                )
+            }
+            else -> {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.color_FFFFFF
+                    )
+                )
+            }
         }
+
+        itemView.setOnClickListener {
+            listener.onItemViewClicked(position)
+        }
+
 
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
@@ -86,24 +117,45 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 //        }
 //
 
-        pummyeong.setOnClickListener {
+        pummyeong.setOnLongClickListener{
             AlertDialog.Builder(itemView.context)
                 .setTitle("품명")
                 .setMessage(data.getpummyeongHP())
                 .setNegativeButton("확인", null)
                 .show()
 
+            false
         }
+
+        dobeon_model.setOnLongClickListener{
+            AlertDialog.Builder(itemView.context)
+                .setTitle("도번모델")
+                .setMessage(data.getdobeon_modelHP())
+                .setNegativeButton("확인", null)
+                .show()
+
+            false
+        }
+
+        sayang.setOnLongClickListener{
+            AlertDialog.Builder(itemView.context)
+                .setTitle("사양")
+                .setMessage(data.getsayangHP())
+                .setNegativeButton("확인", null)
+                .show()
+
+            false
+        }
+
 
         if (data.getPummokCount().isNullOrEmpty()) {
 
 //            if (data.chulgosuryang?.isNotEmpty() == true) {
 //                data.setSerialCount(data.getchulgosuryangHP())
 //            } else {
-                data.setPummokCount("0")
+            data.setPummokCount("0")
 //            }
         }
-
 
 
         val savedSerialString =
@@ -136,24 +188,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 //        chulgosuryang.addTextChangedListener(textChangeListener)
 
 
-
-        if (data.serialCheck) {
-            itemView.setBackgroundColor(
-                ContextCompat.getColor(
-                    itemView.context,
-                    R.color.red
-                )
-            )
-        } else {
-            itemView.setBackgroundColor(
-                ContextCompat.getColor(
-                    itemView.context,
-                    R.color.color_FFFFFF
-                )
-            )
-        }
-
-
         btnEdit.setOnClickListener {
 
 //            val inputCount = chulgosuryang.text.toString()
@@ -164,7 +198,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 //                if (count >= 1) {
 
 //                    listener.onClickedEdit(count, data)
-                    listener.onClickedEdit(data)
+            listener.onClickedEdit(data)
 //                } else {
 //                    AlertDialog.Builder(itemView.context)
 //                        .setMessage("수량을 입력해 주세요.")

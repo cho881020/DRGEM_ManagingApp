@@ -1,7 +1,10 @@
 package kr.co.drgem.managingapp.menu.kitting.adapter
 
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.selects.select
+import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.menu.kitting.KittingDetailEditListener
 import kr.co.drgem.managingapp.menu.kitting.viewholder.KittingDetailListViewHolder
 import kr.co.drgem.managingapp.models.Pummokdetail
@@ -41,4 +44,16 @@ class KittingDetailListAdapter(
         mList.clear()
         notifyDataSetChanged()
     }
+
+    fun onClickedView(position: Int){
+        mList.forEachIndexed { index, pummokdetail ->
+
+            pummokdetail.itemViewClicked = false
+            if(index == position){
+                pummokdetail.itemViewClicked = true
+            }
+        }
+        notifyDataSetChanged()
+    }
+
 }
