@@ -497,7 +497,7 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
                     searchCodeData = it
 
                     binding.pummokcode.text = (inputCode)
-                    binding.pummyeong.text = searchCodeData.getPummokcodeHP()
+                    binding.pummyeong.text = searchCodeData.getpummyeongHP()
                     binding.dobeonModel.text = searchCodeData.getdobeon_modelHP()
                     binding.sayang.text = searchCodeData.getsayangHP()
                     binding.suryang.setText(searchCodeData.gethyeonjaegosuryangHP())
