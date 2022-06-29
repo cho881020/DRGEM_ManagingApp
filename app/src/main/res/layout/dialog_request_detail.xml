@@ -350,17 +350,108 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="품목코드 확인"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <EditText
+                        android:id="@+id/edtPummokcode"
+                        android:layout_width="160dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/light_gray_box"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:inputType="textVisiblePassword"
+                        android:privateImeOptions="defaultInputmode=english"
+                        android:imeOptions="actionNext"
+                        android:selectAllOnFocus="true"
+                        android:maxLines="1"
+                        android:paddingHorizontal="7dp"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp"
+                        tools:text="G22042600391" />
 
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:visibility="invisible"
+                    tools:visibility="visible"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="수량"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp" />
+
+                    <EditText
+                        android:id="@+id/edtCount"
+                        android:layout_width="70dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/light_gray_box"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:selectAllOnFocus="true"
+                        android:imeOptions="actionNext"
+                        android:paddingHorizontal="7dp"
+                        android:textColor="@color/color_000000"
+                        android:textSize="12dp"
+                        android:inputType="number"
+                        tools:text="7" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btnOk"
+                    android:layout_width="65dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/btn_find"
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:text="확인"
+                    android:focusable="false"
+                    android:textColor="@color/color_FFFFFF"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    tools:visibility="visible"/>
+
+            </LinearLayout>
 
             <TextView
+                android:id="@+id/txtSerial"
                 android:layout_width="wrap_content"
-                android:layout_height="23dp"
-                android:layout_marginStart="22dp"
-                android:layout_marginTop="35dp"
-                android:text="시리얼번호 관리"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="시리얼번호"
                 android:textColor="@color/color_000000"
                 android:textSize="16dp"
+                android:visibility="invisible"
+                tools:visibility="visible"
                 android:textStyle="bold" />
 
 

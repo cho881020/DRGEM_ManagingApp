@@ -37,7 +37,6 @@ class KittingDetailDialog : BaseDialogFragment() {
     lateinit var pummokData: Pummokdetail
     var mKittingbeonho = ""
     lateinit var tempData: TempData
-    val mPummokCode = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,7 +64,6 @@ class KittingDetailDialog : BaseDialogFragment() {
 
         binding.btnAdd.setOnClickListener {
 
-
             val contentString = StringBuilder()      //String 문자열 만들기
 
             for (data in mSerialDataList) {         //시리얼데이터 목록을 돌기 (data 변수 명으로)
@@ -91,12 +89,13 @@ class KittingDetailDialog : BaseDialogFragment() {
 
 
             val inputCount = binding.edtCount.text.trim().toString()
+
             if(pummokData.getjungyojajeyeobuHP() == "Y"){
                 val serialData = SerialManageUtil.getSerialStringByPummokCode("${pummokData.getPummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}")
                     .toString()
                 if(inputCount.toInt() != serialData.split(",").size){
 
-                    Log.d("yj", "pummokData.getPummokCount().toInt() : ${pummokData.getPummokCount().toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
+                    Log.d("yj", "inputCount : ${inputCount.toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
 
                     AlertDialog.Builder(requireContext())
                         .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
@@ -108,9 +107,8 @@ class KittingDetailDialog : BaseDialogFragment() {
                 }
             }
 
-
-
             pummokData.setPummokCount(inputCount)
+            saveDoneDialog()
             dismiss()
 
         }

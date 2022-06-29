@@ -68,7 +68,9 @@ class NotDeliveryDialog : BaseDialogFragment() {
 
                 contentString.setLength(contentString.length - 1)
 
-                SerialManageUtil.putSerialStringByPummokCode("${pummokData.getpummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}", contentString.toString())
+                SerialManageUtil.putSerialStringByPummokCode(
+                    "${pummokData.getpummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}",
+                    contentString.toString())
 
             }
 

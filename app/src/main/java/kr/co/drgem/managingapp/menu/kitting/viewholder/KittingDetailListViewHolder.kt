@@ -107,6 +107,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         gichulgosuryang.text = data.getgichulgosuryangHP()
         yocheongbeonho.text = data.getyocheongbeonhoHP()
         seq.text = "${position + 1}"
+        chulgosuryang.text = data.getPummokCount()
 
 //        시리얼수정[뷰홀더] : 중요자재 여부 관계 없이 전부 보이기
 //
@@ -179,7 +180,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 
 
 
-        chulgosuryang.text = data.getPummokCount()
+
 
 
 //        chulgosuryang.setText(data.getSerialCount())

@@ -41,7 +41,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     lateinit var mAdapter: RequestDetailListAdapter
     lateinit var requestDetailData: RequestDetailResponse
 
-    val dialog = RequestDetailDialog()
     val loadingDialog = LoadingDialogFragment()
 
     var mYocheongbeonho = ""
@@ -169,12 +168,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${requestDetailData.pummokcount}건)"
-
-        requestDetailData.returnPummokDetail().forEach {
-            if (it.jungyojajeyeobu == "Y") {
-                binding.serialDetail.isVisible = true
-            }
-        }
 
         binding.btnSave.isVisible = true
 
@@ -336,24 +329,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                         SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                             .toString()
 
-//                    if (it.jungyojajeyeobu == "Y") {
-//
-//                            val serialSize = serialData.split(",").size
-//
-//                            if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
-//                                countSerialDialog()
-//                                it.serialCheck = true
-//                                mAdapter.notifyDataSetChanged()
-//                                serialData = ""
-//
-//                                return@saveDialog
-//
-//                            } else {
-//                                it.serialCheck = false
-//                                mAdapter.notifyDataSetChanged()
-//                            }
-//                        }
-
                     requestChulgodetail.add(
                         RequestChulgodetail(        //check : 요청번호?
                             it.getPummokcodeHP(),
@@ -397,7 +372,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
                                             status = "111"
                                             SerialManageUtil.clearData()
-                                            mAdapter.notifyDataSetChanged()
+                                            mAdapter.clearList()
                                             saveDoneDialog()
 
                                         } else {
@@ -734,8 +709,10 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
 
 
-    override fun onClickedEdit(count: Int, data: Pummokdetail) {
-        dialog.setCount(mYocheongbeonho, count, data)
+    override fun onClickedEdit(data: Pummokdetail) {
+        val dialog = RequestDetailDialog()
+
+        dialog.setCount(mYocheongbeonho,data, setTempData())
         dialog.show(supportFragmentManager, "dialog_request")
     }
 
@@ -754,6 +731,10 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     override fun onDismiss(p0: DialogInterface?) {
 
         mAdapter.notifyDataSetChanged()
+    }
+
+    override fun onItemViewClicked(position: Int) {
+        mAdapter.onClickedView(position)
     }
 
 }
