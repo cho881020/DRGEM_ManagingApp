@@ -70,6 +70,11 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             listener.onItemViewClicked(position)
         }
 
+        if (data.getPummokCount().isNullOrEmpty()) {
+            data.setPummokCount("0")
+        }
+
+
 
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
@@ -115,9 +120,6 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             false
         }
 
-        if (data.getPummokCount().isNullOrEmpty()) {
-            data.setPummokCount("0")
-        }
 
 
         val savedSerialString =

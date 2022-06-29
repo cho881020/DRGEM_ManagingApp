@@ -150,7 +150,6 @@ class RequestDetailDialog : BaseDialogFragment() {
 
 
             if (pummokData.jungyojajeyeobu == "Y") {
-                binding.txtSerial.isVisible = true
                 adapterSet()
             }
 
@@ -249,6 +248,12 @@ class RequestDetailDialog : BaseDialogFragment() {
         binding.gichulgosuryang.text = pummokData.getgichulgosuryangHP()
         binding.chulgosuryang.text = viewholderCount.toString()
         binding.jungyojajeyeobu.text = pummokData.getjungyojajeyeobuHP()
+        if(pummokData.getjungyojajeyeobuHP() == "Y"){
+            binding.txtSerial.isVisible = true
+        }
+
+        binding.edtPummokcode.setText("")
+        binding.edtCount.setText("")
 
         if (pummokData.getPummokCount() != "0") {
 

@@ -40,7 +40,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     lateinit var binding: ActivityNotDeliveryBinding
     lateinit var mAdapter: NotDeliveryListAdapter
     lateinit var notDeliveryData: NotDeliveryResponse
-    val dialog = NotDeliveryDialog()
     val loadingDialog = LoadingDialogFragment()
 
     var calStart = ""
@@ -324,7 +323,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
             notDeliveryData.returnPummokdetailDetail().forEach {
 
-                if (it.getSerialCount() == "0" || it.getSerialCount() == null) {  // 출고수량이 0일때는 체크없음
+                if (it.getPummokCount() == "0" || it.getPummokCount() == null) {  // 출고수량이 0일때는 체크없음
                     return@forEach
                 }
 
@@ -335,7 +334,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 if (it.jungyojajeyeobu == "Y") {
                     val serialSize = serialData.split(",").size
 
-                    if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                    if (serialSize.toString() != it.getPummokCount() || serialData == "null") {
                         countSerialDialog()
                         it.serialCheck = true
                         mAdapter.notifyDataSetChanged()
@@ -356,7 +355,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                 notDeliveryData.returnPummokdetailDetail().forEach {
 
-                    if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
+                    if (it.getPummokCount() == "0" || it.getPummokCount() == null) {
                         return@forEach
                     }
 
@@ -388,7 +387,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         NotDeliveryChulgodetail(
                             it.getyocheongbeonhoHP(),
                             it.getpummokcodeHP(),
-                            it.getSerialCount(),
+                            it.getPummokCount(),
                             it.getjungyojajeyeobuHP(),
                             serialData
                         ).toJsonObject()
@@ -875,14 +874,20 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
     }
 
-    override fun onClickedEdit(count: Int, data: PummokdetailDelivery) {
-        dialog.setCount(count, data)
+    override fun onClickedEdit(data: PummokdetailDelivery) {
+
+        val dialog = NotDeliveryDialog()
+        dialog.setCount(data, setTempData())
         dialog.show(supportFragmentManager, "dialog_notDelivery")
 
     }
 
     override fun onDismiss(p0: DialogInterface?) {
         mAdapter.notifyDataSetChanged()
+    }
+
+    override fun onItemViewClicked(position: Int) {
+        mAdapter.onClickedView(position)
     }
 
 }

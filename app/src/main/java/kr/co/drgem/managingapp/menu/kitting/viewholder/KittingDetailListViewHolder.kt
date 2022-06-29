@@ -95,6 +95,15 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
             listener.onItemViewClicked(position)
         }
 
+        if (data.getPummokCount().isNullOrEmpty()) {
+
+//            if (data.chulgosuryang?.isNotEmpty() == true) {
+//                data.setSerialCount(data.getchulgosuryangHP())
+//            } else {
+            data.setPummokCount("0")
+//            }
+        }
+
 
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
@@ -149,14 +158,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         }
 
 
-        if (data.getPummokCount().isNullOrEmpty()) {
 
-//            if (data.chulgosuryang?.isNotEmpty() == true) {
-//                data.setSerialCount(data.getchulgosuryangHP())
-//            } else {
-            data.setPummokCount("0")
-//            }
-        }
 
 
         val savedSerialString =

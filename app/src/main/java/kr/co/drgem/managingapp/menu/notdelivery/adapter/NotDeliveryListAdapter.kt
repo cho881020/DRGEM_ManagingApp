@@ -46,4 +46,14 @@ class NotDeliveryListAdapter(
         notifyDataSetChanged()
     }
 
+    fun onClickedView(position: Int){
+        mList.forEachIndexed { index, pummokdetail ->
+
+            pummokdetail.itemViewClicked = false
+            if(index == position){
+                pummokdetail.itemViewClicked = true
+            }
+        }
+        notifyDataSetChanged()
+    }
 }
