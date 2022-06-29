@@ -705,8 +705,6 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="시리얼/상세"
-                            tools:visibility="visible"
-                            android:visibility="gone"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 

@@ -7,10 +7,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import kr.co.drgem.managingapp.BaseDialogFragment
@@ -18,7 +20,13 @@ import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogTransactionBinding
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
 import kr.co.drgem.managingapp.models.Georaedetail
+import kr.co.drgem.managingapp.models.TempData
+import kr.co.drgem.managingapp.models.WorkResponse
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class TransactionDialog : BaseDialogFragment() {
 
@@ -28,6 +36,7 @@ class TransactionDialog : BaseDialogFragment() {
     val mSerialDataList = ArrayList<SerialLocalDB>()
 
     var viewholderCount = 0
+    lateinit var tempData: TempData
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,8 +82,29 @@ class TransactionDialog : BaseDialogFragment() {
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
 
+            val inputCount = binding.edtCount.text.trim().toString()
+
+            if(georaeData.getJungyojajeyeobuHP() == "Y"){
+                val serialData = SerialManageUtil.getSerialStringByPummokCode(georaeData.getPummokcodeHP())
+                    .toString()
+                if(inputCount.toInt() != serialData.split(",").size){
+
+                    Log.d("yj", "inputCount : ${inputCount.toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
+
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
+                        .setNegativeButton("확인", null)
+                        .show()
+
+                    SerialManageUtil.clearData()
+                    return@setOnClickListener
+                }
+            }
+
+            georaeData.setPummokCount(inputCount)
             saveDoneDialog()
             dismiss()
+
         }
 
         binding.btnCancel.setOnClickListener {
@@ -90,10 +120,164 @@ class TransactionDialog : BaseDialogFragment() {
 
         }
 
+        binding.btnOk.setOnClickListener {
+
+            val inputCount = binding.edtCount.text.trim().toString()
+
+
+            try {
+                viewholderCount = inputCount.toInt()
+                if (viewholderCount <= 0 ) {
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("수량을 입력해 주세요.")
+                        .setNegativeButton("확인", null)
+                        .show()
+
+                    return@setOnClickListener
+                }
+
+            } catch (e: Exception) {
+                AlertDialog.Builder(requireContext())
+                    .setMessage("수량을 입력해 주세요.")
+                    .setNegativeButton("확인", null)
+                    .show()
+
+                return@setOnClickListener
+            }
+
+
+            if (georaeData.jungyojajeyeobu == "Y") {
+                adapterSet()
+            }
+
+            val tempMap = hashMapOf(
+                "requesttype" to "08003",
+                "saeopjangcode" to tempData.saeopjangcode,
+                "changgocode" to tempData.changgocode,
+                "pummokcode" to georaeData.getPummokcodeHP(),
+                "suryang" to inputCount,
+                "yocheongbeonho" to georaeData.getBaljubeonhoHP(),
+                "ipchulgubun" to "1",
+                "seq" to tempData.seq,
+                "tablet_ip" to IPUtil.getIpAddress(),
+                "sawoncode" to tempData.sawoncode,
+                "status" to "333",
+            )
+
+            Log.d("yj", "tempMap : $tempMap")
+
+            apiList.postRequestTempExtantstock(tempMap).enqueue(object :
+                Callback<WorkResponse> {
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    Log.d("yj", "현재고임시등록 code : ${response.body()?.resultcd}")
+                    Log.d("yj", "현재고임시등록 msg : ${response.body()?.resultmsg}")
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "현재고임시등록")
+                }
+
+            })
+            binding.btnAdd.isEnabled = true
+
+        }
+
+
+        binding.edtPummokcode.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            val inputPummokCode = binding.edtPummokcode.text.toString()
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.edtPummokcode.onEditorAction(5)
+
+                    if (georaeData.getPummokcodeHP() == inputPummokCode) {
+                        binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
+                        binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
+                        binding.btnOk.isVisible = true
+                        binding.layoutCount.isVisible = true
+                        binding.edtCount.requestFocus()
+
+
+                    } else {
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("품목코드가 일치하지 않습니다..")
+                            .setNegativeButton("확인", null)
+                            .show()
+                    }
+
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+        binding.edtCount.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.edtCount.onEditorAction(5)
+                    binding.btnOk.callOnClick()
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+
+
     }
 
     override fun setValues() {
 
+
+        binding.baljubeonho.text = georaeData.getBaljubeonhoHP()
+        binding.pummokcode.text = georaeData.getPummokcodeHP()
+        binding.pummyeong.text = georaeData.getPummyeongHP()
+        binding.dobeonModel.text = georaeData.getDobeonModelHP()
+        binding.sayang.text = georaeData.getsayangHP()
+        binding.balhudanwi.text = georaeData.getBalhudanwiHP()
+        binding.seq.text = georaeData.getSeqHP()
+        binding.jungyojajeyeobu.text = georaeData.getJungyojajeyeobuHP()
+        binding.location.text = georaeData.getLocationHP()
+        binding.ipgoyejeongil.text = "-"
+        binding.baljusuryang.text = georaeData.getBaljusuryangHP()
+        binding.ipgosuryang.text = viewholderCount.toString()
+        if (georaeData.getJungyojajeyeobuHP() == "Y") {
+            binding.txtSerial.isVisible = true
+
+            binding.edtPummokcode.setText("")
+            binding.edtCount.setText("")
+
+
+            if (georaeData.getPummokCount() != "0") {
+
+                binding.edtPummokcode.setText(georaeData.getPummokcodeHP())
+                Log.d(
+                    "yj",
+                    "data.pummokCount : ${georaeData.getPummokcodeHP()} : edtPummokCode ${binding.edtPummokcode}"
+                )
+                binding.edtCount.setText(georaeData.getPummokCount())
+
+                binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
+                binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
+                binding.btnOk.isVisible = true
+                binding.layoutCount.isVisible = true
+
+
+                adapterSet()
+
+
+            }
+        }
+    }
+
+    fun adapterSet(){
         var itemCount = 0
 
         val serialData = SerialManageUtil.getSerialStringByPummokCode(georaeData.getPummokcodeHP())
@@ -140,25 +324,12 @@ class TransactionDialog : BaseDialogFragment() {
 
         val mAdapter = DialogEditTranAdapter(itemCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
-
-        binding.baljubeonho.text = georaeData.getBaljubeonhoHP()
-        binding.pummokcode.text = georaeData.getPummokcodeHP()
-        binding.pummyeong.text = georaeData.getPummyeongHP()
-        binding.dobeonModel.text = georaeData.getDobeonModelHP()
-        binding.sayang.text = georaeData.getsayangHP()
-        binding.balhudanwi.text = georaeData.getBalhudanwiHP()
-        binding.seq.text = georaeData.getSeqHP()
-        binding.jungyojajeyeobu.text = georaeData.getJungyojajeyeobuHP()
-        binding.location.text = georaeData.getLocationHP()
-        binding.ipgoyejeongil.text = "-"
-        binding.baljusuryang.text = georaeData.getBaljusuryangHP()
-        binding.ipgosuryang.text = viewholderCount.toString()
-
     }
 
-    fun setCount(count: Int, data: Georaedetail) {
-        viewholderCount = count
+    fun setCount(data: Georaedetail, tempData: TempData) {
         georaeData = data
+        this.tempData = tempData
+
 
     }
 

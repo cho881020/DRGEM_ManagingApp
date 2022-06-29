@@ -94,28 +94,18 @@
             android:textSize="12dp"
             android:textColor="@color/black" />
 
-
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/ipgosuryang"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            tools:text="3"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/ipgosuryang"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:maxLines="1"
-                android:inputType="number"
-                tools:text="1"
-                android:selectAllOnFocus="true"
-                android:imeOptions="actionNext"
-                android:textSize="12dp"
-                android:gravity="center"
-                android:background="@drawable/light_gray_box"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layoutEdit"

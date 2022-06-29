@@ -49,7 +49,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     var calDate = ""
     lateinit var tranData: TranResponse
 
-    val dialogEdit = TransactionDialog()
     val loadingDialog = LoadingDialogFragment()
 
     var SEQ = ""
@@ -398,7 +397,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
             tranData.returnGeoraedetail().forEach {
 
-                if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
+                if (it.getPummokCount() == "0" || it.getPummokCount() == null) {
                     return@forEach
                 }
 
@@ -410,7 +409,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 if (it.getJungyojajeyeobuHP() == "Y") {
                     val serialSize = serialData.trim().split(",").size
 
-                    if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                    if (serialSize.toString() != it.getPummokCount() || serialData == "null") {
                         countSerialDialog()
                         it.serialCheck = true
                         mAdapter.notifyDataSetChanged()
@@ -429,7 +428,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                 tranData.returnGeoraedetail().forEach {
 
-                    if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
+                    if (it.getPummokCount() == "0" || it.getPummokCount() == null) {
                         return@forEach
                     }
 
@@ -460,7 +459,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                             it.getBaljubeonhoHP(),
                             it.getSeqHP(),
                             it.getPummokcodeHP(),
-                            it.getSerialCount(),
+                            it.getPummokCount(),
                             it.getJungyojajeyeobuHP(),
                             serialData
                         ).toJsonObject()                            // JSONObject로 제작
@@ -660,9 +659,11 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     }
 
 
-    override fun onClickedEdit(count: Int, data: Georaedetail) {
+    override fun onClickedEdit(data: Georaedetail) {
+
+        val dialogEdit = TransactionDialog()
         dialogEdit.show(supportFragmentManager, "dialog")
-        dialogEdit.setCount(count, data)
+        dialogEdit.setCount(data, setTempData())
 
     }
 
@@ -684,6 +685,10 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     override fun onDismiss(p0: DialogInterface?) {
         mAdapter.notifyDataSetChanged()             // 어댑터 데이터 변경 (시리얼이 담긴 리스트 버튼 컬러 변경)
+    }
+
+    override fun onItemViewClicked(position: Int) {
+        mAdapter.onClickedView(position)
     }
 
 

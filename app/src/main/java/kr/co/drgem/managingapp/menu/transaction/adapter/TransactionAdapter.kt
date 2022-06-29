@@ -21,7 +21,7 @@ class TransactionAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is TransactionListViewHolder -> {
-                holder.bind(mList[position], tempData)
+                holder.bind(mList[position], tempData, position)
 //                Log.d("yj", "adapterTemp : $tempData")
             }
         }
@@ -42,6 +42,17 @@ class TransactionAdapter(
 
     fun setTemp(tempData: TempData) {
         this.tempData = tempData
+        notifyDataSetChanged()
+    }
+
+    fun onClickedView(position: Int){
+        mList.forEachIndexed { index, pummokdetail ->
+
+            pummokdetail.itemViewClicked = false
+            if(index == position){
+                pummokdetail.itemViewClicked = true
+            }
+        }
         notifyDataSetChanged()
     }
 

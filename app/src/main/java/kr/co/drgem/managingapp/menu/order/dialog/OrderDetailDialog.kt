@@ -7,17 +7,25 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.databinding.DialogOrderDetailBinding
 import kr.co.drgem.managingapp.localdb.SerialLocalDB
 import kr.co.drgem.managingapp.models.Baljudetail
+import kr.co.drgem.managingapp.models.TempData
+import kr.co.drgem.managingapp.models.WorkResponse
+import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.SerialManageUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class OrderDetailDialog : BaseDialogFragment() {
@@ -28,6 +36,7 @@ class OrderDetailDialog : BaseDialogFragment() {
     var viewholderCount = 0
     lateinit var baljuData: Baljudetail
     var mBaljubeonho = ""
+    lateinit var tempData: TempData
 
     val mSerialDataList = ArrayList<SerialLocalDB>()
 
@@ -87,8 +96,29 @@ class OrderDetailDialog : BaseDialogFragment() {
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
 
+            val inputCount = binding.edtCount.text.trim().toString()
+
+            if(baljuData.getJungyojajeyeobuHP() == "Y"){
+                val serialData = SerialManageUtil.getSerialStringByPummokCode(baljuData.getPummokcodeHP())
+                    .toString()
+                if(inputCount.toInt() != serialData.split(",").size){
+
+                    Log.d("yj", "inputCount : ${inputCount.toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
+
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
+                        .setNegativeButton("확인", null)
+                        .show()
+
+                    SerialManageUtil.clearData()
+                    return@setOnClickListener
+                }
+            }
+
+            baljuData.setPummokCount(inputCount)
             saveDoneDialog()
             dismiss()
+
         }
 
         binding.btnCancel.setOnClickListener {
@@ -104,10 +134,164 @@ class OrderDetailDialog : BaseDialogFragment() {
 
         }
 
+        binding.btnOk.setOnClickListener {
+
+            val inputCount = binding.edtCount.text.trim().toString()
+
+
+            try {
+                viewholderCount = inputCount.toInt()
+                if (viewholderCount <= 0 ) {
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("수량을 입력해 주세요.")
+                        .setNegativeButton("확인", null)
+                        .show()
+
+                    return@setOnClickListener
+                }
+
+            } catch (e: Exception) {
+                AlertDialog.Builder(requireContext())
+                    .setMessage("수량을 입력해 주세요.")
+                    .setNegativeButton("확인", null)
+                    .show()
+
+                return@setOnClickListener
+            }
+
+
+            if (baljuData.jungyojajeyeobu == "Y") {
+                adapterSet()
+            }
+
+            val tempMap = hashMapOf(
+                "requesttype" to "08003",
+                "saeopjangcode" to tempData.saeopjangcode,
+                "changgocode" to tempData.changgocode,
+                "pummokcode" to baljuData.getPummokcodeHP(),
+                "suryang" to inputCount,
+                "yocheongbeonho" to mBaljubeonho,
+                "ipchulgubun" to "1",
+                "seq" to tempData.seq,
+                "tablet_ip" to IPUtil.getIpAddress(),
+                "sawoncode" to tempData.sawoncode,
+                "status" to "333",
+            )
+
+            Log.d("yj", "tempMap : $tempMap")
+
+            apiList.postRequestTempExtantstock(tempMap).enqueue(object :
+                Callback<WorkResponse> {
+                override fun onResponse(
+                    call: Call<WorkResponse>,
+                    response: Response<WorkResponse>
+                ) {
+                    Log.d("yj", "현재고임시등록 code : ${response.body()?.resultcd}")
+                    Log.d("yj", "현재고임시등록 msg : ${response.body()?.resultmsg}")
+                }
+
+                override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
+                    Log.d("yj", "현재고임시등록")
+                }
+
+            })
+            binding.btnAdd.isEnabled = true
+
+        }
+
+
+        binding.edtPummokcode.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            val inputPummokCode = binding.edtPummokcode.text.toString()
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.edtPummokcode.onEditorAction(5)
+
+                    if (baljuData.getPummokcodeHP() == inputPummokCode) {
+                        binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
+                        binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
+                        binding.btnOk.isVisible = true
+                        binding.layoutCount.isVisible = true
+                        binding.edtCount.requestFocus()
+
+
+                    } else {
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("품목코드가 일치하지 않습니다..")
+                            .setNegativeButton("확인", null)
+                            .show()
+                    }
+
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+        binding.edtCount.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.edtCount.onEditorAction(5)
+                    binding.btnOk.callOnClick()
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+
     }
 
     override fun setValues() {
 
+        binding.baljubeonho.text = mBaljubeonho
+        binding.pummokcode.text = baljuData.getPummokcodeHP()
+        binding.pummyeong.text = baljuData.getPummyeongHP()
+        binding.dobeonModel.text = baljuData.getDobeonModelHP()
+        binding.sayang.text = baljuData.getsayangHP()
+        binding.balhudanwi.text = baljuData.getBalhudanwiHP()
+        binding.seq.text = baljuData.getSeqHP()
+        binding.jungyojajeyeobu.text = baljuData.getJungyojajeyeobuHP()
+        binding.location.text = baljuData.getLocationHP()
+        binding.ipgoyejeongil.text = baljuData.getIpgoyejeongilHP()
+        binding.baljusuryang.text = baljuData.getBaljusuryangHP()
+        binding.ipgosuryang.text = viewholderCount.toString()
+
+        if (baljuData.getJungyojajeyeobuHP() == "Y") {
+            binding.txtSerial.isVisible = true
+
+            binding.edtPummokcode.setText("")
+            binding.edtCount.setText("")
+
+
+            if (baljuData.getPummokCount() != "0") {
+
+                binding.edtPummokcode.setText(baljuData.getPummokcodeHP())
+                Log.d(
+                    "yj",
+                    "data.pummokCount : ${baljuData.getPummokcodeHP()} : edtPummokCode ${binding.edtPummokcode}"
+                )
+                binding.edtCount.setText(baljuData.getPummokCount())
+
+                binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
+                binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
+                binding.btnOk.isVisible = true
+                binding.layoutCount.isVisible = true
+
+
+                adapterSet()
+
+
+            }
+        }
+
+    }
+
+    fun adapterSet(){
         var itemCount = 0
 
         val serialData = SerialManageUtil.getSerialStringByPummokCode(baljuData.getPummokcodeHP())
@@ -155,26 +339,12 @@ class OrderDetailDialog : BaseDialogFragment() {
         mAdapter = DialogEditOrderAdapter(baljuData, itemCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
 
-        binding.baljubeonho.text = mBaljubeonho
-        binding.pummokcode.text = baljuData.getPummokcodeHP()
-        binding.pummyeong.text = baljuData.getPummyeongHP()
-        binding.dobeonModel.text = baljuData.getDobeonModelHP()
-        binding.sayang.text = baljuData.getsayangHP()
-        binding.balhudanwi.text = baljuData.getBalhudanwiHP()
-        binding.seq.text = baljuData.getSeqHP()
-        binding.jungyojajeyeobu.text = baljuData.getJungyojajeyeobuHP()
-        binding.location.text = baljuData.getLocationHP()
-        binding.ipgoyejeongil.text = baljuData.getIpgoyejeongilHP()
-        binding.baljusuryang.text = baljuData.getBaljusuryangHP()
-        binding.ipgosuryang.text = viewholderCount.toString()
-
-
     }
 
-    fun setCount(Baljubeonho: String, count: Int, data: Baljudetail) {
+    fun setCount(Baljubeonho: String, data: Baljudetail, tempData: TempData) {
         mBaljubeonho = Baljubeonho
-        viewholderCount = count
         baljuData = data
+        this.tempData = tempData
 
     }
 

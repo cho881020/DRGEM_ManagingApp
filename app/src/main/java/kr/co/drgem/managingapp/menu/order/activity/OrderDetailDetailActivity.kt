@@ -45,7 +45,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     lateinit var orderDetailData: OrderDetailResponse
 
     val loadingDialog = LoadingDialogFragment()
-    val dialog = OrderDetailDialog()
     lateinit var masterData: MasterDataResponse
     val baljuDetail = ArrayList<Baljudetail>()
     var mBaljubeonho = ""
@@ -470,7 +469,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
             orderDetailData.returnBaljudetail().forEach {
 
-                if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
+                if (it.getPummokCount() == "0" || it.getPummokCount() == null) {
                     return@forEach
                 }
 
@@ -482,7 +481,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                 if (it.getJungyojajeyeobuHP() == "Y") {
                     val serialSize = serialData.trim().split(",").size
 
-                    if (serialSize.toString() != it.getSerialCount() || serialData == "null") {
+                    if (serialSize.toString() != it.getPummokCount() || serialData == "null") {
                         countSerialDialog()
                         it.serialCheck = true
                         mAdapter.notifyDataSetChanged()
@@ -501,7 +500,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
                 orderDetailData.returnBaljudetail().forEach {
 
-                    if (it.getSerialCount() == "0" || it.getSerialCount() == null) {
+                    if (it.getPummokCount() == "0" || it.getPummokCount() == null) {
                         return@forEach
                     }
 
@@ -534,7 +533,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                         IpgodetaildetailAdd(
                             it.getSeqHP(),
                             it.getPummokcodeHP(),
-                            it.getSerialCount(),
+                            it.getPummokCount(),
                             it.getJungyojajeyeobuHP(),
                             serialData
                         ).toJsonObject()
@@ -661,9 +660,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     }
 
-    override fun onClickedEdit(count: Int, data: Baljudetail) {
+    override fun onClickedEdit(data: Baljudetail) {
 
-        dialog.setCount(mBaljubeonho, count, data)
+        val dialog = OrderDetailDialog()
+        dialog.setCount(mBaljubeonho, data, setTempData())
         dialog.show(supportFragmentManager, "EditDialog")
         supportFragmentManager.executePendingTransactions()
 
@@ -676,6 +676,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         Log.d("다이얼로그닫히면", "로그찍히나")
 
         mAdapter.notifyDataSetChanged()
+    }
+
+    override fun onItemViewClicked(position: Int) {
+        mAdapter.onClickedView(position)
     }
 
 

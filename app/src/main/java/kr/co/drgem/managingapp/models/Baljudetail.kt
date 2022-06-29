@@ -94,19 +94,21 @@ data class Baljudetail(
         return location
     }
 
-    private var SerialCount = ""
+    private var PummokCount = ""
 
-    fun setSerialCount( count : String) {
-        this.SerialCount = count
+    fun setPummokCount(count : String) {
+        this.PummokCount = count
     }
 
-    fun getSerialCount() : String {
+    fun getPummokCount() : String {
 
-        return SerialCount
+        return PummokCount
     }
 
 
     var serialCheck = false
+
+    var itemViewClicked = false
 
 
 }
