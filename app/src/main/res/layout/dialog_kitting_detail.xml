@@ -434,6 +434,7 @@
                     android:gravity="center"
                     android:layout_gravity="bottom"
                     android:text="확인"
+                    android:focusable="false"
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="14dp"
                     android:textStyle="bold"
@@ -450,12 +451,14 @@
 
 
             <TextView
+                android:id="@+id/txtSerial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="시리얼번호"
                 android:textColor="@color/color_000000"
                 android:textSize="16dp"
+                android:visibility="invisible"
                 android:textStyle="bold" />
 
 

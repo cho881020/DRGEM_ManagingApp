@@ -12,6 +12,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.view.isVisible
@@ -143,11 +144,55 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
 
             binding.suryang.setText("0")
             binding.locationAdd.setText("")
-
+            binding.edtCode.setText("")
 
         }
 
+        binding.edtCode.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.edtCode.onEditorAction(5)
+                    binding.btnFind.callOnClick()
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+        binding.suryang.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.suryang.onEditorAction(5)
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+        binding.locationAdd.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.locationAdd.onEditorAction(5)
+                    binding.btnAdd.callOnClick()
+                    return@setOnEditorActionListener true
+                }
+            }
+
+            return@setOnEditorActionListener actionId != 5
+        }
+
+
+
     }
+
+
+
+
 
     override fun setValues() {
         mAdapter = StockListAdapter(mList)
@@ -311,6 +356,8 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
                                 binding.layoutList.isVisible = true
                                 binding.btnSave.isVisible = true
 
+                                binding.edtCode.requestFocus()
+
                             }
                         }
 
@@ -440,7 +487,6 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
 
         binding.btnFind.setOnClickListener {
 
-
             inputCode = binding.edtCode.text.toString()
 
             searchCodeData = Pummokdetail("", "", "", "", "", "", "", "", "", "", "", "")
@@ -467,6 +513,8 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
 
             binding.layoutAdd.isVisible = true
             binding.layoutFind.isVisible = false
+
+            binding.suryang.requestFocus()
 
 
         }

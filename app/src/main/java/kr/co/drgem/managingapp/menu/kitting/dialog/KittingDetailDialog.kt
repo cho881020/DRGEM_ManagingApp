@@ -160,6 +160,7 @@ class KittingDetailDialog : BaseDialogFragment() {
 
 
             if (pummokData.jungyojajeyeobu == "Y") {
+                binding.txtSerial.isVisible = true
                 adapterSet()
             }
 
@@ -234,6 +235,7 @@ class KittingDetailDialog : BaseDialogFragment() {
             if (actionId == 0) {
                 if (keyEvent.action == KeyEvent.ACTION_UP) {
                     binding.edtCount.onEditorAction(5)
+                    binding.btnOk.callOnClick()
                     return@setOnEditorActionListener true
                 }
             }
