@@ -240,7 +240,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical"
-                        android:inputType="text"
+                        android:inputType="textVisiblePassword"
                         android:maxLines="1"
                         android:paddingHorizontal="7dp"
                         android:privateImeOptions="defaultInputmode=english"

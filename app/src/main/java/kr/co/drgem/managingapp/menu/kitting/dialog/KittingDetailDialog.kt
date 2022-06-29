@@ -65,6 +65,7 @@ class KittingDetailDialog : BaseDialogFragment() {
 
         binding.btnAdd.setOnClickListener {
 
+
             val contentString = StringBuilder()      //String 문자열 만들기
 
             for (data in mSerialDataList) {         //시리얼데이터 목록을 돌기 (data 변수 명으로)
@@ -88,8 +89,29 @@ class KittingDetailDialog : BaseDialogFragment() {
                 Log.d("저장하는 씨리얼스트링", contentString.toString())
             }
 
-            dismiss()
 
+            val inputCount = binding.edtCount.text.trim().toString()
+            if(pummokData.getjungyojajeyeobuHP() == "Y"){
+                val serialData = SerialManageUtil.getSerialStringByPummokCode("${pummokData.getPummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}")
+                    .toString()
+                if(inputCount.toInt() != serialData.split(",").size){
+
+                    Log.d("yj", "pummokData.getPummokCount().toInt() : ${pummokData.getPummokCount().toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
+
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
+                        .setNegativeButton("확인", null)
+                        .show()
+
+                    SerialManageUtil.clearData()
+                    return@setOnClickListener
+                }
+            }
+
+
+
+            pummokData.setPummokCount(inputCount)
+            dismiss()
 
         }
 
@@ -115,6 +137,7 @@ class KittingDetailDialog : BaseDialogFragment() {
 
             val inputCount = binding.edtCount.text.trim().toString()
 
+
             try {
                 viewholderCount = inputCount.toInt()
                 if (viewholderCount <= 0 ) {
@@ -136,8 +159,6 @@ class KittingDetailDialog : BaseDialogFragment() {
             }
 
 
-            pummokData.setPummokCount(inputCount)
-
             if (pummokData.jungyojajeyeobu == "Y") {
                 adapterSet()
             }
@@ -147,7 +168,7 @@ class KittingDetailDialog : BaseDialogFragment() {
                 "saeopjangcode" to tempData.saeopjangcode,
                 "changgocode" to tempData.changgocode,
                 "pummokcode" to pummokData.getPummokcodeHP(),
-                "suryang" to pummokData.getPummokCount(),
+                "suryang" to inputCount,
                 "yocheongbeonho" to pummokData.getyocheongbeonhoHP(),
                 "ipchulgubun" to "2",
                 "seq" to tempData.seq,
