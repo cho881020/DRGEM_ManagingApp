@@ -148,7 +148,7 @@ class OrderDetailDialog : BaseDialogFragment() {
                         Log.d("yj", "inputCount : ${inputCount.toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
 
                         AlertDialog.Builder(requireContext())
-                            .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
+                            .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다.")
                             .setNegativeButton("확인", null)
                             .show()
 

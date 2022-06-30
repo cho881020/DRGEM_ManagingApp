@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.kitting.dialog
 
+import android.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
@@ -7,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +19,6 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 ) {
     var data: List<SerialLocalDB> = listOf()
     var serialPosition = -1
-
 
     val txtNumber = itemView.findViewById<TextView>(R.id.txtNumber)
     val edtSerial = itemView.findViewById<EditText>(R.id.edtSerial)
@@ -44,10 +43,10 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         this.data = data
         this.serialPosition = position
 
+
         txtNumber.text = "${position + 1}"
 
         edtSerial.setText(data[position].serial)
-
 
         edtSerial.removeTextChangedListener(textChangeListener)
         edtSerial.addTextChangedListener(textChangeListener)
@@ -62,12 +61,36 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             if (actionId == 0) {
                 if (keyEvent.action == KeyEvent.ACTION_UP) {
 
+                    run loop@{
+                        data.forEachIndexed { index, serialLocalDB ->
+
+                            if (position == index) {
+                                return@forEachIndexed
+                            }
+                            else if (edtSerial.text.toString() == data[index].serial) {
+
+                                AlertDialog.Builder(itemView.context)
+                                    .setMessage("이미 작성 된 품목입니다.")
+                                    .setNegativeButton("확인", null)
+                                    .show()
+
+                                edtSerial.text = null
+                                edtSerial.onEditorAction(EditorInfo.IME_ACTION_DONE)
+
+                                return@loop
+                            }
+                        }
+                    }
+
                     if (data.size == position + 1) {
                         edtSerial.onEditorAction(EditorInfo.IME_ACTION_DONE)
                         edtSerial.selectAll()
-                    } else {
+                    }
+                    else {
+
                         edtSerial.onEditorAction(5)
                     }
+
 
                     return@setOnEditorActionListener true
                 }
@@ -75,8 +98,6 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
             return@setOnEditorActionListener actionId != 5
         }
-
-
 
         btnRemove.setOnClickListener {
             edtSerial.setText("")

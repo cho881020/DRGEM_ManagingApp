@@ -373,4 +373,6 @@ class KittingDetailDialog : BaseDialogFragment() {
         }
     }
 
+
+
 }
