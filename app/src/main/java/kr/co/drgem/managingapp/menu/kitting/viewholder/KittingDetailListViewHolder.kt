@@ -37,29 +37,11 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
     val seq = itemView.findViewById<TextView>(R.id.seq)
     val yocheongbeonho = itemView.findViewById<TextView>(R.id.yocheongbeonho)
 
-//    val textChangeListener = object : TextWatcher {
-//        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//        }
-//
-//        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-////            val serialCount = chulgosuryang.text.toString().trim()
-////            data?.setSerialCount(serialCount)
-//        }
-//
-//        override fun afterTextChanged(p0: Editable?) {
-//
-//        }
-//    }
 
 
     fun bind(data: Pummokdetail, tempData: TempData, position: Int) {
 
         this.data = data
-
-//        itemView.setOnClickListener {
-//            chulgosuryang.requestFocus()
-//        }
 
         Log.d("yj", "data : ${data.itemViewClicked}")
 
@@ -96,12 +78,8 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         }
 
         if (data.getPummokCount().isNullOrEmpty()) {
-
-//            if (data.chulgosuryang?.isNotEmpty() == true) {
-//                data.setSerialCount(data.getchulgosuryangHP())
-//            } else {
             data.setPummokCount("0")
-//            }
+
         }
 
 
@@ -118,15 +96,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         seq.text = "${position + 1}"
         chulgosuryang.text = data.getPummokCount()
 
-
-//        시리얼수정[뷰홀더] : 중요자재 여부 관계 없이 전부 보이기
-//
-//        if (data.jungyojajeyeobu == "Y") {
-//            layoutEdit.visibility = View.VISIBLE
-//        } else {
-//            layoutEdit.visibility = View.GONE
-//        }
-//
 
         pummyeong.setOnLongClickListener{
             AlertDialog.Builder(itemView.context)
@@ -195,106 +164,10 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 
 
 
-
-
-//        chulgosuryang.setText(data.getSerialCount())
-//
-//        chulgosuryang.removeTextChangedListener(textChangeListener)
-//        chulgosuryang.addTextChangedListener(textChangeListener)
-
-
         btnEdit.setOnClickListener {
 
-//            val inputCount = chulgosuryang.text.toString()
-//            Log.d("yj", "inputCount : $inputCount")
-//
-//            try {
-//                val count: Int = inputCount.toInt()
-//                if (count >= 1) {
-
-//                    listener.onClickedEdit(count, data)
             listener.onClickedEdit(data)
-//                } else {
-//                    AlertDialog.Builder(itemView.context)
-//                        .setMessage("수량을 입력해 주세요.")
-//                        .setNegativeButton("확인", null)
-//                        .show()
-//                }
-//
-//
-//            } catch (e: Exception) {
-//                chulgosuryang.setText("0")
-//                AlertDialog.Builder(itemView.context)
-//                    .setMessage("수량을 입력해 주세요.")
-//                    .setNegativeButton("확인", null)
-//                    .show()
-//                Log.d("yj", "키팅뷰홀더 Exception : $e")
-//            }
         }
-
-
-//        val apiList: APIList
-//        val retrofit = ServerAPI.getRetrofit(itemView.context)
-//        apiList = retrofit.create(APIList::class.java)
-//
-//        chulgosuryang.setOnFocusChangeListener { view, isFocused ->
-//
-//            if (isFocused) {
-//                itemView.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        itemView.context,
-//                        R.color.color_E0E0E0
-//                    )
-//                )
-//            }
-//
-//            if (!isFocused) {
-//
-//                itemView.setBackgroundColor(
-//                    ContextCompat.getColor(
-//                        itemView.context,
-//                        R.color.color_FFFFFF
-//                    )
-//                )
-//
-//                if (data.getSerialCount() == "") {
-//                    data.setSerialCount("0")
-//                }
-//
-//                val tempMap = hashMapOf(
-//                    "requesttype" to "08003",
-//                    "saeopjangcode" to tempData.saeopjangcode,
-//                    "changgocode" to tempData.changgocode,
-//                    "pummokcode" to data.getPummokcodeHP(),
-//                    "suryang" to data.getSerialCount(),
-//                    "yocheongbeonho" to data.getyocheongbeonhoHP(),
-//                    "ipchulgubun" to "2",
-//                    "seq" to tempData.seq,
-//                    "tablet_ip" to IPUtil.getIpAddress(),
-//                    "sawoncode" to tempData.sawoncode,
-//                    "status" to "333",
-//                )
-//
-//                Log.d("yj", "tempMap : $tempMap")
-//
-//                apiList.postRequestTempExtantstock(tempMap).enqueue(object :
-//                    Callback<WorkResponse> {
-//                    override fun onResponse(
-//                        call: Call<WorkResponse>,
-//                        response: Response<WorkResponse>
-//                    ) {
-//                        Log.d("yj", "현재고임시등록 code : ${response.body()?.resultcd}")
-//                        Log.d("yj", "현재고임시등록 msg : ${response.body()?.resultmsg}")
-//                    }
-//
-//                    override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
-//                        Log.d("yj", "현재고임시등록")
-//                    }
-//
-//                })
-//
-//            }
-//        }
 
     }
 
