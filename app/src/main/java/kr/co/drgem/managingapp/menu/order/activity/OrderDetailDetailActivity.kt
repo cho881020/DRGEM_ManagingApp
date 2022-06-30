@@ -620,6 +620,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                             Log.d("yj", "발주 작업상태취소 code : ${it.resultcd}")
                             Log.d("yj", "발주 작업상태취소 msg : ${it.resultmsg}")
 
+                            mSqliteDB.updateWorkInfo("None", "None")
+
                         }
                     }
                 }
