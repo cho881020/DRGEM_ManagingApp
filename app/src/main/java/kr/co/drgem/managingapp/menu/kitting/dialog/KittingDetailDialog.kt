@@ -278,7 +278,7 @@ class KittingDetailDialog : BaseDialogFragment() {
         binding.chulgosuryang.text = viewholderCount.toString()
         binding.jungyojajeyeobu.text = pummokData.getjungyojajeyeobuHP()
         if (pummokData.getjungyojajeyeobuHP() == "Y") {
-            binding.txtSerial.isVisible = true
+            binding.layoutSerial.isVisible = true
         }
 
         binding.edtPummokcode.setText("")

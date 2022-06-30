@@ -259,7 +259,7 @@ class TransactionDialog : BaseDialogFragment() {
         binding.baljusuryang.text = georaeData.getBaljusuryangHP()
         binding.ipgosuryang.text = viewholderCount.toString()
         if (georaeData.getJungyojajeyeobuHP() == "Y") {
-            binding.txtSerial.isVisible = true
+            binding.layoutSerial.isVisible = true
 
             binding.edtPummokcode.setText("")
             binding.edtCount.setText("")

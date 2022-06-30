@@ -276,7 +276,7 @@ class OrderDetailDialog : BaseDialogFragment() {
         binding.ipgosuryang.text = viewholderCount.toString()
 
         if (baljuData.getJungyojajeyeobuHP() == "Y") {
-            binding.txtSerial.isVisible = true
+            binding.layoutSerial.isVisible = true
 
             binding.edtPummokcode.setText("")
             binding.edtCount.setText("")
