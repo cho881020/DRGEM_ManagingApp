@@ -64,10 +64,11 @@ class KittingDetailDialog : BaseDialogFragment() {
 
         binding.btnAdd.setOnClickListener {
 
-            val inputCount = binding.edtCount.text.trim().toString()
+            var inputCount = binding.edtCount.text.trim().toString()
 
             if (inputCount.isNullOrEmpty() || inputCount == "") {
-                inputCount == "0"
+
+                inputCount = "0"
             }
 
             val tempMap = hashMapOf(
@@ -134,8 +135,10 @@ class KittingDetailDialog : BaseDialogFragment() {
                         .toString()
 
                 try {
-                    if (inputCount.toInt() != serialData.split(",").size) {
-
+                    if(inputCount == "0"){
+                        SerialManageUtil.clearData()
+                    }
+                    else if(inputCount.toInt() != serialData.split(",").size){
 
                         AlertDialog.Builder(requireContext())
                             .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
@@ -187,14 +190,14 @@ class KittingDetailDialog : BaseDialogFragment() {
 
             try {
                 viewholderCount = inputCount.toInt()
-                if (viewholderCount <= 0) {
-                    AlertDialog.Builder(requireContext())
-                        .setMessage("수량을 입력해 주세요.")
-                        .setNegativeButton("확인", null)
-                        .show()
-
-                    return@setOnClickListener
-                }
+//                if (viewholderCount <= 0) {
+//                    AlertDialog.Builder(requireContext())
+//                        .setMessage("수량을 입력해 주세요.")
+//                        .setNegativeButton("확인", null)
+//                        .show()
+//
+//                    return@setOnClickListener
+//                }
 
             } catch (e: Exception) {
                 AlertDialog.Builder(requireContext())

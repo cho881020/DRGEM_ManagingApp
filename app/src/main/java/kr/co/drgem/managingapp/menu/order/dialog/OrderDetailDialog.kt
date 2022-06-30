@@ -65,105 +65,11 @@ class OrderDetailDialog : BaseDialogFragment() {
 
         binding.btnAdd.setOnClickListener {
 
-            mSqliteDB.deletePummokcodeSerials(baljuData.getPummokcodeHP())
+            var inputCount = binding.edtCount.text.trim().toString()
 
-            val contentString = StringBuilder()
-
-            for (data in mSerialDataList) {
-
-                if (data.serial.isNotBlank()) {
-
-                    mSqliteDB.insertSerialToPummokcode(
-                        baljuData.getPummokcodeHP(),
-                        data.serial,
-                        data.position
-                    )
-
-                    contentString.append("${data.serial},")
-                }
-
+            if (inputCount.isNullOrEmpty() || inputCount == "") {
+                inputCount = "0"
             }
-            if (contentString.isNotBlank()) {
-
-                contentString.setLength(contentString.length - 1)
-
-                SerialManageUtil.putSerialStringByPummokCode(
-                    baljuData.getPummokcodeHP(),
-                    contentString.toString()
-                )
-
-                Log.d("품목코드", baljuData.getPummokcodeHP())
-                Log.d("저장하는 씨리얼스트링", contentString.toString())
-            }
-
-            val inputCount = binding.edtCount.text.trim().toString()
-
-            if(baljuData.getJungyojajeyeobuHP() == "Y"){
-                val serialData = SerialManageUtil.getSerialStringByPummokCode(baljuData.getPummokcodeHP())
-                    .toString()
-                if(inputCount.toInt() != serialData.split(",").size){
-
-                    Log.d("yj", "inputCount : ${inputCount.toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
-
-                    AlertDialog.Builder(requireContext())
-                        .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
-                        .setNegativeButton("확인", null)
-                        .show()
-
-                    SerialManageUtil.clearData()
-                    return@setOnClickListener
-                }
-            }
-
-            baljuData.setPummokCount(inputCount)
-            saveDoneDialog()
-            dismiss()
-
-        }
-
-        binding.btnCancel.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle("아직 저장하지 않은 사항이 있습니다.")
-                .setMessage("그래도 이 화면을 종료하시겠습니까?")
-                .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
-
-                    dismiss()
-                })
-                .setNegativeButton("아니오", null)
-                .show()
-
-        }
-
-        binding.btnOk.setOnClickListener {
-
-            val inputCount = binding.edtCount.text.trim().toString()
-
-
-            try {
-                viewholderCount = inputCount.toInt()
-                if (viewholderCount <= 0 ) {
-                    AlertDialog.Builder(requireContext())
-                        .setMessage("수량을 입력해 주세요.")
-                        .setNegativeButton("확인", null)
-                        .show()
-
-                    return@setOnClickListener
-                }
-
-            } catch (e: Exception) {
-                AlertDialog.Builder(requireContext())
-                    .setMessage("수량을 입력해 주세요.")
-                    .setNegativeButton("확인", null)
-                    .show()
-
-                return@setOnClickListener
-            }
-
-
-            if (baljuData.jungyojajeyeobu == "Y") {
-                adapterSet()
-            }
-
             val tempMap = hashMapOf(
                 "requesttype" to "08003",
                 "saeopjangcode" to tempData.saeopjangcode,
@@ -195,7 +101,113 @@ class OrderDetailDialog : BaseDialogFragment() {
                 }
 
             })
-            binding.btnAdd.isEnabled = true
+
+            mSqliteDB.deletePummokcodeSerials(baljuData.getPummokcodeHP())
+
+            val contentString = StringBuilder()
+
+            for (data in mSerialDataList) {
+
+                if (data.serial.isNotBlank()) {
+
+                    mSqliteDB.insertSerialToPummokcode(
+                        baljuData.getPummokcodeHP(),
+                        data.serial,
+                        data.position
+                    )
+
+                    contentString.append("${data.serial},")
+                }
+
+            }
+            if (contentString.isNotBlank()) {
+
+                contentString.setLength(contentString.length - 1)
+
+                SerialManageUtil.putSerialStringByPummokCode(
+                    baljuData.getPummokcodeHP(),
+                    contentString.toString()
+                )
+
+                Log.d("품목코드", baljuData.getPummokcodeHP())
+                Log.d("저장하는 씨리얼스트링", contentString.toString())
+            }
+
+
+
+            if(baljuData.getJungyojajeyeobuHP() == "Y"){
+                val serialData = SerialManageUtil.getSerialStringByPummokCode(baljuData.getPummokcodeHP())
+                    .toString()
+
+                try{
+                    if(inputCount == "0"){
+                        SerialManageUtil.clearData()
+                    }
+                    else if(inputCount.toInt() != serialData.split(",").size){
+
+                        Log.d("yj", "inputCount : ${inputCount.toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
+
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
+                            .setNegativeButton("확인", null)
+                            .show()
+
+                        SerialManageUtil.clearData()
+                        return@setOnClickListener
+                    }
+                }
+                catch (e: Exception) {
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("수량을 입력해 주세요.")
+                        .setNegativeButton("확인", null)
+                        .show()
+
+                    return@setOnClickListener
+                }
+
+            }
+
+            baljuData.setPummokCount(inputCount)
+            saveDoneDialog()
+            dismiss()
+
+        }
+
+        binding.btnCancel.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("아직 저장하지 않은 사항이 있습니다.")
+                .setMessage("그래도 이 화면을 종료하시겠습니까?")
+                .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
+
+                    dismiss()
+                })
+                .setNegativeButton("아니오", null)
+                .show()
+
+        }
+
+        binding.btnOk.setOnClickListener {
+
+            val inputCount = binding.edtCount.text.trim().toString()
+
+
+            try {
+                viewholderCount = inputCount.toInt()
+
+
+            } catch (e: Exception) {
+                AlertDialog.Builder(requireContext())
+                    .setMessage("수량을 입력해 주세요.")
+                    .setNegativeButton("확인", null)
+                    .show()
+
+                return@setOnClickListener
+            }
+
+
+            if (baljuData.jungyojajeyeobu == "Y") {
+                adapterSet()
+            }
 
         }
 
@@ -211,7 +223,9 @@ class OrderDetailDialog : BaseDialogFragment() {
                     if (baljuData.getPummokcodeHP() == inputPummokCode) {
                         binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
                         binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
-                        binding.btnOk.isVisible = true
+                        if (baljuData.getJungyojajeyeobuHP() == "Y") {
+                            binding.btnOk.isVisible = true
+                        }
                         binding.layoutCount.isVisible = true
                         binding.edtCount.requestFocus()
 
@@ -279,12 +293,11 @@ class OrderDetailDialog : BaseDialogFragment() {
 
                 binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
                 binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
-                binding.btnOk.isVisible = true
                 binding.layoutCount.isVisible = true
-
-
-                adapterSet()
-
+                if (baljuData.getJungyojajeyeobuHP() == "Y") {
+                    binding.btnOk.isVisible = true
+                    adapterSet()
+                }
 
             }
         }

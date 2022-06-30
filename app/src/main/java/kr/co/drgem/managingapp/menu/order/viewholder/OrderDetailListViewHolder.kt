@@ -123,7 +123,7 @@ class OrderDetailListViewHolder(
         val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())
 
 
-        if (savedSerialString != null) {
+        if (savedSerialString != null || data.getPummokCount() != "0" ) {
 
 
             btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)

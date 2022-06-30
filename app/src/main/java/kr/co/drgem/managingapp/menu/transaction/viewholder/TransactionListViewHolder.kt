@@ -127,7 +127,7 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
             SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
 
 
-        if (savedSerialString != null) {
+        if (savedSerialString != null || data.getPummokCount() != "0" ) {
 
             btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))

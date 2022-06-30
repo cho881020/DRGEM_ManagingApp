@@ -61,93 +61,10 @@ class TransactionDialog : BaseDialogFragment() {
     override fun setupEvents() {
 
         binding.btnAdd.setOnClickListener {
+            var inputCount = binding.edtCount.text.trim().toString()
 
-            val contentString = StringBuilder()     //String 문자열 만들기
-
-            for (data in mSerialDataList) {         //시리얼데이터 목록을 돌기 (data 변수 명으로)
-
-                if (data.serial.isNotBlank()) {     // data 의 시리얼이 빈값이 아닐 때
-
-                    contentString.append("${data.serial},")     // contentString 에 시리얼을 담기
-                }
-            }
-
-            if (contentString.isNotBlank()) {           // contentString 이 빈 값이 아닐 때
-
-                contentString.setLength(contentString.length - 1)           // contentString 길이를 1개 줄임 (, 때문에 빈 값을 제외)
-
-                SerialManageUtil.putSerialStringByPummokCode(georaeData.getPummokcodeHP(), contentString.toString())        // SerialManageUtil 에 값을 담기 (hashMap 형태로)
-
-                Log.d("품목코드", georaeData.getPummokcodeHP())
-                Log.d("저장하는 씨리얼스트링", contentString.toString())
-            }
-
-            val inputCount = binding.edtCount.text.trim().toString()
-
-            if(georaeData.getJungyojajeyeobuHP() == "Y"){
-                val serialData = SerialManageUtil.getSerialStringByPummokCode(georaeData.getPummokcodeHP())
-                    .toString()
-                if(inputCount.toInt() != serialData.split(",").size){
-
-                    Log.d("yj", "inputCount : ${inputCount.toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
-
-                    AlertDialog.Builder(requireContext())
-                        .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
-                        .setNegativeButton("확인", null)
-                        .show()
-
-                    SerialManageUtil.clearData()
-                    return@setOnClickListener
-                }
-            }
-
-            georaeData.setPummokCount(inputCount)
-            saveDoneDialog()
-            dismiss()
-
-        }
-
-        binding.btnCancel.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle("아직 저장하지 않은 사항이 있습니다.")
-                .setMessage("그래도 이 화면을 종료하시겠습니까?")
-                .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
-
-                    dismiss()
-                })
-                .setNegativeButton("아니오", null)
-                .show()
-
-        }
-
-        binding.btnOk.setOnClickListener {
-
-            val inputCount = binding.edtCount.text.trim().toString()
-
-
-            try {
-                viewholderCount = inputCount.toInt()
-                if (viewholderCount <= 0 ) {
-                    AlertDialog.Builder(requireContext())
-                        .setMessage("수량을 입력해 주세요.")
-                        .setNegativeButton("확인", null)
-                        .show()
-
-                    return@setOnClickListener
-                }
-
-            } catch (e: Exception) {
-                AlertDialog.Builder(requireContext())
-                    .setMessage("수량을 입력해 주세요.")
-                    .setNegativeButton("확인", null)
-                    .show()
-
-                return@setOnClickListener
-            }
-
-
-            if (georaeData.jungyojajeyeobu == "Y") {
-                adapterSet()
+            if (inputCount.isNullOrEmpty() || inputCount == "") {
+                inputCount = "0"
             }
 
             val tempMap = hashMapOf(
@@ -181,7 +98,98 @@ class TransactionDialog : BaseDialogFragment() {
                 }
 
             })
-            binding.btnAdd.isEnabled = true
+
+            val contentString = StringBuilder()     //String 문자열 만들기
+
+            for (data in mSerialDataList) {         //시리얼데이터 목록을 돌기 (data 변수 명으로)
+
+                if (data.serial.isNotBlank()) {     // data 의 시리얼이 빈값이 아닐 때
+
+                    contentString.append("${data.serial},")     // contentString 에 시리얼을 담기
+                }
+            }
+
+            if (contentString.isNotBlank()) {           // contentString 이 빈 값이 아닐 때
+
+                contentString.setLength(contentString.length - 1)           // contentString 길이를 1개 줄임 (, 때문에 빈 값을 제외)
+
+                SerialManageUtil.putSerialStringByPummokCode(georaeData.getPummokcodeHP(), contentString.toString())        // SerialManageUtil 에 값을 담기 (hashMap 형태로)
+
+                Log.d("품목코드", georaeData.getPummokcodeHP())
+                Log.d("저장하는 씨리얼스트링", contentString.toString())
+            }
+
+
+
+            if(georaeData.getJungyojajeyeobuHP() == "Y"){
+                val serialData = SerialManageUtil.getSerialStringByPummokCode(georaeData.getPummokcodeHP())
+                    .toString()
+                try{
+                    if(inputCount == "0"){
+                        SerialManageUtil.clearData()
+                    }
+                    else if(inputCount.toInt() != serialData.split(",").size){
+
+                        Log.d("yj", "inputCount : ${inputCount.toInt()} , serialData.split(\",\").size) : ${serialData.split(",").size}")
+
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("입력 수량과 시리얼번호 수량이 일치하지 않습니다..")
+                            .setNegativeButton("확인", null)
+                            .show()
+
+                        SerialManageUtil.clearData()
+                        return@setOnClickListener
+                    }
+                }catch (e: Exception) {
+                    AlertDialog.Builder(requireContext())
+                        .setMessage("수량을 입력해 주세요.")
+                        .setNegativeButton("확인", null)
+                        .show()
+
+                    return@setOnClickListener
+                }
+
+            }
+
+            georaeData.setPummokCount(inputCount)
+            saveDoneDialog()
+            dismiss()
+
+        }
+
+        binding.btnCancel.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("아직 저장하지 않은 사항이 있습니다.")
+                .setMessage("그래도 이 화면을 종료하시겠습니까?")
+                .setNeutralButton("예", DialogInterface.OnClickListener { dialog, which ->
+
+                    dismiss()
+                })
+                .setNegativeButton("아니오", null)
+                .show()
+
+        }
+
+        binding.btnOk.setOnClickListener {
+
+            val inputCount = binding.edtCount.text.trim().toString()
+
+
+            try {
+                viewholderCount = inputCount.toInt()
+                
+            } catch (e: Exception) {
+                AlertDialog.Builder(requireContext())
+                    .setMessage("수량을 입력해 주세요.")
+                    .setNegativeButton("확인", null)
+                    .show()
+
+                return@setOnClickListener
+            }
+
+            if (georaeData.jungyojajeyeobu == "Y") {
+                adapterSet()
+            }
 
         }
 
@@ -197,7 +205,9 @@ class TransactionDialog : BaseDialogFragment() {
                     if (georaeData.getPummokcodeHP() == inputPummokCode) {
                         binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
                         binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
-                        binding.btnOk.isVisible = true
+                        if (georaeData.getJungyojajeyeobuHP() == "Y") {
+                            binding.btnOk.isVisible = true
+                        }
                         binding.layoutCount.isVisible = true
                         binding.edtCount.requestFocus()
 
@@ -266,12 +276,11 @@ class TransactionDialog : BaseDialogFragment() {
 
                 binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
                 binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
-                binding.btnOk.isVisible = true
                 binding.layoutCount.isVisible = true
-
-
-                adapterSet()
-
+                if (georaeData.getJungyojajeyeobuHP() == "Y") {
+                    binding.btnOk.isVisible = true
+                    adapterSet()
+                }
 
             }
         }
