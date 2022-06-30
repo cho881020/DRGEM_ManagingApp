@@ -76,7 +76,13 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
 
         setupEvents()
-        getRequestOrderDetail()
+        if (intent.getBooleanExtra("byLocalDB", false)) {
+            setOrderDataByLocalDB()
+        }
+        else {
+            getRequestOrderDetail()
+        }
+
         postRequestOrderDetail()
         sort()
         spinnerSet()
@@ -427,6 +433,8 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         val savedOrderDetailList = mSqliteDB.getSavedOrderDetail()
         orderDetailData = savedOrderDetailList[0]
+        setValues()
+
         baljuDetail.clear()
 
         for (detail in orderDetailData.returnBaljudetail()) {

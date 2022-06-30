@@ -8,7 +8,9 @@
 package kr.co.drgem.managingapp.menu.order.activity
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -233,6 +235,14 @@ class OrderActivity : BaseActivity() {
 
         lastWorkSEQ?.let {
             getAllBaljubeonhoInLocalDB()
+
+
+            val orderData = mSqliteDB.getSavedOrderDetail()[0]
+            val myIntent = Intent(mContext, OrderDetailDetailActivity::class.java)
+            myIntent.putExtra("baljubeonho", orderData.baljubeonho)
+            myIntent.putExtra("seq", mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER)
+            myIntent.putExtra("byLocalDB", true)
+            startActivity(myIntent)
         }
 
     }
