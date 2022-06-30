@@ -1,5 +1,6 @@
 package kr.co.drgem.managingapp.menu.order.dialog
 
+import android.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -58,6 +59,27 @@ class OrderSerialListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
 
             if (actionId == 0) {
                 if (keyEvent.action == KeyEvent.ACTION_UP) {
+
+                    run loop@{
+                        data.forEachIndexed { index, serialLocalDB ->
+
+                            if (position == index) {
+                                return@forEachIndexed
+                            }
+                            else if (edtSerial.text.toString() == data[index].serial) {
+
+                                AlertDialog.Builder(itemView.context)
+                                    .setMessage("이미 작성 된 시리얼번호 입니다.")
+                                    .setNegativeButton("확인", null)
+                                    .show()
+
+                                edtSerial.text = null
+                                edtSerial.onEditorAction(EditorInfo.IME_ACTION_DONE)
+
+                                return@setOnEditorActionListener true
+                            }
+                        }
+                    }
 
                     if (data.size == position + 1) {
                         edtSerial.onEditorAction(EditorInfo.IME_ACTION_DONE)

@@ -213,9 +213,10 @@ class NotDeliveryDialog : BaseDialogFragment() {
 
                     } else {
                         AlertDialog.Builder(requireContext())
-                            .setMessage("품목코드가 일치하지 않습니다..")
+                            .setMessage("품목코드가 일치하지 않습니다.")
                             .setNegativeButton("확인", null)
                             .show()
+                        binding.edtPummokcode.requestFocus()
                     }
 
                     return@setOnEditorActionListener true

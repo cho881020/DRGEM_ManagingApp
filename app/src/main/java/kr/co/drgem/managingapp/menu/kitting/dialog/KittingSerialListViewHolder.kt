@@ -70,7 +70,7 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
                             else if (edtSerial.text.toString() == data[index].serial) {
 
                                 AlertDialog.Builder(itemView.context)
-                                    .setMessage("이미 작성 된 품목입니다.")
+                                    .setMessage("이미 된 시리얼번호 입니다.")
                                     .setNegativeButton("확인", null)
                                     .show()
 
