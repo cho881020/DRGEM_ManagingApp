@@ -118,6 +118,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         seq.text = "${position + 1}"
         chulgosuryang.text = data.getPummokCount()
 
+
 //        시리얼수정[뷰홀더] : 중요자재 여부 관계 없이 전부 보이기
 //
 //        if (data.jungyojajeyeobu == "Y") {
@@ -175,7 +176,13 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
-            btnEdit.text = "수량입력"
+            if(data.getjungyojajeyeobuHP() == "Y"){
+                btnEdit.text = "정보입력"
+            }
+            else{
+                btnEdit.text = "수량입력"
+            }
+
         }
 
 

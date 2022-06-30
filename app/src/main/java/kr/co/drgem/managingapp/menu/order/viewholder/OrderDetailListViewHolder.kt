@@ -133,7 +133,12 @@ class OrderDetailListViewHolder(
 
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(mContext.resources.getColor(R.color.color_9A9A9A))
-            btnEdit.text = "수량입력"
+            if(data.getJungyojajeyeobuHP() == "Y"){
+                btnEdit.text = "정보입력"
+            }
+            else{
+                btnEdit.text = "수량입력"
+            }
 
         }
 
