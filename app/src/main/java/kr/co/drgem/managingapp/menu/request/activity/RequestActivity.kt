@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -21,10 +22,8 @@ import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityRequestBinding
 import kr.co.drgem.managingapp.menu.request.adapter.RequestListAdapter
-import kr.co.drgem.managingapp.models.Detailcode
-import kr.co.drgem.managingapp.models.MasterDataResponse
-import kr.co.drgem.managingapp.models.RequestResponse
-import kr.co.drgem.managingapp.models.Yocheongdetail
+import kr.co.drgem.managingapp.models.*
+import kr.co.drgem.managingapp.utils.SawonDataManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,6 +49,7 @@ class RequestActivity : BaseActivity() {
 
         setupEvents()
         spinnerSet()
+        completeTextView()
 
     }
 
@@ -125,24 +125,13 @@ class RequestActivity : BaseActivity() {
 
         }
 
-
-
-
-        binding.btnNameRemove.setOnClickListener {
-            binding.edtName.text = null
-        }
-
-
         //    요청번호요청
         binding.btnFind.setOnClickListener {
 
             loadingDialog.show(supportFragmentManager, null)
 
-            var yocheongja = binding.edtName.text.toString()
+            val yocheongja = binding.autoCompleteTextView.text.toString()
 
-            if(binding.edtName.text.toString().isEmpty()){
-                yocheongja = ""
-            }
 
             setDate = "$txtCalStart ~ $txtCalEnd"
 
@@ -208,9 +197,6 @@ class RequestActivity : BaseActivity() {
 
     }
 
-    fun getRequestRequest(){
-
-    }
 
     fun spinnerSet() {
         val masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
@@ -291,5 +277,27 @@ class RequestActivity : BaseActivity() {
 
     }
 
+    private fun completeTextView(){
+
+        val sawonmyeongList = ArrayList<String>()
+        var sawonData = ArrayList<SawonData>()
+
+        SawonDataManager.getSawonData()?.let{
+            sawonData = it.sawon
+        }
+
+        sawonData.forEach {
+            sawonmyeongList.add(it.sawonmyeong)
+        }
+
+        val autoCompleteTextView = binding.autoCompleteTextView
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
+
+        autoCompleteTextView.setAdapter(adapter)
+
+    }
+
 
 }
+

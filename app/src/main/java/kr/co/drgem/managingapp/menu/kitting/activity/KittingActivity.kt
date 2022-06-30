@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -23,6 +24,8 @@ import kr.co.drgem.managingapp.databinding.ActivityKittingBinding
 import kr.co.drgem.managingapp.menu.kitting.adapter.KittingListAdapter
 import kr.co.drgem.managingapp.models.Detailcode
 import kr.co.drgem.managingapp.models.KittingResponse
+import kr.co.drgem.managingapp.models.SawonData
+import kr.co.drgem.managingapp.utils.SawonDataManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,6 +50,8 @@ class KittingActivity : BaseActivity() {
 
         setupEvents()
         getRequestKitting()
+        completeTextView()
+
     }
 
     override fun setupEvents() {
@@ -116,10 +121,6 @@ class KittingActivity : BaseActivity() {
         }
 
 
-        binding.btnKittingjaRemove.setOnClickListener {
-            binding.edtKittingja.text = null
-        }
-
         val changgoList = ArrayList<Detailcode>()
         changgoList.add(Detailcode("", "전체"))
         changgoList.add(Detailcode("2001", "자재창고1"))
@@ -157,11 +158,10 @@ class KittingActivity : BaseActivity() {
     fun getRequestKitting() {
         binding.btnFind.setOnClickListener {
 
+            val kittingja = binding.autoCompleteTextView.text.toString()
             loadingDialog.show(supportFragmentManager, null)
 
-            val inputKittingja = binding.edtKittingja.text.toString()
-
-            apiList.getRequestKittingNumber("02501", calStart, calEnd, inputKittingja, changgocode)
+            apiList.getRequestKittingNumber("02501", calStart, calEnd, kittingja, changgocode)
                 .enqueue(object :
                     Callback<KittingResponse> {
                     override fun onResponse(
@@ -197,6 +197,27 @@ class KittingActivity : BaseActivity() {
                 })
 
         }
+    }
+
+    private fun completeTextView(){
+
+        val sawonmyeongList = ArrayList<String>()
+        var sawonData = ArrayList<SawonData>()
+
+        SawonDataManager.getSawonData()?.let{
+            sawonData = it.sawon
+        }
+
+        sawonData.forEach {
+            sawonmyeongList.add(it.sawonmyeong)
+        }
+
+        val autoCompleteTextView = binding.autoCompleteTextView
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
+
+        autoCompleteTextView.setAdapter(adapter)
+
     }
 
     override fun setValues() {

@@ -84,7 +84,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         spinnerSetIn()
         spinnerSetOut()
         completeTextView()
-
+        completeYocheongja()
     }
 
 
@@ -175,9 +175,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         }
 
-        binding.btnNameRemove.setOnClickListener {
-            binding.edtName.text = null
-        }
 
         binding.btnCodeRemove.setOnClickListener {
             binding.edtCode.text = null
@@ -254,10 +251,10 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     //    미출고명세요청
     fun getRequestNotDelivery() {
 
-        val yocheongja = binding.edtName.text.toString()
+        val yocheongja = binding.autoCompleteYocheongja.text.toString()
         val yocheongpummok = binding.edtCode.text.toString()
 
-
+        Log.d("yj", "미출 yocheongja : $yocheongja , yocheongpummok : $yocheongpummok")
         apiList.getRequestNotDeliveryDetail(
             "02071",
             calStart,
@@ -858,6 +855,26 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
 
         autoCompleteTextView.setAdapter(adapter)
+
+    }
+
+    private fun completeYocheongja(){
+
+        val sawonmyeongList = ArrayList<String>()
+
+        SawonDataManager.getSawonData()?.let{
+            sawonData = it.sawon
+        }
+
+        sawonData.forEach {
+            sawonmyeongList.add(it.sawonmyeong)
+        }
+
+        val autoCompleteYocheongja = binding.autoCompleteYocheongja
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
+
+        autoCompleteYocheongja.setAdapter(adapter)
 
     }
 
