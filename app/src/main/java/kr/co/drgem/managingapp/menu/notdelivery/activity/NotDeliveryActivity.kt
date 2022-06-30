@@ -419,8 +419,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                                             status = "111"
                                             SerialManageUtil.clearData()
-
-                                            mAdapter.notifyDataSetChanged()
+                                            mAdapter.clearList()
                                             saveDoneDialog()
 
                                         } else {

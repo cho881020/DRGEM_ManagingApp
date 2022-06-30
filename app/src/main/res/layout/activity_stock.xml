@@ -242,6 +242,7 @@
                         android:gravity="center_vertical"
                         android:inputType="textVisiblePassword"
                         android:maxLines="1"
+                        android:selectAllOnFocus="true"
                         android:paddingHorizontal="7dp"
                         android:privateImeOptions="defaultInputmode=english"
                         android:textColor="@color/color_000000"

@@ -499,7 +499,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                                             status = "111"
                                             SerialManageUtil.clearData()
-                                            mAdapter.notifyDataSetChanged()
+                                            mAdapter.clearList()
                                             saveDoneDialog()
 
                                         } else {

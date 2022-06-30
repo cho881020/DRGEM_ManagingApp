@@ -127,20 +127,21 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
             }
 
 
-            mList.forEach {
-                if (it.pummokcode == searchCodeData.pummokcode) {
-
-                    AlertDialog.Builder(mContext)
-                        .setMessage("이미 작성 된 품목입니다.")
-                        .setNegativeButton("확인", null)
-                        .show()
-
-                    binding.layoutAdd.isVisible = false
-                    binding.layoutFind.isVisible = true
-                    return@setOnClickListener
-
-                }
-            }
+//            중복허용
+//            mList.forEach {
+//                if (it.pummokcode == searchCodeData.pummokcode) {
+//
+//                    AlertDialog.Builder(mContext)
+//                        .setMessage("이미 작성 된 품목입니다.")
+//                        .setNegativeButton("확인", null)
+//                        .show()
+//
+//                    binding.layoutAdd.isVisible = false
+//                    binding.layoutFind.isVisible = true
+//                    return@setOnClickListener
+//
+//                }
+//            }
 
             mList.addAll(listOf(searchCodeData))
 
@@ -516,6 +517,8 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
 
             if (searchCodeData.pummokcode == "") {
                 searchZeroDialog()
+                binding.edtCode.requestFocus()
+                binding.edtCode.selectAll()
                 return@setOnClickListener
             }
 

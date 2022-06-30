@@ -171,7 +171,12 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 
             btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
-            btnEdit.text = "*수정하기"
+            if(data.getjungyojajeyeobuHP() == "Y"){
+                btnEdit.text = "*정보입력"
+            }
+            else{
+                btnEdit.text = "*수량입력"
+            }
         } else {
 
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
