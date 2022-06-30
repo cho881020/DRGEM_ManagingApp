@@ -236,7 +236,7 @@ class SQLiteDB {
         values.put("WORKNUMBER", "None")
         values.put("TABLETIPNUMBER", IPUtil.getIpAddress())
         values.put("WORK_DATE", "TEMP")
-        values.put("WORK_STATE", "TEMP")
+        values.put("WORK_STATE", "000")
 
         db.insert("LOGIN_WORK_COMMON", null, values)
 
@@ -429,9 +429,9 @@ class SQLiteDB {
     }
 
 
-    fun updateWorkInfo(workType: String, workSEQ: String) {
+    fun updateWorkInfo(workType: String, workSEQ: String, status: String) {
         val query =
-            "UPDATE LOGIN_WORK_COMMON SET WORKGUBUN='${workType}', WORKNUMBER = '${workSEQ}'"
+            "UPDATE LOGIN_WORK_COMMON SET WORKGUBUN='${workType}', WORKNUMBER = '${workSEQ}', WORK_STATE = '${status}'"
         db.execSQL(query)
     }
 

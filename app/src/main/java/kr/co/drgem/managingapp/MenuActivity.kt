@@ -40,7 +40,7 @@ class MenuActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu)
 
         getRequestMasterCode()
-        getRequestMasterSawon()
+//        마스터 끝나고 => 사원코드 끝나고 => 복구모두로 넘어갈지 체크
 
         setupEvents()
         setValues()
@@ -114,6 +114,9 @@ class MenuActivity : BaseActivity() {
         val userName = mSqliteDB.getAllLoginWorkCommon()[0].USERNAME
         binding.sawonmyeong.text = "$userName 님"
 
+        
+
+
     }
 
     fun getRequestMasterCode() {
@@ -130,6 +133,7 @@ class MenuActivity : BaseActivity() {
                         MainDataManager.setMainData(it)
                         Log.d("yj", "masterDataResponse : $it")
 
+                        getRequestMasterSawon()
                     }
                 }
             }
@@ -151,6 +155,7 @@ class MenuActivity : BaseActivity() {
                 if(response.isSuccessful){
                     response.body()?.let{
                         SawonDataManager.setSawonData(it)
+                        checkRecovery()
                     }
                 }
             }
@@ -161,6 +166,22 @@ class MenuActivity : BaseActivity() {
 
 
         })
+    }
+
+    fun checkRecovery() {
+        val workType = intent.getStringExtra("workType")
+        workType?.let {
+            when (workType) {
+                "02" -> {
+                    val myIntent = Intent(mContext, OrderActivity::class.java)
+                    myIntent.putExtra("masterData", masterData)
+                    myIntent.putExtra("lastWorkSEQ", mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER)
+                    startActivity(myIntent)
+                }
+            }
+
+        }
+
     }
 
 }

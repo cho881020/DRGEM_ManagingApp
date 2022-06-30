@@ -229,6 +229,12 @@ class OrderActivity : BaseActivity() {
         mOrderAdapter = OrderListAdapter(baljuList)
         binding.recyclerView.adapter = mOrderAdapter
 
+        val lastWorkSEQ = intent.getStringExtra("lastWorkSEQ")
+
+        lastWorkSEQ?.let {
+            getAllBaljubeonhoInLocalDB()
+        }
+
     }
 
     fun setBaljubeonhoListData() {
