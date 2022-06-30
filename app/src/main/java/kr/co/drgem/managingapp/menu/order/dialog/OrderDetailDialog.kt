@@ -307,31 +307,17 @@ class OrderDetailDialog : BaseDialogFragment() {
     }
 
     fun adapterSet(){
-        var itemCount = 0
 
         val serialData = SerialManageUtil.getSerialStringByPummokCode(baljuData.getPummokcodeHP())
             .toString()
         val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
 
 
-        if (serialList.size > viewholderCount) {
-            itemCount = serialList.size
-        } else if (serialList.size < viewholderCount) {
-            itemCount = viewholderCount
-        } else {
-            itemCount = viewholderCount
-        }
-
-
-        /**
-         *  serial데이터가 있다면, 시리얼을 목록에 담고,
-         *  없다면 그때 빈값으로 만들 수 있도록
-         */
 
         mSerialDataList.clear()
 
 
-        for (i in 0 until itemCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+        for (i in 0 until viewholderCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
 
             var serial = ""
 
@@ -351,7 +337,7 @@ class OrderDetailDialog : BaseDialogFragment() {
         }
 
 
-        mAdapter = DialogEditOrderAdapter(baljuData, itemCount, mSerialDataList)
+        mAdapter = DialogEditOrderAdapter(baljuData, viewholderCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
 
     }

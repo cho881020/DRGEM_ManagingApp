@@ -285,25 +285,16 @@ class RequestDetailDialog : BaseDialogFragment() {
     }
 
     fun adapterSet(){
-        var itemCount = 0
 
         val serialData = SerialManageUtil.getSerialStringByPummokCode(pummokData.getPummokcodeHP())
             .toString()
         val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
 
 
-        if (serialList.size > viewholderCount) {
-            itemCount = serialList.size
-        } else if (serialList.size < viewholderCount) {
-            itemCount = viewholderCount
-        } else {
-            itemCount = viewholderCount
-        }
-
         mSerialDataList.clear()
 
 
-        for (i in 0 until itemCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+        for (i in 0 until viewholderCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
 
             var serial = ""
 
@@ -322,7 +313,7 @@ class RequestDetailDialog : BaseDialogFragment() {
             )
         }
 
-        mAdapter = DialogEditRequestAdapter(itemCount, mSerialDataList)
+        mAdapter = DialogEditRequestAdapter(viewholderCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
     }
 

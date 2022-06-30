@@ -190,14 +190,6 @@ class KittingDetailDialog : BaseDialogFragment() {
 
             try {
                 viewholderCount = inputCount.toInt()
-//                if (viewholderCount <= 0) {
-//                    AlertDialog.Builder(requireContext())
-//                        .setMessage("수량을 입력해 주세요.")
-//                        .setNegativeButton("확인", null)
-//                        .show()
-//
-//                    return@setOnClickListener
-//                }
 
             } catch (e: Exception) {
                 AlertDialog.Builder(requireContext())
@@ -289,7 +281,6 @@ class KittingDetailDialog : BaseDialogFragment() {
 
         if (pummokData.getPummokCount() != "0") {
 
-//            binding.edtPummokcode.setText(pummokData.getPummokcodeHP())
             Log.d(
                 "yj",
                 "data.pummokCount : ${pummokData.getPummokcodeHP()} : edtPummokCode ${binding.edtPummokcode}"
@@ -312,7 +303,6 @@ class KittingDetailDialog : BaseDialogFragment() {
     }
 
     fun adapterSet() {
-        var itemCount = 0
 
         val serialData =
             SerialManageUtil.getSerialStringByPummokCode("${pummokData.getPummokcodeHP()}/${pummokData.getyocheongbeonhoHP()}")
@@ -320,19 +310,10 @@ class KittingDetailDialog : BaseDialogFragment() {
         val serialList = if (serialData != "null") serialData.split(",") else arrayListOf()
 
 
-        if (serialList.size > viewholderCount) {
-            itemCount = serialList.size
-        } else if (serialList.size < viewholderCount) {
-            itemCount = viewholderCount
-        } else {
-            itemCount = viewholderCount
-        }
-
-
         mSerialDataList.clear()
 
 
-        for (i in 0 until itemCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
+        for (i in 0 until viewholderCount) {             // 리스트를 뷰 홀더 갯수만큼 만들어서 어댑터로 보내주기
 
             var serial = ""
 
@@ -354,13 +335,12 @@ class KittingDetailDialog : BaseDialogFragment() {
         Log.d("yj", "serialList = $serialList")
 
 
-        mAdapter = DialogEditKittingAdapter(itemCount, mSerialDataList)
+        mAdapter = DialogEditKittingAdapter(viewholderCount, mSerialDataList)
         binding.recyclerView.adapter = mAdapter
     }
 
     fun setCount(kittingbeonho: String, data: Pummokdetail, tempData: TempData) {
         mKittingbeonho = kittingbeonho
-//        viewholderCount = count
         pummokData = data
         this.tempData = tempData
 
