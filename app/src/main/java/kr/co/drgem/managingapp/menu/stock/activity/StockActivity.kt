@@ -96,6 +96,14 @@ class StockActivity : BaseActivity(), DialogInterface.OnDismissListener {
 
         searchStock()
 
+        binding.btnReset.setOnClickListener {
+            binding.layoutAdd.isVisible = false
+            binding.layoutFind.isVisible = true
+
+            binding.suryang.setText("0")
+            binding.locationAdd.setText("")
+            binding.edtCode.setText("")
+        }
 
         binding.btnAdd.setOnClickListener {
 

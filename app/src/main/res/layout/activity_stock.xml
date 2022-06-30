@@ -388,7 +388,7 @@
 
                     <EditText
                         android:id="@+id/locationAdd"
-                        android:layout_width="257dp"
+                        android:layout_width="180dp"
                         android:layout_height="35dp"
                         android:layout_marginTop="3dp"
                         android:background="@drawable/light_gray_box"
@@ -415,6 +415,21 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="14dp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btnReset"
+                    android:layout_width="65dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/btn_find"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:text="초기화"
+                    android:textColor="@color/color_FFFFFF"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+
 
 
             </LinearLayout>
