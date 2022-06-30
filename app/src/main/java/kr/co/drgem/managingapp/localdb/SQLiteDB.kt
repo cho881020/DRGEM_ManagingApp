@@ -429,9 +429,9 @@ class SQLiteDB {
     }
 
 
-    fun updateWorkInfo(workStatus: String, workSEQ: String) {
+    fun updateWorkInfo(workType: String, workSEQ: String) {
         val query =
-            "UPDATE LOGIN_WORK_COMMON SET WORKGUBUN='${workStatus}', WORKNUMBER = '${workSEQ}'"
+            "UPDATE LOGIN_WORK_COMMON SET WORKGUBUN='${workType}', WORKNUMBER = '${workSEQ}'"
         db.execSQL(query)
     }
 

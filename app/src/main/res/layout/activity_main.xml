@@ -13,9 +13,11 @@
         <!--check : 그림자 확인-->
         <LinearLayout
             android:layout_width="420dp"
-            android:layout_height="420dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="265dp"
             android:gravity="center_horizontal"
+            android:paddingTop="83dp"
+            android:paddingBottom="40dp"
             android:background="@drawable/layout_login_background"
             android:orientation="vertical">
 
@@ -23,7 +25,6 @@
                 android:layout_width="168dp"
                 android:layout_height="71dp"
                 android:layout_marginHorizontal="117dp"
-                android:layout_marginTop="83dp"
                 android:src="@drawable/drgem_logo" />
 
             <EditText
@@ -76,6 +77,19 @@
                 android:gravity="center"
                 android:text="로그인"
                 android:textColor="@color/color_FFFFFF"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/btnRecovery"
+                android:layout_width="260dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="80dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_light_gray"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="작업 복구"
+                android:textColor="@color/color_9A9A9A"
                 android:textSize="14dp" />
 
 

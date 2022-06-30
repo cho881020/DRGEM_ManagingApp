@@ -74,7 +74,7 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
                                 val mSqliteDB = SQLiteDB()
                                 mSqliteDB.makeDb(dbHelper.writableDatabase)
 
-                                mSqliteDB.updateWorkInfo(it.status, it.seq)
+                                mSqliteDB.updateWorkInfo("02", it.seq)
 
                                 Log.d("yj", "SEQ : ${it.seq}")
                                 Log.d("yj", "it : $it")
