@@ -125,6 +125,15 @@ class MainActivity : BaseActivity() {
 
     override fun setValues() {
 
+        if (mSqliteDB.getAllLoginWorkCommon().size > 0) {
+            Log.d("워크구분", mSqliteDB.getAllLoginWorkCommon()[0].WORKGUBUN.toString())
+            Log.d("워크넘버", mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER.toString())
+            
+//            복구 모두 필요
+            
+        }
+
+
     }
 
     private fun md5(input: String): String {

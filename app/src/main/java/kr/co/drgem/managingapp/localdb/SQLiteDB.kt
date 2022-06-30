@@ -232,8 +232,8 @@ class SQLiteDB {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
         values.put("INPUTDATE", simpleDateFormat.format(Calendar.getInstance().time))
 
-        values.put("WORKGUBUN", "TEMP")
-        values.put("WORKNUMBER", "TEMP")
+        values.put("WORKGUBUN", "None")
+        values.put("WORKNUMBER", "None")
         values.put("TABLETIPNUMBER", IPUtil.getIpAddress())
         values.put("WORK_DATE", "TEMP")
         values.put("WORK_STATE", "TEMP")
@@ -428,6 +428,12 @@ class SQLiteDB {
         return list
     }
 
+
+    fun updateWorkInfo(workStatus: String, workSEQ: String) {
+        val query =
+            "UPDATE LOGIN_WORK_COMMON SET WORKGUBUN='${workStatus}', WORKNUMBER = '${workSEQ}'"
+        db.execSQL(query)
+    }
 
 
 }

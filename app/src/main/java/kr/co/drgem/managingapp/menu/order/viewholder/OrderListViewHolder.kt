@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.apis.APIList
 import kr.co.drgem.managingapp.apis.ServerAPI
+import kr.co.drgem.managingapp.localdb.DBHelper
+import kr.co.drgem.managingapp.localdb.SQLiteDB
 import kr.co.drgem.managingapp.menu.order.activity.OrderDetailDetailActivity
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.IPUtil
@@ -17,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
+class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.order_list_item, parent, false)
 ) {
 
@@ -67,6 +69,12 @@ class OrderListViewHolder(parent : ViewGroup) : RecyclerView.ViewHolder(
                                 myIntent.putExtra("baljubeonho", baljuData.getBaljubeonhoHP())
                                 myIntent.putExtra("seq", it.seq)
                                 itemView.context.startActivity(myIntent)
+
+                                val dbHelper = DBHelper(parent.context, "drgemdb.db", null, 1)
+                                val mSqliteDB = SQLiteDB()
+                                mSqliteDB.makeDb(dbHelper.writableDatabase)
+
+                                mSqliteDB.updateWorkInfo(it.status, it.seq)
 
                                 Log.d("yj", "SEQ : ${it.seq}")
                                 Log.d("yj", "it : $it")

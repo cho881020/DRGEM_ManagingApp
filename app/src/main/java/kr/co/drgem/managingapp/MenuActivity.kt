@@ -114,7 +114,6 @@ class MenuActivity : BaseActivity() {
         val userName = mSqliteDB.getAllLoginWorkCommon()[0].USERNAME
         binding.sawonmyeong.text = "$userName 님"
 
-
     }
 
     fun getRequestMasterCode() {

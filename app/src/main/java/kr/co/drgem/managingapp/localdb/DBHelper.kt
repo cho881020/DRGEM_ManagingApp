@@ -48,7 +48,7 @@ class DBHelper(
                 "pummokcode text," +
                 "pummyeong text," +
                 "dobeon_model text," +
-                "saying text," +
+                "sayang text," +
                 "balhudanwi text," +
                 "baljusuryang text," +
                 "ipgoyejeongil text," +
