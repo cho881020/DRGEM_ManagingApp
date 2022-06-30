@@ -257,7 +257,7 @@ class TransactionDialog : BaseDialogFragment() {
 
             if (georaeData.getPummokCount() != "0") {
 
-                binding.edtPummokcode.setText(georaeData.getPummokcodeHP())
+//                binding.edtPummokcode.setText(georaeData.getPummokcodeHP())
                 Log.d(
                     "yj",
                     "data.pummokCount : ${georaeData.getPummokcodeHP()} : edtPummokCode ${binding.edtPummokcode}"

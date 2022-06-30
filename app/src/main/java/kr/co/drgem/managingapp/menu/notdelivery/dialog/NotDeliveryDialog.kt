@@ -255,7 +255,7 @@ class NotDeliveryDialog : BaseDialogFragment() {
 
         if (pummokData.getPummokCount() != "0") {
 
-            binding.edtPummokcode.setText(pummokData.getpummokcodeHP())
+//            binding.edtPummokcode.setText(pummokData.getpummokcodeHP())
             Log.d("yj", "data.pummokCount : ${pummokData.getpummokcodeHP()} : edtPummokCode ${binding.edtPummokcode}")
             binding.edtCount.setText(pummokData.getPummokCount())
 

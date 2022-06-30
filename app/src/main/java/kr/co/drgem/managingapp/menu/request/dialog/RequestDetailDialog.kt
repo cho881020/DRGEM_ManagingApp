@@ -257,7 +257,7 @@ class RequestDetailDialog : BaseDialogFragment() {
 
         if (pummokData.getPummokCount() != "0") {
 
-            binding.edtPummokcode.setText(pummokData.getPummokcodeHP())
+//            binding.edtPummokcode.setText(pummokData.getPummokcodeHP())
             Log.d("yj", "data.pummokCount : ${pummokData.getPummokcodeHP()} : edtPummokCode ${binding.edtPummokcode}")
             binding.edtCount.setText(pummokData.getPummokCount())
 

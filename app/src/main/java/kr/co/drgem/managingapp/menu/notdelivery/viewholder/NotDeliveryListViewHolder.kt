@@ -140,7 +140,7 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
 
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
-            btnEdit.text = "정보입력"
+            btnEdit.text = "수량입력"
 
         }
 

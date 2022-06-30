@@ -687,7 +687,7 @@
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="시리얼/상세"
+                            android:text="수량/시리얼"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp"/>
 

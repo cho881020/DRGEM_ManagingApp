@@ -270,7 +270,7 @@ class OrderDetailDialog : BaseDialogFragment() {
 
             if (baljuData.getPummokCount() != "0") {
 
-                binding.edtPummokcode.setText(baljuData.getPummokcodeHP())
+//                binding.edtPummokcode.setText(baljuData.getPummokcodeHP())
                 Log.d(
                     "yj",
                     "data.pummokCount : ${baljuData.getPummokcodeHP()} : edtPummokCode ${binding.edtPummokcode}"
