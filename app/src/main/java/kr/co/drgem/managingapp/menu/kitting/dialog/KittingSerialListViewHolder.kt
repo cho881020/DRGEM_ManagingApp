@@ -77,7 +77,7 @@ class KittingSerialListViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
                                 edtSerial.text = null
                                 edtSerial.onEditorAction(EditorInfo.IME_ACTION_DONE)
 
-                                return@loop
+                                return@setOnEditorActionListener true
                             }
                         }
                     }
