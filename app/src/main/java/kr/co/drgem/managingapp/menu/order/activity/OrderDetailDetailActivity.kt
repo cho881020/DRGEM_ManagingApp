@@ -388,78 +388,79 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     //    발주명세요청
     fun getRequestOrderDetail() {
         loadingDialog.show(supportFragmentManager, null)
+        apiList.getRequestOrderDetail("02012", mBaljubeonho)
+            .enqueue(object : Callback<OrderDetailResponse> {
+                override fun onResponse(
+                    call: Call<OrderDetailResponse>,
+                    response: Response<OrderDetailResponse>
+                ) {
+
+                    response.body()?.let {
+
+                        orderDetailData = it
+                        setValues()
+
+                        baljuDetail.clear()
+                        baljuDetail.addAll(it.returnBaljudetail())
+
+                        setOrderDetailDataToUI()
+
+
+                        clearAndSaveDataToDB()
+
+                    }
+
+                    loadingDialog.dismiss()
+                }
+
+                override fun onFailure(call: Call<OrderDetailResponse>, t: Throwable) {
+                    serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
+                    loadingDialog.dismiss()
+                }
+
+            })
+
+    }
+
+    private fun setOrderDataByLocalDB() {
+
 
         val savedOrderDetailList = mSqliteDB.getSavedOrderDetail()
-        if (savedOrderDetailList.size > 0 && savedOrderDetailList[0].baljubeonho == mBaljubeonho) {
-            orderDetailData = savedOrderDetailList[0]
-            baljuDetail.clear()
+        orderDetailData = savedOrderDetailList[0]
+        baljuDetail.clear()
 
-            for (detail in orderDetailData.returnBaljudetail()) {
-                baljuDetail.add(detail)
-            }
-
-            val baljuDetailInfoLocalDB = mSqliteDB.getAllBaljuDetailInfo()[0]
-
-            var companyIndex = 0
-            masterData.getCompanyCode().forEachIndexed { index, company ->
-                if (company.code == baljuDetailInfoLocalDB.IPGOSAUPJANGCODE) {
-                    companyIndex = index
-                }
-            }
-
-            binding.spinnerCompany.setSelection(companyIndex)
-
-            var wareHouseIndex = 0
-
-            mWareHouseList.forEachIndexed { index, wareHouse ->
-
-                if (wareHouse.code == baljuDetailInfoLocalDB.IPGOCHANGGOCODE) {
-                    wareHouseIndex = index
-                }
-
-            }
-
-            binding.spinnerWareHouse.setSelection(wareHouseIndex)
-
-
-//            binding.edtName.setText(baljuDetailInfoLocalDB.IPGODAMDANGJA)
-
-            setOrderDetailDataToUI()
-        } else {
-            apiList.getRequestOrderDetail("02012", mBaljubeonho)
-                .enqueue(object : Callback<OrderDetailResponse> {
-                    override fun onResponse(
-                        call: Call<OrderDetailResponse>,
-                        response: Response<OrderDetailResponse>
-                    ) {
-
-                        response.body()?.let {
-
-                            orderDetailData = it
-                            setValues()
-
-                            baljuDetail.clear()
-                            baljuDetail.addAll(it.returnBaljudetail())
-
-                            setOrderDetailDataToUI()
-
-
-                            clearAndSaveDataToDB()
-
-                        }
-
-                        loadingDialog.dismiss()
-                    }
-
-                    override fun onFailure(call: Call<OrderDetailResponse>, t: Throwable) {
-                        serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
-                        loadingDialog.dismiss()
-                    }
-
-                })
+        for (detail in orderDetailData.returnBaljudetail()) {
+            baljuDetail.add(detail)
         }
 
+        setSpinnerDataByLocalDB()
 
+    }
+
+    private fun setSpinnerDataByLocalDB() {
+        val baljuDetailInfoLocalDB = mSqliteDB.getAllBaljuDetailInfo()[0]
+
+        var companyIndex = 0
+        masterData.getCompanyCode().forEachIndexed { index, company ->
+            if (company.code == baljuDetailInfoLocalDB.IPGOSAUPJANGCODE) {
+                companyIndex = index
+            }
+        }
+
+        binding.spinnerCompany.setSelection(companyIndex)
+
+        var wareHouseIndex = 0
+
+        mWareHouseList.forEachIndexed { index, wareHouse ->
+
+            if (wareHouse.code == baljuDetailInfoLocalDB.IPGOCHANGGOCODE) {
+                wareHouseIndex = index
+            }
+
+        }
+
+        binding.spinnerWareHouse.setSelection(wareHouseIndex)
+        setOrderDetailDataToUI()
     }
 
     //    발주대비입고등록

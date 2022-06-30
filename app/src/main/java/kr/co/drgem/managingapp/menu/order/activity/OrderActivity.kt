@@ -53,7 +53,7 @@ class OrderActivity : BaseActivity() {
 
         setupEvents()
         setValues()
-        getAllBaljubeonhoInLocalDB()
+//        getAllBaljubeonhoInLocalDB()
     }
 
     override fun setupEvents() {
