@@ -420,6 +420,7 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp"
                         android:inputType="number"
+                        android:maxLength="6"
                         tools:text="7" />
 
 

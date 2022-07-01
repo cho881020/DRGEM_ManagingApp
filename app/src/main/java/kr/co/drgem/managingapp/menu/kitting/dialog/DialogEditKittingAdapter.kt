@@ -23,7 +23,7 @@ class DialogEditKittingAdapter(
 
             }
         }
-    }
+}
 
     override fun getItemCount() = viewholderCount
 

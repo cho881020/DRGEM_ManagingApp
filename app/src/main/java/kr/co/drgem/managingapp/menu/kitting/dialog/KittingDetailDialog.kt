@@ -237,14 +237,52 @@ class KittingDetailDialog : BaseDialogFragment() {
                 }
             }
 
+            if (actionId == 5) {
+                    if (pummokData.getPummokcodeHP() == inputPummokCode) {
+                        binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)
+                        binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080))
+                        if (pummokData.getjungyojajeyeobuHP() == "Y") {
+                            binding.btnOk.isVisible = true
+                        }
+                        binding.layoutCount.isVisible = true
+                        binding.edtCount.requestFocus()
+
+                    } else {
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("품목코드가 일치하지 않습니다.")
+                            .setNegativeButton("확인", null)
+                            .show()
+
+                        binding.edtPummokcode.requestFocus()
+                    }
+                    return@setOnEditorActionListener true
+            }
+
             return@setOnEditorActionListener actionId != 5
         }
 
         binding.edtCount.setOnEditorActionListener { textView, actionId, keyEvent ->
 
             if (actionId == 0) {
+
+                // 문자 앞에 "0"등이 존재하는 것을 없앤다.// by jung 2022.07.01
+                val inputCount = binding.edtCount.text.trim().toString()
+                binding.edtCount.setText(inputCount.toInt().toString())
+                // 여기서 요청수량과 비교해서 더 크면 요청수량으로 바꾼다.  // by jung 2022.07.01
+                val i_yocheongsuryang = binding.yocheongsuryang.text.trim().toString()
+                if ( inputCount.toInt() > i_yocheongsuryang.toInt() ) {
+                    binding.edtCount.setText(binding.yocheongsuryang.text.toString())
+                }
+
                 if (keyEvent.action == KeyEvent.ACTION_UP) {
-                    binding.edtCount.onEditorAction(5)
+
+                    // 일단 수치 입력에서는 제자리에 있도록 한다.   // by jung 2022.07.01
+                    // 후에 확인 키를 누르면 다음작업으로 가도록 한다.
+                    binding.edtCount.selectAll()
+                    binding.edtCount.requestFocus()
+
+
+                    //binding.edtCount.onEditorAction(5)  // by jung 2022.07.01 원본을 막기만 한것
                     binding.btnOk.callOnClick()
                     return@setOnEditorActionListener true
                 }
@@ -317,7 +355,7 @@ class KittingDetailDialog : BaseDialogFragment() {
 
             var serial = ""
 
-            if (serialList.isNotEmpty() && serialList.size > i) {      // 시리얼리스트가 사이즈 i보다 크거나 같을 때
+            if (serialList.isNotEmpty()                                                                                                                                                                                                                                                                                                          && serialList.size > i) {      // 시리얼리스트가 사이즈 i보다 크거나 같을 때
 
                 serial = serialList[i]
 

@@ -12,7 +12,9 @@ import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.DatePicker
 import androidx.core.view.isVisible
@@ -76,6 +78,15 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     }
 
     override fun setupEvents() {
+
+        binding.edtTranNum.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == 0) {
+                if (keyEvent.action == KeyEvent.ACTION_UP) {
+                    binding.btnFind.performClick()
+                }
+            }
+            return@setOnEditorActionListener actionId != 5
+        }
 
         binding.layoutBigo.setOnClickListener {
             AlertDialog.Builder(mContext)
