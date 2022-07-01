@@ -61,6 +61,10 @@ class KittingDetailDialog : BaseDialogFragment() {
 
     override fun setupEvents() {
 
+        binding.btnCodeRemove.setOnClickListener {
+            binding.edtPummokcode.text = null
+        }
+
 
         binding.btnAdd.setOnClickListener {
 

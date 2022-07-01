@@ -368,24 +368,48 @@
                         android:text="품목코드 확인"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/edtPummokcode"
-                        android:layout_width="160dp"
-                        android:layout_height="35dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/light_gray_box"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
-                        android:inputType="textVisiblePassword"
-                        android:privateImeOptions="defaultInputmode=english"
-                        android:imeOptions="actionNext"
-                        android:selectAllOnFocus="true"
-                        android:maxLines="1"
-                        android:paddingHorizontal="7dp"
-                        android:textColor="@color/color_000000"
-                        android:textSize="12dp"
-                        tools:text="G22042600391" />
+                        <EditText
+                            android:id="@+id/edtPummokcode"
+                            android:layout_width="160dp"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/light_gray_box"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:inputType="textVisiblePassword"
+                            android:privateImeOptions="defaultInputmode=english"
+                            android:imeOptions="actionNext"
+                            android:selectAllOnFocus="true"
+                            android:maxLines="1"
+                            android:paddingHorizontal="7dp"
+                            android:textColor="@color/color_000000"
+                            android:textSize="12dp"
+                            tools:text="G22042600391" />
+
+                        <LinearLayout
+                            android:id="@+id/btnCodeRemove"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="right|center_vertical"
+                            android:focusable="false"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="7dp"
+                                android:focusable="false"
+                                android:src="@drawable/btn_x" />
+                        </LinearLayout>
+
+
+                    </FrameLayout>
+
 
 
                 </LinearLayout>
