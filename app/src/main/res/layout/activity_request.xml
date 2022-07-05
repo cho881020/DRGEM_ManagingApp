@@ -266,6 +266,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:dropDownWidth="130dp"
                         android:inputType="text"
                         android:privateImeOptions="defaultInputmode=korean"
                         android:paddingHorizontal="7dp"

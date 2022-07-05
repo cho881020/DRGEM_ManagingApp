@@ -219,7 +219,7 @@ class KittingActivity : BaseActivity() {
         }
 
         sawonData.forEach {
-            sawonmyeongList.add(it.sawonmyeong)
+            sawonmyeongList.add("${it.sawonmyeong} (${it.sawoncode})")
         }
 
         val autoCompleteTextView = binding.autoCompleteTextView

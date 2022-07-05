@@ -274,13 +274,13 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
         binding.btnSave.setOnClickListener {
             //                사원코드 가져오기
-            val selecSawon = binding.autoCompleteTextView.text.toString()
-            sawonData.forEach {
-                if(it.sawonmyeong == selecSawon){
-                    ipgodamdangjacode = it.sawoncode
-                    Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
-                }
-            }
+//            val selecSawon = binding.autoCompleteTextView.text.toString()
+//            sawonData.forEach {
+//                if(it.sawonmyeong == selecSawon){
+//                    ipgodamdangjacode = it.sawoncode
+//                    Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
+//                }
+//            }
 
             if(ipgodamdangjacode == ""){
                 ipgodamdangjacodeDialog()
@@ -696,7 +696,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         }
 
         sawonData.forEach {
-            sawonmyeongList.add(it.sawonmyeong)
+            sawonmyeongList.add("${it.sawonmyeong} (${it.sawoncode})")
         }
 
         val autoCompleteTextView = binding.autoCompleteTextView

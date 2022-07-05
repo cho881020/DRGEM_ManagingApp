@@ -305,13 +305,13 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         binding.btnSave.setOnClickListener {
 
-            val selecSawon = binding.autoCompleteTextView.text.toString()
-            sawonData.forEach {
-                if(it.sawonmyeong == selecSawon){
-                    ipgodamdangjacode = it.sawoncode
-                    Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
-                }
-            }
+//            val selecSawon = binding.autoCompleteTextView.text.toString()
+//            sawonData.forEach {
+//                if(it.sawonmyeong == selecSawon){
+//                    ipgodamdangjacode = it.sawoncode
+//                    Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
+//                }
+//            }
 
             if(ipgodamdangjacode == ""){
                 ipgodamdangjacodeDialog()
@@ -846,7 +846,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         }
 
         sawonData.forEach {
-            sawonmyeongList.add(it.sawonmyeong)
+            sawonmyeongList.add("${it.sawonmyeong} (${it.sawoncode})")
         }
 
         val autoCompleteTextView = binding.autoCompleteTextView
@@ -866,7 +866,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         }
 
         sawonData.forEach {
-            sawonmyeongList.add(it.sawonmyeong)
+            sawonmyeongList.add("${it.sawonmyeong} (${it.sawoncode})")
         }
 
         val autoCompleteYocheongja = binding.autoCompleteYocheongja
