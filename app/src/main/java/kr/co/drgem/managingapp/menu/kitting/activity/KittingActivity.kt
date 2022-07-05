@@ -57,13 +57,16 @@ class KittingActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+
         binding.autoCompleteTextView.setOnItemClickListener { adapterView, view, position, l ->
 
+            val selectedSawonString = adapterView.getItemAtPosition(position) as String
 
-            Toast.makeText(mContext, "${position}번 줄 클릭", Toast.LENGTH_SHORT).show()
+            val code = selectedSawonString.split("(")[1].replace(")","")
+
+            binding.autoCompleteTextView.setText(code)
 
         }
-
         binding.btnBack.setOnClickListener {
             finish()
         }

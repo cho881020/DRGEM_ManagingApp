@@ -91,6 +91,18 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
     override fun setupEvents() {
 
+
+        binding.autoCompleteTextView.setOnItemClickListener { adapterView, view, position, l ->
+
+            val selectedSawonString = adapterView.getItemAtPosition(position) as String
+
+            val code = selectedSawonString.split("(")[1].replace(")","")
+
+            binding.autoCompleteTextView.setText(code)
+
+            ipgodamdangjacode = code
+        }
+
         binding.btnBack.setOnClickListener {
             if(status=="333"){
                 backDialog() {

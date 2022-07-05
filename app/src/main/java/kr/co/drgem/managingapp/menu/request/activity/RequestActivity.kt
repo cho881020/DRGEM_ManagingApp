@@ -55,6 +55,16 @@ class RequestActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        binding.autoCompleteTextView.setOnItemClickListener { adapterView, view, position, l ->
+
+            val selectedSawonString = adapterView.getItemAtPosition(position) as String
+
+            val code = selectedSawonString.split("(")[1].replace(")","")
+
+            binding.autoCompleteTextView.setText(code)
+        }
+
+
         binding.btnBack.setOnClickListener {
             finish()
         }
