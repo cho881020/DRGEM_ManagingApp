@@ -282,7 +282,7 @@ class RequestActivity : BaseActivity() {
         val sawonmyeongList = ArrayList<String>()
         var sawonData = ArrayList<SawonData>()
 
-        SawonDataManager.getSawonData()?.let{
+        SawonDataManager.getSawonDataList()?.let{
             sawonData = it.sawon
         }
 

@@ -841,7 +841,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         val sawonmyeongList = ArrayList<String>()
 
-        SawonDataManager.getSawonData()?.let{
+        SawonDataManager.getSawonDataList()?.let{
             sawonData = it.sawon
         }
 
@@ -861,7 +861,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         val sawonmyeongList = ArrayList<String>()
 
-        SawonDataManager.getSawonData()?.let{
+        SawonDataManager.getSawonDataList()?.let{
             sawonData = it.sawon
         }
 

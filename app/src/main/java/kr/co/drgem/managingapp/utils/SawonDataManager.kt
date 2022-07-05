@@ -5,21 +5,20 @@ import kr.co.drgem.managingapp.models.MasterSawonResponse
 class SawonDataManager {
 
     companion object {
-        private var sawonData: MasterSawonResponse? = null
+        private var sawonDataResponse: MasterSawonResponse? = null
 
-        fun setSawonData(data: MasterSawonResponse) {
+        fun setSawonDataList(data: MasterSawonResponse) {
 
-            if (sawonData == null) {
-                sawonData = data
+            if (sawonDataResponse == null) {
+                sawonDataResponse = data
             }
 
         }
 
-        fun getSawonData(): MasterSawonResponse? {
+        fun getSawonDataList(): MasterSawonResponse? {
 
-            return sawonData
+            return sawonDataResponse
         }
-
 
     }
 

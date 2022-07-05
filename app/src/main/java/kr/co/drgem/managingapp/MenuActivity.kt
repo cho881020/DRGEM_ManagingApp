@@ -154,7 +154,7 @@ class MenuActivity : BaseActivity() {
             ) {
                 if(response.isSuccessful){
                     response.body()?.let{
-                        SawonDataManager.setSawonData(it)
+                        SawonDataManager.setSawonDataList(it)
                         checkRecovery()
                     }
                 }

@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.google.gson.JsonArray
@@ -28,11 +29,9 @@ import kr.co.drgem.managingapp.menu.kitting.adapter.KittingDetailListAdapter
 import kr.co.drgem.managingapp.menu.kitting.dialog.KittingDetailDialog
 import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.*
-import okhttp3.internal.notify
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.FieldPosition
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -103,6 +102,21 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     }
 
     override fun setupEvents() {
+
+
+        binding.autoCompleteTextView.setOnItemClickListener { adapterView, view, position, l ->
+
+            val selectedSawonString = adapterView.getItemAtPosition(position) as String
+
+            val code = selectedSawonString.split("(")[1].replace(")","")
+
+            binding.autoCompleteTextView.setText(code)
+
+            ipgodamdangjacode = code
+            
+
+
+        }
 
 
         binding.btnBack.setOnClickListener {
@@ -284,13 +298,13 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         binding.btnSave.setOnClickListener {
 
 //                사원코드 가져오기
-            val selecSawon = binding.autoCompleteTextView.text.toString()
-            sawonData.forEach {
-                if(it.sawonmyeong == selecSawon){
-                    ipgodamdangjacode = it.sawoncode
-                    Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
-                }
-            }
+//            val selecSawon = binding.autoCompleteTextView.text.toString()
+//            sawonData.forEach {
+//                if(it.sawonmyeong == selecSawon){
+//                    ipgodamdangjacode = it.sawoncode
+//                    Log.d("yj", "사원명 : $selecSawon , 사원코드 : ${it.sawoncode}")
+//                }
+//            }
 
             if(ipgodamdangjacode == ""){
                 ipgodamdangjacodeDialog()
@@ -725,12 +739,12 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         val sawonmyeongList = ArrayList<String>()
 
-        SawonDataManager.getSawonData()?.let{
+        SawonDataManager.getSawonDataList()?.let{
             sawonData = it.sawon
         }
 
         sawonData.forEach {
-            sawonmyeongList.add(it.sawonmyeong)
+            sawonmyeongList.add("${it.sawonmyeong} (${it.sawoncode})")
         }
 
         val autoCompleteTextView = binding.autoCompleteTextView

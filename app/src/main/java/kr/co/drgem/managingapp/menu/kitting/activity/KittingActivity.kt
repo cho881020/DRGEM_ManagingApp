@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.drgem.managingapp.BaseActivity
@@ -55,6 +56,13 @@ class KittingActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        binding.autoCompleteTextView.setOnItemClickListener { adapterView, view, position, l ->
+
+
+            Toast.makeText(mContext, "${position}번 줄 클릭", Toast.LENGTH_SHORT).show()
+
+        }
 
         binding.btnBack.setOnClickListener {
             finish()
@@ -151,6 +159,8 @@ class KittingActivity : BaseActivity() {
 
             }
 
+
+
     }
 
 
@@ -204,7 +214,7 @@ class KittingActivity : BaseActivity() {
         val sawonmyeongList = ArrayList<String>()
         var sawonData = ArrayList<SawonData>()
 
-        SawonDataManager.getSawonData()?.let{
+        SawonDataManager.getSawonDataList()?.let{
             sawonData = it.sawon
         }
 

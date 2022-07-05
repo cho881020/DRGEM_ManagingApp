@@ -691,7 +691,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
         val sawonmyeongList = ArrayList<String>()
 
-        SawonDataManager.getSawonData()?.let{
+        SawonDataManager.getSawonDataList()?.let{
             sawonData = it.sawon
         }
 
