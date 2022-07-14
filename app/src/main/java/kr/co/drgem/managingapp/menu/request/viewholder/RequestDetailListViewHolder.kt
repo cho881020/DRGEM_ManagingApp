@@ -1,3 +1,9 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : RequestDetailListViewHolder.kt
+ * 개 발 자 : (주)디알젬
+ * 업무기능 : 자재출고 화면으로 요청명세요청 및 요청출고등록 기능  ListViewHolder
+ */
 package kr.co.drgem.managingapp.menu.request.viewholder
 
 import android.app.AlertDialog
@@ -33,7 +39,6 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
     val gichulgosuryang = itemView.findViewById<TextView>(R.id.gichulgosuryang)
     val seq = itemView.findViewById<TextView>(R.id.seq)
     val chulgosuryang = itemView.findViewById<TextView>(R.id.chulgosuryang)
-
 
     fun bind(data: Pummokdetail, tempData: TempData, position: Int) {
 
@@ -74,8 +79,6 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             data.setPummokCount("0")
         }
 
-
-
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
         dobeon_model.text = data.getdobeon_modelHP()
@@ -87,8 +90,6 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
         gichulgosuryang.text = data.getgichulgosuryangHP()
         seq.text = "${position + 1}"
         chulgosuryang.text = data.getPummokCount()
-
-
 
         pummyeong.setOnLongClickListener {
             AlertDialog.Builder(itemView.context)
@@ -120,8 +121,6 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             false
         }
 
-
-
         val savedSerialString =
             SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
 
@@ -136,7 +135,6 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
                 btnEdit.text = "*수량입력"
             }
         } else {
-
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
             if(data.getjungyojajeyeobuHP() == "Y"){
@@ -147,14 +145,18 @@ class RequestDetailListViewHolder(parent: ViewGroup, val listener: RequestDetail
             }
         }
 
-
         btnEdit.setOnClickListener {
-
-            listener.onClickedEdit(data)
-
+            // 여기서 "요청수량-기출고수량"이 1보다 작으면 입력할 수량 없음으로 표시하고 종료
+            val sss1 = (yocheongsuryang.text.trim().toString().toInt()  // 요청수량
+                    - gichulgosuryang.text.trim().toString().toInt())  // 기출고수량
+            if (1 > sss1) {
+                AlertDialog.Builder(itemView.context)
+                    .setMessage("요청수량에서 기출고수량을 뺀 수량이 1보다 작습니다..")
+                    .setNegativeButton("확인", null)
+                    .show()
+            } else {
+                listener.onClickedEdit(data)
+            }
         }
-
-
     }
-
 }

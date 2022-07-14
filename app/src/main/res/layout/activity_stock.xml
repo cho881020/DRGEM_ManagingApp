@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--                                                  -->
+<!--    프로젝트명 : 스마트창고관리 시스템                  -->
+<!--    프로그램명 : activity_stock.xml                 -->
+<!--    개 발 자  : (주)디알젬                           -->
+<!--    업무기능  : 재고조사 메인 화면 디자인               -->
+<!--                                                  -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -35,7 +41,6 @@
 
             </LinearLayout>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
@@ -63,9 +68,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <LinearLayout
             android:id="@+id/layoutReady"
@@ -116,9 +119,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             </LinearLayout>
 
@@ -159,9 +160,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             </LinearLayout>
 
@@ -183,7 +182,6 @@
 
             </LinearLayout>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -191,7 +189,6 @@
                 android:text="재고조사 준비 완료 시 작업이 가능합니다\n (최대 10분 소요)"
                 android:textColor="@color/color_000000"
                 android:textSize="12dp" />
-
 
         </LinearLayout>
 
@@ -264,12 +261,9 @@
 
                     </LinearLayout>
 
-
                 </LinearLayout>
 
-
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/btnFind"
@@ -285,7 +279,6 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutCode"
                 app:layout_constraintStart_toEndOf="@+id/layoutCode" />
-
 
         </LinearLayout>
 
@@ -336,9 +329,7 @@
                         android:textSize="12dp"
                         tools:text="G22042600391" />
 
-
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -352,7 +343,6 @@
                         android:text="실사수량"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
-
 
                     <EditText
                         android:id="@+id/suryang"
@@ -369,9 +359,7 @@
                         android:textSize="12dp"
                         tools:text="3" />
 
-
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -430,9 +418,6 @@
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
-
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -443,8 +428,6 @@
                 android:background="@color/color_F4F4F4"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -514,7 +497,6 @@
                     android:layout_marginStart="7dp"
                     android:background="@color/color_E0E0E0" />
 
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -543,14 +525,9 @@
 
                 </LinearLayout>
 
-
-
-
             </LinearLayout>
 
-
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/layoutEmpty"
@@ -581,7 +558,6 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/layoutList"
             android:layout_width="match_parent"
@@ -593,7 +569,6 @@
             android:orientation="vertical"
             android:visibility="gone"
             tools:visibility="visible">
-
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -613,6 +588,13 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingHorizontal="10dp">
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:text="순번"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
 
                         <TextView
                             android:layout_width="100dp"
@@ -670,6 +652,12 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="작업시간"
+                            android:textColor="@color/color_808080"
+                            android:textSize="12dp" />
 
                     </LinearLayout>
 
@@ -685,14 +673,11 @@
                         android:layout_weight="1"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-
                 </LinearLayout>
 
             </HorizontalScrollView>
 
-
         </LinearLayout>
-
 
     </LinearLayout>
 </layout>

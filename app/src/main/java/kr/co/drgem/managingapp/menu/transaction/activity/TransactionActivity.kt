@@ -46,8 +46,14 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     lateinit var detailCode: Detailcode
 
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
-    var companyCode = "0001"
-    var wareHouseCode = "1001"
+    var companyCode    = "0001"
+    var wareHouseCode  = "1001"
+
+    var companyCode0   = "0001"
+    var wareHouseCode0 = "1001"
+    var CompanySel   = 0
+    var WareHouseSel = 0
+    var FirstSetSW   = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var calDate = ""
     lateinit var tranData: TranResponse
 
@@ -59,22 +65,30 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     var baljubeonho = ""
 
+    // sort의 상태를 파악하기 위한 변수
+    var onClickSeq         = 0
+    var onClickPummokcode  = 0
+    var onClickPummyeong   = 0
+    var onClickDobeonModel = 0
+    var onClickSayang      = 0
+    var onClickLocation    = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
+            companyCode0   = it.saeopjangcode.toString()  // by jung 2022.07.02
+            wareHouseCode0 = it.changgocode.toString()    // by jung 2022.07.02
         }
         binding.ipgodamdangja.text = sawonCode
-
 
         setupEvents()
         sort()
         postRequestTran()
 
         spinnerSet()
-
     }
 
     override fun setupEvents() {
@@ -96,7 +110,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 .show()
         }
 
-
         val cal = Calendar.getInstance()
         val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")     // 텍스트뷰 포맷
@@ -113,7 +126,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
                     calDate = dateServer.format(cal.time)
                     binding.txtDate.text = dateFormat.format(cal.time)
-
                 }
             }
 
@@ -126,9 +138,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             )
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
-
         }
-
 
         binding.btnBack.setOnClickListener {
 
@@ -141,7 +151,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             else{
                 finish()
             }
-
         }
 
         binding.btnFold.setOnClickListener {
@@ -159,8 +168,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             binding.layoutInfo.isVisible = false
         }
 
-
+        // 검색버튼 클릭시
         binding.btnFind.setOnClickListener {
+
+            // 영문자 대문자로 변경하기
+            val UpperCaseS = binding.edtTranNum.text.toString().uppercase()
+            binding.edtTranNum.setText(UpperCaseS)
 
             if(status=="111"){
                 requestWorkseq()
@@ -169,10 +182,12 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 status333Dialog(){
                     SerialManageUtil.clearData()
                     requestWorkseq()
+
+                    FirstSetSW  = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    spinnerSet()       // by jung 2022.07.02
                 }
             }
         }
-
     }
 
     fun setTempData(): TempData {
@@ -187,7 +202,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         )
 
         return tempData
-
     }
 
     override fun setValues() {
@@ -197,25 +211,17 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         binding.bigo.text = tranData.getBigoHP()
         binding.txtCount.text = "(${tranData.returnGeoraedetail().size}건)"
 
-
-
         tranData.returnGeoraedetail().forEach {
             if (it.jungyojajeyeobu == "Y") {
                 binding.serialDetail.isVisible = true
             }
         }
 
-
         mAdapter = TransactionAdapter(this)
         mAdapter.setList(tranData.returnGeoraedetail())
         mAdapter.setTemp(setTempData())
         binding.recyclerView.adapter = mAdapter
-
-
-
-
     }
-
 
     fun spinnerSet() {
 
@@ -229,10 +235,19 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             )
         binding.spinnerCompany.adapter = spinnerCompanyAdapter
 
-
         val spinnerWareHouseAdapter =
             MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
         binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
+
+        if (FirstSetSW == 0) {
+            var iCnt = binding.spinnerCompany.count
+            for ( i: Int in 0 until iCnt) {
+                if (masterData.getCompanyCode()[i].code == companyCode0){
+                    CompanySel = i
+                }
+            }
+            binding.spinnerCompany.setSelection(CompanySel)
+        }
 
         binding.spinnerCompany.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -251,7 +266,20 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                             wareHouseCode = mWareHouseList[0].code
                         }
 
+                        if (FirstSetSW == 0) {
+                            var iCnt = binding.spinnerWareHouse.count
+                            for ( i: Int in 0 until iCnt) {
+                                if (masterData.getGwangmyeongCode()[i].code == wareHouseCode0){
+                                    WareHouseSel = i
+                                }
+                            }
+                            binding.spinnerWareHouse.setSelection(WareHouseSel,false)
 
+                            if (mWareHouseList.size > 0) {
+                                wareHouseCode = mWareHouseList[WareHouseSel].code
+                            }
+                                FirstSetSW = 1
+                        }
                     }
 
                     if (masterData.getCompanyCode()[position].code == "0002") {
@@ -266,20 +294,30 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                             wareHouseCode = mWareHouseList[0].code
                         }
 
+                        if (FirstSetSW == 0) {
+                            var iCnt = binding.spinnerWareHouse.count
+                            for ( i: Int in 0 until iCnt) {
+                                if (masterData.getGumiCode()[i].code == wareHouseCode0){
+                                    WareHouseSel = i
+                                }
+                            }
+                            binding.spinnerWareHouse.setSelection(WareHouseSel,false)
+
+                            if (mWareHouseList.size > 0) {
+                                wareHouseCode = mWareHouseList[WareHouseSel].code
+                            }
+                            FirstSetSW = 1
+                        }
                     }
                     try{
                         mAdapter.setTemp(setTempData())
                     }catch (e: Exception){
 
                     }
-
-
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-
                 }
-
             }
 
         binding.spinnerWareHouse.onItemSelectedListener =
@@ -287,26 +325,20 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 override fun onItemSelected(
                     parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
-
                     wareHouseCode = mWareHouseList[position].code
 
                     try{
                         mAdapter.setTemp(setTempData())
                     }catch (e: Exception){
-
                     }
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-
                 }
-
             }
-
-
     }
 
-    //    작업 SEQ 요청
+    // 작업 SEQ 요청
     fun requestWorkseq() {
 
         loadingDialog.show(supportFragmentManager, null)
@@ -338,22 +370,18 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                         }
                     }
                 }
-
             }
 
             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                 Log.d("yj", "SEQ 서버 실패 : ${t.message}")
             }
-
         })
-
     }
 
-    //    거래명세조회
+    // 거래명세조회
     fun getRequestTran() {
 
         val inputNum = binding.edtTranNum.text.toString()
-
 
         apiList.getRequestTranDetail("02001", inputNum)
             .enqueue(object : Callback<TranResponse> {
@@ -376,7 +404,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                 binding.layoutInfo.isVisible = false
                                 status = "111"
 
-
                             } else {
                                 status = "333"
                                 binding.layoutEmpty.isVisible = false
@@ -384,7 +411,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                 binding.layoutInfo.isVisible = true
                                 binding.layoutFold.isVisible = true
                                 binding.btnSave.isVisible = true
-
                             }
                         }
                         loadingDialog.dismiss()
@@ -396,12 +422,10 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                     serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     loadingDialog.dismiss()
                 }
-
             })
     }
 
-
-//    거래명세등록
+    // 거래명세등록
     fun postRequestTran() {
 
         binding.btnSave.setOnClickListener {
@@ -415,7 +439,6 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 var serialData =
                     SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                         .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
-
 
                 if (it.getJungyojajeyeobuHP() == "Y") {
                     val serialSize = serialData.trim().split(",").size
@@ -464,8 +487,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 //                        }
 //                    }
 
-
-                    georaedetail.add(                         // 리스트에 담기
+                    georaedetail.add(          // 리스트에 담기
                         GeoraedetailAdd(
                             it.getBaljubeonhoHP(),
                             it.getSeqHP(),
@@ -473,9 +495,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                             it.getPummokCount(),
                             it.getJungyojajeyeobuHP(),
                             serialData
-                        ).toJsonObject()                            // JSONObject로 제작
+                        ).toJsonObject()      // JSONObject로 제작
                     )
-
                 }
 
                 val georaeMap = hashMapOf(
@@ -502,21 +523,16 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                 call: Call<BasicResponse>,
                                 response: Response<BasicResponse>
                             ) {
-
                                 if (response.isSuccessful) {
                                     response.body()?.let {
                                         if (it.resultcd == "000") {
-
-
                                             status = "111"
                                             SerialManageUtil.clearData()
                                             mAdapter.clearList()
                                             saveDoneDialog()
-
                                         } else {
                                             serverErrorDialog("${it.resultmsg}")
                                         }
-
                                     }
                                 }
                                 loadingDialog.dismiss()
@@ -527,16 +543,15 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                                 Log.d("yj", "거래명세서실패 : ${t.message}")
                                 loadingDialog.dismiss()
                             }
-
                         })
                 } else {
                     saveNotDoneDialog()
                 }
             }
         }
-
     }
-    //    작업상태취소
+
+    // 작업상태취소
     fun workStatusCancle() {
 
         val workCancelMap = hashMapOf(
@@ -555,10 +570,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let {
-
                             Log.d("yj", "거래 작업상태취소 code : ${it.resultcd}")
                             Log.d("yj", "거래 작업상태취소 msg : ${it.resultmsg}")
-
                         }
                     }
                 }
@@ -566,17 +579,15 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
                 }
-
             })
-
     }
-
 
     fun sort() {
 
-        var onClickSeq = 0
-
+        // 순번 소트
         binding.layoutSeq.setOnClickListener {
+
+            sortImageClear(1)
 
             if (onClickSeq < 2) {
                 onClickSeq++
@@ -585,62 +596,52 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             }
 
             when (onClickSeq) {
-
                 0 -> {
                     binding.imgSeq.setImageResource(R.drawable.dropempty)
                     mAdapter.setList(tranData.returnGeoraedetail())
-
                 }
-
                 1 -> {
                     binding.imgSeq.setImageResource(R.drawable.dropdown)
                     mAdapter.setList(tranData.getDownSeq())
-
                 }
-
                 2 -> {
                     binding.imgSeq.setImageResource(R.drawable.dropup)
                     mAdapter.setList(tranData.getUpSeq())
                 }
             }
-
         }
 
-        var onClickLocation = 0
+        // 품목코드 소트
+        binding.layoutPummokcode.setOnClickListener {
 
-        binding.layoutLocation.setOnClickListener {
+            sortImageClear(2)
 
-            if (onClickLocation < 2) {
-                onClickLocation++
+            if (onClickPummokcode < 2) {
+                onClickPummokcode++
             } else {
-                onClickLocation = 0
+                onClickPummokcode = 0
             }
 
-            when (onClickLocation) {
-
+            when (onClickPummokcode) {
                 0 -> {
-                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    binding.imgPummokcode.setImageResource(R.drawable.dropempty)
                     mAdapter.setList(tranData.returnGeoraedetail())
                 }
-
                 1 -> {
-                    binding.imgLocation.setImageResource(R.drawable.dropdown)
-                    mAdapter.setList(tranData.getDownLocation())
+                    binding.imgPummokcode.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(tranData.getDownPummokcode())
                 }
-
                 2 -> {
-                    binding.imgLocation.setImageResource(R.drawable.dropup)
-                    mAdapter.setList(tranData.getUpLocation())
+                    binding.imgPummokcode.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(tranData.getUpPummokcode())
                 }
             }
-
         }
 
-
-
-        var onClickPummyeong = 0
-
+        // 품목명 소트
         binding.layoutPummyeong.setOnClickListener {
+
+            sortImageClear(3)
 
             if (onClickPummyeong < 2) {
                 onClickPummyeong++
@@ -649,49 +650,150 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
             }
 
             when (onClickPummyeong) {
-
                 0 -> {
                     binding.imgPummyeong.setImageResource(R.drawable.dropempty)
                     mAdapter.setList(tranData.returnGeoraedetail())
                 }
-
                 1 -> {
                     binding.imgPummyeong.setImageResource(R.drawable.dropdown)
                     mAdapter.setList(tranData.getDownPummyeong())
                 }
-
                 2 -> {
                     binding.imgPummyeong.setImageResource(R.drawable.dropup)
                     mAdapter.setList(tranData.getUpPummyeong())
                 }
             }
+        }
 
+        // 도번/모델 소트
+        binding.layoutDobeonModel.setOnClickListener {
+
+            sortImageClear(4)
+
+            if (onClickDobeonModel < 2) {
+                onClickDobeonModel++
+            } else {
+                onClickDobeonModel = 0
+            }
+
+            when (onClickDobeonModel) {
+                0 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(tranData.returnGeoraedetail())
+                }
+                1 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(tranData.getDownDobeonModel())
+                }
+                2 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(tranData.getUpDobeonModel())
+                }
+            }
+        }
+
+        // 사양 소트
+        binding.layoutSayang.setOnClickListener {
+
+            sortImageClear(5)
+
+            if (onClickSayang < 2) {
+                onClickSayang++
+            } else {
+                onClickSayang = 0
+            }
+
+            when (onClickSayang) {
+                0 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(tranData.returnGeoraedetail())
+                }
+                1 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(tranData.getDownSayang())
+                }
+                2 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(tranData.getUpSayang())
+                }
+            }
+        }
+
+        // 위치 소트
+        binding.layoutLocation.setOnClickListener {
+
+            sortImageClear(6)
+
+            if (onClickLocation < 2) {
+                onClickLocation++
+            } else {
+                onClickLocation = 0
+            }
+
+            when (onClickLocation) {
+                0 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(tranData.returnGeoraedetail())
+                }
+                1 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(tranData.getDownLocation())
+                }
+                2 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(tranData.getUpLocation())
+                }
+            }
         }
     }
 
+    // 다른 항목의 소트의 상태를 초기상태로 표시
+    fun sortImageClear(iP : Int){
+        if (iP != 1){
+            onClickSeq         = 0
+            binding.imgSeq.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 2){
+            onClickPummokcode  = 0
+            binding.imgPummokcode.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 3){
+            onClickPummyeong   = 0
+            binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 4){
+            onClickDobeonModel = 0
+            binding.imgDobeonModel.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 5){
+            onClickSayang      = 0
+            binding.imgSayang.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 6){
+            onClickLocation    = 0
+            binding.imgLocation.setImageResource(R.drawable.dropempty)
+        }
+    }
 
     override fun onClickedEdit(data: Georaedetail) {
 
         val dialogEdit = TransactionDialog()
-        dialogEdit.show(supportFragmentManager, "dialog")
         dialogEdit.setCount(data, setTempData())
-
+        dialogEdit.show(supportFragmentManager, "dialog")  // by jung 2022.07.02 줄 위치를 가운데에서 아래로 가져옴
     }
 
-
+    // 시스템 종료키(태블릿 PC 아랫쪽 세모 버튼)를 누른 경우
     override fun onBackPressed() {
 
         if(status=="333"){
             backDialog() {
                 SerialManageUtil.clearData()
-                workStatusCancle()
+                workStatusCancle() // 작업상태취소를 서버에 통보하고 확인받는 루틴(이안에서 login테이블의 상태정보 update되어야 한다.)
             }
         }
         else {
             finish()
         }
-
-
     }
 
     override fun onDismiss(p0: DialogInterface?) {
@@ -701,6 +803,4 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
     override fun onItemViewClicked(position: Int) {
         mAdapter.onClickedView(position)
     }
-
-
 }

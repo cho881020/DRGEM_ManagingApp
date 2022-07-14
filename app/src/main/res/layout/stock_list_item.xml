@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--                                                  -->
+<!--    프로젝트명 : 스마트창고관리 시스템                  -->
+<!--    프로그램명 : stock_list_item.xml                -->
+<!--    개 발 자  : (주)디알젬                           -->
+<!--    업무기능  : 재고조사 상세리스트 화면 디자인          -->
+<!--                                                  -->
 <layout xmlns:tools="http://schemas.android.com/tools">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -11,6 +17,17 @@
         android:gravity="center_vertical"
         android:paddingHorizontal="10dp"
         android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/seqnumber"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            tools:text="12345"
+            android:textSize="12dp"
+            android:textColor="@color/color_000000"/>
 
         <TextView
             android:id="@+id/pummokcode"
@@ -78,20 +95,31 @@
             android:textSize="12dp"
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/hyeonjaegosuryang"
+        <LinearLayout
+            android:id="@+id/layoutEdit"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="3dp"
-            tools:text="3"
-            android:textSize="12dp"
-            android:textColor="@color/black" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/hyeonjaegosuryang"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:maxLines="1"
+                android:paddingRight="5dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/black"
+                android:background="@drawable/btn_light_gray"
+                android:textSize="12dp"
+                android:maxLength="6"
+                tools:text="3" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/locationAdd"
-            android:layout_width="100dp"
+            android:id="@+id/locationadd"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
@@ -100,7 +128,16 @@
             android:textSize="12dp"
             android:textColor="@color/black" />
 
-
+        <TextView
+            android:id="@+id/worktime"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="3dp"
+            tools:text="작업시간"
+            android:textSize="12dp"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 

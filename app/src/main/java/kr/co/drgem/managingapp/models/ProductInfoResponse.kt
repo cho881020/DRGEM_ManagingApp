@@ -7,7 +7,6 @@ data class ProductInfoResponse(
     val resultmsg: String
 ){
 
-
     fun returnPummokDetail() : ArrayList<Pummokdetail> {
 
         val pummokdetailList = ArrayList<Pummokdetail>()

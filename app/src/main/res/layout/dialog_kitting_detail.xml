@@ -41,7 +41,6 @@
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
-
             </LinearLayout>
 
             <View
@@ -126,7 +125,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                 </LinearLayout>
 
                 <View
@@ -203,7 +201,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                 </LinearLayout>
 
                 <View
@@ -238,7 +235,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="35dp"
@@ -260,7 +256,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="35dp"
@@ -281,7 +276,6 @@
                         tools:text="0"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
-
 
                 </LinearLayout>
 
@@ -317,7 +311,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="35dp"
@@ -339,7 +332,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                 </LinearLayout>
 
                 <View
@@ -347,9 +339,7 @@
                     android:layout_height="1dp"
                     android:background="@color/color_E0E0E0" />
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -407,10 +397,7 @@
                                 android:src="@drawable/btn_x" />
                         </LinearLayout>
 
-
                     </FrameLayout>
-
-
 
                 </LinearLayout>
 
@@ -447,7 +434,6 @@
                         android:maxLength="6"
                         tools:text="7" />
 
-
                 </LinearLayout>
 
                 <TextView
@@ -465,9 +451,6 @@
                     android:textStyle="bold"
                     android:visibility="invisible"
                     tools:visibility="visible"/>
-
-
-
 
             </LinearLayout>
 
@@ -487,7 +470,6 @@
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
@@ -498,9 +480,6 @@
 
             </LinearLayout>
 
-
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -508,7 +487,6 @@
                 android:layout_marginBottom="30dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-
 
                 <TextView
                     android:id="@+id/btnCancel"
@@ -531,6 +509,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="invisible"
+                    tools:visibility="visible"
                     android:gravity="center"
                     android:text="등록하기"
                     android:textColor="@color/color_FFFFFF"
@@ -539,10 +519,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         </LinearLayout>
-
 
     </LinearLayout>
 </layout>

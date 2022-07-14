@@ -13,17 +13,10 @@ class MainDataManager {
             if(masterData == null){
                 masterData = data
             }
-
         }
 
         fun getMainData() : MasterDataResponse? {
-
             return masterData
         }
-
-
-
     }
-
-
 }

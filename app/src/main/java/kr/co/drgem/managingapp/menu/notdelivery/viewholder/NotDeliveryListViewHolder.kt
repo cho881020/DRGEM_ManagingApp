@@ -1,3 +1,9 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : NotDeliveryListViewHolder.kt
+ * 개 발 자 : (주)디알젬
+ * 업무기능 : 미출고자재 출고  ListViewHolder
+ */
 package kr.co.drgem.managingapp.menu.notdelivery.viewholder
 
 import android.app.AlertDialog
@@ -35,7 +41,6 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
     val chulgosuryang = itemView.findViewById<TextView>(R.id.chulgosuryang)
     val seq = itemView.findViewById<TextView>(R.id.seq)
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
-
 
     fun bind(data: PummokdetailDelivery, tempData: TempData, position: Int) {
 
@@ -76,7 +81,6 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
             data.setPummokCount("0")
         }
 
-
         yocheongil.text = data.getyocheongilHP()
         yocheongbeonho.text = data.getyocheongbeonhoHP()
         yocheongchanggo.text = data.getyocheongchanggoHP()
@@ -93,7 +97,6 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
         seq.text = "${position + 1}"
 
         chulgosuryang.text = data.getPummokCount()
-
 
         pummyeong.setOnLongClickListener {
             AlertDialog.Builder(itemView.context)
@@ -125,11 +128,8 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
             false
         }
 
-
-
         val savedSerialString =
             SerialManageUtil.getSerialStringByPummokCode("${data.getpummokcodeHP()}/${data.getyocheongbeonhoHP()}")        // 품목 코드에 맞는 시리얼 가져와서
-
 
         if (savedSerialString != null || data.getPummokCount() != "0" ) {
 
@@ -151,18 +151,20 @@ class NotDeliveryListViewHolder(parent: ViewGroup, val listener: NotDeliveryEdit
             else{
                 btnEdit.text = "수량입력"
             }
-
         }
 
-
-
-
         btnEdit.setOnClickListener {
-
-
-            listener.onClickedEdit(data)
-
-
+            // 여기서 "요청수량-기출고수량"이 1보다 작으면 입력할 수량 없음으로 표시하고 종료
+            val sss1 = (yocheongsuryang.text.trim().toString().toInt()  // 요청수량
+                    - gichulgosuryang.text.trim().toString().toInt())  // 기출고수량
+            if (1 > sss1) {
+                AlertDialog.Builder(itemView.context)
+                    .setMessage("요청수량에서 기출고수량을 뺀 수량이 1보다 작습니다..")
+                    .setNegativeButton("확인", null)
+                    .show()
+            } else {
+                listener.onClickedEdit(data)
+            }
         }
     }
 }

@@ -41,7 +41,6 @@
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
-
             </LinearLayout>
 
             <View
@@ -125,14 +124,12 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/color_E0E0E0" />
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -202,7 +199,6 @@
                         tools:text="G22042600391"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
-
 
                 </LinearLayout>
 
@@ -280,7 +276,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                 </LinearLayout>
 
                 <View
@@ -315,7 +310,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="35dp"
@@ -337,7 +331,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="35dp"
@@ -358,7 +351,6 @@
                         tools:text="20220203"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
-
 
                 </LinearLayout>
 
@@ -394,7 +386,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="35dp"
@@ -416,14 +407,12 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/color_E0E0E0" />
-
 
             </LinearLayout>
 
@@ -444,6 +433,10 @@
                         android:text="품목코드 확인"
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/edtPummokcode"
@@ -463,6 +456,23 @@
                         android:textSize="12dp"
                         tools:text="G22042600391" />
 
+                        <LinearLayout
+                            android:id="@+id/btnCodeRemove"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="right|center_vertical"
+                            android:focusable="false"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="7dp"
+                                android:focusable="false"
+                                android:src="@drawable/btn_x" />
+                        </LinearLayout>
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
@@ -496,8 +506,8 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp"
                         android:inputType="number"
+                        android:maxLength="6"
                         tools:text="7" />
-
 
                 </LinearLayout>
 
@@ -535,7 +545,6 @@
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
@@ -546,8 +555,6 @@
 
             </LinearLayout>
 
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -555,7 +562,6 @@
                 android:layout_marginBottom="30dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-
 
                 <TextView
                     android:id="@+id/btnCancel"
@@ -578,6 +584,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="invisible"
+                    tools:visibility="visible"
                     android:gravity="center"
                     android:text="등록하기"
                     android:textColor="@color/color_FFFFFF"
@@ -586,10 +594,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         </LinearLayout>
-
 
     </LinearLayout>
 </layout>

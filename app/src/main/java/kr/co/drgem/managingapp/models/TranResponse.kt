@@ -14,10 +14,7 @@ data class TranResponse (
     val nappumcheomyeong : String?,
     val pummokcount : String?,
     val georaemyeongsebeonho : String?,
-
-
 ){
-
     fun getGeoraecheocodeHP() : String {
         if(georaecheocode == null){
             return "-"
@@ -53,7 +50,6 @@ data class TranResponse (
         return georaecheomyeong
     }
 
-
     fun getNappumcheomyeongHP() : String {
         if(nappumcheomyeong == null){
             return "-"
@@ -75,20 +71,15 @@ data class TranResponse (
         return georaemyeongsebeonho
     }
 
-
     fun returnGeoraedetail() : ArrayList<Georaedetail> {
-
         val GeoraeList = ArrayList<Georaedetail>()
 
         if(georaedetail != null){
             GeoraeList.clear()
             GeoraeList.addAll(georaedetail)
         }
-
         return GeoraeList
     }
-
-
 
     fun getUpSeq(): ArrayList<Georaedetail>{
         val sortList : ArrayList<Georaedetail> = arrayListOf()
@@ -96,13 +87,9 @@ data class TranResponse (
         if (georaedetail != null) {
             sortList.addAll(georaedetail)
         }
-
-
-
         sortList.sortBy { it.seq?.toInt() }
         return sortList
     }
-
 
     fun getDownSeq(): ArrayList<Georaedetail>{
         val sortList : ArrayList<Georaedetail> = arrayListOf()
@@ -114,23 +101,23 @@ data class TranResponse (
         return sortList
     }
 
-    fun getUpLocation(): ArrayList<Georaedetail>{
+    fun getUpPummokcode(): ArrayList<Georaedetail>{
         val sortList : ArrayList<Georaedetail> = arrayListOf()
         sortList.clear()
         if (georaedetail != null) {
             sortList.addAll(georaedetail)
         }
-        sortList.sortBy { it.location }
+        sortList.sortBy { it.pummokcode }
         return sortList
     }
 
-    fun getDownLocation(): ArrayList<Georaedetail>{
+    fun getDownPummokcode(): ArrayList<Georaedetail>{
         val sortList : ArrayList<Georaedetail> = arrayListOf()
         sortList.clear()
         if (georaedetail != null) {
             sortList.addAll(georaedetail)
         }
-        sortList.sortByDescending { it.location }
+        sortList.sortByDescending { it.pummokcode }
         return sortList
     }
 
@@ -154,8 +141,64 @@ data class TranResponse (
         return sortList
     }
 
+    fun getUpDobeonModel(): ArrayList<Georaedetail>{
+        val sortList : ArrayList<Georaedetail> = arrayListOf()
+        sortList.clear()
+        if (georaedetail != null) {
+            sortList.addAll(georaedetail)
+        }
+        sortList.sortBy { it.dobeon_model }
+        return sortList
+    }
 
+    fun getDownDobeonModel(): ArrayList<Georaedetail>{
+        val sortList : ArrayList<Georaedetail> = arrayListOf()
+        sortList.clear()
+        if (georaedetail != null) {
+            sortList.addAll(georaedetail)
+        }
+        sortList.sortByDescending { it.dobeon_model }
+        return sortList
+    }
 
+    fun getUpSayang(): ArrayList<Georaedetail>{
+        val sortList : ArrayList<Georaedetail> = arrayListOf()
+        sortList.clear()
+        if (georaedetail != null) {
+            sortList.addAll(georaedetail)
+        }
+        sortList.sortBy { it.sayang }
+        return sortList
+    }
 
+    fun getDownSayang(): ArrayList<Georaedetail>{
+        val sortList : ArrayList<Georaedetail> = arrayListOf()
+        sortList.clear()
+        if (georaedetail != null) {
+            sortList.addAll(georaedetail)
+        }
+        sortList.sortByDescending { it.sayang }
+        return sortList
+    }
+
+    fun getUpLocation(): ArrayList<Georaedetail>{
+        val sortList : ArrayList<Georaedetail> = arrayListOf()
+        sortList.clear()
+        if (georaedetail != null) {
+            sortList.addAll(georaedetail)
+        }
+        sortList.sortBy { it.location }
+        return sortList
+    }
+
+    fun getDownLocation(): ArrayList<Georaedetail>{
+        val sortList : ArrayList<Georaedetail> = arrayListOf()
+        sortList.clear()
+        if (georaedetail != null) {
+            sortList.addAll(georaedetail)
+        }
+        sortList.sortByDescending { it.location }
+        return sortList
+    }
 
 }

@@ -128,6 +128,11 @@ class OrderActivity : BaseActivity() {
 
 
         binding.btnFind.setOnClickListener {
+
+            // 발주번호 영문자 대문자로 변경하기
+            val UpperCaseS = binding.edtBaljubeonho.text.toString().uppercase()
+            binding.edtBaljubeonho.setText(UpperCaseS)
+
             getRequestOrderNum()
         }
 

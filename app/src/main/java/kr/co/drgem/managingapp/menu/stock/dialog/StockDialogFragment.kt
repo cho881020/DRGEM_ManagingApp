@@ -28,10 +28,9 @@ class StockDialogFragment : DialogFragment() {
 
     lateinit var binding: DialogStockBinding
 
-    var companyCode = "0002"
+    var companyCode   = "0002"
     var wareHouseCode = "2001"
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,10 +41,9 @@ class StockDialogFragment : DialogFragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.dialog_stock, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.setCanceledOnTouchOutside(false) // 외부 터치 막음
 
         return binding.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,13 +51,10 @@ class StockDialogFragment : DialogFragment() {
 
         spinnerSet()
 
-
         binding.btnSave.setOnClickListener {
             dismiss()
         }
-
     }
-
 
     fun spinnerSet() {
 
@@ -72,7 +67,6 @@ class StockDialogFragment : DialogFragment() {
                     it.getCompanyCode()
                 )
             binding.spinnerCompany.adapter = spinnerCompanyAdapter
-
 
             val spinnerWareHouseAdapter =
                 MasterDataSpinnerAdapter(
@@ -100,7 +94,6 @@ class StockDialogFragment : DialogFragment() {
                             if (mWareHouseList.size > 0) {
                                 wareHouseCode = mWareHouseList[0].code
                             }
-
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -114,14 +107,11 @@ class StockDialogFragment : DialogFragment() {
                             if (mWareHouseList.size > 0) {
                                 wareHouseCode = mWareHouseList[0].code
                             }
-
                         }
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
 
             binding.spinnerWareHouse.onItemSelectedListener =
@@ -133,13 +123,9 @@ class StockDialogFragment : DialogFragment() {
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
-
         }
-
     }
 
     override fun onDismiss(dialog: DialogInterface) {           // 다이얼로그가 닫힐 때 메인액티비티로 전달해주는 리스너
@@ -147,8 +133,7 @@ class StockDialogFragment : DialogFragment() {
 
         val activity: Activity? = activity
         if (activity is DialogInterface.OnDismissListener) {                        // 액티비티에 다이얼로그 리스너가 있다면,
-            (activity as DialogInterface.OnDismissListener).onDismiss(dialog)           // 액티비티의 onDismiss 를 실행
+            (activity as DialogInterface.OnDismissListener).onDismiss(dialog)       // 액티비티의 onDismiss 를 실행
         }
     }
-
 }

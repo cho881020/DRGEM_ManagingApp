@@ -2,7 +2,7 @@
  * 프로젝트명 : 스마트창고관리 시스템
  * 프로그램명 : LoadingDialogFragment
  * 개발자 : (주)NePP 이윤주
- * 업무기능 : 검색 진행 시 로딩 다이얼로그
+ * 업무기능 : 검색 진행 시 로딩 다이얼로그 (모래시계기능)
  */
 
 package kr.co.drgem.managingapp

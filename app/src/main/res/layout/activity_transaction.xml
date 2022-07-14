@@ -35,7 +35,6 @@
 
             </LinearLayout>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
@@ -46,7 +45,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="10dp"/>
-
 
             <TextView
                 android:id="@+id/btnSave"
@@ -64,7 +62,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -131,10 +128,8 @@
 
                     </LinearLayout>
 
-
                 </LinearLayout>
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/btnFind"
@@ -219,7 +214,6 @@
                     android:layout_marginStart="10dp"
                     android:background="@color/color_E0E0E0" />
 
-
                 <LinearLayout
                     android:id="@+id/layoutBigo"
                     android:layout_width="wrap_content"
@@ -247,12 +241,9 @@
 
                 </LinearLayout>
 
-
             </LinearLayout>
 
-
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/layoutFold"
@@ -280,7 +271,6 @@
                     android:textColor="@color/color_808080"
                     android:textSize="12dp" />
 
-
                 <LinearLayout
                     android:id="@+id/layoutDate"
                     android:layout_width="110dp"
@@ -299,7 +289,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -307,7 +296,6 @@
                         android:src="@drawable/dropdown" />
 
                 </LinearLayout>
-
 
             </LinearLayout>
 
@@ -348,9 +336,7 @@
                         android:layout_marginHorizontal="7dp"
                         android:src="@drawable/dropdown" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             </LinearLayout>
 
@@ -390,7 +376,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginHorizontal="7dp"
                         android:src="@drawable/dropdown" />
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -432,7 +417,6 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                 </LinearLayout>
 
             </LinearLayout>
@@ -451,7 +435,6 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -466,13 +449,9 @@
                     android:layout_marginStart="5dp"
                     android:src="@drawable/fold_icon" />
 
-
             </LinearLayout>
 
-
         </LinearLayout>
-
-
 
         <LinearLayout
             android:id="@+id/layoutEmpty"
@@ -501,7 +480,6 @@
 <!--                android:textStyle="bold" />-->
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/layoutList"
@@ -539,7 +517,6 @@
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
-
                     <View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
@@ -555,7 +532,6 @@
                         tools:visibility="visible"
                         android:orientation="horizontal">
 
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -570,12 +546,9 @@
                             android:layout_marginStart="5dp"
                             android:src="@drawable/open_icon" />
 
-
                 </LinearLayout>
 
-
             </LinearLayout>
-
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -603,7 +576,6 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:id="@+id/txtSeq"
                                 android:layout_width="wrap_content"
@@ -612,24 +584,33 @@
                                 android:text="순번"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
-
-
                             <ImageView
                                 android:id="@+id/imgSeq"
                                 android:src="@drawable/dropempty"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
-
-
                         </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutPummokcode"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="품목코드"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
-
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtPummokcode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="품목코드"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+                            <ImageView
+                                android:id="@+id/imgPummokcode"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/layoutPummyeong"
@@ -637,7 +618,6 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:id="@+id/txtPummyeong"
                                 android:layout_width="wrap_content"
@@ -645,33 +625,52 @@
                                 android:text="품명"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
-
-
                             <ImageView
                                 android:id="@+id/imgPummyeong"
                                 android:src="@drawable/dropempty"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
-
-
-
                         </LinearLayout>
 
-
-
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutDobeonModel"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="도번/모델"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtDobeonModel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="도번/모델"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+                            <ImageView
+                                android:id="@+id/imgDobeonModel"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutSayang"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="사양"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtSayang"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="사양"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+                            <ImageView
+                                android:id="@+id/imgSayang"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="60dp"
@@ -688,8 +687,6 @@
                             android:text="발주수량"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
-
-
 
                         <TextView
                             android:layout_width="70dp"
@@ -716,14 +713,12 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-
                         <LinearLayout
                             android:id="@+id/layoutLocation"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:id="@+id/txtLocation"
                                 android:layout_width="wrap_content"
@@ -731,18 +726,12 @@
                                 android:text="위치"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
-
-
                             <ImageView
                                 android:id="@+id/imgLocation"
                                 android:src="@drawable/dropempty"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
-
-
                         </LinearLayout>
-
-
 
                         <TextView
                             android:layout_width="100dp"
@@ -750,7 +739,6 @@
                             android:text="발주번호"
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
-
 
                         <TextView
                             android:layout_width="100dp"
@@ -773,14 +761,12 @@
                         android:layout_weight="1"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-
                 </LinearLayout>
 
             </HorizontalScrollView>
 
-
         </LinearLayout>
 
-
     </LinearLayout>
+
 </layout>

@@ -36,6 +36,8 @@ class MainActivity : BaseActivity() {
         setupEvents()
         setValues()
 
+        binding.edtId.setText("22018")
+        binding.edtPw.setText("jung1049&&")
     }
 
     override fun setupEvents() {
@@ -200,7 +202,7 @@ class MainActivity : BaseActivity() {
 
         if (mSqliteDB.getAllLoginWorkCommon().size > 0) {
             val workStatus = mSqliteDB.getAllLoginWorkCommon()[0].WORKGUBUN.toString()
-            val workSEQ = mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER.toString()
+            //val workSEQ = mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER.toString() //by jung 막음 2022.07.03
             
 //            복구 모두 필요
             if (workStatus != "None") {

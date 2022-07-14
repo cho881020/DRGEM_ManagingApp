@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class ServerAPI {
 
@@ -42,6 +43,8 @@ class ServerAPI {
 
 
                 val myClient = OkHttpClient.Builder()
+                    .connectTimeout(10, TimeUnit.MINUTES)
+                    .readTimeout(10, TimeUnit.MINUTES)
                     .addInterceptor(interceptor)
                     .build()
 

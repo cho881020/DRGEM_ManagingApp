@@ -12,7 +12,6 @@ data class RequestDetailResponse(
     val yocheongchanggocode: String,
     val yocheongsaupjangcode: String
 ){
-
     fun returnPummokDetail() : ArrayList<Pummokdetail> {
 
         val pummokdetailList = ArrayList<Pummokdetail>()
@@ -21,27 +20,26 @@ data class RequestDetailResponse(
             pummokdetailList.clear()
             pummokdetailList.addAll(pummokdetail)
         }
-
         return pummokdetailList
     }
 
-    fun getUpLocation(): ArrayList<Pummokdetail>{
+    fun getUpPummokcode(): ArrayList<Pummokdetail>{
         val sortList : ArrayList<Pummokdetail> = arrayListOf()
         sortList.clear()
         if (pummokdetail != null) {
             sortList.addAll(pummokdetail)
         }
-        sortList.sortBy { it.location }
+        sortList.sortBy { it.pummokcode }
         return sortList
     }
 
-    fun getDownLocation(): ArrayList<Pummokdetail>{
+    fun getDownPummokcode(): ArrayList<Pummokdetail>{
         val sortList : ArrayList<Pummokdetail> = arrayListOf()
         sortList.clear()
         if (pummokdetail != null) {
             sortList.addAll(pummokdetail)
         }
-        sortList.sortByDescending { it.location }
+        sortList.sortByDescending { it.pummokcode }
         return sortList
     }
 
@@ -62,6 +60,66 @@ data class RequestDetailResponse(
             sortList.addAll(pummokdetail)
         }
         sortList.sortByDescending { it.pummyeong }
+        return sortList
+    }
+
+    fun getUpDobeonModel(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortBy { it.dobeon_model }
+        return sortList
+    }
+
+    fun getDownDobeonModel(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortByDescending { it.dobeon_model }
+        return sortList
+    }
+
+    fun getUpSayang(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortBy { it.sayang }
+        return sortList
+    }
+
+    fun getDownSayang(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortByDescending { it.sayang }
+        return sortList
+    }
+
+    fun getUpLocation(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortBy { it.location }
+        return sortList
+    }
+
+    fun getDownLocation(): ArrayList<Pummokdetail>{
+        val sortList : ArrayList<Pummokdetail> = arrayListOf()
+        sortList.clear()
+        if (pummokdetail != null) {
+            sortList.addAll(pummokdetail)
+        }
+        sortList.sortByDescending { it.location }
         return sortList
     }
 

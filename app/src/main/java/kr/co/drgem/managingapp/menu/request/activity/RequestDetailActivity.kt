@@ -56,8 +56,13 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     var companyCode = ""    // 조회에서 가져온 회사/창고코드
     var wareHouseCode = ""
 
-    var companyCodeOut = "0001"
-    var wareHouseCodeOut = "1001"
+    var companyCodeOut    = "0001"
+    var wareHouseCodeOut  = "1001"
+    var companyCodeOut0   = "0001"
+    var wareHouseCodeOut0 = "1001"
+    var CompanySel   = 0
+    var WareHouseSel = 0
+    var FirstSetSW   = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
 
     var companyCodeIn = "0001"
@@ -65,6 +70,13 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     var mWareHouseListIn: ArrayList<Detailcode> = arrayListOf()
 
     var calDate = ""
+
+    // sort의 상태를 파악하기 위한 변수
+    var onClickPummokcode     = 0
+    var onClickPummyeong      = 0
+    var onClickDobeonModel    = 0
+    var onClickSayang         = 0
+    var onClickLocation       = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,9 +87,10 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
+            companyCodeOut0   = it.saeopjangcode.toString()  // by jung 2022.07.02
+            wareHouseCodeOut0 = it.changgocode.toString()    // by jung 2022.07.02
         }
         binding.chulgodamdangjacode.text = sawonCode
-
 
         setupEvents()
         dateSet()
@@ -86,7 +99,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         spinnerSetOut()
         spinnerSetIn()
         completeTextView()
-
     }
 
     override fun setupEvents() {
@@ -103,6 +115,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             }
         }
 
+        // 검색버튼 클릭시
         binding.btnFind.setOnClickListener {
             if(status=="111"){
                 requestWorkseq()
@@ -111,6 +124,9 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 status333Dialog(){
                     SerialManageUtil.clearData()
                     requestWorkseq()
+
+                    FirstSetSW  = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    spinnerSetOut()    // by jung 2022.07.02
                 }
             }
         }
@@ -142,7 +158,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 migwanri = "1"
             }
         }
-
     }
 
     fun setTempData(): TempData {
@@ -157,7 +172,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         )
 
         return tempData
-
     }
 
     override fun setValues() {
@@ -189,8 +203,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             "status" to "111",
         )
 
-
-
         apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
 
             override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
@@ -209,22 +221,18 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                         }
                     }
                 }
-
             }
 
             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                 Log.d("yj", "SEQ 서버 실패 : ${t.message}")
             }
-
         })
-
     }
 
     fun getRequestDetail() {
 
         companyCode = intent.getStringExtra("companyCode").toString()
         wareHouseCode = intent.getStringExtra("wareHouseCode").toString()
-
 
         Log.d("yj", "조회조건 : $johoejogeon , 미관리 :$migwanri")
         apiList.getRequestRequestDetail(
@@ -253,8 +261,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                             setValues()
                             status = "333"
                         }
-
-
                     }
                 }
                 loadingDialog.dismiss()
@@ -263,11 +269,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             override fun onFailure(call: Call<RequestDetailResponse>, t: Throwable) {
                 serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                 loadingDialog.dismiss()
-
             }
-
         })
-
     }
 
     fun PostRequestRequest() {
@@ -311,7 +314,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                         it.serialCheck = false
                         mAdapter.notifyDataSetChanged()
                     }
-
                 }
             }
 
@@ -337,7 +339,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                             serialData
                         ).toJsonObject()
                     )
-
                 }
 
                 val requestAdd = hashMapOf(
@@ -380,20 +381,17 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                         }
                                     }
                                 }
-
                             }
 
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                                 serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                             }
-
                         })
                 } else {
                     saveNotDoneDialog()
                 }
             }
         }
-
     }
     //    작업상태취소
     fun workStatusCancle() {
@@ -418,8 +416,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let {
-
-
                         }
                     }
                 }
@@ -427,11 +423,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
                 }
-
             })
-
     }
-
 
     fun spinnerSetOut() {
 
@@ -441,11 +434,19 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
             binding.spinnerCompanyOut.adapter = spinnerCompanyAdapter
 
-
             val spinnerWareHouseAdapter =
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseOut.adapter = spinnerWareHouseAdapter
 
+            if (FirstSetSW == 0) {
+                var iCnt = binding.spinnerCompanyOut.count
+                for ( i: Int in 0 until iCnt) {
+                    if (it.getCompanyCode()[i].code == companyCodeOut0){
+                        CompanySel = i
+                    }
+                }
+                binding.spinnerCompanyOut.setSelection(CompanySel)
+            }
 
             binding.spinnerCompanyOut.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -463,7 +464,20 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
 
+                            if (FirstSetSW == 0) {
+                                var iCnt = binding.spinnerWareHouseOut.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGwangmyeongCode()[i].code == wareHouseCodeOut0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseOut.setSelection(WareHouseSel,false)
 
+                                if (mWareHouseListOut.size > 0) {
+                                    wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
+                                }
+                                FirstSetSW = 1
+                            }
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -477,6 +491,20 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                             if (mWareHouseListOut.size > 0) {
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
+                            if (FirstSetSW == 0) {
+                                var iCnt = binding.spinnerWareHouseOut.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGumiCode()[i].code == wareHouseCodeOut0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseOut.setSelection(WareHouseSel,false)
+
+                                if (mWareHouseListOut.size > 0) {
+                                    wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
+                                }
+                                FirstSetSW = 1
+                            }
                         }
 
                         try{
@@ -487,9 +515,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
 
             binding.spinnerWareHouseOut.onItemSelectedListener =
@@ -503,17 +529,12 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                         }catch (e: Exception){
 
                         }
-
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
-
         }
-
     }
 
     fun spinnerSetIn() {
@@ -524,11 +545,9 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
             binding.spinnerCompanyIn.adapter = spinnerCompanyAdapter
 
-
             val spinnerWareHouseAdapter =
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseIn.adapter = spinnerWareHouseAdapter
-
 
             binding.spinnerCompanyIn.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -545,8 +564,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                             if (mWareHouseListIn.size > 0) {
                                 wareHouseCodeIn = mWareHouseListIn[0].code
                             }
-
-
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -566,7 +583,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                     override fun onNothingSelected(p0: AdapterView<*>?) {
 
                     }
-
                 }
 
             binding.spinnerWareHouseIn.onItemSelectedListener =
@@ -579,20 +595,125 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
-
         }
-
     }
 
     fun sort() {
 
-        var onClickLocation = 0
+        // 품목코드 소트
+        binding.layoutPummokcode.setOnClickListener {
 
+            sortImageClear(1)
+
+            if (onClickPummokcode < 2) {
+                onClickPummokcode++
+            } else {
+                onClickPummokcode = 0
+            }
+
+            when (onClickPummokcode) {
+                0 -> {
+                    binding.imgPummokcode.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(requestDetailData.returnPummokDetail())
+                }
+                1 -> {
+                    binding.imgPummokcode.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(requestDetailData.getDownPummokcode())
+                }
+                2 -> {
+                    binding.imgPummokcode.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(requestDetailData.getUpPummokcode())
+                }
+            }
+        }
+
+        // 품목명 소트
+        binding.layoutPummyeong.setOnClickListener {
+
+            sortImageClear(2)
+
+            if (onClickPummyeong < 2) {
+                onClickPummyeong++
+            } else {
+                onClickPummyeong = 0
+            }
+
+            when (onClickPummyeong) {
+                0 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(requestDetailData.returnPummokDetail())
+                }
+                1 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(requestDetailData.getDownPummyeong())
+                }
+                2 -> {
+                    binding.imgPummyeong.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(requestDetailData.getUpPummyeong())
+                }
+            }
+        }
+
+        // 도번/모델 소트
+        binding.layoutDobeonModel.setOnClickListener {
+
+            sortImageClear(3)
+
+            if (onClickDobeonModel < 2) {
+                onClickDobeonModel++
+            } else {
+                onClickDobeonModel = 0
+            }
+
+            when (onClickDobeonModel) {
+                0 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(requestDetailData.returnPummokDetail())
+                }
+                1 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(requestDetailData.getDownDobeonModel())
+                }
+                2 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(requestDetailData.getUpDobeonModel())
+                }
+            }
+        }
+
+        // 사양 소트
+        binding.layoutSayang.setOnClickListener {
+
+            sortImageClear(4)
+
+            if (onClickSayang < 2) {
+                onClickSayang++
+            } else {
+                onClickSayang = 0
+            }
+
+            when (onClickSayang) {
+                0 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(requestDetailData.returnPummokDetail())
+                }
+                1 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(requestDetailData.getDownSayang())
+                }
+                2 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(requestDetailData.getUpSayang())
+                }
+            }
+        }
+
+        // 위치 소트
         binding.layoutLocation.setOnClickListener {
+
+            sortImageClear(5)
 
             if (onClickLocation < 2) {
                 onClickLocation++
@@ -606,59 +727,47 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                     binding.imgLocation.setImageResource(R.drawable.dropempty)
                     mAdapter.setList(requestDetailData.returnPummokDetail())
                 }
-
                 1 -> {
                     binding.imgLocation.setImageResource(R.drawable.dropdown)
                     mAdapter.setList(requestDetailData.getDownLocation())
                 }
-
                 2 -> {
                     binding.imgLocation.setImageResource(R.drawable.dropup)
                     mAdapter.setList(requestDetailData.getUpLocation())
                 }
             }
         }
-
-        var onClickPummyeong = 0
-
-        binding.layoutPummyeong.setOnClickListener {
-
-            if (onClickPummyeong < 2) {
-                onClickPummyeong++
-            } else {
-                onClickPummyeong = 0
-            }
-
-            when (onClickPummyeong) {
-
-                0 -> {
-                    binding.imgPummyeong.setImageResource(R.drawable.dropempty)
-                    mAdapter.setList(requestDetailData.returnPummokDetail())
-                }
-
-                1 -> {
-                    binding.imgPummyeong.setImageResource(R.drawable.dropdown)
-                    mAdapter.setList(requestDetailData.getDownPummyeong())
-                }
-
-                2 -> {
-                    binding.imgPummyeong.setImageResource(R.drawable.dropup)
-                    mAdapter.setList(requestDetailData.getUpPummyeong())
-                }
-            }
-
-        }
-
-
     }
 
+    // 다른 항목의 소트의 상태를 초기상태로 표시
+    private fun sortImageClear(iP : Int){
+        if (iP != 1){
+            onClickPummokcode  = 0
+            binding.imgPummokcode.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 2){
+            onClickPummyeong   = 0
+            binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 3){
+            onClickDobeonModel = 0
+            binding.imgDobeonModel.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 4){
+            onClickSayang      = 0
+            binding.imgSayang.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 5){
+            onClickLocation    = 0
+            binding.imgLocation.setImageResource(R.drawable.dropempty)
+        }
+    }
 
     fun dateSet() {
         val cal = Calendar.getInstance()
         val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
         val dateFormat = SimpleDateFormat("MM-dd")     // 텍스트뷰 포맷
         binding.txtDate.text = dateFormat.format(cal.time)
-
 
         calDate = dateServer.format(cal.time)
         binding.layoutDate.setOnClickListener {
@@ -670,7 +779,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
                     calDate = dateServer.format(cal.time)
                     binding.txtDate.text = dateFormat.format(cal.time)
-
                 }
             }
 
@@ -684,7 +792,6 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
         }
-
     }
 
     private fun completeTextView(){
@@ -704,10 +811,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
 
         autoCompleteTextView.setAdapter(adapter)
-
     }
-
-
 
     override fun onClickedEdit(data: Pummokdetail) {
         val dialog = RequestDetailDialog()
@@ -716,11 +820,12 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         dialog.show(supportFragmentManager, "dialog_request")
     }
 
+    // 시스템 종료키(태블릿 PC 아랫쪽 세모 버튼)를 누른 경우
     override fun onBackPressed() {
         if(status=="333"){
             backDialog() {
                 SerialManageUtil.clearData()
-                workStatusCancle()
+                workStatusCancle() // 작업상태취소를 서버에 통보하고 확인받는 루틴(이안에서 login테이블의 상태정보 update되어야 한다.)
             }
         }
         else {

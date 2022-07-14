@@ -44,22 +44,20 @@ class LocationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_location)
 
-
         setupEvents()
         sort()
-
     }
 
+    // 시스템 종료키(태블릿 PC 아랫쪽 세모 버튼)를 누른 경우
     override fun onBackPressed() {
         if(status=="333"){
             backDialog() {
-                workStatusCancle()
+                workStatusCancle() // 작업상태취소를 서버에 통보하고 확인받는 루틴(이안에서 login테이블의 상태정보 update되어야 한다.)
             }
         }
         else {
             finish()
         }
-
     }
 
     override fun setupEvents() {
@@ -73,7 +71,6 @@ class LocationActivity : BaseActivity() {
             else {
                 finish()
             }
-
         }
 
         binding.btnSave.setOnClickListener {
@@ -107,16 +104,12 @@ class LocationActivity : BaseActivity() {
                     position: Int,
                     id: Long
                 ) {
-
                     changgocode = changgoList[position].code
                     Log.d("yj", "창고코드 : $changgocode")
-
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-
                 }
-
             }
 
         binding.btnFind.setOnClickListener {
@@ -129,7 +122,6 @@ class LocationActivity : BaseActivity() {
                 }
             }
         }
-
     }
 
     override fun setValues() {
@@ -172,13 +164,8 @@ class LocationActivity : BaseActivity() {
                     mAdapter.setList(locationData.getUpPummyeong())
                 }
             }
-
         }
-
-
     }
-
-
 
     //    작업 SEQ 요청
     fun requestWorkseq() {
@@ -199,7 +186,6 @@ class LocationActivity : BaseActivity() {
 
         Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
 
-
         apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
 
             override fun onResponse(call: Call<WorkResponse>, response: Response<WorkResponse>) {
@@ -218,20 +204,17 @@ class LocationActivity : BaseActivity() {
                         }
                     }
                 }
-
             }
 
             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                 Log.d("yj", "SEQ 서버 실패 : ${t.message}")
             }
-
         })
-
     }
     //    로케이션요청
     fun getRequestLocation() {
 
-        val changgocode = ""
+        val changgocode = changgocode
         val location = binding.edtLocation.text.toString()
         inputPummyeong = binding.pummyeong.text.toString()
 
@@ -259,8 +242,6 @@ class LocationActivity : BaseActivity() {
 
                                 status = "333"
                             }
-
-
                         }
                     }
                     loadingDialog.dismiss()
@@ -301,7 +282,6 @@ class LocationActivity : BaseActivity() {
             "pummokdetail" to pummokdetail
         )
 
-
         Log.d("yj", "로케이션등록 맵확인 : $locationAdd")
 
         if (pummokdetail.size() > 0) {
@@ -320,19 +300,14 @@ class LocationActivity : BaseActivity() {
                             } else {
                                 serverErrorDialog(it.resultmsg)
                             }
-
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                 }
-
             })
         }
-
-
     }
     //    작업상태취소
     fun workStatusCancle() {
@@ -360,13 +335,9 @@ class LocationActivity : BaseActivity() {
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
                 }
-
             })
-
     }
-
 }

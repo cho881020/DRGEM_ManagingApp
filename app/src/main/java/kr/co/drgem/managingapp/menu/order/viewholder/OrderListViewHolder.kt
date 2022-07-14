@@ -1,4 +1,5 @@
-package kr.co.drgem.managingapp.menu.order.viewholder
+// 매입입고
+ package kr.co.drgem.managingapp.menu.order.viewholder
 
 import android.content.Intent
 import android.util.Log
@@ -22,8 +23,6 @@ import retrofit2.Response
 class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.order_list_item, parent, false)
 ) {
-
-
     val georaecheomyeong = itemView.findViewById<TextView>(R.id.georaecheomyeong)
     val baljubeonho = itemView.findViewById<TextView>(R.id.baljubeonho)
     val georaecheocode = itemView.findViewById<TextView>(R.id.georaecheocode)
@@ -33,7 +32,6 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
     val seq = itemView.findViewById<TextView>(R.id.seq)
 
     fun bind(baljuData: Baljubeonho, position: Int){
-
 
         val apiList: APIList
         val retrofit = ServerAPI.getRetrofit(itemView.context)
@@ -55,7 +53,6 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
             )
 
             Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
-
 
             apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse>{
 
@@ -85,18 +82,12 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
                             }
                         }
                     }
-
                 }
-
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     Log.d("yj", "SEQ 서버 실패 : ${t.message}")
                 }
-
             })
-
         }
-
-
         georaecheomyeong.text = baljuData.getGeoraecheomyeongHP()
         baljubeonho.text = baljuData.getBaljubeonhoHP()
         georaecheocode.text = baljuData.getGeoraecheocodeHP()
@@ -104,7 +95,5 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
         nappumjangso.text = baljuData.getNappumjangsoHP()
         bigo.text = baljuData.getbigoHP()
         seq.text = "${position+1}"
-
     }
-
 }

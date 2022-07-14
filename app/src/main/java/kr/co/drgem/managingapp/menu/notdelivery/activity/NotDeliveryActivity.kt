@@ -49,8 +49,13 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
 
     var migwanri = "0"
-    var companyCodeOut = "0001"
-    var wareHouseCodeOut = "1001"
+    var companyCodeOut    = "0001"
+    var wareHouseCodeOut  = "1001"
+    var companyCodeOut0   = "0001"
+    var wareHouseCodeOut0 = "1001"
+    var CompanySel   = 0
+    var WareHouseSel = 0
+    var FirstSetSW   = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
     var sawonData = ArrayList<SawonData>()
     var ipgodamdangjacode = ""
@@ -65,12 +70,22 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     var status = "111"
     var sawonCode = ""
 
+    // sort의 상태를 파악하기 위한 변수
+    var onClickYocheongBeonho = 0
+    var onClickPummokcode     = 0
+    var onClickPummyeong      = 0
+    var onClickDobeonModel    = 0
+    var onClickSayang         = 0
+    var onClickLocation       = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_not_delivery)
 
         LoginUserUtil.getLoginData()?.let {
             sawonCode = it.sawoncode.toString()
+            companyCodeOut0   = it.saeopjangcode.toString()  // by jung 2022.07.02
+            wareHouseCodeOut0 = it.changgocode.toString()    // by jung 2022.07.02
         }
 
         binding.chulgodamdangjacode.text = sawonCode
@@ -87,7 +102,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         completeYocheongja()
     }
 
-
     override fun setupEvents() {
 
         binding.btnBack.setOnClickListener {
@@ -99,7 +113,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             } else {
                 finish()
             }
-
         }
 
         binding.btnFold.setOnClickListener {
@@ -113,7 +126,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             binding.btnOpen.isVisible = false
             binding.btnFold.isVisible = true
         }
-
 
         val cal = Calendar.getInstance()
         val dateSet = SimpleDateFormat("yyyyMMdd")
@@ -134,7 +146,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                     calStart = dateSet.format(cal.time)
                     binding.txtDateStart.text = dateFormat.format(cal.time)
-
                 }
             }
 
@@ -147,8 +158,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             )
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
-
-
         }
 
         binding.layoutDateEnd.setOnClickListener {
@@ -171,15 +180,11 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             )
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
-
-
         }
-
 
         binding.btnCodeRemove.setOnClickListener {
             binding.edtCode.text = null
         }
-
 
         binding.checkMigwanri.setOnCheckedChangeListener { button, ischecked ->
             if (ischecked) {
@@ -189,21 +194,28 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
         }
 
+        // 검색버튼 클릭시
         binding.btnFind.setOnClickListener {
+
+            // 품목코드 - 영문자 대문자로 변경하기
+            val UpperCaseS = binding.edtCode.text.toString().uppercase()
+            binding.edtCode.setText(UpperCaseS)
+
             if (status == "111") {
                 requestWorkseq()
             } else if (status == "333") {
                 status333Dialog() {
                     SerialManageUtil.clearData()
                     requestWorkseq()
+
+                    FirstSetSW  = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    spinnerSetOut()    // by jung 2022.07.02
                 }
             }
         }
-
-
     }
 
-    //    작업 SEQ 요청
+    // 작업 SEQ 요청
     fun requestWorkseq() {
 
         loadingDialog.show(supportFragmentManager, null)
@@ -217,7 +229,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         )
 
         Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
-
 
         apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
 
@@ -237,15 +248,12 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         }
                     }
                 }
-
             }
 
             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                 Log.d("yj", "SEQ 서버 실패 : ${t.message}")
             }
-
         })
-
     }
 
     //    미출고명세요청
@@ -297,7 +305,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 loadingDialog.dismiss()
             }
         })
-
     }
 
     //    미출고출고등록
@@ -342,7 +349,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         it.serialCheck = false
                         mAdapter.notifyDataSetChanged()
                     }
-
                 }
             }
 
@@ -425,7 +431,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                         } else {
                                             serverErrorDialog(it.resultmsg)
                                         }
-
                                     }
                                 }
                             }
@@ -433,14 +438,12 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                                 serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                             }
-
                         })
                 } else {
                     saveNotDoneDialog()
                 }
             }
         }
-
     }
 
     //    작업상태취소
@@ -465,17 +468,13 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                             Log.d("yj", "거래 작업상태취소 code : ${it.resultcd}")
                             Log.d("yj", "거래 작업상태취소 msg : ${it.resultmsg}")
-
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
                 }
-
             })
-
     }
 
     fun setTempData(): TempData {
@@ -488,9 +487,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             IPUtil.getIpAddress(),
             sawonCode
         )
-
         return tempData
-
     }
 
     override fun setValues() {
@@ -520,7 +517,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
             binding.spinnerCompany.adapter = spinnerCompanyAdapter
 
-
             val spinnerWareHouseAdapter =
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouse.adapter = spinnerWareHouseAdapter
@@ -543,7 +539,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             if (mWareHouseList.size > 0) {
                                 wareHouseCode = mWareHouseList[0].code
                             }
-
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -557,14 +552,11 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             if (mWareHouseList.size > 0) {
                                 wareHouseCode = mWareHouseList[0].code
                             }
-
                         }
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
 
             binding.spinnerWareHouse.onItemSelectedListener =
@@ -576,13 +568,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
-
         }
-
     }
 
     fun spinnerSetOut() {
@@ -593,11 +581,19 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
             binding.spinnerCompanyOut.adapter = spinnerCompanyAdapter
 
-
             val spinnerWareHouseAdapter =
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseOut.adapter = spinnerWareHouseAdapter
 
+            if (FirstSetSW == 0) {
+                var iCnt = binding.spinnerCompanyOut.count
+                for ( i: Int in 0 until iCnt) {
+                    if (it.getCompanyCode()[i].code == companyCodeOut0){
+                        CompanySel = i
+                    }
+                }
+                binding.spinnerCompanyOut.setSelection(CompanySel)
+            }
 
             binding.spinnerCompanyOut.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -615,7 +611,20 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
 
+                            if (FirstSetSW == 0) {
+                                var iCnt = binding.spinnerWareHouseOut.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGwangmyeongCode()[i].code == wareHouseCodeOut0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseOut.setSelection(WareHouseSel,false)
 
+                                if (mWareHouseListOut.size > 0) {
+                                    wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
+                                }
+                                FirstSetSW = 1
+                            }
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -629,6 +638,20 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             if (mWareHouseListOut.size > 0) {
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
+                            if (FirstSetSW == 0) {
+                                var iCnt = binding.spinnerWareHouseOut.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGumiCode()[i].code == wareHouseCodeOut0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseOut.setSelection(WareHouseSel,false)
+
+                                if (mWareHouseListOut.size > 0) {
+                                    wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
+                                }
+                                FirstSetSW = 1
+                            }
                         }
 
                         try {
@@ -639,9 +662,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
 
             binding.spinnerWareHouseOut.onItemSelectedListener =
@@ -658,13 +679,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
-
         }
-
     }
 
     fun spinnerSetIn() {
@@ -675,11 +692,9 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, it.getCompanyCode())
             binding.spinnerCompanyIn.adapter = spinnerCompanyAdapter
 
-
             val spinnerWareHouseAdapter =
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseIn.adapter = spinnerWareHouseAdapter
-
 
             binding.spinnerCompanyIn.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -696,8 +711,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             if (mWareHouseListIn.size > 0) {
                                 wareHouseCodeIn = mWareHouseListIn[0].code
                             }
-
-
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -715,9 +728,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
 
             binding.spinnerWareHouseIn.onItemSelectedListener =
@@ -726,53 +737,74 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                         parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         wareHouseCodeIn = mWareHouseListIn[position].code
-
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
-
                     }
-
                 }
-
         }
-
     }
 
     fun sort() {
 
-        var onClickLocation = 0
+        // 요청번호 소트
+        binding.layoutYocheongBeonho.setOnClickListener {
 
-        binding.layoutLocation.setOnClickListener {
+            sortImageClear(1)
 
-            if (onClickLocation < 2) {
-                onClickLocation++
+            if (onClickYocheongBeonho < 2) {
+                onClickYocheongBeonho++
             } else {
-                onClickLocation = 0
+                onClickYocheongBeonho = 0
             }
 
-            when (onClickLocation) {
-
+            when (onClickYocheongBeonho) {
                 0 -> {
-                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    binding.imgYocheongBeonho.setImageResource(R.drawable.dropempty)
                     mAdapter.setList(notDeliveryData.returnPummokdetailDetail())
                 }
-
                 1 -> {
-                    binding.imgLocation.setImageResource(R.drawable.dropdown)
-                    mAdapter.setList(notDeliveryData.getDownLocation())
+                    binding.imgYocheongBeonho.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(notDeliveryData.getDownYocheongBeonho())
                 }
-
                 2 -> {
-                    binding.imgLocation.setImageResource(R.drawable.dropup)
-                    mAdapter.setList(notDeliveryData.getUpLocation())
+                    binding.imgYocheongBeonho.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(notDeliveryData.getUpYocheongBeonho())
                 }
             }
         }
 
-        var onClickPummyeong = 0
+        // 품목코드 소트
+        binding.layoutPummokcode.setOnClickListener {
 
+            sortImageClear(2)
+
+            if (onClickPummokcode < 2) {
+                onClickPummokcode++
+            } else {
+                onClickPummokcode = 0
+            }
+
+            when (onClickPummokcode) {
+                0 -> {
+                    binding.imgPummokcode.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(notDeliveryData.returnPummokdetailDetail())
+                }
+                1 -> {
+                    binding.imgPummokcode.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(notDeliveryData.getDownPummokcode())
+                }
+                2 -> {
+                    binding.imgPummokcode.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(notDeliveryData.getUpPummokcode())
+                }
+            }
+        }
+
+        // 품목명 소트
         binding.layoutPummyeong.setOnClickListener {
+
+            sortImageClear(3)
 
             if (onClickPummyeong < 2) {
                 onClickPummyeong++
@@ -781,26 +813,129 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             }
 
             when (onClickPummyeong) {
-
                 0 -> {
                     binding.imgPummyeong.setImageResource(R.drawable.dropempty)
                     mAdapter.setList(notDeliveryData.returnPummokdetailDetail())
                 }
-
                 1 -> {
                     binding.imgPummyeong.setImageResource(R.drawable.dropdown)
                     mAdapter.setList(notDeliveryData.getDownPummyeong())
                 }
-
                 2 -> {
                     binding.imgPummyeong.setImageResource(R.drawable.dropup)
                     mAdapter.setList(notDeliveryData.getUpPummyeong())
                 }
             }
-
         }
 
+        // 도번/모델 소트
+        binding.layoutDobeonModel.setOnClickListener {
 
+            sortImageClear(4)
+
+            if (onClickDobeonModel < 2) {
+                onClickDobeonModel++
+            } else {
+                onClickDobeonModel = 0
+            }
+
+            when (onClickDobeonModel) {
+                0 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(notDeliveryData.returnPummokdetailDetail())
+                }
+                1 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(notDeliveryData.getDownDobeonModel())
+                }
+                2 -> {
+                    binding.imgDobeonModel.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(notDeliveryData.getUpDobeonModel())
+                }
+            }
+        }
+
+        // 사양 소트
+        binding.layoutSayang.setOnClickListener {
+
+            sortImageClear(5)
+
+            if (onClickSayang < 2) {
+                onClickSayang++
+            } else {
+                onClickSayang = 0
+            }
+
+            when (onClickSayang) {
+                0 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(notDeliveryData.returnPummokdetailDetail())
+                }
+                1 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(notDeliveryData.getDownSayang())
+                }
+                2 -> {
+                    binding.imgSayang.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(notDeliveryData.getUpSayang())
+                }
+            }
+        }
+
+        // 위치 소트
+        binding.layoutLocation.setOnClickListener {
+
+            sortImageClear(6)
+
+            if (onClickLocation < 2) {
+                onClickLocation++
+            } else {
+                onClickLocation = 0
+            }
+
+            when (onClickLocation) {
+                0 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropempty)
+                    mAdapter.setList(notDeliveryData.returnPummokdetailDetail())
+                }
+                1 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropdown)
+                    mAdapter.setList(notDeliveryData.getDownLocation())
+                }
+                2 -> {
+                    binding.imgLocation.setImageResource(R.drawable.dropup)
+                    mAdapter.setList(notDeliveryData.getUpLocation())
+                }
+            }
+        }
+
+    }
+    // 다른 항목의 소트의 상태를 초기상태로 표시
+    private fun sortImageClear(iP : Int){
+        if (iP != 1){
+            onClickYocheongBeonho   = 0
+            binding.imgYocheongBeonho.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 2){
+            onClickPummokcode  = 0
+            binding.imgPummokcode.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 3){
+            onClickPummyeong   = 0
+            binding.imgPummyeong.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 4){
+            onClickDobeonModel = 0
+            binding.imgDobeonModel.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 5){
+            onClickSayang      = 0
+            binding.imgSayang.setImageResource(R.drawable.dropempty)
+        }
+        if (iP != 6){
+            onClickLocation    = 0
+            binding.imgLocation.setImageResource(R.drawable.dropempty)
+        }
     }
 
     fun dateSet() {
@@ -808,7 +943,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         val dateServer = SimpleDateFormat("yyyyMMdd")  // 서버 전달 포맷
         val dateFormat = SimpleDateFormat("MM-dd")     // 텍스트뷰 포맷
         binding.txtDate.text = dateFormat.format(cal.time)
-
 
         calDate = dateServer.format(cal.time)
         binding.layoutDate.setOnClickListener {
@@ -820,7 +954,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                     calDate = dateServer.format(cal.time)
                     binding.txtDate.text = dateFormat.format(cal.time)
-
                 }
             }
 
@@ -834,7 +967,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
         }
-
     }
 
     private fun completeTextView(){
@@ -874,20 +1006,18 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
 
         autoCompleteYocheongja.setAdapter(adapter)
-
     }
 
-
+    // 시스템 종료키(태블릿 PC 아랫쪽 세모 버튼)를 누른 경우
     override fun onBackPressed() {
         if (status == "333") {
             backDialog() {
-                workStatusCancle()
+                workStatusCancle()  // 작업상태취소를 서버에 통보하고 확인받는 루틴(이안에서 login테이블의 상태정보 update되어야 한다.)
                 SerialManageUtil.clearData()
             }
         } else {
             finish()
         }
-
     }
 
     override fun onClickedEdit(data: PummokdetailDelivery) {
@@ -895,7 +1025,6 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         val dialog = NotDeliveryDialog()
         dialog.setCount(data, setTempData())
         dialog.show(supportFragmentManager, "dialog_notDelivery")
-
     }
 
     override fun onDismiss(p0: DialogInterface?) {

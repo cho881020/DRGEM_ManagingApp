@@ -35,24 +35,19 @@ class LoadingStockDialogFragment : DialogFragment() {
         dialog?.setCanceledOnTouchOutside(false) // 외부 터치 막음
 
         return binding.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.btnOk.setOnClickListener {
             dismiss()
         }
-
     }
 
-    fun loadingEnd() {
+    fun loadingEnd(sCnt : String) {
+        //binding.msgText.setText( "< " + sCnt + " > 건의 품목이 로딩되었습니다.")  // 일단 조회가 항상 같아서 막음 조사해 볼 것
         binding.layoutLoadingEnd.isVisible = true
         binding.layoutLoadingIng.isVisible = false
     }
-
-
 }

@@ -9,7 +9,6 @@
         android:orientation="vertical"
         tools:context=".menu.kitting.activity.KittingDetailActivity">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutTitle"
             android:layout_width="match_parent"
@@ -35,7 +34,6 @@
 
             </LinearLayout>
 
-
             <TextView
                 android:id="@+id/kittingbeonho"
                 android:layout_width="wrap_content"
@@ -47,7 +45,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="10dp"/>
-
 
             <TextView
                 android:id="@+id/btnSave"
@@ -65,7 +62,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -94,8 +90,6 @@
                 android:background="@color/color_CCCCCC"
                 android:layout_marginStart="33dp"
                 android:layout_marginEnd="20dp"/>
-
-
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
@@ -128,7 +122,6 @@
                         android:text="미출고"
                         android:textSize="12dp" />
 
-
                 </RadioGroup>
 
                 <CheckBox
@@ -154,7 +147,6 @@
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="12dp"
                 android:textStyle="bold" />
-
 
         </LinearLayout>
 
@@ -187,7 +179,6 @@
                 android:textSize="14dp"
                 android:textStyle="bold" />
 
-
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
@@ -201,7 +192,6 @@
                 android:gravity="center"
                 android:visibility="visible"
                 android:orientation="horizontal">
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -217,9 +207,7 @@
                     android:layout_marginStart="5dp"
                     android:src="@drawable/fold_icon" />
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/btnOpen"
@@ -230,7 +218,6 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:orientation="horizontal">
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -246,12 +233,9 @@
                     android:layout_marginStart="5dp"
                     android:src="@drawable/open_icon" />
 
-
             </LinearLayout>
 
-
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/layoutFold"
@@ -309,12 +293,9 @@
 
                     </LinearLayout>
 
-
                 </LinearLayout>
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -328,7 +309,6 @@
                     android:text="출고할사업장"
                     android:textColor="@color/color_808080"
                     android:textSize="12dp" />
-
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="95dp"
@@ -354,9 +334,7 @@
                         android:layout_marginHorizontal="7dp"
                         android:src="@drawable/dropdown" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             </LinearLayout>
 
@@ -397,9 +375,7 @@
                         android:layout_marginHorizontal="7dp"
                         android:src="@drawable/dropdown" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             </LinearLayout>
 
@@ -439,11 +415,9 @@
                         android:textColor="@color/color_000000"
                         android:textSize="12dp" />
 
-
                 </LinearLayout>
 
-
-            </LinearLayout>
+           </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -481,7 +455,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginHorizontal="7dp"
                         android:src="@drawable/dropdown" />
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -524,12 +497,9 @@
                         android:layout_marginHorizontal="7dp"
                         android:src="@drawable/dropdown" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -578,7 +548,6 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/layoutList"
             android:layout_width="match_parent"
@@ -587,8 +556,6 @@
             android:layout_marginBottom="5dp"
             android:background="@color/color_FFFFFF"
             android:orientation="vertical">
-
-
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -610,19 +577,47 @@
                         android:orientation="horizontal"
                         android:paddingHorizontal="10dp">
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutSeq"
                             android:layout_width="35dp"
                             android:layout_height="wrap_content"
-                            android:text="순번"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtSeq"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="순번"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+                            <ImageView
+                                android:id="@+id/imgSeq"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutPummokcode"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="품목코드"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtPummokcode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="품목코드"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+                            <ImageView
+                                android:id="@+id/imgPummokcode"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/layoutPummyeong"
@@ -630,7 +625,6 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:id="@+id/txtPummyeong"
                                 android:layout_width="wrap_content"
@@ -638,30 +632,52 @@
                                 android:text="품명"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
-
-
                             <ImageView
                                 android:id="@+id/imgPummyeong"
                                 android:src="@drawable/dropempty"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
-
                         </LinearLayout>
 
-
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutDobeonModel"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="도번/모델"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtDobeonModel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="도번/모델"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+                            <ImageView
+                                android:id="@+id/imgDobeonModel"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutSayang"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="사양"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtSayang"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="사양"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+                            <ImageView
+                                android:id="@+id/imgSayang"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="60dp"
@@ -686,8 +702,6 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-
-
                         <TextView
                             android:id="@+id/serialDetail"
                             android:layout_width="80dp"
@@ -697,15 +711,12 @@
                             android:textSize="12dp"
                             tools:visibility="visible"/>
 
-
-
                         <LinearLayout
                             android:id="@+id/layoutLocation"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
-
                             <TextView
                                 android:id="@+id/txtLocation"
                                 android:layout_width="wrap_content"
@@ -713,15 +724,11 @@
                                 android:text="창고위치"
                                 android:textColor="@color/color_808080"
                                 android:textSize="12dp" />
-
-
                             <ImageView
                                 android:id="@+id/imgLocation"
                                 android:src="@drawable/dropempty"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
-
-
                         </LinearLayout>
 
                         <TextView
@@ -732,8 +739,6 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-
-
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
@@ -742,13 +747,25 @@
                             android:textColor="@color/color_808080"
                             android:textSize="12dp" />
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/layoutYocheongBeonho"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:text="요청번호"
-                            android:textColor="@color/color_808080"
-                            android:textSize="12dp" />
-
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtYocheongBeonho"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="요청번호"
+                                android:textColor="@color/color_808080"
+                                android:textSize="12dp" />
+                            <ImageView
+                                android:id="@+id/imgYocheongBeonho"
+                                android:src="@drawable/dropempty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -764,14 +781,11 @@
                         android:layout_weight="1"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-
                 </LinearLayout>
 
             </HorizontalScrollView>
 
-
         </LinearLayout>
-
 
     </LinearLayout>
 </layout>

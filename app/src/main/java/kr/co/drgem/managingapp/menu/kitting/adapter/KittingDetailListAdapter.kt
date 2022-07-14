@@ -1,3 +1,9 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : KittingDetailListAdapter.kt
+ * 개 발 자 : (주)디알젬
+ * 업무기능 : 키팅출고 화면으로 키팅명세요청 및 일괄출고등록 기능 Adapter
+ */
 package kr.co.drgem.managingapp.menu.kitting.adapter
 
 import android.view.ViewGroup
@@ -27,7 +33,7 @@ class KittingDetailListAdapter(
         }
     }
 
-    override fun getItemCount() = mList.size
+    override fun getItemCount() = mList.size  // getItemCount()도 Adapter 의 기본 멤버함수이다. 무조건 있어야 한다??
 
     fun setTemp(tempData : TempData) {
         this.tempData = tempData

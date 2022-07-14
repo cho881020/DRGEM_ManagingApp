@@ -62,23 +62,23 @@ data class OrderDetailResponse(
         return nappumjangso
     }
 
-    fun getUpLocation(): ArrayList<Baljudetail>{
+    fun getUpPummokcode(): ArrayList<Baljudetail>{
         val sortList : ArrayList<Baljudetail> = arrayListOf()
         sortList.clear()
         if (baljudetail != null) {
             sortList.addAll(baljudetail)
         }
-        sortList.sortBy { it.location }
+        sortList.sortBy { it.pummokcode }
         return sortList
     }
 
-    fun getDownLocation(): ArrayList<Baljudetail>{
+    fun getDownPummokcode(): ArrayList<Baljudetail>{
         val sortList : ArrayList<Baljudetail> = arrayListOf()
         sortList.clear()
         if (baljudetail != null) {
             sortList.addAll(baljudetail)
         }
-        sortList.sortByDescending { it.location }
+        sortList.sortByDescending { it.pummokcode }
         return sortList
     }
 
@@ -99,6 +99,65 @@ data class OrderDetailResponse(
             sortList.addAll(baljudetail)
         }
         sortList.sortByDescending { it.pummyeong }
+        return sortList
+    }
+    fun getUpDobeonModel(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortBy { it.dobeon_model }
+        return sortList
+    }
+
+    fun getDownDobeonModel(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortByDescending { it.dobeon_model }
+        return sortList
+    }
+
+    fun getUpSayang(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortBy { it.sayang }
+        return sortList
+    }
+
+    fun getDownSayang(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortByDescending { it.sayang }
+        return sortList
+    }
+
+    fun getUpLocation(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortBy { it.location }
+        return sortList
+    }
+
+    fun getDownLocation(): ArrayList<Baljudetail>{
+        val sortList : ArrayList<Baljudetail> = arrayListOf()
+        sortList.clear()
+        if (baljudetail != null) {
+            sortList.addAll(baljudetail)
+        }
+        sortList.sortByDescending { it.location }
         return sortList
     }
 

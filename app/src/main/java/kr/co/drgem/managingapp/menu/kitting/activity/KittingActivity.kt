@@ -40,18 +40,16 @@ class KittingActivity : BaseActivity() {
     val loadingDialog = LoadingDialogFragment()
 
     var changgocode = ""
-    var calStart = ""
-    var calEnd = ""
+    var calStart    = ""
+    var calEnd      = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kitting)
 
-
         setupEvents()
         getRequestKitting()
         completeTextView()
-
     }
 
     override fun setupEvents() {
@@ -79,7 +77,6 @@ class KittingActivity : BaseActivity() {
 
                     calStart = dateSet.format(cal.time)
                     binding.txtDateStart.text = dateFormat.format(cal.time)
-
                 }
             }
 
@@ -92,8 +89,6 @@ class KittingActivity : BaseActivity() {
             )
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
-
-
         }
 
         binding.layoutDateEnd.setOnClickListener {
@@ -116,10 +111,7 @@ class KittingActivity : BaseActivity() {
             )
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
-
-
         }
-
 
         val changgoList = ArrayList<Detailcode>()
         changgoList.add(Detailcode("", "전체"))
@@ -138,23 +130,15 @@ class KittingActivity : BaseActivity() {
                     position: Int,
                     id: Long
                 ) {
-
                     changgocode = changgoList[position].code
                     Log.d("yj", "창고코드 : $changgocode")
-
-
                 }
-
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-
                 }
-
             }
-
     }
 
-
-    //    키팅번호요청
+    // 키팅번호요청
     fun getRequestKitting() {
         binding.btnFind.setOnClickListener {
 
@@ -179,23 +163,18 @@ class KittingActivity : BaseActivity() {
                                     binding.txtCount.text = "(0건)"
 
                                 } else {
-
                                     binding.layoutList.isVisible = true
                                     binding.layoutEmpty.isVisible = false
-
                                 }
                             }
                         }
                         loadingDialog.dismiss()
                     }
-
                     override fun onFailure(call: Call<KittingResponse>, t: Throwable) {
                         loadingDialog.dismiss()
                         serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     }
-
                 })
-
         }
     }
 
@@ -217,18 +196,13 @@ class KittingActivity : BaseActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sawonmyeongList)
 
         autoCompleteTextView.setAdapter(adapter)
-
     }
 
     override fun setValues() {
-
         mAdapter = KittingListAdapter()
         mAdapter.setList(kittingData.returnKittingDetail())
         binding.recyclerView.adapter = mAdapter
 
         binding.txtCount.text = "(${kittingData.returnKittingDetail().size}건)"
-
     }
-
-
 }

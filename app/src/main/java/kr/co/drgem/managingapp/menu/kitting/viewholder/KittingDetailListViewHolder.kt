@@ -1,3 +1,9 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : KittingDetailListViewHolder.kt
+ * 개 발 자 : (주)디알젬
+ * 업무기능 : 키팅출고 화면으로 키팅명세요청 및 일괄출고등록 기능 ListViewHolder
+ */
 package kr.co.drgem.managingapp.menu.kitting.viewholder
 
 import android.app.AlertDialog
@@ -21,6 +27,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 
     var data: Pummokdetail? = null
 
+    // 수량입력 항목 버튼
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
 
     //    val layoutEdit = itemView.findViewById<LinearLayout>(R.id.layoutEdit)
@@ -37,14 +44,11 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
     val seq = itemView.findViewById<TextView>(R.id.seq)
     val yocheongbeonho = itemView.findViewById<TextView>(R.id.yocheongbeonho)
 
-
-
     fun bind(data: Pummokdetail, tempData: TempData, position: Int) {
 
         this.data = data
 
         Log.d("yj", "data : ${data.itemViewClicked}")
-
 
         when {
             data.itemViewClicked -> {
@@ -79,9 +83,7 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
 
         if (data.getPummokCount().isNullOrEmpty()) {
             data.setPummokCount("0")
-
         }
-
 
         pummokcode.text = data.getPummokcodeHP()
         pummyeong.text = data.getpummyeongHP()
@@ -95,7 +97,6 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
         yocheongbeonho.text = data.getyocheongbeonhoHP()
         seq.text = "${position + 1}"
         chulgosuryang.text = data.getPummokCount()
-
 
         pummyeong.setOnLongClickListener{
             AlertDialog.Builder(itemView.context)
@@ -127,13 +128,11 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
             false
         }
 
-
-
-
-
+        // "품목코드+요청번호"에 맞는 시리얼번호 가져오기
         val savedSerialString =
-            SerialManageUtil.getSerialStringByPummokCode("${data.getPummokcodeHP()}/${data.getyocheongbeonhoHP()}")        // 품목 코드에 맞는 시리얼 가져와서
+            SerialManageUtil.getSerialStringByPummokCode("${data.getPummokcodeHP()}/${data.getyocheongbeonhoHP()}")
 
+        // btnEdit의 표시를 달리한다.
         if (savedSerialString != null || data.getPummokCount() != "0") {
 
             Log.d("yj", "getPummokCount : ${data.getPummokCount()}")
@@ -146,8 +145,8 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
             else{
                 btnEdit.text = "*수량입력"
             }
-        } else {
-
+        } else
+        {
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
             if(data.getjungyojajeyeobuHP() == "Y"){
@@ -156,20 +155,35 @@ class KittingDetailListViewHolder(parent: ViewGroup, val listener: KittingDetail
             else{
                 btnEdit.text = "수량입력"
             }
-
         }
 
+//        // 선택된 데이터는 스킵하도록하는 컬러 입히기 루틴 테스트 한 것 // 2022.07.08 by jung
+//        val kk = (position + 1) % 3
+//        if (kk == 0) {
+//            itemView.setBackgroundColor(
+//                ContextCompat.getColor(
+//                    itemView.context,
+//                    R.color.color_455591
+//                )
+//            )
+//        }
 
-
-
-
-
+        // 수량입력 버튼을 클리하면 시리얼번호 입력루틴으로 가도록
+        // KittingDetailEditListener 리스너 기능을 이용하여
+        // KittingDetailActivity.kt의 onClickedEdit()를 호출한다.
         btnEdit.setOnClickListener {
-
-            listener.onClickedEdit(data)
+            // 여기서 "요청수량-기출고수량"이 1보다 작으면 입력할 수량 없음으로 표시하고 종료
+            val sss1 = (yocheongsuryang.text.trim().toString().toInt()  // 요청수량
+                    - gichulgosuryang.text.trim().toString().toInt())  // 기출고수량
+            if (1 > sss1) {
+                AlertDialog.Builder(itemView.context)
+                    .setMessage("요청수량에서 기출고수량을 뺀 수량이 1보다 작습니다..")
+                    .setNegativeButton("확인", null)
+                    .show()
+            } else {
+                listener.onClickedEdit(data)
+            }
         }
-
     }
-
 
 }

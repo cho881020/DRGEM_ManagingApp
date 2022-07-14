@@ -1,12 +1,13 @@
 package kr.co.drgem.managingapp.models
 
-data class Pummokdetail(
-    val pummokcode: String?,     // 품목코드
+data class PummokdetailSeq(
+    var seqnum: String?,     // 시퀀스 번호
+    var pummokcode: String?,     // 품목코드
     val pummyeong: String?,      // 품명
     val dobeon_model: String?,   //도번/모델
     val sayang: String?,         //사양
     val danwi: String?,          //단위
-    val location: String?,       //위치
+    var location: String?,       //위치
     var hyeonjaegosuryang: String?,      //현재고수량
     val yocheongsuryang: String?,        //요청수량
     val gichulgosuryang: String?,        //기출고수량
@@ -14,11 +15,18 @@ data class Pummokdetail(
     val jungyojajeyeobu: String?,        //중요자재여부
     val yocheongbeonho: String?,        //요청번호
 ) {
+    fun getSeqNumHP() : String {
+        if(seqnum == null){
+            return "-"
+        }
+        return seqnum as String
+    }
+
     fun getPummokcodeHP() : String {
         if(pummokcode == null){
             return "-"
         }
-        return pummokcode
+        return pummokcode as String
     }
 
     fun getpummyeongHP() : String {
@@ -53,7 +61,7 @@ data class Pummokdetail(
         if(location == null){
             return "-"
         }
-        return location
+        return location as String
     }
 
     fun gethyeonjaegosuryangHP() : String {
