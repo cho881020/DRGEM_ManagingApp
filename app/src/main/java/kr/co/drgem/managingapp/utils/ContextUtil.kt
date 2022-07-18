@@ -6,12 +6,10 @@ class ContextUtil {
 
     companion object {
 
-
         private val prefName = "DRGEM_ManagingAppPref"
 
-        //        토큰
+        // 토큰
         val TOKEN = "TOKEN"
-
 
         fun setToken(context: Context, token: String) {
             val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
@@ -19,14 +17,8 @@ class ContextUtil {
         }
 
         fun getToken(context: Context) : String {
-
             val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
             return pref.getString(TOKEN, "")!!
-
         }
-
-
-
     }
-
 }

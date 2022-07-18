@@ -34,11 +34,11 @@ class LocationActivity : BaseActivity() {
     lateinit var locationData: LocationResponse
     val loadingDialog = LoadingDialogFragment()
 
-    var changgocode = ""
+    var changgocode    = ""
     var inputPummyeong = ""
-    var SEQ = ""
-    var status = "111"
-    var sawonCode = ""
+    var SEQ            = ""
+    var status         = "111"
+    var sawonCode      = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +90,11 @@ class LocationActivity : BaseActivity() {
         val changgoList = ArrayList<Detailcode>()
         changgoList.add(Detailcode("", "전체"))
         changgoList.add(Detailcode("2001", "자재창고1"))
+        changgoList.add(Detailcode("2002", "생산자재창고"))
         changgoList.add(Detailcode("2014", "자재창고2"))
+        changgoList.add(Detailcode("2020", "자재재작업창고"))
+        changgoList.add(Detailcode("2021", "품경창고"))
+        changgoList.add(Detailcode("2015", "수입검사대기창고"))
 
         val spinnerAdapter =
             MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, changgoList)
@@ -167,7 +171,7 @@ class LocationActivity : BaseActivity() {
         }
     }
 
-    //    작업 SEQ 요청
+    // 작업 SEQ 요청
     fun requestWorkseq() {
 
         loadingDialog.show(supportFragmentManager, null)
@@ -211,10 +215,11 @@ class LocationActivity : BaseActivity() {
             }
         })
     }
-    //    로케이션요청
+
+    // 로케이션요청
     fun getRequestLocation() {
 
-        val changgocode = changgocode
+        //val changgocode = changgocode
         val location = binding.edtLocation.text.toString()
         inputPummyeong = binding.pummyeong.text.toString()
 
@@ -254,7 +259,8 @@ class LocationActivity : BaseActivity() {
                 }
             })
     }
-    //    로케이션등록
+
+    // 로케이션등록
     fun postRequestLocationAdd() {
         val pummokdetail = JsonArray()
 
@@ -309,7 +315,7 @@ class LocationActivity : BaseActivity() {
             })
         }
     }
-    //    작업상태취소
+    // 작업상태취소
     fun workStatusCancle() {
 
         val workCancelMap = hashMapOf(

@@ -51,17 +51,18 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
     var companyCode0   = "0001"
     var wareHouseCode0 = "1001"
-    var CompanySel   = 0
-    var WareHouseSel = 0
-    var FirstSetSW   = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
-    var calDate = ""
+    var CompanySel     = 0
+    var WareHouseSel   = 0
+    var FirstSetSW     = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
+    var calDate        = ""
+
     lateinit var tranData: TranResponse
 
     val loadingDialog = LoadingDialogFragment()
 
-    var SEQ = ""
-    var status = "111"
-    var sawonCode = ""
+    var SEQ         = ""
+    var status      = "111"
+    var sawonCode   = ""
 
     var baljubeonho = ""
 
@@ -78,7 +79,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transaction)
 
         LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
+            sawonCode      = it.sawoncode.toString()
             companyCode0   = it.saeopjangcode.toString()  // by jung 2022.07.02
             wareHouseCode0 = it.changgocode.toString()    // by jung 2022.07.02
         }
@@ -86,7 +87,7 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         setupEvents()
         sort()
-        postRequestTran()
+        postRequestTran()    // 거래명세등록 리스너 세팅
 
         spinnerSet()
     }
@@ -208,8 +209,8 @@ class TransactionActivity : BaseActivity(), transactionEditListener,
 
         binding.georaecheomyeong.text = tranData.getGeoraecheomyeongHP()
         binding.nappumcheomyeong.text = tranData.getNappumcheomyeongHP()
-        binding.bigo.text = tranData.getBigoHP()
-        binding.txtCount.text = "(${tranData.returnGeoraedetail().size}건)"
+        binding.bigo            .text = tranData.getBigoHP()
+        binding.txtCount        .text = "(${tranData.returnGeoraedetail().size}건)"
 
         tranData.returnGeoraedetail().forEach {
             if (it.jungyojajeyeobu == "Y") {

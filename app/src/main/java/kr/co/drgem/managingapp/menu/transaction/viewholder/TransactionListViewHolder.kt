@@ -1,3 +1,9 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : TransactionListViewHolder.kt
+ * 개 발 자  : (주)디알젬
+ * 업무기능 : 거래명세입고 화면으로 거래명세요청, 거래명세등록 기능 ListViewHolder
+ */
 package kr.co.drgem.managingapp.menu.transaction.viewholder
 
 import android.app.AlertDialog
@@ -20,21 +26,20 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
 
     var data: Georaedetail? = null
 
-    val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
-    val ipgosuryang = itemView.findViewById<TextView>(R.id.ipgosuryang)
+    val btnEdit       = itemView.findViewById<TextView>(R.id.btnEdit)
+    val ipgosuryang   = itemView.findViewById<TextView>(R.id.ipgosuryang)
 
-    val seq = itemView.findViewById<TextView>(R.id.seq)
-    val pummokcode = itemView.findViewById<TextView>(R.id.pummokcode)
-    val pummyeong = itemView.findViewById<TextView>(R.id.pummyeong)
-    val dobeon_model = itemView.findViewById<TextView>(R.id.dobeon_model)
-    val sayang = itemView.findViewById<TextView>(R.id.sayang)
-    val balhudanwi = itemView.findViewById<TextView>(R.id.balhudanwi)
-    val baljubeonho = itemView.findViewById<TextView>(R.id.baljubeonho)
-    val baljusuryang = itemView.findViewById<TextView>(R.id.baljusuryang)
+    val seq           = itemView.findViewById<TextView>(R.id.seq)
+    val pummokcode    = itemView.findViewById<TextView>(R.id.pummokcode)
+    val pummyeong     = itemView.findViewById<TextView>(R.id.pummyeong)
+    val dobeon_model  = itemView.findViewById<TextView>(R.id.dobeon_model)
+    val sayang        = itemView.findViewById<TextView>(R.id.sayang)
+    val balhudanwi    = itemView.findViewById<TextView>(R.id.balhudanwi)
+    val baljubeonho   = itemView.findViewById<TextView>(R.id.baljubeonho)
+    val baljusuryang  = itemView.findViewById<TextView>(R.id.baljusuryang)
     val giipgosuryang = itemView.findViewById<TextView>(R.id.giipgosuryang)
-    val baljuseq = itemView.findViewById<TextView>(R.id.baljuseq)
-    val location = itemView.findViewById<TextView>(R.id.location)
-
+    val baljuseq      = itemView.findViewById<TextView>(R.id.baljuseq)
+    val location      = itemView.findViewById<TextView>(R.id.location)
 
     fun bind(data: Georaedetail, tempData: TempData, position: Int) {
 
@@ -72,25 +77,22 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
         }
 
         if (data.getPummokCount().isNullOrEmpty()) {
-            data.setPummokCount("0")
-
+            //data.setPummokCount("0")  // 자재부의 요청으로 첫음에는 입고수량을 발주수량과 같도록 한다.
+            data.setPummokCount(data.getBaljusuryangHP())  // 2022.07.15
         }
 
-        seq.text = data.getSeqHP()
-        pummokcode.text = data.getPummokcodeHP()
-        pummyeong.text = data.getPummyeongHP()
-        dobeon_model.text = data.getDobeonModelHP()
-        sayang.text = data.getsayangHP()
-        balhudanwi.text = data.getBalhudanwiHP()
-        baljubeonho.text = data.getBaljubeonhoHP()
-        baljusuryang.text = data.getBaljusuryangHP()
+        seq          .text = data.getSeqHP()
+        pummokcode   .text = data.getPummokcodeHP()
+        pummyeong    .text = data.getPummyeongHP()
+        dobeon_model .text = data.getDobeonModelHP()
+        sayang       .text = data.getsayangHP()
+        balhudanwi   .text = data.getBalhudanwiHP()
+        baljubeonho  .text = data.getBaljubeonhoHP()
+        baljusuryang .text = data.getBaljusuryangHP()
         giipgosuryang.text = data.getGiipgosuryangHP()
-        ipgosuryang.text = data.getPummokCount()
-
-
-        baljuseq.text = data.getBaljuseqHP()
-        location.text = data.getLocationHP()
-
+        ipgosuryang  .text = data.getPummokCount()
+        baljuseq     .text = data.getBaljuseqHP()
+        location     .text = data.getLocationHP()
 
         pummyeong.setOnLongClickListener {
             AlertDialog.Builder(itemView.context)
@@ -122,10 +124,8 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
             false
         }
 
-
         val savedSerialString =
             SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())        // 품목 코드에 맞는 시리얼 가져와서
-
 
         if (savedSerialString != null || data.getPummokCount() != "0" ) {
 
@@ -133,28 +133,20 @@ class TransactionListViewHolder(parent: ViewGroup, val listener: transactionEdit
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_FFFFFF))
             if(data.getJungyojajeyeobuHP() == "Y"){
                 btnEdit.text = "*정보입력"
-            }
-            else{
+            } else {
                 btnEdit.text = "*수량입력"
             }
-
         } else {
-
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(itemView.context.resources.getColor(R.color.color_9A9A9A))
             if(data.getJungyojajeyeobuHP() == "Y"){
                 btnEdit.text = "정보입력"
-            }
-            else{
+            } else {
                 btnEdit.text = "수량입력"
             }
-
         }
 
-
         btnEdit.setOnClickListener {
-
-
             listener.onClickedEdit(data)
         }
     }

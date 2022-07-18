@@ -438,6 +438,9 @@ class KittingDetailDialog : BaseDialogFragment() {
                 binding.btnOk.isVisible = true              // 확인버튼이 보이고,
                 adapterSet()                                // 시리얼번호 입력난을 표시.
             }
+        } else
+        {
+            binding.edtCount.setText(binding.yocheongsuryang.text)  // 수량이 0인 경우 요청수량을 적용시킨다. // 2022.07.15 자재부 요청사항
         }
 
         Log.d("yj", "binding.edtPummokcode : ${binding.edtPummokcode.text}")

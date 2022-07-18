@@ -36,8 +36,9 @@ class MainActivity : BaseActivity() {
         setupEvents()
         setValues()
 
-        binding.edtId.setText("22018")
-        binding.edtPw.setText("jung1049&&")
+        // 지울것
+        //binding.edtId.setText("22018")
+        //binding.edtPw.setText("jung1049&&")
     }
 
     override fun setupEvents() {
@@ -45,11 +46,10 @@ class MainActivity : BaseActivity() {
         binding.btnRecovery.setOnClickListener {
 
             val loginWorkInfo = mSqliteDB.getAllLoginWorkCommon()[0]
-            val workType = loginWorkInfo.WORKGUBUN.toString()
-            val workSEQ = loginWorkInfo.WORKNUMBER.toString()
+            val workType      = loginWorkInfo.WORKGUBUN.toString()
+            val workSEQ       = loginWorkInfo.WORKNUMBER.toString()
 
-
-//           JSON 바디로 보낼때 => 해쉬맵을 보내는 방향으로
+            // JSON 바디로 보낼때 => 해쉬맵을 보내는 방향으로
             val dataMap = hashMapOf(
                 "requesttype" to "01001",
                 "username" to loginWorkInfo.USERID!!,
@@ -65,13 +65,10 @@ class MainActivity : BaseActivity() {
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
-
                 ) {
-
 //                    Log.d("콜확인", call.request().body().toString())
 
                     if (response.isSuccessful) {
-
                         val br = response.body()!!
 //                       Log.d("응답확인", br.resultmsg)
 //                       Log.d("응답확인", br.resultcd)
@@ -81,7 +78,6 @@ class MainActivity : BaseActivity() {
                             ContextUtil.setToken(mContext, br.security_token!!)
                             LoginUserUtil.setLoginData(br)
 
-
                             val myIntent =Intent(mContext, MenuActivity::class.java)
                             myIntent.putExtra("name", br.sawonmyeong)
                             myIntent.putExtra("workType", workType)
@@ -89,17 +85,13 @@ class MainActivity : BaseActivity() {
 
                             startActivity(myIntent)
                             finish()
-
                         } else {
-
                             binding.loginMSG.text = br.resultmsg
                         }
-
                     } else {
                         Toast.makeText(mContext, "뭔가 결과만 실패", Toast.LENGTH_SHORT).show()
                         Log.d("에러코드", response.errorBody()!!.string())
                     }
-
                 }
 
                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
@@ -107,21 +99,17 @@ class MainActivity : BaseActivity() {
                     serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     t.printStackTrace()
                 }
-
             })
-
-
         }
 
 //        binding.btnLogin.setOnClickListener {
 //            val myIntent = Intent(mContext, MenuActivity::class.java)
 //            startActivity(myIntent)}
 
+        // 로그인 버튼을 클릭하면
         binding.btnLogin.setOnClickListener {
-
             val inputId = binding.edtId.text.toString()
             val inputPw = binding.edtPw.text.toString()
-
 
 //           JSON 바디로 보낼때 => 해쉬맵을 보내는 방향으로
             val dataMap = hashMapOf(
@@ -139,16 +127,14 @@ class MainActivity : BaseActivity() {
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
-
                 ) {
-
-//                    Log.d("콜확인", call.request().body().toString())
+                    // Log.d("콜확인", call.request().body().toString())
 
                     if (response.isSuccessful) {
 
                         val br = response.body()!!
-//                       Log.d("응답확인", br.resultmsg)
-//                       Log.d("응답확인", br.resultcd)
+                        // Log.d("응답확인", br.resultmsg)
+                        // Log.d("응답확인", br.resultcd)
 
                         if (br.resultcd == "000") {
 
@@ -166,37 +152,28 @@ class MainActivity : BaseActivity() {
                                 md5(inputPw),
                                 br
                             )
-
                             finish()
-
                         } else {
-
                             binding.loginMSG.text = br.resultmsg
                         }
-
                     } else {
                         Toast.makeText(mContext, "뭔가 결과만 실패", Toast.LENGTH_SHORT).show()
                         Log.d("에러코드", response.errorBody()!!.string())
                     }
-
                 }
 
                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
-//                    Log.d("콜확인", call.request().body().toString())
+                    // Log.d("콜확인", call.request().body().toString())
                     serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     t.printStackTrace()
                 }
-
             })
-
         }
-
     }
 
     override fun onBackPressed() {
         endDialog()
     }
-
 
     override fun setValues() {
 
@@ -204,23 +181,20 @@ class MainActivity : BaseActivity() {
             val workStatus = mSqliteDB.getAllLoginWorkCommon()[0].WORKGUBUN.toString()
             //val workSEQ = mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER.toString() //by jung 막음 2022.07.03
             
-//            복구 모두 필요
+            // 복구 모두 필요
             if (workStatus != "None") {
                 binding.btnRecovery.visibility = View.VISIBLE
             }
             else {
                 binding.btnRecovery.visibility = View.GONE
             }
-            
         }
-
-
     }
 
+    // password 암호화
     private fun md5(input: String): String {
         val md = MessageDigest.getInstance("MD5")
         return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
             .lowercase()
     }
-
 }

@@ -10,19 +10,13 @@ class LoginUserUtil {
         private var loginData : BasicResponse? = null
 
         fun setLoginData(data : BasicResponse) {
-
             if(loginData == null){
                 loginData = data
             }
-
         }
 
         fun getLoginData() : BasicResponse? {
-
             return loginData
         }
-
     }
-
-
 }

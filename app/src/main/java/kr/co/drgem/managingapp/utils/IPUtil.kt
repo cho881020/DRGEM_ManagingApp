@@ -19,6 +19,7 @@ class IPUtil {
             }
             return result
         }
+
         private fun isIPv4Address(address: String): Boolean {
             return if (address.isEmpty()) {
                 false
@@ -29,5 +30,4 @@ class IPUtil {
             }
         }
     }
-
 }

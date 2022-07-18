@@ -13,11 +13,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonArray
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kr.co.drgem.managingapp.BaseActivity
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
@@ -32,11 +37,13 @@ import kr.co.drgem.managingapp.models.*
 import kr.co.drgem.managingapp.utils.IPUtil
 import kr.co.drgem.managingapp.utils.LoginUserUtil
 import kr.co.drgem.managingapp.utils.MainDataManager
+import okhttp3.internal.wait
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlinx.coroutines.delay as delay
 
 class StockActivity : BaseActivity(), StockListEditListener,
     DialogInterface.OnDismissListener {
@@ -78,8 +85,7 @@ class StockActivity : BaseActivity(), StockListEditListener,
         spinnerSet()  // 사업장, 창고 콤보박스 세팅 (재고조사 준비에서 사용)
 
         // 지울것 (테스트용)
-        binding.edtCode.setText("e07-000710-00")
-
+        //binding.edtCode.setText("e07-000710-00")
     }
 
     // 시스템 종료키(태블릿 PC 아랫쪽 세모 버튼)를 누른 경우
@@ -113,7 +119,7 @@ class StockActivity : BaseActivity(), StockListEditListener,
             requestWorkseq()
         }
 
-        searchStock()   // 검색버튼을 클릭에 대한  "binding.btnFind.setOnClickListener {" 정의
+        searchStock()   // 검색버튼의 클릭에 대한  "binding.btnFind.setOnClickListener {" 정의
 
         // 초기화 버튼
         binding.btnReset.setOnClickListener {
@@ -128,6 +134,12 @@ class StockActivity : BaseActivity(), StockListEditListener,
             binding.suryang    .setText("0")
             binding.locationAdd.setText("")
             binding.edtCode    .setText("")
+
+            binding.edtCode.requestFocus()
+
+            // keyboard 올리기
+            val imm = binding.edtCode.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.edtCode,0)
         }
 
         // +추가버튼을 클릭하면
@@ -144,8 +156,8 @@ class StockActivity : BaseActivity(), StockListEditListener,
             //searchCodeData.danwi           = "" // 단위     --> 이 데이터는 검색버튼을 누른 경우 복사된다.
             //searchCodeData.location        = "" // 위치     --> 이 데이터는 검색버튼을 누른 경우 복사된다.
             searchCodeData.hyeonjaegosuryang = binding.suryang.text.toString()      // 현재고수량
-            searchCodeData.josasigan         = josasigan0                           // 조사시간
-            searchCodeData.locationadd       = binding.locationAdd.text.toString()  // 입력된 로케이션
+            searchCodeData.josasigan = josasigan0                           // 조사시간
+            searchCodeData.locationadd = binding.locationAdd.text.toString()  // 입력된 로케이션
 
             if (searchCodeData.gethyeonjaegosuryangHP() == "") {
                 AlertDialog.Builder(mContext)
@@ -180,16 +192,15 @@ class StockActivity : BaseActivity(), StockListEditListener,
                 setValues()
 
                 MakeSeqNum++  // 추가작업후 순번을 +1 한다.
-            } else
-            {   //AddUpdateCheckSw == 0 은 기본으로 추가 버튼, 1은 정정 버튼으로 사용을 지정
+            } else {   //AddUpdateCheckSw == 0 은 기본으로 추가 버튼, 1은 정정 버튼으로 사용을 지정
                 // 여기서는 정정 작업
                 mListSeq.forEach {
 
-                    if ( it.getSeqNumHP().toInt() == SavedSeqNum)  {
+                    if (it.getSeqNumHP().toInt() == SavedSeqNum) {
 
                         it.hyeonjaegosuryang = searchCodeData.hyeonjaegosuryang  // 입력된 수량
-                        it.locationadd       = searchCodeData.locationadd        // 입력된 로케이션
-                        it.josasigan         = searchCodeData.josasigan          // 입력 작업시간
+                        it.locationadd = searchCodeData.locationadd        // 입력된 로케이션
+                        it.josasigan = searchCodeData.josasigan          // 입력 작업시간
 
                         return@forEach
                     }
@@ -198,7 +209,7 @@ class StockActivity : BaseActivity(), StockListEditListener,
                 binding.recyclerView.adapter = mAdapter
 
                 // 버튼 명 바꾸기
-                binding.btnAdd  .text = "+ 추가"  // 수정
+                binding.btnAdd.text = "+ 추가"  // 수정
                 binding.btnReset.text = "초기화"  // 취소
             }
 
@@ -206,15 +217,22 @@ class StockActivity : BaseActivity(), StockListEditListener,
 
             AddUpdateCheckSw = 0 // 0 은 기본으로 추가 버튼, 1은 정정 버튼으로 사용을 지정
 
-            binding.layoutAdd .isVisible = false
+            binding.layoutAdd.isVisible = false
             binding.layoutFind.isVisible = true
 
-            binding.suryang    .setText("0")
+            binding.suryang.setText("0")
             binding.locationAdd.setText("")
-            binding.edtCode    .setText("")
+            binding.edtCode.setText("")
 
             // 지울것 (테스트용)
-            binding.edtCode.setText("e07-000710-00")
+            //binding.edtCode.setText("e07-000710-00")
+
+            binding.edtCode.requestFocus()
+
+            // 키보드 올리기
+            // 이곳에 있어야 한다.
+            var imm = binding.edtCode.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.edtCode, 0)
         }
 
         // 품목코드 입력 항목
@@ -338,7 +356,7 @@ class StockActivity : BaseActivity(), StockListEditListener,
         }
     }
 
-    // 서버에 작업 SEQ 요청
+    // 서버에 작업 SEQ 요청 -> 계속해서 서버에 품목정보요청까지
     fun requestWorkseq() {
 
         loadingDialog.show(supportFragmentManager, null)
@@ -404,7 +422,9 @@ class StockActivity : BaseActivity(), StockListEditListener,
 
                                 productData = it
 
-                                loadingDialog.loadingEnd(it.pummokcount)
+                                val sSize = productData.pummokdetail?.size.toString()
+
+                                loadingDialog.loadingEnd(sSize)
 
                                 binding.layoutEmpty.isVisible = false
                                 binding.layoutReady.isVisible = false
@@ -412,13 +432,17 @@ class StockActivity : BaseActivity(), StockListEditListener,
                                 binding.layoutFind .isVisible = true
                                 binding.layoutList .isVisible = true
                                 binding.btnSave    .isVisible = true
-
                                 binding.edtCode    .requestFocus()
+
+                                // SHOW_IMPLICIT 가 지정되어야 종료시 키보드가 사라진다.
+                                // deprecated된 toggleSoftInput() 함수를 사용해야만 키보드가 올라온다.
+                                // showSoftInput() 함수를 사용하면 먹히지 않는다. 통신시 쓰레드의 연관???
+                                var imm = binding.edtCode.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                                imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
                             }
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<ProductInfoResponse>, t: Throwable) {
                     serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     loadingDialog.dismiss()
@@ -591,7 +615,8 @@ class StockActivity : BaseActivity(), StockListEditListener,
 //        dialog.setCount(mkittingbeonho,data, setTempData())
 //        dialog.show(supportFragmentManager, "Kitting_dialog")
 //    }
-    // 상세정보 조회시에서 수량 버튼을 클릭하면 수량 정정으로 화면을 바꾼다.
+
+    // 상세정보 조회시에서 수량 사각형 버튼을 클릭하면 수량 정정으로 화면을 바꾼다.
     override fun onClickedEdit(data: PummokdetailStock) {
 
         AddUpdateCheckSw = 1 // 0 은 기본으로 추가 버튼, 1 은 정정 버튼으로 사용을 지정
@@ -632,6 +657,10 @@ class StockActivity : BaseActivity(), StockListEditListener,
         binding.layoutFind.isVisible = false  // 품목코드 입력하고 검색하는 영역
 
         binding.suryang.requestFocus()
+
+        // keyboard 올리기
+        val imm = binding.suryang.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding.suryang,0)
     }
 
     override fun onItemViewClicked(position: Int) {

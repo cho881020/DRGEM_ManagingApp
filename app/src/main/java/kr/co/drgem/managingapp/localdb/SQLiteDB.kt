@@ -30,18 +30,16 @@ class SQLiteDB {
 
     fun insertBaljubeonho(data: Baljubeonho) {
         val values = ContentValues()
-        values.put("baljuiljastart", data.baljuiljastart)
-        values.put("baljuiljaend", data.baljuiljaend)
+        values.put("baljuiljastart"  , data.baljuiljastart)
+        values.put("baljuiljaend"    , data.baljuiljaend)
         values.put("georaecheomyeong", data.georaecheomyeong)
-        values.put("baljubeonho", data.baljubeonho)
-        values.put("georaecheocode", data.georaecheocode)
-        values.put("baljuil", data.baljuil)
-        values.put("nappumjangso", data.nappumjangso)
-        values.put("bigo", data.bigo)
-
+        values.put("baljubeonho"     , data.baljubeonho)
+        values.put("georaecheocode"  , data.georaecheocode)
+        values.put("baljuil"         , data.baljuil)
+        values.put("nappumjangso"    , data.nappumjangso)
+        values.put("bigo"            , data.bigo)
 
         db.insert("baljubeonho", null, values)
-
     }
 
     @SuppressLint("Range")
@@ -65,9 +63,7 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("bigo"))
                 )
             )
-
         }
-
         return list
     }
 
@@ -82,16 +78,16 @@ class SQLiteDB {
 
     fun insertOrderDetail(data: OrderDetailResponse) {
         val values = ContentValues()
-        values.put("georaecheocode", data.georaecheocode)
-        values.put("bigo", data.bigo)
-        values.put("resultcd", data.resultcd)
-        values.put("requesttype", data.requesttype)
-        values.put("baljubeonho", data.baljubeonho)
-        values.put("nappumcheo", data.nappumcheo)
+        values.put("georaecheocode"  , data.georaecheocode)
+        values.put("bigo"            , data.bigo)
+        values.put("resultcd"        , data.resultcd)
+        values.put("requesttype"     , data.requesttype)
+        values.put("baljubeonho"     , data.baljubeonho)
+        values.put("nappumcheo"      , data.nappumcheo)
         values.put("georaecheomyeong", data.georaecheomyeong)
-        values.put("baljuil", data.baljuil)
-        values.put("nappumjangso", data.nappumjangso)
-        values.put("resultmsg", data.resultmsg)
+        values.put("baljuil"         , data.baljuil)
+        values.put("nappumjangso"    , data.nappumjangso)
+        values.put("resultmsg"       , data.resultmsg)
 
 
         db.insert("orderdetail", null, values)
@@ -103,8 +99,6 @@ class SQLiteDB {
 
             Log.d("로컬DB에들어가는발주상세", balju_detail.pummyeong.toString())
         }
-
-
     }
 
     @SuppressLint("Range")
@@ -131,17 +125,13 @@ class SQLiteDB {
 
             orderDetail.baljudetail?.addAll(getAllSavedBaljuDetail())
 
-
             Log.d("주문상세의발주상세갯수", orderDetail.returnBaljudetail().size.toString())
             list.add(
                 orderDetail
             )
-
         }
-
         return list
     }
-
 
     fun deleteBaljuDetail() {
         val query = "DELETE FROM baljudetail;"
@@ -150,22 +140,20 @@ class SQLiteDB {
 
     fun insertBaljuDetail(data: Baljudetail) {
         val values = ContentValues()
-        values.put("seq", data.seq)
-        values.put("pummokcode", data.pummokcode)
-        values.put("pummyeong", data.pummyeong)
-        values.put("dobeon_model", data.dobeon_model)
-        values.put("sayang", data.sayang)
-        values.put("balhudanwi", data.balhudanwi)
-        values.put("baljusuryang", data.baljusuryang)
-        values.put("ipgoyejeongil", data.ipgoyejeongil)
-        values.put("giipgosuryang", data.giipgosuryang)
-        values.put("ipgosuryang", data.ipgosuryang)
+        values.put("seq"            , data.seq)
+        values.put("pummokcode"     , data.pummokcode)
+        values.put("pummyeong"      , data.pummyeong)
+        values.put("dobeon_model"   , data.dobeon_model)
+        values.put("sayang"         , data.sayang)
+        values.put("balhudanwi"     , data.balhudanwi)
+        values.put("baljusuryang"   , data.baljusuryang)
+        values.put("ipgoyejeongil"  , data.ipgoyejeongil)
+        values.put("giipgosuryang"  , data.giipgosuryang)
+        values.put("ipgosuryang"    , data.ipgosuryang)
         values.put("jungyojajeyeobu", data.jungyojajeyeobu)
-        values.put("location", data.location)
-
+        values.put("location"       , data.location)
 
         db.insert("baljudetail", null, values)
-
     }
 
     @SuppressLint("Range")
@@ -193,9 +181,7 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("location"))
                 )
             )
-
         }
-
         return list
     }
 
@@ -205,41 +191,40 @@ class SQLiteDB {
         db.execSQL(query)
     }
 
-
     fun deleteLoginWorkCommon() {
         val query = "DELETE FROM LOGIN_WORK_COMMON;"
         db.execSQL(query)
     }
 
+    // 개인 로그인 정보와 작업 상황 정보를 로그인 공통 테이블에 저장
     fun insertLoginWorkCommon(
         userId: String,
         userPw: String,
-        data: BasicResponse
+        data  : BasicResponse
     ) {
         val values = ContentValues()
-        values.put("USERID", userId)
-        values.put("USERNAME", data.sawonmyeong)
-        values.put("USERPW", userPw)
-        values.put("SAEOPJANGCODE", data.saeopjangcode)
+        values.put("USERID"         , userId)
+        values.put("USERNAME"       , data.sawonmyeong)
+        values.put("USERPW"         , userPw)
+        values.put("SAEOPJANGCODE"  , data.saeopjangcode)
         values.put("SAEOPJANGMYEONG", data.saeopjangmyeong)
-        values.put("BUSEOCODE", data.buseocode)
-        values.put("BUSEOMYEONG", data.buseomyeong)
-        values.put("CHANGGOCODE", data.changgocode)
-        values.put("CHANGGOMYEONG", data.changgomyeong)
-        values.put("SECURITY_TOKEN", data.security_token)
+        values.put("BUSEOCODE"      , data.buseocode)
+        values.put("BUSEOMYEONG"    , data.buseomyeong)
+        values.put("CHANGGOCODE"    , data.changgocode)
+        values.put("CHANGGOMYEONG"  , data.changgomyeong)
+        values.put("SECURITY_TOKEN" , data.security_token)
         values.put("PROGRAM_VERSION", data.program_version)
 
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-        values.put("INPUTDATE", simpleDateFormat.format(Calendar.getInstance().time))
+        values.put("INPUTDATE"      , simpleDateFormat.format(Calendar.getInstance().time))
 
-        values.put("WORKGUBUN", "None")
-        values.put("WORKNUMBER", "None")
-        values.put("TABLETIPNUMBER", IPUtil.getIpAddress())
-        values.put("WORK_DATE", "TEMP")
-        values.put("WORK_STATE", "000")
+        values.put("WORKGUBUN"      , "None")
+        values.put("WORKNUMBER"     , "None")
+        values.put("TABLETIPNUMBER" , IPUtil.getIpAddress())
+        values.put("WORK_DATE"      , "TEMP")
+        values.put("WORK_STATE"     , "000")
 
         db.insert("LOGIN_WORK_COMMON", null, values)
-
     }
 
     @SuppressLint("Range")
@@ -270,12 +255,9 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("WORK_STATE"))
                 )
             )
-
         }
-
         return list
     }
-
 
     fun deleteAllSerials() {
         val query = "DELETE FROM SERIAL;"
@@ -289,16 +271,15 @@ class SQLiteDB {
 
     fun insertSerialToPummokcode(
         pummokcode: String,
-        serial: String,
-        position: String,
+        serial    : String,
+        position  : String,
     ) {
         val values = ContentValues()
         values.put("pummokcode", pummokcode)
-        values.put("serial", serial)
-        values.put("position", position)
+        values.put("serial"    , serial)
+        values.put("position"  , position)
 
         db.insert("SERIAL", null, values)
-
     }
 
     @SuppressLint("Range")
@@ -315,17 +296,12 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("position")),
                 )
             )
-
         }
-
         return list
-
     }
-
 
     @SuppressLint("Range")
     fun getFirstSerialByPummokcodeAndPosition(pummokcode:String, position: String) : SerialLocalDB? {
-
 
         val query =
             "SELECT * FROM SERIAL WHERE pummokcode='${pummokcode}' AND  position='${position}';"
@@ -342,26 +318,24 @@ class SQLiteDB {
         }
     }
 
-
     fun deleteBaljuCommon() {
         val query = "DELETE FROM BALJU_COMMON;"
         db.execSQL(query)
     }
 
     fun insertBaljuCommon(
-        BALJUILJASTART: String?,
-        BALJUILJAEND: String?,
+        BALJUILJASTART : String?,
+        BALJUILJAEND   : String?,
         GEORAECHEOMEONG: String?,
-        BALJUBEONHO: String?,
+        BALJUBEONHO    : String?,
     ) {
         val values = ContentValues()
-        values.put("BALJUILJASTART", BALJUILJASTART)
-        values.put("BALJUILJAEND", BALJUILJAEND)
+        values.put("BALJUILJASTART" , BALJUILJASTART)
+        values.put("BALJUILJAEND"   , BALJUILJAEND)
         values.put("GEORAECHEOMEONG", GEORAECHEOMEONG)
-        values.put("BALJUBEONHO", BALJUBEONHO)
+        values.put("BALJUBEONHO"    , BALJUBEONHO)
 
         db.insert("BALJU_COMMON", null, values)
-
     }
 
     @SuppressLint("Range")
@@ -379,12 +353,9 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("BALJUBEONHO")),
                 )
             )
-
         }
-
         return list
     }
-
 
     fun deleteBaljuDetailInfo() {
         val query = "DELETE FROM BALJU_DETAIL_INFO;"
@@ -392,19 +363,18 @@ class SQLiteDB {
     }
 
     fun insertBaljuDetailInfo(
-        IPGODATE: String?,
+        IPGODATE        : String?,
         IPGOSAUPJANGCODE: String?,
-        IPGOCHANGGOCODE: String?,
-        IPGODAMDANGJA: String?,
+        IPGOCHANGGOCODE : String?,
+        IPGODAMDANGJA   : String?,
     ) {
         val values = ContentValues()
-        values.put("IPGODATE", IPGODATE)
+        values.put("IPGODATE"        , IPGODATE)
         values.put("IPGOSAUPJANGCODE", IPGOSAUPJANGCODE)
-        values.put("IPGOCHANGGOCODE", IPGOCHANGGOCODE)
-        values.put("IPGODAMDANGJA", IPGODAMDANGJA)
+        values.put("IPGOCHANGGOCODE" , IPGOCHANGGOCODE)
+        values.put("IPGODAMDANGJA"   , IPGODAMDANGJA)
 
         db.insert("BALJU_DETAIL_INFO", null, values)
-
     }
 
     @SuppressLint("Range")
@@ -422,18 +392,13 @@ class SQLiteDB {
                     c.getString(c.getColumnIndex("IPGODAMDANGJA")),
                 )
             )
-
         }
-
         return list
     }
-
 
     fun updateWorkInfo(workType: String, workSEQ: String, status: String) {
         val query =
             "UPDATE LOGIN_WORK_COMMON SET WORKGUBUN='${workType}', WORKNUMBER = '${workSEQ}', WORK_STATE = '${status}'"
         db.execSQL(query)
     }
-
-
 }

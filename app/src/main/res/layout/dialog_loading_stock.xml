@@ -78,13 +78,9 @@
                     android:textColor="@color/color_808080"
                     android:textSize="14dp"/>
 
-
             </LinearLayout>
 
-
-
         </LinearLayout>
-
 
     </LinearLayout>
 </layout>

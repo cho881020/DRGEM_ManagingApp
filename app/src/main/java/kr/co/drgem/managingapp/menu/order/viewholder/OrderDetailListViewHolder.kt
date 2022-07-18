@@ -1,3 +1,9 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : TransactionListViewHolder.kt
+ * 개 발 자  : (주)디알젬
+ * 업무기능 : 매입입고(발중입고) ListViewHolder
+ */
 package kr.co.drgem.managingapp.menu.order.viewholder
 
 import android.app.AlertDialog
@@ -32,7 +38,6 @@ class OrderDetailListViewHolder(
     val ipgoyejeongil = itemView.findViewById<TextView>(R.id.ipgoyejeongil)
     val giipgosuryang = itemView.findViewById<TextView>(R.id.giipgosuryang)
     val location = itemView.findViewById<TextView>(R.id.location)
-
     val btnEdit = itemView.findViewById<TextView>(R.id.btnEdit)
     val ipgosuryang = itemView.findViewById<TextView>(R.id.ipgosuryang)
 
@@ -73,7 +78,8 @@ class OrderDetailListViewHolder(
         }
 
         if (data.getPummokCount().isNullOrEmpty()) {
-            data.setPummokCount("0")
+            //data.setPummokCount("0")  // 자재부의 요청으로 첫음에는 입고수량을 발주수량과 같도록 한다.
+            data.setPummokCount(data.getBaljusuryangHP())  // 2022.07.15
         }
 
         txtSeq.text = data.getSeqHP()
@@ -87,7 +93,6 @@ class OrderDetailListViewHolder(
         giipgosuryang.text = data.getGiipgosuryangHP()
         location.text = data.getLocationHP()
         ipgosuryang.text = data.getPummokCount()
-
 
         pummyeong.setOnLongClickListener {
             AlertDialog.Builder(itemView.context)
@@ -119,40 +124,29 @@ class OrderDetailListViewHolder(
             false
         }
 
+        val savedSerialString =
+            SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())
 
-        val savedSerialString = SerialManageUtil.getSerialStringByPummokCode(data.getPummokcodeHP())
-
-
-        if (savedSerialString != null || data.getPummokCount() != "0" ) {
-
+        if (savedSerialString != null || data.getPummokCount() != "0") {
 
             btnEdit.setBackgroundResource(R.drawable.borderbox_skyblue_round2)
             btnEdit.setTextColor(mContext.resources.getColor(R.color.color_FFFFFF))
-            if(data.getJungyojajeyeobuHP() == "Y"){
+            if (data.getJungyojajeyeobuHP() == "Y") {
                 btnEdit.text = "*정보입력"
-            }
-            else{
+            } else {
                 btnEdit.text = "*수량입력"
             }
         } else {
-
             btnEdit.setBackgroundResource(R.drawable.btn_light_gray)
             btnEdit.setTextColor(mContext.resources.getColor(R.color.color_9A9A9A))
-            if(data.getJungyojajeyeobuHP() == "Y"){
+            if (data.getJungyojajeyeobuHP() == "Y") {
                 btnEdit.text = "정보입력"
-            }
-            else{
+            } else {
                 btnEdit.text = "수량입력"
             }
-
         }
-
-
         btnEdit.setOnClickListener {
-
             listener.onClickedEdit(data)
-
-
         }
     }
 }

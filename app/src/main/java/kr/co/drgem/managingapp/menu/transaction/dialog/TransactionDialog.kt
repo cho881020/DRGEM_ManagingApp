@@ -404,18 +404,19 @@ class TransactionDialog : BaseDialogFragment() {
         // Pummokdetail.kt의 PummokCount 의 값은 시리얼번호 입력화면에서 등록하기 버튼에의해 등록될때
         // 작업완료 제일 끝에 현재 화면상에 입력된 값이 저장된 것이다.
 
-        binding.baljubeonho.text = georaeData.getBaljubeonhoHP()
-        binding.pummokcode.text = georaeData.getPummokcodeHP()
-        binding.pummyeong.text = georaeData.getPummyeongHP()
-        binding.dobeonModel.text = georaeData.getDobeonModelHP()
-        binding.sayang.text = georaeData.getsayangHP()
-        binding.balhudanwi.text = georaeData.getBalhudanwiHP()
-        binding.seq.text = georaeData.getSeqHP()
+        binding.baljubeonho    .text = georaeData.getBaljubeonhoHP()
+        binding.pummokcode     .text = georaeData.getPummokcodeHP()
+        binding.pummyeong      .text = georaeData.getPummyeongHP()
+        binding.dobeonModel    .text = georaeData.getDobeonModelHP()
+        binding.sayang         .text = georaeData.getsayangHP()
+        binding.balhudanwi     .text = georaeData.getBalhudanwiHP()
+        binding.seq            .text = georaeData.getSeqHP()
         binding.jungyojajeyeobu.text = georaeData.getJungyojajeyeobuHP()
-        binding.location.text = georaeData.getLocationHP()
-        binding.ipgoyejeongil.text = "-"
-        binding.baljusuryang.text = georaeData.getBaljusuryangHP()
-        binding.ipgosuryang.text = viewholderCount.toString()
+        binding.location       .text = georaeData.getLocationHP()
+        binding.ipgoyejeongil  .text = "-"
+        binding.baljusuryang   .text = georaeData.getBaljusuryangHP()
+        binding.ipgosuryang    .text = viewholderCount.toString()
+
         if (georaeData.getJungyojajeyeobuHP() == "Y") {
             binding.layoutSerial.isVisible = true
         }  // 2022.07.02 by jung 루틴 수정 - 거래명세만 루틴이 틀리게 작성되어 있었음

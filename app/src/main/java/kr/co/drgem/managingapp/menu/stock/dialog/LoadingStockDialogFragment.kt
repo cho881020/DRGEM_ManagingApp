@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -46,7 +48,7 @@ class LoadingStockDialogFragment : DialogFragment() {
     }
 
     fun loadingEnd(sCnt : String) {
-        //binding.msgText.setText( "< " + sCnt + " > 건의 품목이 로딩되었습니다.")  // 일단 조회가 항상 같아서 막음 조사해 볼 것
+        binding.msgText.setText( "< " + sCnt + " > 건의 품목이 로딩되었습니다.")  // 일단 조회가 항상 같아서 막음 조사해 볼 것 - 서버쪽 문제??
         binding.layoutLoadingEnd.isVisible = true
         binding.layoutLoadingIng.isVisible = false
     }

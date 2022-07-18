@@ -1,3 +1,9 @@
+/**
+ * 프로젝트명 : 스마트창고관리 시스템
+ * 프로그램명 : TransactionAdapter.kt
+ * 개 발 자  : (주)디알젬
+ * 업무기능 : 거래명세입고 화면으로 거래명세요청, 거래명세등록 기능 Adapter
+ */
 package kr.co.drgem.managingapp.menu.transaction.adapter
 
 import android.view.ViewGroup

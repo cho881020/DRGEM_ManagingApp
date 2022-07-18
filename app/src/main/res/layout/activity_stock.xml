@@ -243,6 +243,7 @@
                         android:paddingHorizontal="7dp"
                         android:privateImeOptions="defaultInputmode=english"
                         android:textColor="@color/color_000000"
+                        android:imeOptions="actionNext"
                         android:textSize="12dp" />
 
                     <LinearLayout
@@ -351,12 +352,15 @@
                         android:layout_marginTop="3dp"
                         android:background="@drawable/light_gray_box"
                         android:gravity="center_vertical"
-                        android:inputType="number"
                         android:maxLines="1"
-                        android:paddingHorizontal="7dp"
                         android:selectAllOnFocus="true"
+                        android:imeOptions="actionNext"
+                        android:paddingHorizontal="7dp"
                         android:textColor="@color/color_000000"
+                        android:privateImeOptions="defaultInputmode=english"
                         android:textSize="12dp"
+                        android:inputType="number"
+                        android:maxLength="6"
                         tools:text="3" />
 
                 </LinearLayout>

@@ -16,9 +16,6 @@ data class BasicResponse (
 
     val seq : String,
     val status : String,
-
 ){
-
-
 
 }

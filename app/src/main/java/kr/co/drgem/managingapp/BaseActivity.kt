@@ -29,8 +29,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var mSqliteDB : SQLiteDB
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,8 +40,6 @@ abstract class BaseActivity : AppCompatActivity() {
         val dbHelper = DBHelper(mContext, "drgemdb.db", null, 1)
         mSqliteDB = SQLiteDB()
         mSqliteDB.makeDb(dbHelper.writableDatabase)
-
-
     }
 
     abstract fun setupEvents()
@@ -61,11 +57,9 @@ abstract class BaseActivity : AppCompatActivity() {
                     Handler(Looper.getMainLooper()).post(it)
                 }
                 finish()
-
             })
             .setNegativeButton("아니오", null)
             .show()
-
     }
 
     fun saveDialog(runnable: Runnable?){
@@ -81,7 +75,6 @@ abstract class BaseActivity : AppCompatActivity() {
             .setNegativeButton("아니오", null)
             .show()
     }
-
 
     fun endDialog(){
         AlertDialog.Builder(mContext)
@@ -107,7 +100,6 @@ abstract class BaseActivity : AppCompatActivity() {
             .setNegativeButton("확인", null)
             .show()
     }
-
 
     fun searchZeroDialog(){
         AlertDialog.Builder(mContext)
@@ -150,6 +142,4 @@ abstract class BaseActivity : AppCompatActivity() {
             .setNegativeButton("아니오", null)
             .show()
     }
-
-
 }
