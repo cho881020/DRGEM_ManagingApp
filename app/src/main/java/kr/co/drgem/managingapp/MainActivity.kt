@@ -58,9 +58,9 @@ class MainActivity : BaseActivity() {
             // JSON 바디로 보낼때 => 해쉬맵을 보내는 방향으로
             val dataMap = hashMapOf(
                 "requesttype" to "01001",
-                "username" to loginWorkInfo.USERID!!,
-                "password" to loginWorkInfo.USERPW!!, // md5로 이미 변환되어있음
-                "tabletip" to IPUtil.getIpAddress(), // IP획득 후 첨부
+                "username"    to loginWorkInfo.USERID!!,
+                "password"    to loginWorkInfo.USERPW!!, // md5로 이미 변환되어있음
+                "tabletip"    to IPUtil.getIpAddress(), // IP획득 후 첨부
             )
 
             Log.d("맵확인", dataMap.toString())

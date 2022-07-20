@@ -32,7 +32,7 @@ import retrofit2.Response
 
 class MenuActivity : BaseActivity() {
 
-    lateinit var binding: ActivityMenuBinding
+    lateinit var binding   : ActivityMenuBinding
     lateinit var masterData: MasterDataResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,40 +49,47 @@ class MenuActivity : BaseActivity() {
     override fun setupEvents() {
 
         binding.transaction.setOnClickListener {
+            mSqliteDB.updateLoginWorkCommonWorkGubun("01")  // 거래명세입고
             val myIntent = Intent(this, TransactionActivity::class.java)
             myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
         binding.orderReceipt.setOnClickListener {
+            mSqliteDB.updateLoginWorkCommonWorkGubun("02")  // 매입입고
             val myIntent = Intent(this, OrderActivity::class.java)
             myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
         binding.kitting.setOnClickListener {
+            mSqliteDB.updateLoginWorkCommonWorkGubun("03")  // 키팅출고
             val myIntent = Intent(this, KittingActivity::class.java)
             startActivity(myIntent)
         }
 
         binding.request.setOnClickListener {
+            mSqliteDB.updateLoginWorkCommonWorkGubun("04")  // 요청출고
             val myIntent = Intent(this, RequestActivity::class.java)
             myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
         binding.notDelivery.setOnClickListener {
+            mSqliteDB.updateLoginWorkCommonWorkGubun("05")  // 미출자재출고
             val myIntent = Intent(this, NotDeliveryActivity::class.java)
             myIntent.putExtra("masterData", masterData)
             startActivity(myIntent)
         }
 
         binding.location.setOnClickListener {
+            mSqliteDB.updateLoginWorkCommonWorkGubun("06")  // 로케이션조회
             val myIntent = Intent(this, LocationActivity::class.java)
             startActivity(myIntent)
         }
 
         binding.stock.setOnClickListener {
+            mSqliteDB.updateLoginWorkCommonWorkGubun("07")  // 재고조사
             val myIntent = Intent(this, StockActivity::class.java)
             startActivity(myIntent)
         }

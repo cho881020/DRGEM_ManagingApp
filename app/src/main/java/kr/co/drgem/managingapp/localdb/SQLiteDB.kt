@@ -23,6 +23,84 @@ class SQLiteDB {
         db = localDB
     }
 
+    // 개인 로그인 정보와 작업 상황 정보를 로그인 공통 테이블에 저장
+    fun insertLoginWorkCommon(
+        userId: String,
+        userPw: String,
+        data  : BasicResponse
+    ) {
+        val values = ContentValues()
+        values.put("USERID"         , userId)
+        values.put("USERNAME"       , data.sawonmyeong)
+        values.put("USERPW"         , userPw)
+        values.put("SAEOPJANGCODE"  , data.saeopjangcode)
+        values.put("SAEOPJANGMYEONG", data.saeopjangmyeong)
+        values.put("BUSEOCODE"      , data.buseocode)
+        values.put("BUSEOMYEONG"    , data.buseomyeong)
+        values.put("CHANGGOCODE"    , data.changgocode)
+        values.put("CHANGGOMYEONG"  , data.changgomyeong)
+        values.put("SECURITY_TOKEN" , data.security_token)
+        values.put("PROGRAM_VERSION", data.program_version)
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        values.put("INPUTDATE"      , simpleDateFormat.format(Calendar.getInstance().time))
+        values.put("WORKGUBUN"      , "None") //01:거래,02:발주,03:키팅,04:요청,05:미출자재,06:로케이션,07:재고 선택되면 update
+        values.put("WORKNUMBER"     , "None") // worknumber요청하여 받은 순간 update
+        values.put("TABLETIPNUMBER" , IPUtil.getIpAddress())
+        values.put("WORK_DATE"      , "TEMP") // 첫 333 전송 시간? update
+        values.put("WORK_STATE"     , "000") //초기값 '000', 작업시작(관리번호받으면)'111', 개별전송 '333', 전송완료'777' update
+
+        db.insert("LOGIN_WORK_COMMON", null, values)  // 로그인이 완료된 순간
+    }
+
+    @SuppressLint("Range")
+    fun getAllLoginWorkCommon(): ArrayList<LoginWorkCommonLocalDB> {
+        val list = ArrayList<LoginWorkCommonLocalDB>()
+
+        val query = "SELECT * FROM LOGIN_WORK_COMMON;"
+        val c = db.rawQuery(query, null)
+        while (c.moveToNext()) {
+            list.add(
+                LoginWorkCommonLocalDB(
+                    c.getString(c.getColumnIndex("USERID")),
+                    c.getString(c.getColumnIndex("USERNAME")),
+                    c.getString(c.getColumnIndex("USERPW")),
+                    c.getString(c.getColumnIndex("SAEOPJANGCODE")),
+                    c.getString(c.getColumnIndex("SAEOPJANGMYEONG")),
+                    c.getString(c.getColumnIndex("BUSEOCODE")),
+                    c.getString(c.getColumnIndex("BUSEOMYEONG")),
+                    c.getString(c.getColumnIndex("CHANGGOCODE")),
+                    c.getString(c.getColumnIndex("CHANGGOMYEONG")),
+                    c.getString(c.getColumnIndex("SECURITY_TOKEN")),
+                    c.getString(c.getColumnIndex("PROGRAM_VERSION")),
+                    c.getString(c.getColumnIndex("INPUTDATE")),
+                    c.getString(c.getColumnIndex("WORKGUBUN")),
+                    c.getString(c.getColumnIndex("WORKNUMBER")),
+                    c.getString(c.getColumnIndex("TABLETIPNUMBER")),
+                    c.getString(c.getColumnIndex("WORK_DATE")),
+                    c.getString(c.getColumnIndex("WORK_STATE"))
+                )
+            )
+        }
+        return list
+    }
+
+    fun updateLoginWorkCommonWorkGubun(WorkGubun: String) {  // 1개의 레코드로 운용되기 때문에 무조건 update
+        val query = "UPDATE LOGIN_WORK_COMMON SET WORKGUBUN='${WorkGubun}' "
+
+        db.execSQL(query)
+    }
+
+    fun updateLoginWorkCommonWorkState(WorkState: String) {  // 1개의 레코드로 운용되기 때문에 무조건 update
+        val query = "UPDATE LOGIN_WORK_COMMON SET WORKGUBUN='${WorkState}' "
+
+        db.execSQL(query)
+    }
+
+    fun deleteLoginWorkCommon() {
+        val query = "DELETE FROM LOGIN_WORK_COMMON;"
+        db.execSQL(query)
+    }
+
     fun deleteBaljubeonho() {
         val query = "DELETE FROM baljubeonho;"
         db.execSQL(query)
@@ -71,7 +149,6 @@ class SQLiteDB {
         val query = "DELETE FROM orderdetail;"
         db.execSQL(query)
 
-
         val query2 = "DELETE FROM baljudetail;"
         db.execSQL(query2)
     }
@@ -88,7 +165,6 @@ class SQLiteDB {
         values.put("baljuil"         , data.baljuil)
         values.put("nappumjangso"    , data.nappumjangso)
         values.put("resultmsg"       , data.resultmsg)
-
 
         db.insert("orderdetail", null, values)
 
@@ -189,74 +265,6 @@ class SQLiteDB {
         val query =
             "UPDATE baljudetail SET ipgosuryang='${data.ipgosuryang}' WHERE pummokcode = '${data.getPummokcodeHP()}'"
         db.execSQL(query)
-    }
-
-    fun deleteLoginWorkCommon() {
-        val query = "DELETE FROM LOGIN_WORK_COMMON;"
-        db.execSQL(query)
-    }
-
-    // 개인 로그인 정보와 작업 상황 정보를 로그인 공통 테이블에 저장
-    fun insertLoginWorkCommon(
-        userId: String,
-        userPw: String,
-        data  : BasicResponse
-    ) {
-        val values = ContentValues()
-        values.put("USERID"         , userId)
-        values.put("USERNAME"       , data.sawonmyeong)
-        values.put("USERPW"         , userPw)
-        values.put("SAEOPJANGCODE"  , data.saeopjangcode)
-        values.put("SAEOPJANGMYEONG", data.saeopjangmyeong)
-        values.put("BUSEOCODE"      , data.buseocode)
-        values.put("BUSEOMYEONG"    , data.buseomyeong)
-        values.put("CHANGGOCODE"    , data.changgocode)
-        values.put("CHANGGOMYEONG"  , data.changgomyeong)
-        values.put("SECURITY_TOKEN" , data.security_token)
-        values.put("PROGRAM_VERSION", data.program_version)
-
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-        values.put("INPUTDATE"      , simpleDateFormat.format(Calendar.getInstance().time))
-
-        values.put("WORKGUBUN"      , "None")
-        values.put("WORKNUMBER"     , "None")
-        values.put("TABLETIPNUMBER" , IPUtil.getIpAddress())
-        values.put("WORK_DATE"      , "TEMP")
-        values.put("WORK_STATE"     , "000")
-
-        db.insert("LOGIN_WORK_COMMON", null, values)
-    }
-
-    @SuppressLint("Range")
-    fun getAllLoginWorkCommon(): ArrayList<LoginWorkCommonLocalDB> {
-        val list = ArrayList<LoginWorkCommonLocalDB>()
-
-        val query = "SELECT * FROM LOGIN_WORK_COMMON;"
-        val c = db.rawQuery(query, null)
-        while (c.moveToNext()) {
-            list.add(
-                LoginWorkCommonLocalDB(
-                    c.getString(c.getColumnIndex("USERID")),
-                    c.getString(c.getColumnIndex("USERNAME")),
-                    c.getString(c.getColumnIndex("USERPW")),
-                    c.getString(c.getColumnIndex("SAEOPJANGCODE")),
-                    c.getString(c.getColumnIndex("SAEOPJANGMYEONG")),
-                    c.getString(c.getColumnIndex("BUSEOCODE")),
-                    c.getString(c.getColumnIndex("BUSEOMYEONG")),
-                    c.getString(c.getColumnIndex("CHANGGOCODE")),
-                    c.getString(c.getColumnIndex("CHANGGOMYEONG")),
-                    c.getString(c.getColumnIndex("SECURITY_TOKEN")),
-                    c.getString(c.getColumnIndex("PROGRAM_VERSION")),
-                    c.getString(c.getColumnIndex("INPUTDATE")),
-                    c.getString(c.getColumnIndex("WORKGUBUN")),
-                    c.getString(c.getColumnIndex("WORKNUMBER")),
-                    c.getString(c.getColumnIndex("TABLETIPNUMBER")),
-                    c.getString(c.getColumnIndex("WORK_DATE")),
-                    c.getString(c.getColumnIndex("WORK_STATE"))
-                )
-            )
-        }
-        return list
     }
 
     fun deleteAllSerials() {
