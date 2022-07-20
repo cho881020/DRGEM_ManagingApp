@@ -46,10 +46,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     val loadingDialog = LoadingDialogFragment()
     lateinit var masterData: MasterDataResponse
-    val baljuDetail = ArrayList<Baljudetail>()
+    val baljuDetail  = ArrayList<Baljudetail>()
     var mBaljubeonho = ""
-    var SEQ = ""
-    var status = "333"
+    var SEQ          = ""
+    var status       = "333"
 
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var companyCode    = "0001"
@@ -57,12 +57,12 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     var companyCode0   = "0001"
     var wareHouseCode0 = "1001"
-    var CompanySel   = 0
-    var WareHouseSel = 0
-    var FirstSetSW   = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
-    var calDate = ""
+    var CompanySel     = 0
+    var WareHouseSel   = 0
+    var FirstSetSW     = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
+    var calDate        = ""
 
-    var sawonCode = ""
+    var sawonCode      = ""
 
     // sort의 상태를 파악하기 위한 변수
     var onClickPummokcode     = 0
@@ -79,7 +79,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         SEQ = intent.getStringExtra("seq").toString()
 
         LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
+            sawonCode      = it.sawoncode.toString()
             companyCode0   = it.saeopjangcode.toString()  // by jung 2022.07.02
             wareHouseCode0 = it.changgocode.toString()    // by jung 2022.07.02
         }
@@ -88,7 +88,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         MainDataManager.getMainData()?.let{
             masterData = it
         }
-
 
         setupEvents()
         if (intent.getBooleanExtra("byLocalDB", false)) {
@@ -660,17 +659,17 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                 }
 
                 val georaeMap = hashMapOf(
-                    "requesttype" to "02014",
-                    "baljubeonho" to mBaljubeonho,
-                    "ipgoilja" to calDate,
+                    "requesttype"      to "02014",
+                    "baljubeonho"      to mBaljubeonho,
+                    "ipgoilja"         to calDate,
                     "ipgosaupjangcode" to companyCode,
-                    "ipgochanggocode" to wareHouseCode,
-                    "ipgodamdangja" to sawonCode,
-                    "georaecheocode" to orderDetailData.getGeoraecheocodeHP(),
-                    "seq" to SEQ,
-                    "status" to "777",
-                    "pummokcount" to ipgodetail.size().toString(),
-                    "ipgodetail" to ipgodetail
+                    "ipgochanggocode"  to wareHouseCode,
+                    "ipgodamdangja"    to sawonCode,
+                    "georaecheocode"   to orderDetailData.getGeoraecheocodeHP(),
+                    "seq"              to SEQ,
+                    "status"           to "777",
+                    "pummokcount"      to ipgodetail.size().toString(),
+                    "ipgodetail"       to ipgodetail
                 )
 
                 Log.d("yj", "georaeMap : ${georaeMap}")
@@ -714,15 +713,15 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         }
     }
 
-    //    작업상태취소
+    // 작업상태취소
     fun workStatusCancle() {
 
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
-            "seq" to SEQ,
-            "tablet_ip" to IPUtil.getIpAddress(),
-            "sawoncode" to sawonCode,
-            "status" to status,
+            "seq"         to SEQ,
+            "tablet_ip"   to IPUtil.getIpAddress(),
+            "sawoncode"   to sawonCode,
+            "status"      to status,
         )
 
         apiList.postRequestWorkstatusCancle(workCancelMap)
@@ -741,7 +740,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                         }
                     }
                 }
-
                 override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                     Log.d("yj", "발주 작업상태취소 실패 : ${t.message}")
                 }

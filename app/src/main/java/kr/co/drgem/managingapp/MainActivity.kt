@@ -52,7 +52,7 @@ class MainActivity : BaseActivity() {
         binding.btnRecovery.setOnClickListener {
 
             val loginWorkInfo = mSqliteDB.getAllLoginWorkCommon()[0]
-            val workType      = loginWorkInfo.WORKGUBUN.toString()  // workgubun 언제 업데이트하는지 검사할 것-메뉴에서 하는 것이 가장 간단
+            val workType      = loginWorkInfo.WORKGUBUN.toString()  // 메뉴에서 update되도록 함 2022.07.20
             val workSEQ       = loginWorkInfo.WORKNUMBER.toString()
 
             // JSON 바디로 보낼때 => 해쉬맵을 보내는 방향으로
