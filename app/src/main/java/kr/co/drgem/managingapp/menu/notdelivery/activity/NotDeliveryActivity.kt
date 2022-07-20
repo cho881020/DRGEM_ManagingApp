@@ -40,35 +40,41 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
     lateinit var binding: ActivityNotDeliveryBinding
     lateinit var mAdapter: NotDeliveryListAdapter
     lateinit var notDeliveryData: NotDeliveryResponse
-    val loadingDialog = LoadingDialogFragment()
 
-    var calStart = ""
-    var calEnd = ""
-    var companyCode = "0002"
-    var wareHouseCode = "2001"
+    val loadingDialog     = LoadingDialogFragment()
+
+    var SEQ               = ""
+    var status            = "111"
+
+    var sawonCode         = ""
+    var sawonData         = ArrayList<SawonData>()
+    var ipgodamdangjacode = ""
+
+    var calStart          = ""
+    var calEnd            = ""
+    var companyCode       = "0002"
+    var wareHouseCode     = "2001"
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
 
-    var migwanri = "0"
+    var migwanri          = "0"
+
     var companyCodeOut    = "0001"
     var wareHouseCodeOut  = "1001"
     var companyCodeOut0   = "0001"
     var wareHouseCodeOut0 = "1001"
-    var CompanySel   = 0
-    var WareHouseSel = 0
-    var FirstSetSW   = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
+    var CompanySel        = 0
+    var WareHouseSel      = 0
+    var FirstSetSWOut     = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
-    var sawonData = ArrayList<SawonData>()
-    var ipgodamdangjacode = ""
 
-    var companyCodeIn = "0001"
-    var wareHouseCodeIn = "1001"
+    var companyCodeIn     = "0001"
+    var wareHouseCodeIn   = "1001"
+    var companyCodeIn0    = "0001"
+    var wareHouseCodeIn0  = "1001"
+    var FirstSetSWIn      = 0    // 입고 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var mWareHouseListIn: ArrayList<Detailcode> = arrayListOf()
 
-    var calDate = ""
-
-    var SEQ = ""
-    var status = "111"
-    var sawonCode = ""
+    var calDate           = ""
 
     // sort의 상태를 파악하기 위한 변수
     var onClickYocheongBeonho = 0
@@ -83,9 +89,12 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         binding = DataBindingUtil.setContentView(this, R.layout.activity_not_delivery)
 
         LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
+            sawonCode         = it.sawoncode.toString()
             companyCodeOut0   = it.saeopjangcode.toString()  // by jung 2022.07.02
             wareHouseCodeOut0 = it.changgocode.toString()    // by jung 2022.07.02
+            companyCodeIn0    = it.saeopjangcode.toString()  // by jung 2022.07.20
+            wareHouseCodeIn0  = it.changgocode.toString()    // by jung 2022.07.20
+            wareHouseCodeIn0  = "2002"                       // by jung 2022.07.20 생산자재창고
         }
 
         binding.chulgodamdangjacode.text = sawonCode
@@ -117,18 +126,18 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         binding.btnFold.setOnClickListener {
             binding.layoutFold.isVisible = false
-            binding.btnOpen.isVisible = true
-            binding.btnFold.isVisible = false
+            binding.btnOpen   .isVisible = true
+            binding.btnFold   .isVisible = false
         }
 
         binding.btnOpen.setOnClickListener {
             binding.layoutFold.isVisible = true
-            binding.btnOpen.isVisible = false
-            binding.btnFold.isVisible = true
+            binding.btnOpen   .isVisible = false
+            binding.btnFold   .isVisible = true
         }
 
-        val cal = Calendar.getInstance()
-        val dateSet = SimpleDateFormat("yyyyMMdd")
+        val cal        = Calendar.getInstance()
+        val dateSet    = SimpleDateFormat("yyyyMMdd")
         val dateFormat = SimpleDateFormat("MM-dd")
 
         binding.txtDateStart.text = dateFormat.format(cal.time)
@@ -208,7 +217,8 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                     SerialManageUtil.clearData()
                     requestWorkseq()
 
-                    FirstSetSW  = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    FirstSetSWOut = 0   // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    FirstSetSWIn  = 0   // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.20
                     spinnerSetOut()    // by jung 2022.07.02
                 }
             }
@@ -222,10 +232,10 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         val SEQMap = hashMapOf(
             "requesttype" to "08001",
-            "pid" to "05",
-            "tablet_ip" to IPUtil.getIpAddress(),
-            "sawoncode" to sawonCode,
-            "status" to "111",
+            "pid"         to "05",
+            "tablet_ip"   to IPUtil.getIpAddress(),
+            "sawoncode"   to sawonCode,
+            "status"      to "111",
         )
 
         Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
@@ -398,18 +408,18 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 }
 
                 val notDeliveryAdd = hashMapOf(
-                    "requesttype" to "02072",
-                    "chulgoilja" to calDate,
-                    "chulgosaupjangcode" to companyCodeOut,
-                    "chulgochanggocode" to wareHouseCodeOut,
+                    "requesttype"         to "02072",
+                    "chulgoilja"          to calDate,
+                    "chulgosaupjangcode"  to companyCodeOut,
+                    "chulgochanggocode"   to wareHouseCodeOut,
                     "chulgodamdangjacode" to sawonCode,
-                    "ipgosaupjangcode" to companyCodeIn,
-                    "ipgochanggocode" to wareHouseCodeIn,
-                    "ipgodamdangjacode" to ipgodamdangjacode,
-                    "seq" to SEQ,
-                    "status" to "777",
-                    "pummokcount" to chulgodetail.size().toString(),
-                    "chulgodetail" to chulgodetail
+                    "ipgosaupjangcode"    to companyCodeIn,
+                    "ipgochanggocode"     to wareHouseCodeIn,
+                    "ipgodamdangjacode"   to ipgodamdangjacode,
+                    "seq"                 to SEQ,
+                    "status"              to "777",
+                    "pummokcount"         to chulgodetail.size().toString(),
+                    "chulgodetail"        to chulgodetail
                 )
 
                 if (chulgodetail.size() > 0) {
@@ -451,10 +461,10 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
-            "seq" to SEQ,
-            "tablet_ip" to IPUtil.getIpAddress(),
-            "sawoncode" to sawonCode,
-            "status" to status,
+            "seq"         to SEQ,
+            "tablet_ip"   to IPUtil.getIpAddress(),
+            "sawoncode"   to sawonCode,
+            "status"      to status,
         )
 
         apiList.postRequestWorkstatusCancle(workCancelMap)
@@ -585,7 +595,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseOut.adapter = spinnerWareHouseAdapter
 
-            if (FirstSetSW == 0) {
+            if (FirstSetSWOut == 0) {
                 var iCnt = binding.spinnerCompanyOut.count
                 for ( i: Int in 0 until iCnt) {
                     if (it.getCompanyCode()[i].code == companyCodeOut0){
@@ -611,7 +621,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
 
-                            if (FirstSetSW == 0) {
+                            if (FirstSetSWOut == 0) {
                                 var iCnt = binding.spinnerWareHouseOut.count
                                 for ( i: Int in 0 until iCnt) {
                                     if (it.getGwangmyeongCode()[i].code == wareHouseCodeOut0){
@@ -623,7 +633,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                 if (mWareHouseListOut.size > 0) {
                                     wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
                                 }
-                                FirstSetSW = 1
+                                FirstSetSWOut = 1
                             }
                         }
 
@@ -638,7 +648,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             if (mWareHouseListOut.size > 0) {
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
-                            if (FirstSetSW == 0) {
+                            if (FirstSetSWOut == 0) {
                                 var iCnt = binding.spinnerWareHouseOut.count
                                 for ( i: Int in 0 until iCnt) {
                                     if (it.getGumiCode()[i].code == wareHouseCodeOut0){
@@ -650,7 +660,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                                 if (mWareHouseListOut.size > 0) {
                                     wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
                                 }
-                                FirstSetSW = 1
+                                FirstSetSWOut = 1
                             }
                         }
 
@@ -684,6 +694,7 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
         }
     }
 
+    // 입고 사업장코드, 창고코드 Event 세팅
     fun spinnerSetIn() {
 
         MainDataManager.getMainData()?.let {
@@ -695,6 +706,16 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
             val spinnerWareHouseAdapter =
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseIn.adapter = spinnerWareHouseAdapter
+
+            if (FirstSetSWIn == 0) {
+                var iCnt = binding.spinnerCompanyIn.count
+                for ( i: Int in 0 until iCnt) {
+                    if (it.getCompanyCode()[i].code == companyCodeIn0){
+                        CompanySel = i
+                    }
+                }
+                binding.spinnerCompanyIn.setSelection(CompanySel)
+            }
 
             binding.spinnerCompanyIn.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -711,6 +732,21 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
                             if (mWareHouseListIn.size > 0) {
                                 wareHouseCodeIn = mWareHouseListIn[0].code
                             }
+
+                            if (FirstSetSWIn == 0) {
+                                var iCnt = binding.spinnerWareHouseIn.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGwangmyeongCode()[i].code == wareHouseCodeIn0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseIn.setSelection(WareHouseSel,false)
+
+                                if (mWareHouseListIn.size > 0) {
+                                    wareHouseCodeIn = mWareHouseListIn[WareHouseSel].code
+                                }
+                                FirstSetSWIn = 1
+                            }
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -723,6 +759,20 @@ class NotDeliveryActivity : BaseActivity(), NotDeliveryEditListener,
 
                             if (mWareHouseListIn.size > 0) {
                                 wareHouseCodeIn = mWareHouseListIn[0].code
+                            }
+                            if (FirstSetSWIn == 0) {
+                                var iCnt = binding.spinnerWareHouseIn.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGumiCode()[i].code == wareHouseCodeIn0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseIn.setSelection(WareHouseSel,false)
+
+                                if (mWareHouseListIn.size > 0) {
+                                    wareHouseCodeIn = mWareHouseListIn[WareHouseSel].code
+                                }
+                                FirstSetSWIn = 1
                             }
                         }
                     }

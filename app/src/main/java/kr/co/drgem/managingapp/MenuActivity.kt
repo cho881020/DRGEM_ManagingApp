@@ -40,11 +40,10 @@ class MenuActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu)
 
         getRequestMasterCode()
-//        마스터 끝나고 => 사원코드 끝나고 => 복구모두로 넘어갈지 체크
+//        마스터 끝나고 => 사원코드 끝나고 => 복구모드로 넘어갈지 체크
 
         setupEvents()
         setValues()
-
     }
 
     override fun setupEvents() {
@@ -102,7 +101,6 @@ class MenuActivity : BaseActivity() {
                 .setNegativeButton("아니오", null)
                 .show()
         }
-
     }
 
     override fun onBackPressed() {
@@ -110,13 +108,8 @@ class MenuActivity : BaseActivity() {
     }
 
     override fun setValues() {
-
         val userName = mSqliteDB.getAllLoginWorkCommon()[0].USERNAME
         binding.sawonmyeong.text = "$userName 님"
-
-        
-
-
     }
 
     fun getRequestMasterCode() {
@@ -126,7 +119,6 @@ class MenuActivity : BaseActivity() {
                 call: Call<MasterDataResponse>,
                 response: Response<MasterDataResponse>
             ) {
-
                 if (response.isSuccessful) {
                     response.body()?.let {
                         masterData = it
@@ -137,12 +129,10 @@ class MenuActivity : BaseActivity() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<MasterDataResponse>, t: Throwable) {
                 serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                 Log.d("yj", "MasterCode 실패 : ${t.message}")
             }
-
         })
     }
 
@@ -159,12 +149,8 @@ class MenuActivity : BaseActivity() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<MasterSawonResponse>, t: Throwable) {
-
             }
-
-
         })
     }
 
@@ -179,9 +165,6 @@ class MenuActivity : BaseActivity() {
                     startActivity(myIntent)
                 }
             }
-
         }
-
     }
-
 }

@@ -43,19 +43,20 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     lateinit var mAdapter: KittingDetailListAdapter
     lateinit var kittingDetailData: KittingDetailResponse
 
-    val loadingDialog = LoadingDialogFragment()
+    val loadingDialog     = LoadingDialogFragment()
 
-    var mkittingbeonho = ""
-    var SEQ            = ""
-    var status         = "111"
+    var mkittingbeonho    = ""
 
-    var sawonData = ArrayList<SawonData>()
-    var sawonCode = ""
+    var SEQ               = ""
+    var status            = "111"
+
+    var sawonData         = ArrayList<SawonData>()
+    var sawonCode         = ""
+    var ipgodamdangjacode = ""
 
     var johoejogeon       = "0"
     var migwanri          = "0"
     var changgocode       = ""
-    var ipgodamdangjacode = ""
 
     var companyCodeOut    = "0001"
     var wareHouseCodeOut  = "1001"
@@ -63,14 +64,17 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
     var wareHouseCodeOut0 = "1001"
     var CompanySel        = 0
     var WareHouseSel      = 0
-    var FirstSetSW        = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
+    var FirstSetSWOut     = 0    // 출고 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
 
     var companyCodeIn     = "0001"
     var wareHouseCodeIn   = "1001"
+    var companyCodeIn0    = "0001"
+    var wareHouseCodeIn0  = "1001"
+    var FirstSetSWIn      = 0    // 입고 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var mWareHouseListIn: ArrayList<Detailcode> = arrayListOf()
 
-    var calDate = ""
+    var calDate           = ""
 
     // sort의 상태를 파악하기 위한 변수
     var onClickPummokcode     = 0
@@ -88,9 +92,12 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         binding.kittingbeonho.text = "키팅번호 - $mkittingbeonho"
 
         LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
+            sawonCode         = it.sawoncode.toString()
             companyCodeOut0   = it.saeopjangcode.toString()  // by jung 2022.07.02
             wareHouseCodeOut0 = it.changgocode.toString()    // by jung 2022.07.02
+            companyCodeIn0    = it.saeopjangcode.toString()  // by jung 2022.07.20
+            wareHouseCodeIn0  = it.changgocode.toString()    // by jung 2022.07.20
+            wareHouseCodeIn0  = "2002"                       // by jung 2022.07.20 생산자재창고
         }
         binding.chulgodamdangjacode.text = sawonCode
 
@@ -102,7 +109,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         spinnerSetOut()      // 출고 사업장코드, 창고코드 Event 설정
         spinnerSetIn()       // 입고 사업장코드, 창고 코드 Event 설정
 
-        completeTextView()    // 사원명 AutoComplete 기능
+        completeTextView()   // 사원명 AutoComplete 기능
     }
 
     // 시스템 종료키(태블릿 PC 아랫쪽 세모 버튼)를 누른 경우
@@ -136,27 +143,28 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
         // 접기 - 화면의 중간 디스플레이 영역(저장할때 지정되는 항목)을 안보이도록
         binding.btnFold.setOnClickListener {
             binding.layoutFold.isVisible = false
-            binding.btnOpen.isVisible = true
-            binding.btnFold.isVisible = false
+            binding.btnOpen   .isVisible = true
+            binding.btnFold   .isVisible = false
         }
 
         // 열기 - 화면의 중간 디스플레이 영역(저장할때 지정되는 항목)을 보이도록
         binding.btnOpen.setOnClickListener {
             binding.layoutFold.isVisible = true
-            binding.btnOpen.isVisible = false
-            binding.btnFold.isVisible = true
+            binding.btnOpen   .isVisible = false
+            binding.btnFold   .isVisible = true
         }
 
         // 검색버튼 클릭시
         binding.btnFind.setOnClickListener {
-            if(status=="111"){        // 아직 검색된 적이 없는 경우 // FirstSetSW = 0  // spinnerSetOut() 는 처음 초기화에서 진행 된다.
+            if(status=="111"){        // 아직 검색된 적이 없는 경우 // FirstSetSWOut = 0  // spinnerSetOut() 는 처음 초기화에서 진행 된다.
                 requestWorkseq()      // 작업 SEQ 요청, 상세정보 다운로드, Adapter를 이용하여 화면에 데이터 디스플레이 까지
             }
             else if (status == "333"){
                 status333Dialog(){
                     requestWorkseq()  // 작업 SEQ 요청, 상세정보 다운로드, Adapter를 이용하여 화면에 데이터 디스플레이 까지
 
-                    FirstSetSW  = 0   // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    FirstSetSWOut = 0   // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    FirstSetSWIn  = 0   // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.20
                     spinnerSetOut()   // by jung 2022.07.02
                 }
             }
@@ -231,10 +239,10 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         val SEQMap = hashMapOf(
             "requesttype" to "08001",
-            "pid" to "03",
-            "tablet_ip" to IPUtil.getIpAddress(),
-            "sawoncode" to sawonCode,
-            "status" to "111",
+            "pid"         to "03",
+            "tablet_ip"   to IPUtil.getIpAddress(),
+            "sawoncode"   to sawonCode,
+            "status"      to "111",
         )
 
         Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
@@ -396,19 +404,19 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                 }
 
                 val kittingAdd = hashMapOf(
-                    "requesttype" to "02053",
-                    "kittingbeonho" to mkittingbeonho,
-                    "chulgoilja" to calDate,
-                    "chulgosaupjangcode" to companyCodeOut,
-                    "chulgochanggocode" to wareHouseCodeOut,
+                    "requesttype"         to "02053",
+                    "kittingbeonho"       to mkittingbeonho,
+                    "chulgoilja"          to calDate,
+                    "chulgosaupjangcode"  to companyCodeOut,
+                    "chulgochanggocode"   to wareHouseCodeOut,
                     "chulgodamdangjacode" to sawonCode,
-                    "ipgosaupjangcode" to companyCodeIn,
-                    "ipgodamdangjacode" to ipgodamdangjacode,
-                    "ipgochanggocode" to wareHouseCodeIn,
-                    "seq" to SEQ,
-                    "status" to "777",
-                    "pummokcount" to chulgodetail.size().toString(),
-                    "chulgodetail" to chulgodetail
+                    "ipgosaupjangcode"    to companyCodeIn,
+                    "ipgodamdangjacode"   to ipgodamdangjacode,
+                    "ipgochanggocode"     to wareHouseCodeIn,
+                    "seq"                 to SEQ,
+                    "status"              to "777",
+                    "pummokcount"         to chulgodetail.size().toString(),
+                    "chulgodetail"        to chulgodetail
                 )
 
                 Log.d("yj", "일괄출고등록 맵확인 : $kittingAdd")
@@ -452,10 +460,10 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
         val workCancelMap = hashMapOf(  // 취소 요청 데이터 준비
             "requesttype" to "08002",
-            "seq" to SEQ,
-            "tablet_ip" to IPUtil.getIpAddress(),
-            "sawoncode" to sawonCode,
-            "status" to status,
+            "seq"         to SEQ,
+            "tablet_ip"   to IPUtil.getIpAddress(),
+            "sawoncode"   to sawonCode,
+            "status"      to status,
         )
 
         apiList.postRequestWorkstatusCancle(workCancelMap)
@@ -492,7 +500,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseOut.adapter = spinnerWareHouseAdapter
 
-            if (FirstSetSW == 0) {
+            if (FirstSetSWOut == 0) {
                 var iCnt = binding.spinnerCompanyOut.count
                 for ( i: Int in 0 until iCnt) {
                     if (it.getCompanyCode()[i].code == companyCodeOut0){
@@ -518,7 +526,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
 
-                            if (FirstSetSW == 0) {
+                            if (FirstSetSWOut == 0) {
                                 var iCnt = binding.spinnerWareHouseOut.count
                                 for ( i: Int in 0 until iCnt) {
                                     if (it.getGwangmyeongCode()[i].code == wareHouseCodeOut0){
@@ -530,7 +538,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                 if (mWareHouseListOut.size > 0) {
                                     wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
                                 }
-                                FirstSetSW = 1
+                                FirstSetSWOut = 1
                             }
                         }
 
@@ -545,7 +553,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                             if (mWareHouseListOut.size > 0) {
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
-                            if (FirstSetSW == 0) {
+                            if (FirstSetSWOut == 0) {
                                 var iCnt = binding.spinnerWareHouseOut.count
                                 for ( i: Int in 0 until iCnt) {
                                     if (it.getGumiCode()[i].code == wareHouseCodeOut0){
@@ -557,7 +565,7 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                                 if (mWareHouseListOut.size > 0) {
                                     wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
                                 }
-                                FirstSetSW = 1
+                                FirstSetSWOut = 1
                             }
                         }
 
@@ -602,6 +610,16 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseIn.adapter = spinnerWareHouseAdapter
 
+            if (FirstSetSWIn == 0) {
+                var iCnt = binding.spinnerCompanyIn.count
+                for ( i: Int in 0 until iCnt) {
+                    if (it.getCompanyCode()[i].code == companyCodeIn0){
+                        CompanySel = i
+                    }
+                }
+                binding.spinnerCompanyIn.setSelection(CompanySel)
+            }
+
             binding.spinnerCompanyIn.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -617,6 +635,21 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
                             if (mWareHouseListIn.size > 0) {
                                 wareHouseCodeIn = mWareHouseListIn[0].code
                             }
+
+                            if (FirstSetSWIn == 0) {
+                                var iCnt = binding.spinnerWareHouseIn.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGwangmyeongCode()[i].code == wareHouseCodeIn0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseIn.setSelection(WareHouseSel,false)
+
+                                if (mWareHouseListIn.size > 0) {
+                                    wareHouseCodeIn = mWareHouseListIn[WareHouseSel].code
+                                }
+                                FirstSetSWIn = 1
+                            }
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -629,6 +662,20 @@ class KittingDetailActivity : BaseActivity(), KittingDetailEditListener,
 
                             if (mWareHouseListIn.size > 0) {
                                 wareHouseCodeIn = mWareHouseListIn[0].code
+                            }
+                            if (FirstSetSWIn == 0) {
+                                var iCnt = binding.spinnerWareHouseIn.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGumiCode()[i].code == wareHouseCodeIn0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseIn.setSelection(WareHouseSel,false)
+
+                                if (mWareHouseListIn.size > 0) {
+                                    wareHouseCodeIn = mWareHouseListIn[WareHouseSel].code
+                                }
+                                FirstSetSWIn = 1
                             }
                         }
                     }

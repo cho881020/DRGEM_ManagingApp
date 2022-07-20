@@ -41,35 +41,39 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
     lateinit var mAdapter: RequestDetailListAdapter
     lateinit var requestDetailData: RequestDetailResponse
 
-    val loadingDialog = LoadingDialogFragment()
+    val loadingDialog     = LoadingDialogFragment()
 
-    var mYocheongbeonho = ""
-    var SEQ = ""
-    var status = "111"
-    var sawonCode = ""
+    var mYocheongbeonho   = ""
 
-    var sawonData = ArrayList<SawonData>()
+    var SEQ               = ""
+    var status            = "111"
+
+    var sawonCode         = ""
+    var sawonData         = ArrayList<SawonData>()
     var ipgodamdangjacode = ""
 
-    var johoejogeon = "0"
-    var migwanri = "0"
-    var companyCode = ""    // 조회에서 가져온 회사/창고코드
-    var wareHouseCode = ""
+    var johoejogeon       = "0"
+    var migwanri          = "0"
+    var companyCode       = ""    // 조회에서 가져온 회사/창고코드
+    var wareHouseCode     = ""
 
     var companyCodeOut    = "0001"
     var wareHouseCodeOut  = "1001"
     var companyCodeOut0   = "0001"
     var wareHouseCodeOut0 = "1001"
-    var CompanySel   = 0
-    var WareHouseSel = 0
-    var FirstSetSW   = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것
+    var CompanySel        = 0
+    var WareHouseSel      = 0
+    var FirstSetSWOut     = 0    // 출고 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var mWareHouseListOut: ArrayList<Detailcode> = arrayListOf()
 
-    var companyCodeIn = "0001"
-    var wareHouseCodeIn = "1001"
+    var companyCodeIn     = "0001"
+    var wareHouseCodeIn   = "1001"
+    var companyCodeIn0    = "0001"
+    var wareHouseCodeIn0  = "1001"
+    var FirstSetSWIn      = 0    // 입고 사업장코드와 창고코드 처음 한번 적용하기 위한 것
     var mWareHouseListIn: ArrayList<Detailcode> = arrayListOf()
 
-    var calDate = ""
+    var calDate           = ""
 
     // sort의 상태를 파악하기 위한 변수
     var onClickPummokcode     = 0
@@ -86,9 +90,12 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         binding.yocheongbeonho.text = "요청번호 - $mYocheongbeonho"
 
         LoginUserUtil.getLoginData()?.let {
-            sawonCode = it.sawoncode.toString()
+            sawonCode         = it.sawoncode.toString()
             companyCodeOut0   = it.saeopjangcode.toString()  // by jung 2022.07.02
             wareHouseCodeOut0 = it.changgocode.toString()    // by jung 2022.07.02
+            companyCodeIn0    = it.saeopjangcode.toString()  // by jung 2022.07.20
+            wareHouseCodeIn0  = it.changgocode.toString()    // by jung 2022.07.20
+            wareHouseCodeIn0  = "2002"                       // by jung 2022.07.20 생산자재창고
         }
         binding.chulgodamdangjacode.text = sawonCode
 
@@ -125,7 +132,8 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                     SerialManageUtil.clearData()
                     requestWorkseq()
 
-                    FirstSetSW  = 0    // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    FirstSetSWOut = 0   // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.02
+                    FirstSetSWIn  = 0   // 사업장코드와 창고코드 처음 한번 적용하기 위한 것  by jung 2022.07.20
                     spinnerSetOut()    // by jung 2022.07.02
                 }
             }
@@ -133,14 +141,14 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
         binding.btnFold.setOnClickListener {
             binding.layoutFold.isVisible = false
-            binding.btnOpen.isVisible = true
-            binding.btnFold.isVisible = false
+            binding.btnOpen   .isVisible = true
+            binding.btnFold   .isVisible = false
         }
 
         binding.btnOpen.setOnClickListener {
             binding.layoutFold.isVisible = true
-            binding.btnOpen.isVisible = false
-            binding.btnFold.isVisible = true
+            binding.btnOpen   .isVisible = false
+            binding.btnFold   .isVisible = true
         }
 
         binding.radio0.setOnClickListener {
@@ -197,10 +205,10 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
         val SEQMap = hashMapOf(
             "requesttype" to "08001",
-            "pid" to "04",
-            "tablet_ip" to IPUtil.getIpAddress(),
-            "sawoncode" to sawonCode,
-            "status" to "111",
+            "pid"         to "04",
+            "tablet_ip"   to IPUtil.getIpAddress(),
+            "sawoncode"   to sawonCode,
+            "status"      to "111",
         )
 
         apiList.postRequestSEQ(SEQMap).enqueue(object : Callback<WorkResponse> {
@@ -342,19 +350,19 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 }
 
                 val requestAdd = hashMapOf(
-                    "requesttype" to "02063",
-                    "yocheongbeonho" to mYocheongbeonho,
-                    "chulgoilja" to calDate,
-                    "chulgosaupjangcode" to companyCodeOut,
-                    "chulgochanggocode" to wareHouseCodeOut,
+                    "requesttype"         to "02063",
+                    "yocheongbeonho"      to mYocheongbeonho,
+                    "chulgoilja"          to calDate,
+                    "chulgosaupjangcode"  to companyCodeOut,
+                    "chulgochanggocode"   to wareHouseCodeOut,
                     "chulgodamdangjacode" to sawonCode,
-                    "ipgosaupjangcode" to companyCodeIn,
-                    "ipgochanggocode" to wareHouseCodeIn,
-                    "ipgodamdangjacode" to ipgodamdangjacode,
-                    "seq" to SEQ,
-                    "status" to "777",
-                    "pummokcount" to requestChulgodetail.size().toString(),
-                    "chulgodetail" to requestChulgodetail
+                    "ipgosaupjangcode"    to companyCodeIn,
+                    "ipgochanggocode"     to wareHouseCodeIn,
+                    "ipgodamdangjacode"   to ipgodamdangjacode,
+                    "seq"                 to SEQ,
+                    "status"              to "777",
+                    "pummokcount"         to requestChulgodetail.size().toString(),
+                    "chulgodetail"        to requestChulgodetail
                 )
 
                 Log.d("yj", "requestAdd : $requestAdd")
@@ -402,10 +410,10 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
         val workCancelMap = hashMapOf(
             "requesttype" to "08002",
-            "seq" to SEQ,
-            "tablet_ip" to IPUtil.getIpAddress(),
-            "sawoncode" to sawonCode,
-            "status" to status,
+            "seq"         to SEQ,
+            "tablet_ip"   to IPUtil.getIpAddress(),
+            "sawoncode"   to sawonCode,
+            "status"      to status,
         )
 
         apiList.postRequestWorkstatusCancle(workCancelMap)
@@ -438,7 +446,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseOut.adapter = spinnerWareHouseAdapter
 
-            if (FirstSetSW == 0) {
+            if (FirstSetSWOut == 0) {
                 var iCnt = binding.spinnerCompanyOut.count
                 for ( i: Int in 0 until iCnt) {
                     if (it.getCompanyCode()[i].code == companyCodeOut0){
@@ -464,7 +472,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
 
-                            if (FirstSetSW == 0) {
+                            if (FirstSetSWOut == 0) {
                                 var iCnt = binding.spinnerWareHouseOut.count
                                 for ( i: Int in 0 until iCnt) {
                                     if (it.getGwangmyeongCode()[i].code == wareHouseCodeOut0){
@@ -476,7 +484,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                 if (mWareHouseListOut.size > 0) {
                                     wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
                                 }
-                                FirstSetSW = 1
+                                FirstSetSWOut = 1
                             }
                         }
 
@@ -491,7 +499,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                             if (mWareHouseListOut.size > 0) {
                                 wareHouseCodeOut = mWareHouseListOut[0].code
                             }
-                            if (FirstSetSW == 0) {
+                            if (FirstSetSWOut == 0) {
                                 var iCnt = binding.spinnerWareHouseOut.count
                                 for ( i: Int in 0 until iCnt) {
                                     if (it.getGumiCode()[i].code == wareHouseCodeOut0){
@@ -503,7 +511,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                                 if (mWareHouseListOut.size > 0) {
                                     wareHouseCodeOut = mWareHouseListOut[WareHouseSel].code
                                 }
-                                FirstSetSW = 1
+                                FirstSetSWOut = 1
                             }
                         }
 
@@ -537,6 +545,7 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
         }
     }
 
+    // 입고 사업장코드, 창고코드 Event 세팅
     fun spinnerSetIn() {
 
         MainDataManager.getMainData()?.let {
@@ -548,6 +557,16 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
             val spinnerWareHouseAdapter =
                 MasterDataSpinnerAdapter(mContext, R.layout.spinner_list_item, arrayListOf())
             binding.spinnerWareHouseIn.adapter = spinnerWareHouseAdapter
+
+            if (FirstSetSWIn == 0) {
+                var iCnt = binding.spinnerCompanyIn.count
+                for ( i: Int in 0 until iCnt) {
+                    if (it.getCompanyCode()[i].code == companyCodeIn0){
+                        CompanySel = i
+                    }
+                }
+                binding.spinnerCompanyIn.setSelection(CompanySel)
+            }
 
             binding.spinnerCompanyIn.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -564,6 +583,21 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
                             if (mWareHouseListIn.size > 0) {
                                 wareHouseCodeIn = mWareHouseListIn[0].code
                             }
+
+                            if (FirstSetSWIn == 0) {
+                                var iCnt = binding.spinnerWareHouseIn.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGwangmyeongCode()[i].code == wareHouseCodeIn0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseIn.setSelection(WareHouseSel,false)
+
+                                if (mWareHouseListIn.size > 0) {
+                                    wareHouseCodeIn = mWareHouseListIn[WareHouseSel].code
+                                }
+                                FirstSetSWIn = 1
+                            }
                         }
 
                         if (it.getCompanyCode()[position].code == "0002") {
@@ -576,6 +610,20 @@ class RequestDetailActivity : BaseActivity(), RequestDetailEditListener,
 
                             if (mWareHouseListIn.size > 0) {
                                 wareHouseCodeIn = mWareHouseListIn[0].code
+                            }
+                            if (FirstSetSWIn == 0) {
+                                var iCnt = binding.spinnerWareHouseIn.count
+                                for ( i: Int in 0 until iCnt) {
+                                    if (it.getGumiCode()[i].code == wareHouseCodeIn0){
+                                        WareHouseSel = i
+                                    }
+                                }
+                                binding.spinnerWareHouseIn.setSelection(WareHouseSel,false)
+
+                                if (mWareHouseListIn.size > 0) {
+                                    wareHouseCodeIn = mWareHouseListIn[WareHouseSel].code
+                                }
+                                FirstSetSWIn = 1
                             }
                         }
                     }

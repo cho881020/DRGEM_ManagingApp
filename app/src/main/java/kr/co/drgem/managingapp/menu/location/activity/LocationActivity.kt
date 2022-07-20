@@ -90,10 +90,10 @@ class LocationActivity : BaseActivity() {
         val changgoList = ArrayList<Detailcode>()
         changgoList.add(Detailcode("", "전체"))
         changgoList.add(Detailcode("2001", "자재창고1"))
-        changgoList.add(Detailcode("2002", "생산자재창고"))
         changgoList.add(Detailcode("2014", "자재창고2"))
+        changgoList.add(Detailcode("2025", "자재창고J"))
         changgoList.add(Detailcode("2020", "자재재작업창고"))
-        changgoList.add(Detailcode("2021", "품경창고"))
+        changgoList.add(Detailcode("2021", "품경자재창고"))
         changgoList.add(Detailcode("2015", "수입검사대기창고"))
 
         val spinnerAdapter =

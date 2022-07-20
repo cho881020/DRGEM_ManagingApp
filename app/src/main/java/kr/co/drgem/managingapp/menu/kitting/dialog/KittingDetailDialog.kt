@@ -39,11 +39,11 @@ class KittingDetailDialog : BaseDialogFragment() {
     val mSerialDataList  = ArrayList<SerialLocalDB>()
     val mSerialDataListC = ArrayList<SerialLocalDB>()
 
-    var viewholderCount = 0
+    var viewholderCount  = 0
     lateinit var pummokData: Pummokdetail
-    var mKittingbeonho = ""
+    var mKittingbeonho   = ""
     lateinit var tempData: TempData
-    var beforeSuryang = 0   // 작업전에 가지고 있던 수량, 이전에 수량이 0이 아니였는데 0으로 바뀐경우 전송하기 위해
+    var beforeSuryang   = 0   // 작업전에 가지고 있던 수량, 이전에 수량이 0이 아니였는데 0으로 바뀐경우 전송하기 위해
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +53,7 @@ class KittingDetailDialog : BaseDialogFragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.dialog_kitting_detail, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         return binding.root
     }
 

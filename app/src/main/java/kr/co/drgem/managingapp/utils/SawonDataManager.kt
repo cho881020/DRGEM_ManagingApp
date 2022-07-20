@@ -12,16 +12,10 @@ class SawonDataManager {
             if (sawonData == null) {
                 sawonData = data
             }
-
         }
 
         fun getSawonData(): MasterSawonResponse? {
-
             return sawonData
         }
-
-
     }
-
-
 }
