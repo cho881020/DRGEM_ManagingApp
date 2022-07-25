@@ -34,11 +34,12 @@ class MainActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         setupEvents()
-        setValues()
+        setValues()  // 복구데이터 존재여부 검사 및 그에 따른 이후 복구작업 지시
+                     // 데이터는 존재하지만 "333"이 아니면 로컬테이블 초기화 작업진행
 
         // test용 지울것
-        //binding.edtId.setText("22018")
-        //binding.edtPw.setText("jung1049&&")
+        binding.edtId.setText("22018")
+        binding.edtPw.setText("jung1049&&")
     }
 
     override fun setupEvents() {
@@ -52,8 +53,10 @@ class MainActivity : BaseActivity() {
         binding.btnRecovery.setOnClickListener {
 
             val loginWorkInfo = mSqliteDB.getAllLoginWorkCommon()[0]
-            val workType      = loginWorkInfo.WORKGUBUN.toString()  // 메뉴에서 update되도록 함 2022.07.20
-            val workSEQ       = loginWorkInfo.WORKNUMBER.toString()
+            val workType      = loginWorkInfo.WORKGUBUN.toString()   // 메뉴에서 update되도록 함 2022.07.20
+            val workSEQ       = loginWorkInfo.WORKNUMBER.toString()  // 각 업무에서 "333"인 경우 복구한다.
+
+            // 서버와의 통신 불필요하다. ???
 
             // JSON 바디로 보낼때 => 해쉬맵을 보내는 방향으로
             val dataMap = hashMapOf(
@@ -177,17 +180,33 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    // 최종 정상 종료
     override fun onBackPressed() {
-        endDialog()
+        endDialog() // 이작업 안에서 모든 로컬테이블 clear 작업이 이루어져야 한다.
     }
 
+    // 복구데이터 존재여부 검사 및 그에 따른 이후 복구작업 지시
+    // 데이터는 존재하지만 "333"이 아니면 로컬테이블 초기화 작업진행
     override fun setValues() {
 
-        if (mSqliteDB.getAllLoginWorkCommon().size > 0) {
+        if (mSqliteDB.getAllLoginWorkCommon().size > 0) {  // login 정보가 있다면 복구작업 진행 시도
+                                                           // workStatus가 "333"인 경우만 진행 그렇지 않다면 모든 로컬테이블 지우고 정상 시작처리
             val workStatus = mSqliteDB.getAllLoginWorkCommon()[0].WORKGUBUN.toString()
+            //val workStatus = "333"
+            if (workStatus == "333") {
+                val myIntent =Intent(mContext, MenuActivity::class.java)
+                myIntent.putExtra("WorkRecovery"  , true)
+
+                startActivity(myIntent)
+                finish()
+            } else {
+                // 모든 데이터 초기화 클리어 처리
+            }
+
             //val workSEQ = mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER.toString() //by jung 막음 2022.07.03
             
 //            // 복구 데이터 존재 여부 검사 - 복구작업 진행 할 때 사용 - 현재는 미 작업
+//            // 선택적이 아니라 확인 메시지만 보여주고 바로 복구작업으로 진입해서 최종 화면을 보여 준다.
 //            if (workStatus != "None") {
 //                binding.btnRecovery.visibility = View.VISIBLE
 //            }

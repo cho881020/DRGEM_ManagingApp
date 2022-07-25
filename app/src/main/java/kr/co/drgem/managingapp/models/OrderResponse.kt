@@ -6,7 +6,6 @@ data class OrderResponse(
     val resultmsg: String
 
 ){
-
     fun returnBaljubeonho() : ArrayList<Baljubeonho> {
 
         val baljuList = ArrayList<Baljubeonho>()
@@ -15,12 +14,6 @@ data class OrderResponse(
             baljuList.clear()
             baljuList.addAll(baljubeonho)
         }
-
-
-
         return baljuList
     }
-
-
-
 }

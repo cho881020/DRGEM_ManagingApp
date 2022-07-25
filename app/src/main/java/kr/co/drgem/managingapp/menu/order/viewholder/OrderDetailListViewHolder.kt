@@ -42,7 +42,7 @@ class OrderDetailListViewHolder(
     val ipgosuryang = itemView.findViewById<TextView>(R.id.ipgosuryang)
 
 
-    fun bind(data: Baljudetail, tempData: TempData) {
+    fun bind(data: Baljudetail, tempData: TempData, position: Int){
 
         this.data = data
 

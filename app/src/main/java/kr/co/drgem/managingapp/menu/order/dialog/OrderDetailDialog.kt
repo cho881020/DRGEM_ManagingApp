@@ -35,18 +35,18 @@ import retrofit2.Response
 
 class OrderDetailDialog : BaseDialogFragment() {
 
-    lateinit var binding: DialogOrderDetailBinding
+    lateinit var binding : DialogOrderDetailBinding
     lateinit var mAdapter: DialogEditOrderAdapter
 
-    var viewholderCount = 0
+    var viewholderCount  = 0
     lateinit var baljuData: Baljudetail
-    var mBaljubeonho = ""
+    var mBaljubeonho     = ""
     lateinit var tempData: TempData
 
     val mSerialDataList  = ArrayList<SerialLocalDB>()
     val mSerialDataListC = ArrayList<SerialLocalDB>()
 
-    var beforeSuryang = 0   // 작업전에 가지고 있던 수량, 이전에 수량이 0이 아니였는데 0으로 바뀐경우 전송하기 위해
+    var beforeSuryang    = 0   // 작업전에 가지고 있던 수량, 이전에 수량이 0이 아니였는데 0으로 바뀐경우 전송하기 위해
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +55,8 @@ class OrderDetailDialog : BaseDialogFragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_order_detail, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.setCanceledOnTouchOutside(false) // 외부 터치 막음
+
         return binding.root
     }
 
@@ -112,7 +114,7 @@ class OrderDetailDialog : BaseDialogFragment() {
 
             // 중요자재 항목일 경우만 진행--------------------------------- start
             if (baljuData.getJungyojajeyeobuHP() == "Y") {
-                mSqliteDB.deletePummokcodeSerials(baljuData.getPummokcodeHP()) // 2022.07.12 막음
+                //mSqliteDB.deletePummokcodeSerials(baljuData.getPummokcodeHP()) // 2022.07.25 막음
                 // 시리얼번호 편집
                 val contentString = StringBuilder()     // String 문자열 만들기
 
@@ -181,17 +183,17 @@ class OrderDetailDialog : BaseDialogFragment() {
             // 서버로 현재고 임시등록 처리--------------------------------- start
             // 중요자재와 일반자재와 공통 처리
             val tempMap = hashMapOf(
-                "requesttype" to "08003",
-                "saeopjangcode" to tempData.saeopjangcode,
-                "changgocode" to tempData.changgocode,
-                "pummokcode" to baljuData.getPummokcodeHP(),
-                "suryang" to inputCount,
+                "requesttype"    to "08003",
+                "saeopjangcode"  to tempData.saeopjangcode,
+                "changgocode"    to tempData.changgocode,
+                "pummokcode"     to baljuData.getPummokcodeHP(),
+                "suryang"        to inputCount,
                 "yocheongbeonho" to mBaljubeonho,
-                "ipchulgubun" to "1",
-                "seq" to tempData.seq,
-                "tablet_ip" to IPUtil.getIpAddress(),
-                "sawoncode" to tempData.sawoncode,
-                "status" to "333",
+                "ipchulgubun"    to "1",
+                "seq"            to tempData.seq,
+                "tablet_ip"      to IPUtil.getIpAddress(),
+                "sawoncode"      to tempData.sawoncode,
+                "status"         to "333",
             )
 
             Log.d("yj", "tempMap : $tempMap")
@@ -227,6 +229,33 @@ class OrderDetailDialog : BaseDialogFragment() {
             // 서버전송시 에러가 발생한 경우------------------------------- end
 
             baljuData.setPummokCount(inputCount)
+
+            // 시리얼번호 정보를 로컬테이블에 저장하기---------------------------- start 2022.07.25 추가
+            if (baljuData.getJungyojajeyeobuHP() == "Y") {// 중요자재 항목일 경우만 진행
+                mSqliteDB.deletePummokcodeSerials(baljuData.getPummokcodeHP()) // 해당 품목 시리얼번호 정보 삭제
+                // 아래의 메모리 데이터와의 연관성 같이 삭제하고 다시 넣어야 하는지 검토
+//                // 해당 pummokCode의 데이터를 Clear
+//                fun clearData1( pummokCode: String ) {
+//                    SerialManageUtil.mHashMap[pummokCode] = ""
+//                }
+
+                for (data in mSerialDataList) {         // 시리얼데이터 목록을 돌기 (data 변수 명으로)
+                    // mSerialDataList에는 시리얼번호가 개별로 보관되어 있다.
+                    if (data.serial.isNotBlank()) {     // data 의 시리얼이 빈값이 아닐 때
+                        mSqliteDB.insertSerialToPummokcode(data.pummokcode,data.serial,data.position)
+                        // 위의 삭제와 마찬가지로 추가하는 것도 연관성 조사
+//                        fun putSerialStringByPummokCode(pummokCode: String, content: String ) {
+//
+//                            SerialManageUtil.mHashMap[pummokCode] = content
+//                        }
+
+                    } else {   // contentString 이 빈 값일 때
+                        //삭제된 상태로 그대로 진행
+                    }
+                }
+            }
+            // 시리얼번호 정보를 로컬테이블에 저장하기---------------------------- end
+
             saveDoneDialog()
             dismiss()
         }
@@ -403,18 +432,18 @@ class OrderDetailDialog : BaseDialogFragment() {
         // Pummokdetail.kt의 PummokCount 의 값은 시리얼번호 입력화면에서 등록하기 버튼에의해 등록될때
         // 작업완료 제일 끝에 현재 화면상에 입력된 값이 저장된 것이다.
 
-        binding.baljubeonho.text = mBaljubeonho
-        binding.pummokcode.text = baljuData.getPummokcodeHP()
-        binding.pummyeong.text = baljuData.getPummyeongHP()
-        binding.dobeonModel.text = baljuData.getDobeonModelHP()
-        binding.sayang.text = baljuData.getsayangHP()
-        binding.balhudanwi.text = baljuData.getBalhudanwiHP()
-        binding.seq.text = baljuData.getSeqHP()
+        binding.baljubeonho    .text = mBaljubeonho
+        binding.pummokcode     .text = baljuData.getPummokcodeHP()
+        binding.pummyeong      .text = baljuData.getPummyeongHP()
+        binding.dobeonModel    .text = baljuData.getDobeonModelHP()
+        binding.sayang         .text = baljuData.getsayangHP()
+        binding.balhudanwi     .text = baljuData.getBalhudanwiHP()
+        binding.seq            .text = baljuData.getSeqHP()
         binding.jungyojajeyeobu.text = baljuData.getJungyojajeyeobuHP()
-        binding.location.text = baljuData.getLocationHP()
-        binding.ipgoyejeongil.text = baljuData.getIpgoyejeongilHP()
-        binding.baljusuryang.text = baljuData.getBaljusuryangHP()
-        binding.ipgosuryang.text = viewholderCount.toString()
+        binding.location       .text = baljuData.getLocationHP()
+        binding.ipgoyejeongil  .text = baljuData.getIpgoyejeongilHP()
+        binding.baljusuryang   .text = baljuData.getBaljusuryangHP()
+        binding.ipgosuryang    .text = viewholderCount.toString()
 
         if (baljuData.getJungyojajeyeobuHP() == "Y") {
             binding.layoutSerial.isVisible = true
@@ -430,7 +459,7 @@ class OrderDetailDialog : BaseDialogFragment() {
                 "yj",
                 "data.edtPummokCode ${baljuData.getPummokcodeHP()} :pummokCount : ${baljuData.getPummokCount()} edtPummokCode ${binding.edtPummokcode}"
             )
-            binding.edtCount.setText(baljuData.getPummokCount())                 // 보관되어있던 수량을 표시한다.
+            binding.edtCount     .setText(baljuData.getPummokCount())             // 보관되어있던 수량을 표시한다.
             binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)      // 품목코드의 입력영역을 gray로 만든다.
             binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080)) // 품목코드의 text를 808080의 컬러로 만든다.
             binding.layoutCount.isVisible = true            // 수량 text와 수량입력(edtCount) 칸이 보이도록한다.
@@ -491,7 +520,7 @@ class OrderDetailDialog : BaseDialogFragment() {
     }
 
     // 상세정보 조회시에서 정보입력 버튼을 클릭하면 시리얼번호 입력화면을 표시하기 위해 불려지는
-    // KittingDetailActivity.kt의 override fun onClickedEdit(data: Pummokdetail) { 함수에서
+    // *DetailActivity.kt의 override fun onClickedEdit(data: Pummokdetail) { 함수에서
     // 호출된다.
     fun setCount(Baljubeonho: String, data: Baljudetail, tempData: TempData) {
         mBaljubeonho = Baljubeonho

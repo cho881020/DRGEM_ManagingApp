@@ -37,16 +37,16 @@ import retrofit2.Response
 
 class TransactionDialog : BaseDialogFragment() {
 
-    lateinit var binding: DialogTransactionBinding
-    lateinit var mAdapter: DialogEditTranAdapter
+    lateinit var binding   : DialogTransactionBinding
+    lateinit var mAdapter  : DialogEditTranAdapter
     lateinit var georaeData: Georaedetail
 
     val mSerialDataList  = ArrayList<SerialLocalDB>()
     val mSerialDataListC = ArrayList<SerialLocalDB>()
 
-    var viewholderCount = 0
+    var viewholderCount  = 0
     lateinit var tempData: TempData
-    var beforeSuryang = 0   // 작업전에 가지고 있던 수량, 이전에 수량이 0이 아니였는데 0으로 바뀐경우 전송하기 위해
+    var beforeSuryang    = 0   // 작업전에 가지고 있던 수량, 이전에 수량이 0이 아니였는데 0으로 바뀐경우 전송하기 위해
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,8 +55,9 @@ class TransactionDialog : BaseDialogFragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_transaction, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        return binding.root
+        dialog?.setCanceledOnTouchOutside(false) // 외부 터치 막음
 
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -182,17 +183,17 @@ class TransactionDialog : BaseDialogFragment() {
             // 서버로 현재고 임시등록 처리--------------------------------- start
             // 중요자재와 일반자재와 공통 처리
             val tempMap = hashMapOf(
-                "requesttype" to "08003",
-                "saeopjangcode" to tempData.saeopjangcode,
-                "changgocode" to tempData.changgocode,
-                "pummokcode" to georaeData.getPummokcodeHP(),
-                "suryang" to inputCount,
+                "requesttype"    to "08003",
+                "saeopjangcode"  to tempData.saeopjangcode,
+                "changgocode"    to tempData.changgocode,
+                "pummokcode"     to georaeData.getPummokcodeHP(),
+                "suryang"        to inputCount,
                 "yocheongbeonho" to georaeData.getBaljubeonhoHP(),
-                "ipchulgubun" to "1",
-                "seq" to tempData.seq,
-                "tablet_ip" to IPUtil.getIpAddress(),
-                "sawoncode" to tempData.sawoncode,
-                "status" to "333",
+                "ipchulgubun"    to "1",
+                "seq"            to tempData.seq,
+                "tablet_ip"      to IPUtil.getIpAddress(),
+                "sawoncode"      to tempData.sawoncode,
+                "status"         to "333",
             )
 
             Log.d("yj", "tempMap : $tempMap")
@@ -432,7 +433,7 @@ class TransactionDialog : BaseDialogFragment() {
                 "yj",
                 "data.edtPummokCode ${georaeData.getPummokcodeHP()} :pummokCount : ${georaeData.getPummokCount()} edtPummokCode ${binding.edtPummokcode}"
             )
-            binding.edtCount.setText(georaeData.getPummokCount())                 // 보관되어있던 수량을 표시한다.
+            binding.edtCount     .setText(georaeData.getPummokCount())            // 보관되어있던 수량을 표시한다.
             binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)      // 품목코드의 입력영역을 gray로 만든다.
             binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080)) // 품목코드의 text를 808080의 컬러로 만든다.
             binding.layoutCount.isVisible = true            // 수량 text와 수량입력(edtCount) 칸이 보이도록한다.

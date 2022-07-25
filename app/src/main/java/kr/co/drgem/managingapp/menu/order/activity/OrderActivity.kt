@@ -30,32 +30,28 @@ import java.util.*
 
 class OrderActivity : BaseActivity() {
 
-    lateinit var binding: ActivityOrderBinding
-    lateinit var mOrderAdapter: OrderListAdapter
     val loadingDialog = LoadingDialogFragment()
 
-    lateinit var masterData: MasterDataResponse
-    val baljuList = ArrayList<Baljubeonho>()
+    lateinit var binding      : ActivityOrderBinding
+    lateinit var mOrderAdapter: OrderListAdapter
+    lateinit var masterData   : MasterDataResponse
 
-
-    val calStart = Calendar.getInstance()
-    val calEnd = Calendar.getInstance()
-    val dateSet = SimpleDateFormat("yyyyMMdd")
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-
+    val baljuList   = ArrayList<Baljubeonho>()
+    val calStart    = Calendar.getInstance()
+    val calEnd      = Calendar.getInstance()
+    val dateSet     = SimpleDateFormat("yyyyMMdd")
+    val dateFormat  = SimpleDateFormat("yyyy-MM-dd")
     var calStartStr = dateSet.format(calStart.time)
-    var calEndStr = dateSet.format(calEnd.time)
+    var calEndStr   = dateSet.format(calEnd.time)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_order)
+        binding    = DataBindingUtil.setContentView(this, R.layout.activity_order)
 
         masterData = intent.getSerializableExtra("masterData") as MasterDataResponse
 
-
         setupEvents()
-        setValues()
-//        getAllBaljubeonhoInLocalDB()
+        setValues()  // 복구작업 존재하면 복구작업 진행까지
     }
 
     override fun setupEvents() {
@@ -63,7 +59,6 @@ class OrderActivity : BaseActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-
 
         binding.btnCompanyRemove.setOnClickListener {
             binding.edtGeoraecheomyeong.text = null
@@ -73,10 +68,8 @@ class OrderActivity : BaseActivity() {
             binding.edtBaljubeonho.text = null
         }
 
-
         binding.txtDateStart.text = dateFormat.format(calStart.time)
         binding.txtDateEnd.text = dateFormat.format(calEnd.time)
-
 
         binding.layoutDateStart.setOnClickListener {
 
@@ -87,7 +80,6 @@ class OrderActivity : BaseActivity() {
 
                     calStartStr = dateSet.format(calStart.time)
                     binding.txtDateStart.text = dateFormat.format(calStart.time)
-
                 }
             }
 
@@ -100,7 +92,6 @@ class OrderActivity : BaseActivity() {
             )
             datePick.datePicker.maxDate = System.currentTimeMillis()
             datePick.show()
-
         }
 
         binding.layoutDateEnd.setOnClickListener {
@@ -125,20 +116,18 @@ class OrderActivity : BaseActivity() {
             datePick.show()
         }
 
-
-
+        // 검색버튼 클릭시
         binding.btnFind.setOnClickListener {
 
             // 발주번호 영문자 대문자로 변경하기
             val UpperCaseS = binding.edtBaljubeonho.text.toString().uppercase()
             binding.edtBaljubeonho.setText(UpperCaseS)
 
-            getRequestOrderNum()
+            getRequestOrderNum()  // 발주번호리스트 요청
         }
-
     }
 
-    //    발주번호요청
+    // 발주번호리스트 요청
     fun getRequestOrderNum() {
 
         loadingDialog.show(supportFragmentManager, null)
@@ -168,67 +157,93 @@ class OrderActivity : BaseActivity() {
                             mOrderAdapter.clearList()
                         }
 
-                        setBaljubeonhoListData()
+                        setBaljubeonhoListData()          // 발주번호 갯수를 표시
 
-                        clearDbAndInsertAllSearchedData()
-
-
+                        clearDbAndInsertAllSearchedData() // 로컬테이블에 발주번호리스트 클리어 및 저장
                     }
                     loadingDialog.dismiss()
-
                 }
 
                 override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
                     serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                     loadingDialog.dismiss()
                 }
-
             })
     }
 
+    // 로컬테이블에 발주 공통정보 삭제 후 신규정보로 재 등록
+    // 로컬테이블에 검색된 발주번호리스트 클리어 및 저장
+    // 발주번호리스트 요청이 정상적으로 이루어지면 진행된다.
     private fun clearDbAndInsertAllSearchedData() {
 
-        mSqliteDB.deleteBaljuCommon()
-        mSqliteDB.insertBaljuCommon(
+// 테이블 통합전의 실행문 - 아래의 문장들로 대체 됨
+//        mSqliteDB.deleteBaljuCommon()
+//        mSqliteDB.insertBaljuCommon(    // 로컬테이블에 발주 검색 공통조건 저장
+//            dateFormat.format(calStart.time),
+//            dateFormat.format(calEnd.time),
+//            binding.edtGeoraecheomyeong.text.toString(),
+//            binding.edtBaljubeonho.text.toString()
+//        )
+
+        // 발주 공통정보 삭제 후 신규정보로 재 등록
+        mSqliteDB.deleteBaljuInfoCommon()
+
+        mSqliteDB.insertBaljuInfoCommon(    // 로컬테이블에 발주 검색 공통조건 저장
             dateFormat.format(calStart.time),
             dateFormat.format(calEnd.time),
             binding.edtGeoraecheomyeong.text.toString(),
-            binding.edtBaljubeonho.text.toString()
+            binding.edtBaljubeonho.text.toString(),
+            // 이후의 항목들은 발주명세화면에서 발주명세정보 서버로부터 받은 후 업데이트 된다.
+            // count 정보는 아직 미 처리 상태
+           "",
+           "",
+           "",
+           "",
+           "",
+           "",
+           "",
+           "",
+            // 이후의 항목들은 발주명세화면에서 발주명세정보 서버로부터 받은 후와 임시저장시 업데이트 된다.
+           "",
+           "",
+           "",
+           ""
         )
 
+        // 로컬테이블에 발주번호리스트 클리어 및 저장
         mSqliteDB.deleteBaljubeonho()
         for (data in baljuList) {
 
             mSqliteDB.insertBaljubeonho(data)
-
         }
     }
 
+    // 복구작업 진행시 조회조건 및 데이터 셋업
     private fun getAllBaljubeonhoInLocalDB() {
 
-        val baljuCommonDataList = mSqliteDB.getAllBaljuCommon()
+        val baljuInfoCommonDataList = mSqliteDB.getAllBaljuInfoCommon()  // 발주검색정보 공통
 
-        if (baljuCommonDataList.isNotEmpty()) {
+        if (baljuInfoCommonDataList.isNotEmpty()) {
 
-            val data = baljuCommonDataList[0]
+            val data = baljuInfoCommonDataList[0]
 
             binding.txtDateStart.text = data.BALJUILJASTART
-            binding.txtDateEnd.text = data.BALJUILJAEND
+            binding.txtDateEnd  .text = data.BALJUILJAEND
             binding.edtGeoraecheomyeong.setText(data.GEORAECHEOMEONG)
-            binding.edtBaljubeonho.setText(data.BALJUBEONHO)
+            binding.edtBaljubeonho     .setText(data.BALJUBEONHO)
 
             calStart.time = dateFormat.parse(data.BALJUILJASTART)
-            calEnd.time = dateFormat.parse(data.BALJUILJAEND)
+            calEnd  .time = dateFormat.parse(data.BALJUILJAEND)
 
             calStartStr = dateSet.format(calStart.time)
-            calEndStr = dateSet.format(calEnd.time)
+            calEndStr   = dateSet.format(calEnd.time)
 
         }
 
         baljuList.clear()
         baljuList.addAll(mSqliteDB.getAllSavedBaljubeonho())
 
-        setBaljubeonhoListData()
+        setBaljubeonhoListData()  // 발주번호 갯수를 표시
     }
 
     override fun setValues() {
@@ -236,35 +251,35 @@ class OrderActivity : BaseActivity() {
         mOrderAdapter = OrderListAdapter(baljuList)
         binding.recyclerView.adapter = mOrderAdapter
 
-        val lastWorkSEQ = intent.getStringExtra("lastWorkSEQ")
+        // 복구작업 진행
+        //val lastWorkSEQ = intent.getStringExtra("lastWorkSEQ")
+        //lastWorkSEQ?.let {
+        if (intent.getBooleanExtra("WorkRecovery", false)) { // 복구작업 진행
 
-        lastWorkSEQ?.let {
-            getAllBaljubeonhoInLocalDB()
+            getAllBaljubeonhoInLocalDB()  // 복구작업 진행시 데이터 셋업
 
+            //val orderData = mSqliteDB.getSavedOrderDetail()[0] // 발주번호를 넘겨주려고 하는 것 같은 데 // 공통 정보에 있어서 넘겨줄필요없다.
+                                                                 // 이거 하나로 너무 많은 데이터를 읽어야 한다.
+            val myIntent  = Intent(mContext, OrderDetailDetailActivity::class.java)
 
-            val orderData = mSqliteDB.getSavedOrderDetail()[0]
-            val myIntent = Intent(mContext, OrderDetailDetailActivity::class.java)
-            myIntent.putExtra("baljubeonho", orderData.baljubeonho)
-            myIntent.putExtra("seq", mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER)
-            myIntent.putExtra("byLocalDB", true)
+            //myIntent.putExtra("baljubeonho", orderData.baljubeonho)
+            myIntent.putExtra("baljubeonho", mSqliteDB.getAllBaljuInfoCommon()[0].BALJUBEONHOSEL) // 발주번호는 이것으로 대체한다.
+            myIntent.putExtra("seq"        , mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER)
+            myIntent.putExtra("WorkRecovery"  , true)
             startActivity(myIntent)
         }
-
     }
 
+    // 발주번호 갯수를 표시
     fun setBaljubeonhoListData() {
 
         if (baljuList.size > 0) {
-            binding.layoutList.isVisible = true
+            binding.layoutList .isVisible = true
             binding.layoutEmpty.isVisible = false
         }
-
 
         binding.txtCount.text = "(${baljuList.size}건)"
 
         mOrderAdapter.notifyDataSetChanged()
-
     }
-
-
 }

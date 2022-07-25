@@ -24,12 +24,12 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.order_list_item, parent, false)
 ) {
     val georaecheomyeong = itemView.findViewById<TextView>(R.id.georaecheomyeong)
-    val baljubeonho = itemView.findViewById<TextView>(R.id.baljubeonho)
-    val georaecheocode = itemView.findViewById<TextView>(R.id.georaecheocode)
-    val baljuil = itemView.findViewById<TextView>(R.id.baljuil)
-    val nappumjangso = itemView.findViewById<TextView>(R.id.nappumjangso)
-    val bigo = itemView.findViewById<TextView>(R.id.bigo)
-    val seq = itemView.findViewById<TextView>(R.id.seq)
+    val baljubeonho      = itemView.findViewById<TextView>(R.id.baljubeonho)
+    val georaecheocode   = itemView.findViewById<TextView>(R.id.georaecheocode)
+    val baljuil          = itemView.findViewById<TextView>(R.id.baljuil)
+    val nappumjangso     = itemView.findViewById<TextView>(R.id.nappumjangso)
+    val bigo             = itemView.findViewById<TextView>(R.id.bigo)
+    val seq              = itemView.findViewById<TextView>(R.id.seq)
 
     fun bind(baljuData: Baljubeonho, position: Int){
 
@@ -42,14 +42,16 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
             var sawonCode = ""
                 LoginUserUtil.getLoginData()?.let {
                     sawonCode = it.sawoncode.toString()
+                    // 상태정보도 읽어서 반영해야 한다. 현재 하드코딩 "111"
+                    // 업무구분도 읽어서 반영해야 한다. 현재 하드코딩 "02"
                 }
 
             val SEQMap = hashMapOf(
                 "requesttype" to "08001",
-                "pid" to "02",
-                "tablet_ip" to IPUtil.getIpAddress(),
-                "sawoncode" to sawonCode,
-                "status" to "111",
+                "pid"         to "02",
+                "tablet_ip"   to IPUtil.getIpAddress(),
+                "sawoncode"   to sawonCode,
+                "status"      to "111",
             )
 
             Log.d("yj", "orderViewholder tabletIp : ${IPUtil.getIpAddress()}")
@@ -69,7 +71,7 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
 
                                 val dbHelper = DBHelper(parent.context, "drgemdb.db", null, 1)
                                 val mSqliteDB = SQLiteDB()
-                                mSqliteDB.makeDb(dbHelper.writableDatabase)
+                                mSqliteDB.makeDb(dbHelper.writableDatabase)  // 이것이 기존의 db를 사용하는것인지 ??
 
                                 mSqliteDB.updateWorkInfo("02", it.seq, it.status)
 
@@ -88,12 +90,13 @@ class OrderListViewHolder(val parent : ViewGroup) : RecyclerView.ViewHolder(
                 }
             })
         }
+
         georaecheomyeong.text = baljuData.getGeoraecheomyeongHP()
-        baljubeonho.text = baljuData.getBaljubeonhoHP()
-        georaecheocode.text = baljuData.getGeoraecheocodeHP()
-        baljuil.text = baljuData.getBaljuilHP()
-        nappumjangso.text = baljuData.getNappumjangsoHP()
-        bigo.text = baljuData.getbigoHP()
-        seq.text = "${position+1}"
+        baljubeonho     .text = baljuData.getBaljubeonhoHP()
+        georaecheocode  .text = baljuData.getGeoraecheocodeHP()
+        baljuil         .text = baljuData.getBaljuilHP()
+        nappumjangso    .text = baljuData.getNappumjangsoHP()
+        bigo            .text = baljuData.getbigoHP()
+        seq             .text = "${position+1}"
     }
 }

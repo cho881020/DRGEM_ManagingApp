@@ -23,6 +23,7 @@ import kr.co.drgem.managingapp.LoadingDialogFragment
 import kr.co.drgem.managingapp.R
 import kr.co.drgem.managingapp.adapers.MasterDataSpinnerAdapter
 import kr.co.drgem.managingapp.databinding.ActivityOrderDetailBinding
+import kr.co.drgem.managingapp.localdb.model.BaljuInfoCommonDB
 import kr.co.drgem.managingapp.menu.order.OrderDetailEditListener
 import kr.co.drgem.managingapp.menu.order.adapter.OrderDetailListAdapter
 import kr.co.drgem.managingapp.menu.order.dialog.OrderDetailDialog
@@ -40,16 +41,16 @@ import java.util.*
 class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     DialogInterface.OnDismissListener {
 
-    lateinit var binding: ActivityOrderDetailBinding
-    lateinit var mAdapter: OrderDetailListAdapter
+    lateinit var binding        : ActivityOrderDetailBinding
+    lateinit var mAdapter       : OrderDetailListAdapter
     lateinit var orderDetailData: OrderDetailResponse
 
     val loadingDialog = LoadingDialogFragment()
     lateinit var masterData: MasterDataResponse
-    val baljuDetail  = ArrayList<Baljudetail>()
-    var mBaljubeonho = ""
-    var SEQ          = ""
-    var status       = "333"
+    val baljuDetail   = ArrayList<Baljudetail>()
+    var mBaljubeonho  = ""
+    var SEQ           = ""
+    var status        = "333"
 
     var mWareHouseList: ArrayList<Detailcode> = arrayListOf()
     var companyCode    = "0001"
@@ -65,18 +66,18 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
     var sawonCode      = ""
 
     // sort의 상태를 파악하기 위한 변수
-    var onClickPummokcode     = 0
-    var onClickPummyeong      = 0
-    var onClickDobeonModel    = 0
-    var onClickSayang         = 0
-    var onClickLocation       = 0
+    var onClickPummokcode  = 0
+    var onClickPummyeong   = 0
+    var onClickDobeonModel = 0
+    var onClickSayang      = 0
+    var onClickLocation    = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_detail)
 
         mBaljubeonho = intent.getStringExtra("baljubeonho").toString()
-        SEQ = intent.getStringExtra("seq").toString()
+        SEQ          = intent.getStringExtra("seq").toString()
 
         LoginUserUtil.getLoginData()?.let {
             sawonCode      = it.sawoncode.toString()
@@ -89,26 +90,29 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             masterData = it
         }
 
-        setupEvents()
-        if (intent.getBooleanExtra("byLocalDB", false)) {
+        setupEvents()  // 각종 이벤트 지정
+
+        if (intent.getBooleanExtra("WorkRecovery", false)) {  // 이것은 복구시 작업
             setOrderDataByLocalDB()
         }
-        else {
-            getRequestOrderDetail()
+        else {  // 복구시 작업이 아닌 일상의 작업인 경우
+            getRequestOrderDetail() // 서버로 발주명세요청
         }
 
-        postRequestOrderDetail()
-        sort()
-        spinnerSet()
+        // 아래의 3개 문장도 복구시 관계 조사해 보아야 한다.
+        postRequestOrderDetail()    // btnSave 키 이벤트에 의한 발주입고등록작업
+        sort()                      // sort event 세팅
+        spinnerSet()                // 콤보박스 세팅
     }
 
     // 시스템 종료키(태블릿 PC 아랫쪽 세모 버튼)를 누른 경우
     override fun onBackPressed() {
         if (status == "333") {
             backDialog() {
-                clearAndCancelWork()
-                workStatusCancle() // 작업상태취소를 서버에 통보하고 확인받는 루틴(이안에서 login테이블의 상태정보 update되어야 한다.)
-                SerialManageUtil.clearData()
+                clearAndCancelWork()         // 로컬테이블 상세정보, 시리얼정보 clear
+                workStatusCancle()           // 서버에 취소 허가 받고, 상태정보 변경
+                                             // WORKGUBUN="None",WORKNUMBER="None",WORK_STATE="000"
+                SerialManageUtil.clearData() // 시리얼정보 clear
             }
         } else {
             finish()
@@ -117,9 +121,10 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
     override fun setupEvents() {
 
+        // 테스트용?? "저장하기" 버튼 앞쪽에 숨겨져 있음
+        // 화면정의(xml)에서 android:visibility="gone" 문장을 빼면 보이고 실행 된다.
         binding.btnTempSave.setOnClickListener {
-
-            clearAndSaveDataToDB()
+            clearAndSaveDataToDB()  // 로컬테이블의 발주상세공통정보1.발주디테일정보.시리얼정보 clear하고, 발주상세공통정보1. 발주상세정보 저장
         }
 
         binding.btnFold.setOnClickListener {
@@ -132,13 +137,15 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             binding.btnOpen.isVisible = false
         }
 
+        // 이전키를 누르면 상태가 333이면 상태 변경작업 진행
         binding.btnBack.setOnClickListener {
 
             if (status == "333") {
                 backDialog() {
-                    clearAndCancelWork()
-                    workStatusCancle()
-                    SerialManageUtil.clearData()
+                    clearAndCancelWork()          // 로컬테이블 상세정보, 시리얼정보 clear
+                    workStatusCancle()            // 서버에 취소 허가 받고, 상태정보 변경
+                                                  // WORKGUBUN="None",WORKNUMBER="None",WORK_STATE="000"
+                    SerialManageUtil.clearData()  // 시리얼정보 clear
                 }
             } else {
                 finish()
@@ -472,15 +479,16 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         }
     }
 
+    // 발주번호에 따른 상세품목 정보를 디스플레이
     fun setOrderDetailDataToUI() {
 
-        binding.baljubeonho.text = "발주번호 - $mBaljubeonho"
-        binding.baljubeonho2.text = mBaljubeonho
-        binding.baljuil.text = orderDetailData.getBaljuilHP()
-        binding.georaecheocode.text = orderDetailData.getGeoraecheocodeHP()
+        binding.baljubeonho     .text = "발주번호 - $mBaljubeonho"
+        binding.baljubeonho2    .text = mBaljubeonho
+        binding.baljuil         .text = orderDetailData.getBaljuilHP()
+        binding.georaecheocode  .text = orderDetailData.getGeoraecheocodeHP()
         binding.georaecheomyeong.text = orderDetailData.getGeoraecheomyeongHP()
-        binding.bigo.text = orderDetailData.getBigoHP()
-        binding.txtCount.text = "(${baljuDetail.size}건)"
+        binding.bigo            .text = orderDetailData.getBigoHP()
+        binding.txtCount        .text = "(${baljuDetail.size}건)"
 
         baljuDetail.forEach {
             if (it.jungyojajeyeobu == "Y") {
@@ -488,9 +496,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             }
         }
 
-        SerialManageUtil.clearData()
+        SerialManageUtil.clearData()  // 전체 시리얼정보를 Clear
 
-        for (pummok in baljuDetail) {
+        for (pummok in baljuDetail) {  // 시리얼 정보가 로컬테이블에 왜 존재하는지 ???
             val serialList = mSqliteDB.getAllSerialByPummokcode(pummok.getPummokcodeHP())
 
             val contentString = StringBuilder()
@@ -512,7 +520,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         mAdapter.notifyDataSetChanged()
     }
 
-    //    발주명세요청
+    // 발주명세요청
     fun getRequestOrderDetail() {
         loadingDialog.show(supportFragmentManager, null)
         apiList.getRequestOrderDetail("02012", mBaljubeonho)
@@ -524,14 +532,14 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                     response.body()?.let {
 
                         orderDetailData = it
-                        setValues()
+                        setValues()  // 받은 데이터 디스플레이
 
                         baljuDetail.clear()
                         baljuDetail.addAll(it.returnBaljudetail())
 
-                        setOrderDetailDataToUI()
+                        setOrderDetailDataToUI()    // 발주번호에 따른 상세품목 정보를 디스플레이
 
-                        clearAndSaveDataToDB()
+                        clearAndSaveDataToDB()   // 로컬테이블의 발주상세공통정보1.발주디테일정보.시리얼정보 clear하고, 발주상세공통정보1. 발주상세정보 저장
                     }
                     loadingDialog.dismiss()
                 }
@@ -543,9 +551,34 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             })
     }
 
+//    // 현재 공통 정보와 디테일 정보가 분리된 상태이므로 전반적으로 재 작성 되어야 한다.
+//    private fun setOrderDataByLocalDB() {
+//
+//        val savedOrderDetailList = mSqliteDB.getSavedOrderDetail()
+//
+//        orderDetailData = savedOrderDetailList[0]
+//        setValues()
+//
+//        baljuDetail.clear()
+//
+//        for (detail in orderDetailData.returnBaljudetail()) {
+//            baljuDetail.add(detail)
+//        }
+//
+//        setSpinnerDataByLocalDB()
+//    }
+
+    // 상세디테일 화면에서의 복구작업 시작 루틴
     private fun setOrderDataByLocalDB() {
 
         val savedOrderDetailList = mSqliteDB.getSavedOrderDetail()
+
+        // 시리얼번호 정보는 어디서 읽어 오는 가???? 지우지 않아서 그대로 남아 있다???
+        // 그렇다면 시리얼정보 로컬테이블 읽어서 어디에 복사해야 하는 지 검사
+        // 일단 시리얼정보 저장하는 곳을 찾아 볼 것
+         SerialLocalDB.clear()
+        // mSqliteDB.getAllSerialByPummokcode
+
         orderDetailData = savedOrderDetailList[0]
         setValues()
 
@@ -554,15 +587,18 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
         for (detail in orderDetailData.returnBaljudetail()) {
             baljuDetail.add(detail)
         }
+
         setSpinnerDataByLocalDB()
     }
 
+    // 로컬테이블 정보를 읽어서 사업장, 창고 세팅 후
+    // 발주번호에 따른 상세품목 정보를 디스플레이
     private fun setSpinnerDataByLocalDB() {
-        val baljuDetailInfoLocalDB = mSqliteDB.getAllBaljuDetailInfo()[0]
+        val baljuInfoCommonLocalDB = mSqliteDB.getAllBaljuInfoCommon()[0]  // 발주상세공통정보
 
         var companyIndex = 0
         masterData.getCompanyCode().forEachIndexed { index, company ->
-            if (company.code == baljuDetailInfoLocalDB.IPGOSAUPJANGCODE) {
+            if (company.code == baljuInfoCommonLocalDB.IPGOSAUPJANGCODE) {
                 companyIndex = index
             }
         }
@@ -573,18 +609,20 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
 
         mWareHouseList.forEachIndexed { index, wareHouse ->
 
-            if (wareHouse.code == baljuDetailInfoLocalDB.IPGOCHANGGOCODE) {
+            if (wareHouse.code == baljuInfoCommonLocalDB.IPGOCHANGGOCODE) {
                 wareHouseIndex = index
             }
         }
 
         binding.spinnerWareHouse.setSelection(wareHouseIndex)
-        setOrderDetailDataToUI()
+
+        setOrderDetailDataToUI()    // 발주번호에 따른 상세품목 정보를 디스플레이
     }
 
-    //    발주대비입고등록
+    // 발주 입고등록
     fun postRequestOrderDetail() {
 
+        // 저장하기 버튼 클릭시
         binding.btnSave.setOnClickListener {
 
             orderDetailData.returnBaljudetail().forEach {
@@ -597,7 +635,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                     SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                         .toString()      // 거래명세번호 내의 품목코드(키) 값으로 시리얼 데이터 꺼내오기
 
-
                 if (it.getJungyojajeyeobuHP() == "Y") {
                     val serialSize = serialData.trim().split(",").size
 
@@ -607,7 +644,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                         mAdapter.notifyDataSetChanged()
                         serialData = ""
                         return@setOnClickListener
-
                     } else {
                         it.serialCheck = false
                         mAdapter.notifyDataSetChanged()
@@ -627,7 +663,6 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                     val serialData =
                         SerialManageUtil.getSerialStringByPummokCode(it.getPummokcodeHP())
                             .toString()
-
 
 //                    if (it.jungyojajeyeobu == "Y") {
 //
@@ -672,9 +707,9 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                     "ipgodetail"       to ipgodetail
                 )
 
-                Log.d("yj", "georaeMap : ${georaeMap}")
+                Log.d("yj", "georaeMap     : ${georaeMap}")
                 Log.d("yj", "발주입고등록SEQ : $SEQ")
-                Log.d("yj", "ipgodetail : ${Gson().toJson(ipgodetail)}")
+                Log.d("yj", "ipgodetail    : ${Gson().toJson(ipgodetail)}")
 
                 if (ipgodetail.size() > 0) {
                     loadingDialog.show(supportFragmentManager, null)
@@ -691,16 +726,16 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                                             SerialManageUtil.clearData()
                                             mAdapter.clearList()
                                             saveDoneDialog()
-
+                                            // 작업번호는 그대로 유지한채 상태코드만 111로 변경??
+                                            // 더이상 작업 내용이 없으므로 이전 화면으로 돌아가야 한다. ??
+                                            // 로컬테이블 정보 클리어 및 로컬테이블 상태정보 변경  // 작업 상태코드, SEQ 등
                                         } else {
                                             serverErrorDialog(it.resultmsg)
                                         }
                                     }
                                 }
-
                                 loadingDialog.dismiss()
                             }
-
                             override fun onFailure(call: Call<WorkResponse>, t: Throwable) {
                                 serverErrorDialog("${t.message}\n 관리자에게 문의하세요.")
                                 loadingDialog.dismiss()
@@ -736,6 +771,7 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
                             Log.d("yj", "발주 작업상태취소 code : ${it.resultcd}")
                             Log.d("yj", "발주 작업상태취소 msg : ${it.resultmsg}")
 
+                            // "None" "None" "111" ??? 판단 필요
                             mSqliteDB.updateWorkInfo("None", "None", "000")
                         }
                     }
@@ -746,38 +782,72 @@ class OrderDetailDetailActivity : BaseActivity(), OrderDetailEditListener,
             })
     }
 
+    // 로컬테이블의 상세정보, 시리얼정보 삭제
     fun clearAndCancelWork() {
-
         Log.d("KJ", "DB에 있는 작업 데이터 삭제만 하기")
-        mSqliteDB.deleteOrderDetail()
-        mSqliteDB.deleteAllSerials()
+        mSqliteDB.deleteBaljuDetail()      // 발주디테일정보 삭제
+        mSqliteDB.deleteAllSerials()       // 시리얼정보 삭제
     }
 
+    // 로컬테이블의 발주상세공통정보1.발주디테일정보.시리얼정보 clear하고, 발주상세공통정보1. 발주상세정보 저장
+    // 발주명세요청에서 정상적으로 데이터를 받고 처리한 다음 진행된다.
     fun clearAndSaveDataToDB() {
+        clearAndCancelWork()  // 로컬테이블의 상세정보, 시리얼정보 삭제
 
-        mSqliteDB.deleteBaljuDetailInfo()
+// 테이블 통합전의 실행문 - 아래의 문장들로 대체 됨
+//        mSqliteDB.deleteBaljuDetailInfo()  // 발주상세공통정보1 삭제
+//        mSqliteDB.insertBaljuDetailInfo(   // 발주상세공통정보1 저장
+//            binding.txtDate.text.toString(),                                               // 일자
+//            masterData.getCompanyCode()[binding.spinnerCompany.selectedItemPosition].code, // 사업장코드
+//            mWareHouseList[binding.spinnerCompany.selectedItemPosition].code,              // 창고코드
+//            sawonCode                                                                      // 사원코드
+//        )
 
-        mSqliteDB.deleteOrderDetail()
-        mSqliteDB.deleteAllSerials()
+        updateBaljuINfoCommWork()  // 현재의 공통정보(선택발주번호정보+전송공통)를 로컬테이블에 저장한다.
 
-        mSqliteDB.insertBaljuDetailInfo(
-
-            binding.txtDate.text.toString(),
-            masterData.getCompanyCode()[binding.spinnerCompany.selectedItemPosition].code,
-            mWareHouseList[binding.spinnerCompany.selectedItemPosition].code,
-            sawonCode
-        )
-
-        mSqliteDB.insertOrderDetail(orderDetailData)
+        mSqliteDB.insertOrderDetail(orderDetailData)  // 발주상세정보 저장
     }
 
+    // OrderDetailListViewHolder.kt에서 btnEdit 클릭시 실행되는 수량.시리얼번호 입력 루틴
     override fun onClickedEdit(data: Baljudetail) {
 
         val dialog = OrderDetailDialog()
         dialog.setCount(mBaljubeonho, data, setTempData())
         dialog.show(supportFragmentManager, "EditDialog")
         supportFragmentManager.executePendingTransactions()
-//        dialog.dialog?.setOnDismissListener(this)
+
+        updateBaljuINfoCommWork1()  // 여기서 무조건 현재의 공통정보를 로컬테이블에 저장한다. 세분화 구분 생략 (취소,등록)
+
+        // dialog.dialog?.setOnDismissListener(this)
+    }
+
+    // 발주 공통정보 업데이트- 2군데에서 이루어 진다.// 선택발주번호상세정보 + 발주상세공통정보(전송데이터4개) 업데이트
+    // 시리얼번호 입력화면(또는 수량입력화면)에서 등록하기(임시저장)에서는 전송데이터4개만 필요하지만 전체 업데이트 진행
+    // 저장하기에서는 직접 화면의 데이터를 사용하기때문에 별도의 저장 불필요
+    fun updateBaljuINfoCommWork(){
+        mSqliteDB.updateBaljuInfoCommon(
+            orderDetailData.baljubeonho,                                                   // 선택된 발주번호
+            orderDetailData.baljuil,                                                       // 선택된 발주일
+            orderDetailData.georaecheocode,                                                // 선택된 거래처코드
+            orderDetailData.georaecheomyeong,                                              // 선택된 거래처명
+            orderDetailData.bigo,                                                          // 선택된 비고
+            orderDetailData.nappumjangso,                                                  // 선택된 납품장소
+            binding.txtDate.text.toString(),                                               // 일자
+            masterData.getCompanyCode()[binding.spinnerCompany.selectedItemPosition].code, // 사업장코드
+            mWareHouseList[binding.spinnerCompany.selectedItemPosition].code,              // 창고코드
+            sawonCode                                                                      // 사원코드
+        )
+    }
+    // 발주 공통정보 업데이트- 2군데에서 이루어 진다.// 선택발주번호상세정보 + 발주상세공통정보(전송데이터4개) 업데이트
+    // 시리얼번호 입력화면(또는 수량입력화면)에서 등록하기(임시저장)에서는 전송데이터4개만 업데이트 진행
+    // 저장하기에서는 직접 화면의 데이터를 사용하기때문에 별도의 저장 불필요
+    fun updateBaljuINfoCommWork1(){
+        mSqliteDB.updateBaljuInfoCommon1(
+            binding.txtDate.text.toString(),                                               // 일자
+            masterData.getCompanyCode()[binding.spinnerCompany.selectedItemPosition].code, // 사업장코드
+            mWareHouseList[binding.spinnerCompany.selectedItemPosition].code,              // 창고코드
+            sawonCode                                                                      // 사원코드
+        )
     }
 
     override fun onDismiss(p0: DialogInterface?) {

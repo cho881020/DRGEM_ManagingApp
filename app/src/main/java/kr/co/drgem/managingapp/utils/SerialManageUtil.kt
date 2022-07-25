@@ -9,7 +9,6 @@ class SerialManageUtil {
         fun putSerialStringByPummokCode(pummokCode: String, content: String ) {
 
             mHashMap[pummokCode] = content
-
         }
 
         fun getSerialStringByPummokCode( pummokCode: String ) : String? {
@@ -28,7 +27,5 @@ class SerialManageUtil {
         }
 
         // 위의 두가지를 테스트 해보아야 한다.
-
     }
-
 }

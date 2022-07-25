@@ -10,7 +10,6 @@ class OrderListAdapter(
     val baljuList : ArrayList<Baljubeonho>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return OrderListViewHolder(parent)
     }
@@ -23,11 +22,8 @@ class OrderListAdapter(
 
     override fun getItemCount() = baljuList.size
 
-
-
     fun clearList() {
         baljuList.clear()
         notifyDataSetChanged()
     }
-
 }

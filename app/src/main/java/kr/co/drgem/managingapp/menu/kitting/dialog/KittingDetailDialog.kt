@@ -33,7 +33,7 @@ import retrofit2.Response
 
 class KittingDetailDialog : BaseDialogFragment() {
 
-    lateinit var binding: DialogKittingDetailBinding
+    lateinit var binding : DialogKittingDetailBinding
     lateinit var mAdapter: DialogEditKittingAdapter
 
     val mSerialDataList  = ArrayList<SerialLocalDB>()
@@ -43,7 +43,7 @@ class KittingDetailDialog : BaseDialogFragment() {
     lateinit var pummokData: Pummokdetail
     var mKittingbeonho   = ""
     lateinit var tempData: TempData
-    var beforeSuryang   = 0   // 작업전에 가지고 있던 수량, 이전에 수량이 0이 아니였는데 0으로 바뀐경우 전송하기 위해
+    var beforeSuryang    = 0   // 작업전에 가지고 있던 수량, 이전에 수량이 0이 아니였는데 0으로 바뀐경우 전송하기 위해
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +53,7 @@ class KittingDetailDialog : BaseDialogFragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.dialog_kitting_detail, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.setCanceledOnTouchOutside(false) // 외부 터치 막음
 
         return binding.root
     }
@@ -179,17 +180,17 @@ class KittingDetailDialog : BaseDialogFragment() {
             // 서버로 현재고 임시등록 처리--------------------------------- start
             // 중요자재와 일반자재와 공통 처리
             val tempMap = hashMapOf(
-                "requesttype" to "08003",
-                "saeopjangcode" to tempData.saeopjangcode,
-                "changgocode" to tempData.changgocode,
-                "pummokcode" to pummokData.getPummokcodeHP(),
-                "suryang" to inputCount,
+                "requesttype"    to "08003",
+                "saeopjangcode"  to tempData.saeopjangcode,
+                "changgocode"    to tempData.changgocode,
+                "pummokcode"     to pummokData.getPummokcodeHP(),
+                "suryang"        to inputCount,
                 "yocheongbeonho" to pummokData.getyocheongbeonhoHP(),
-                "ipchulgubun" to "2",
-                "seq" to tempData.seq,
-                "tablet_ip" to IPUtil.getIpAddress(),
-                "sawoncode" to tempData.sawoncode,
-                "status" to "333",
+                "ipchulgubun"    to "2",
+                "seq"            to tempData.seq,
+                "tablet_ip"      to IPUtil.getIpAddress(),
+                "sawoncode"      to tempData.sawoncode,
+                "status"         to "333",
             )
             Log.d("yj", "tempMap : $tempMap")
 
@@ -405,18 +406,18 @@ class KittingDetailDialog : BaseDialogFragment() {
         // Pummokdetail.kt의 PummokCount 의 값은 시리얼번호 입력화면에서 등록하기 버튼에의해 등록될때
         // 작업완료 제일 끝에 현재 화면상에 입력된 값이 저장된 것이다.
 
-        binding.kittingbeonho.text = mKittingbeonho
-        binding.pummokcode.text = pummokData.getPummokcodeHP()
-        binding.pummyeong.text = pummokData.getpummyeongHP()
-        binding.dobeonModel.text = pummokData.getdobeon_modelHP()
-        binding.sayang.text = pummokData.getsayangHP()
-        binding.danwi.text = pummokData.getdanwiHP()
-        binding.location.text = pummokData.getlocationHP()
+        binding.kittingbeonho    .text = mKittingbeonho
+        binding.pummokcode       .text = pummokData.getPummokcodeHP()
+        binding.pummyeong        .text = pummokData.getpummyeongHP()
+        binding.dobeonModel      .text = pummokData.getdobeon_modelHP()
+        binding.sayang           .text = pummokData.getsayangHP()
+        binding.danwi            .text = pummokData.getdanwiHP()
+        binding.location         .text = pummokData.getlocationHP()
         binding.hyeonjaegosuryang.text = pummokData.gethyeonjaegosuryangHP()
-        binding.yocheongsuryang.text = pummokData.getyocheongsuryangHP()
-        binding.gichulgosuryang.text = pummokData.getgichulgosuryangHP()
-        binding.chulgosuryang.text = viewholderCount.toString()
-        binding.jungyojajeyeobu.text = pummokData.getjungyojajeyeobuHP()
+        binding.yocheongsuryang  .text = pummokData.getyocheongsuryangHP()
+        binding.gichulgosuryang  .text = pummokData.getgichulgosuryangHP()
+        binding.chulgosuryang    .text = viewholderCount.toString()
+        binding.jungyojajeyeobu  .text = pummokData.getjungyojajeyeobuHP()
         if (pummokData.getjungyojajeyeobuHP() == "Y") {
             binding.layoutSerial.isVisible = true
         }
@@ -431,7 +432,7 @@ class KittingDetailDialog : BaseDialogFragment() {
                 "yj",
                 "data.edtPummokCode ${pummokData.getPummokcodeHP()} :pummokCount : ${pummokData.getPummokCount()} edtPummokCode ${binding.edtPummokcode}"
             )
-            binding.edtCount.setText(pummokData.getPummokCount())                 // 보관되어있던 수량을 표시한다.
+            binding.edtCount     .setText(pummokData.getPummokCount())            // 보관되어있던 수량을 표시한다.
             binding.edtPummokcode.setBackgroundResource(R.drawable.gray_box)      // 품목코드의 입력영역을 gray로 만든다.
             binding.edtPummokcode.setTextColor(requireContext().resources.getColor(R.color.color_808080)) // 품목코드의 text를 808080의 컬러로 만든다.
             binding.layoutCount.isVisible = true            // 수량 text와 수량입력(edtCount) 칸이 보이도록한다.

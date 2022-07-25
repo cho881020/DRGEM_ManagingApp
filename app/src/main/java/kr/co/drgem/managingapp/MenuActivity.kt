@@ -39,11 +39,12 @@ class MenuActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu)
 
-        getRequestMasterCode()
-//        마스터 끝나고 => 사원코드 끝나고 => 복구모드로 넘어갈지 체크
+        // 사업장.창고 마스터 데이터 가져오고  사원마스터 가져오고
+        // 복구데이터 존재여부 검사 및 그에 따른 이후 복구작업 지시
+        getRequestMasterCodeAndRecovery()
 
-        setupEvents()
-        setValues()
+        setupEvents()  // 클릭 이벤트 설정 및 그에 따른 작업 지시
+        setValues()    // 단순히 사용자명 디스플레이
     }
 
     override fun setupEvents() {
@@ -114,12 +115,13 @@ class MenuActivity : BaseActivity() {
         endDialog()
     }
 
+    // 단순히 사용자명 디스플레이
     override fun setValues() {
         val userName = mSqliteDB.getAllLoginWorkCommon()[0].USERNAME
         binding.sawonmyeong.text = "$userName 님"
     }
 
-    fun getRequestMasterCode() {
+    fun getRequestMasterCodeAndRecovery() {
 
         apiList.getRequestMasterData().enqueue(object : Callback<MasterDataResponse> {
             override fun onResponse(
@@ -161,17 +163,47 @@ class MenuActivity : BaseActivity() {
         })
     }
 
+    // 복구작업으로 진행해야하는 지 검사 및 진행
     fun checkRecovery() {
-        val workType = intent.getStringExtra("workType")
-        workType?.let {
-            when (workType) {
-                "02" -> {
-                    val myIntent = Intent(mContext, OrderActivity::class.java)
-                    myIntent.putExtra("masterData", masterData)
-                    myIntent.putExtra("lastWorkSEQ", mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER)
-                    startActivity(myIntent)
+
+        if (intent.getBooleanExtra("WorkRecovery", false)) { // 복구 작업 진행
+
+            // workType에 해당되는 작업을 진행한다.
+            //val workType = intent.getStringExtra("workType")
+            val workType = mSqliteDB.getAllLoginWorkCommon()[0].WORKGUBUN.toString()
+            workType.let {
+                when (workType) {
+                    "01" -> {  // 거래명세입고
+//                        val myIntent = Intent(this, TransactionActivity::class.java)
+//                        myIntent.putExtra("masterData", masterData)
+//                        myIntent.putExtra("WorkRecovery"  , true)
+//                        startActivity(myIntent)
+                    }
+                    "02" -> {  // 매입입고
+                        val myIntent = Intent(mContext, OrderActivity::class.java)
+                        myIntent.putExtra("masterData", masterData)  // 사업장.창고 마스터
+                        // 로그인과 동일하게 사용- 다음화면에서 복구로 진행되도록 한다.
+                        myIntent.putExtra("WorkRecovery"  , true)
+
+                        // 아래의 문장도 업무에서 조회하면 나타나는 것이므로 일단 삭제
+                        // myIntent.putExtra("lastWorkSEQ",
+                        //    mSqliteDB.getAllLoginWorkCommon()[0].WORKNUMBER)
+                        startActivity(myIntent)
+                    }
+                    "03" -> {  // 키팅출고
+                    }
+                    "04" -> {  // 요청출고
+                    }
+                    "05" -> {  // 미출자재출고
+                    }
+                    "06" -> {  // 로케이션조회
+                    }
+                    "07" -> {  // 재고조사
+                    }
                 }
             }
+        } else {
+            // 별도의 처리작업 없다. 통상의 작업 진행
         }
     }
 }

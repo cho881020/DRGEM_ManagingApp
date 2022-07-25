@@ -34,8 +34,8 @@ import java.util.*
 
 class KittingActivity : BaseActivity() {
 
-    lateinit var binding: ActivityKittingBinding
-    lateinit var mAdapter: KittingListAdapter
+    lateinit var binding    : ActivityKittingBinding
+    lateinit var mAdapter   : KittingListAdapter
     lateinit var kittingData: KittingResponse
     val loadingDialog = LoadingDialogFragment()
 
@@ -48,8 +48,8 @@ class KittingActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kitting)
 
         setupEvents()
-        getRequestKitting()
-        completeTextView()
+        getRequestKitting()  // 키팅번호요청
+        completeTextView()   // 사원정보 autoCompleteTextView 세팅작업
     }
 
     override fun setupEvents() {
@@ -178,6 +178,7 @@ class KittingActivity : BaseActivity() {
         }
     }
 
+    // 사원정보 autoCompleteTextView 세팅작업
     private fun completeTextView(){
 
         val sawonmyeongList = ArrayList<String>()
